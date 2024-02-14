@@ -28,7 +28,7 @@ class Employee(db.Model):
     employee_trainings=db.relationship('EmployeeTraining', backref='employee')
     leaves=db.relationship('Leave', backref='employee')
     leave_approvals=db.relationship('LeaveApproval', backref='employee')
-    documents=db.relationship('Document', backref='employee')
+    documents=db.relationship('Documents', backref='employee')
     educations=db.relationship('Education', backref='employee')
 
    
