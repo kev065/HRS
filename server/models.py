@@ -28,7 +28,7 @@ class Employee(db.Model):
     employee_trainings=db.relationship('EmployeeTraining', backref='employee')
     leaves=db.relationship('Leave', backref='employee')
     leave_approvals=db.relationship('LeaveApproval', backref='employee')
-    documents=db.relationship('Document', backref='employee')
+    documents=db.relationship('Documents', backref='employee')
     educations=db.relationship('Education', backref='employee')
 
    
@@ -211,7 +211,7 @@ class Department(db.Model):
      name=db.Column(db.String,nullable=False)
      dept_head=db.Column(db.String,db.ForeignKey('managers.id'),nullable=False) 
      employees = db.relationship('Employee', backref='department')
-     managers = db.relationship('Manager', backref='department')
+     managers = db.relationship('Manager', backref='department', foreign_keys=[Manager.dept_id])
      hr_personnels = db.relationship('HR_Personel', backref='department')
 
      
