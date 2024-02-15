@@ -13,7 +13,14 @@ db = SQLAlchemy(metadata=metadata)
 def generate_uuid():
     return str(uuid.uuid4())
 
-
+class Documents(db.Model):
+       __tablename__='documents'
+       id=db.Column(db.String,primary_key=True,default=generate_uuid)  
+       employee_id=db.Column(db.String,db.ForeignKey('employees.id'),nullable=False)  
+       link_url=db.Column(db.String)
+       name=db.Column(db.String,nullable=False)
+      
+       type = db.Column(Enum("official", "institution", "other"), nullable=False)
 
 class Employee(db.Model):
     __tablename__='employees'
@@ -186,14 +193,14 @@ class LeaveApproval(db.Model):
 
 
 
-class Documents(db.Model):
-       __tablename__='documents'
-       id=db.Column(db.String,primary_key=True,default=generate_uuid)  
-       employee_id=db.Column(db.String,db.ForeignKey('employees.id'),nullable=False)  
-       link_url=db.Column(db.String)
-       name=db.Column(db.String,nullable=False)
+# class Documents(db.Model):
+#        __tablename__='documents'
+#        id=db.Column(db.String,primary_key=True,default=generate_uuid)  
+#        employee_id=db.Column(db.String,db.ForeignKey('employees.id'),nullable=False)  
+#        link_url=db.Column(db.String)
+#        name=db.Column(db.String,nullable=False)
       
-       type = db.Column(Enum("official", "institution", "other"), nullable=False)
+#        type = db.Column(Enum("official", "institution", "other"), nullable=False)
 
 class Education(db.Model):
      __tablename__='educations'
@@ -213,23 +220,3 @@ class Department(db.Model):
      employees = db.relationship('Employee', backref='department')
      managers = db.relationship('Manager', backref='department', foreign_keys=[Manager.dept_id])
      hr_personnels = db.relationship('HR_Personel', backref='department')
-
-     
-
-
-
-
-
-
-     
-
-     
-
-     
-
-
-
-
-
-
-
