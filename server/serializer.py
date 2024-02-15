@@ -23,5 +23,12 @@ class HrProfileSchema(SQLAlchemyAutoSchema):
         model = HrProfile
         include_fk = True
 
-
 hrProfileSchema =HrProfileSchema()
+
+class RemunerationSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Remuneration
+        include_fk = True
+
+
+remunerationSchema = RemunerationSchema()
