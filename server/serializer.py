@@ -40,3 +40,11 @@ class RemunerationDescriptionSchema(SQLAlchemyAutoSchema):
 
 
 remunerationDescriptionSchema = RemunerationDescriptionSchema()
+
+class ExperienceSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Experience
+        include_fk = True
+
+
+experienceSchema = ExperienceSchema()
