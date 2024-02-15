@@ -17,3 +17,9 @@ class EmployeeSchema(SQLAlchemyAutoSchema):
         model = Employee
 
 employeeSchema = EmployeeSchema()
+
+class SessionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Session
+
+sessionSchema = SessionSchema()
