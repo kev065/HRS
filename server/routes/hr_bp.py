@@ -41,7 +41,7 @@ class HR_Personnels(Resource):
         if HR:
             abort(409, detail="HR with the same email already exists")
         hashed_password = bcrypt.generate_password_hash(data['password'])
-        new_HR = HR(email=data['email'], password=hashed_password, dept_id=data['dept_id'])
+        new_HR = HR_Personel(email=data['email'], password=hashed_password, dept_id=data['dept_id'])
         db.session.add(new_HR)
         db.session.commit()
 
@@ -51,23 +51,23 @@ class HR_Personnels(Resource):
         return response
 api.add_resource(HR_Personnels,'/hr_personnels')
 
-class HRById(Resource):
-    def get(self, id):
-        single_HR = HR_Personel.query.filter_by(id=id).first()
+class HRByEmail(Resource):
+    def get(self, email):
+        single_HR = HR_Personel.query.filter_by(email=email).first()
 
         if not single_HR:
-            abort(404, detail=f'user with  id {id} does not exist')
+            abort(404, detail=f'user with email {email} does not exist')
 
         else:
             result = hrSchema.dump(single_HR)
             response = make_response(jsonify(result), 200)
             return response
 
-    def patch(self, id):
-        single_HR = HR_Personel.query.filter_by(id=id).first()
+    def patch(self, email):
+        single_HR = HR_Personel.query.filter_by(email=email).first()
 
         if not single_HR:
-            abort(404, detail=f'user with id {id} does not exist')
+            abort(404, detail=f'user with email {email} does not exist')
 
         data = patch_args.parse_args()
         for key, value in data.items():
@@ -80,10 +80,10 @@ class HRById(Resource):
 
         return response
     
-    def delete(self, id):
-        HR = HR_Personel.query.filter_by(id=id).first()
+    def delete(self, email):
+        HR = HR_Personel.query.filter_by(email=email).first()
         if not HR:
-            abort(404, detail=f'HR with id {id} does not exist')
+            abort(404, detail=f'HR with email {email} does not exist')
         db.session.delete(HR)
         db.session.commit()
 
@@ -95,4 +95,4 @@ class HRById(Resource):
         return response
 
 
-api.add_resource(HRById, '/hr_personnels/<int:id>')
+api.add_resource(HRByEmail, '/hr_personnels/<string:email>')

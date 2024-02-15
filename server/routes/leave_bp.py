@@ -52,23 +52,23 @@ class Leaves(Resource):
     
 api.add_resource(Leaves,'/leaves')
 
-class LeaveById(Resource):
-    def get(self, id):
-        single_leave = Leave.query.filter_by(id=id).first()
+class LeaveByDescription(Resource):
+    def get(self, description):
+        single_leave = Leave.query.filter_by(description=description).first()
 
         if not single_leave:
-            abort(404, detail=f'leave with  id {id} does not exist')
+            abort(404, detail=f'leave with description {description} does not exist')
 
         else:
             result = leaveSchema.dump(single_leave)
             response = make_response(jsonify(result), 200)
             return response
 
-    def patch(self, id):
-        single_leave = Leave.query.filter_by(id=id).first()
+    def patch(self, description):
+        single_leave = Leave.query.filter_by(description=description).first()
 
         if not single_leave:
-            abort(404, detail=f'leave with id {id} does not exist')
+            abort(404, detail=f'leave with description {description} does not exist')
 
         data = patch_args.parse_args()
         for key, value in data.items():
@@ -81,10 +81,10 @@ class LeaveById(Resource):
 
         return response
     
-    def delete(self, id):
-        leave = Leave.query.filter_by(id=id).first()
+    def delete(self, description):
+        leave = Leave.query.filter_by(description=description).first()
         if not leave:
-            abort(404, detail=f'leave with id {id} does not exist')
+            abort(404, detail=f'leave with description {description} does not exist')
         db.session.delete(leave)
         db.session.commit()
 
@@ -96,4 +96,4 @@ class LeaveById(Resource):
         return response
 
 
-api.add_resource(LeaveById, '/leaves/<int:id>')
+api.add_resource(LeaveByDescription, '/leaves/<string:description>')
