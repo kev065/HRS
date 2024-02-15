@@ -17,3 +17,11 @@ class EmployeeSchema(SQLAlchemyAutoSchema):
         model = Employee
 
 employeeSchema = EmployeeSchema()
+
+class HrProfileSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = HrProfile
+        include_fk = True
+
+
+hrProfileSchema =HrProfileSchema()
