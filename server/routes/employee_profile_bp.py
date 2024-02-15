@@ -42,7 +42,7 @@ patch_args.add_argument('date_joined', type=str)
 class EmployeeProfiles(Resource):
     def get(self):
         employee_profiles= EmployeeProfile.query.all()
-        result =EmployeeProfile.dump(employee_profiles, many=True)
+        result =employeeProfileSchema.dump(employee_profiles, many=True)
         response = make_response(jsonify(result), 200)
 
         return response
