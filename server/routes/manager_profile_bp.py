@@ -8,7 +8,7 @@ from serializer import managerProfileSchema
 
 from models import ManagerProfile, db
 
-manager_profile_bp = Blueprint('manager_bp', __name__)
+manager_profile_bp = Blueprint('manager_profile_bp', __name__)
 ma=Marshmallow(manager_profile_bp)
 bcrypt = Bcrypt()
 api = Api(manager_profile_bp)
