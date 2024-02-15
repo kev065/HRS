@@ -15,5 +15,35 @@ api = Api(serializer_bp)
 class EmployeeSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Employee
+        include_fk=True
 
 employeeSchema = EmployeeSchema()
+
+class HrSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = HR_Personel
+        include_fk=True
+
+hrSchema = HrSchema()
+
+class ManagerSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Manager
+        include_fk=True
+
+managerSchema = ManagerSchema()
+
+class ManagerProfileSchema(SQLAlchemyAutoSchema):
+    manager_id = ma.Nested('ManagerSchema', many=True)
+    class Meta:
+        model = ManagerProfile
+        include_fk= True
+
+managerProfileSchema = ManagerProfileSchema()
+
+class LeaveSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Leave
+        include_fk= True
+
+leaveSchema = LeaveSchema()

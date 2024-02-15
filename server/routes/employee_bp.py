@@ -1,5 +1,4 @@
 from flask import Blueprint, make_response, jsonify
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
@@ -81,8 +80,20 @@ class EmployeeById(Resource):
 
         return response
     
-    
+    def delete(self, id):
+        employee = Employee.query.filter_by(id=id).first()
+        if not employee:
+            abort(404, detail=f'employee with id {id} does not exist')
+        db.session.delete(employee)
+        db.session.commit()
+
+        response_body = {
+            "message": "employee successfully deleted"
+        }
+
+        response = make_response(response_body, 200)
+        return response
 
 
-api.add_resource(EmployeeById, '/users/<int:id>')
+api.add_resource(EmployeeById, '/employees/<int:id>')
 
