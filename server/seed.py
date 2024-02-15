@@ -166,4 +166,8 @@ for employee in Employee.query.all():
     db.session.add(education)
 
 
-db.session.commit()
+try:
+    db.session.commit()
+    print("Data seeded successfully!")
+except Exception as e:
+    print("An error occurred while seeding data:", e)
