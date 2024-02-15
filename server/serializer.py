@@ -48,3 +48,11 @@ class ExperienceSchema(SQLAlchemyAutoSchema):
 
 
 experienceSchema = ExperienceSchema()
+
+class EmployeeProfileSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = EmployeeProfile
+        include_fk = True
+
+
+employeeProfileSchema = EmployeeProfileSchema()
