@@ -23,3 +23,16 @@ class SessionSchema(SQLAlchemyAutoSchema):
         model = Session
 
 sessionSchema = SessionSchema()
+
+
+class GoalsSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Goals
+
+goalsSchema = GoalsSchema()
+
+class TrainingSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Training
+
+trainingSchema = TrainingSchema()
