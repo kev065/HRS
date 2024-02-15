@@ -21,6 +21,7 @@ employeeSchema = EmployeeSchema()
 class SessionSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Session
+        include_fk = True
 
 sessionSchema = SessionSchema()
 
@@ -28,12 +29,14 @@ sessionSchema = SessionSchema()
 class GoalsSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Goals
+        include_fk = True
 
 goalsSchema = GoalsSchema()
 
 class TrainingSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Training
+        include_fk = True
 
 trainingSchema = TrainingSchema()
 
@@ -41,12 +44,14 @@ trainingSchema = TrainingSchema()
 class LeaveApprovalSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = LeaveApproval
+        include_fk = True
 
 leaveApprovalSchema = LeaveApprovalSchema()
 
 class EmployeeTrainingSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = EmployeeTraining
+        include_fk = True
 
 employeeTrainingSchema = EmployeeTrainingSchema()
 
