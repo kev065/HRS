@@ -32,3 +32,11 @@ class RemunerationSchema(SQLAlchemyAutoSchema):
 
 
 remunerationSchema = RemunerationSchema()
+
+class RemunerationDescriptionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = RemunerationDescription
+        include_fk = True
+
+
+remunerationDescriptionSchema = RemunerationDescriptionSchema()

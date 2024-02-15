@@ -113,13 +113,6 @@ class Remuneration(db.Model):
 
 
 
-# class RemunerationType(Enum):
-#   normal="normal"
-#   deduction ="deduction"
-#   bonus ="bonus"
-#   allowance ="allowance"
-
-    
 
 class RemunerationDescription(db.Model):
      __tablename__='remuneration_descriptions'

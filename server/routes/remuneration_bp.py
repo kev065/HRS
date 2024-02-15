@@ -14,28 +14,17 @@ api = Api(remuneration_bp)
 
  
 post_args = reqparse.RequestParser()
-post_args.add_argument('date_of_birth', type=str, required=True, help='Date of Birth is required')
-post_args.add_argument('hr_id', type=str, required=True, help='hr_id is required')
-post_args.add_argument('first_name', type=str, required=True, help='First Name is required')
-post_args.add_argument('last_name', type=str, required=True, help='Last Name is required')
-post_args.add_argument('mantra', type=str, required=True)
-post_args.add_argument('phone_contact', type=str, required=True, help='Phone Number is required')
-post_args.add_argument('profile_photo', type=str, required=True, help='Photo is required')
-post_args.add_argument('title', type=str, required=True, help='Title is required')
-post_args.add_argument('date_created', type=str, required=True, help='Date created is required')
-post_args.add_argument('date_joined', type=str, required=True, help='Date Joined is required')
-
-
+post_args.add_argument('name', type=str, required=True, help='Name is required')
+post_args.add_argument('employee_id', type=str, required=True, help='Employee ID is required')
+post_args.add_argument('remuneration_date', type=str, required=True, help='Remuneration Date is required')
+post_args.add_argument('salary', type=str, required=True, help='Salary is required')
 
 patch_args = reqparse.RequestParser()
-patch_args.add_argument('date_of_birth', type=str, required=True, help='Date of Birth is required')
-patch_args.add_argument('first_name', type=str, required=True, help='First Name is required')
-patch_args.add_argument('last_name', type=str, required=True, help='Last Name is required')
-patch_args.add_argument('mantra', type=str, required=True)
-patch_args.add_argument('phone_contact', type=str, required=True, help='Phone Number is required')
-patch_args.add_argument('profile_photo', type=str, required=True, help='Photo is required')
-patch_args.add_argument('title', type=str, required=True, help='Title is required')
-patch_args.add_argument('date_joined', type=str, required=True, help='Date Joined is required')
+patch_args.add_argument('name', type=str)
+patch_args.add_argument('employee_id', type=str)
+patch_args.add_argument('remuneration_date', type=str)
+patch_args.add_argument('salary', type=str)
+
 
 
 class Remunerations(Resource):

@@ -9,7 +9,7 @@ from models import db
 from routes.employee_bp import employee_bp
 from routes.hrProfile_bp import hrProfile_bp
 from routes.remuneration_bp import remuneration_bp
-
+from routes.remuneration_desc_bp import remunerationDescription_bp
 from dotenv import load_dotenv
 
 import os
@@ -25,6 +25,7 @@ def create_app():
     app.register_blueprint(employee_bp)
     app.register_blueprint(hrProfile_bp)
     app.register_blueprint(remuneration_bp)
+    app.register_blueprint(remunerationDescription_bp)
 
 
     return app

@@ -28,14 +28,15 @@ post_args.add_argument('date_joined', type=str, required=True, help='Date Joined
 
 
 patch_args = reqparse.RequestParser()
-patch_args.add_argument('date_of_birth', type=str, required=True, help='Date of Birth is required')
-patch_args.add_argument('first_name', type=str, required=True, help='First Name is required')
-patch_args.add_argument('last_name', type=str, required=True, help='Last Name is required')
-patch_args.add_argument('mantra', type=str, required=True)
-patch_args.add_argument('phone_contact', type=str, required=True, help='Phone Number is required')
-patch_args.add_argument('profile_photo', type=str, required=True, help='Photo is required')
-patch_args.add_argument('title', type=str, required=True, help='Title is required')
-patch_args.add_argument('date_joined', type=str, required=True, help='Date Joined is required')
+patch_args.add_argument('date_of_birth', type=str)
+patch_args.add_argument('hr_id', type=str)
+patch_args.add_argument('first_name', type=str)
+patch_args.add_argument('last_name', type=str)
+patch_args.add_argument('mantra', type=str)
+patch_args.add_argument('phone_contact', type=str)
+patch_args.add_argument('profile_photo', type=str)
+patch_args.add_argument('title', type=str)
+patch_args.add_argument('date_joined', type=str)
 
 
 class HrProfiles(Resource):
