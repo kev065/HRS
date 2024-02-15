@@ -51,23 +51,24 @@ class HR_Personnels(Resource):
         return response
 api.add_resource(HR_Personnels,'/hr_personnels')
 
-class HRByEmail(Resource):
-    def get(self, email):
-        single_HR = HR_Personel.query.filter_by(email=email).first()
+class HRById(Resource): 
+    def get(self, id): 
+        single_HR = HR_Personel.query.filter_by(id=id).first()
+
 
         if not single_HR:
-            abort(404, detail=f'user with email {email} does not exist')
+            abort(404, detail=f'user with  id {id} does not exist')
 
         else:
             result = hrSchema.dump(single_HR)
             response = make_response(jsonify(result), 200)
             return response
 
-    def patch(self, email):
-        single_HR = HR_Personel.query.filter_by(email=email).first()
+    def patch(self, id):
+        single_HR = HR_Personel.query.filter_by(id=id).first()
 
         if not single_HR:
-            abort(404, detail=f'user with email {email} does not exist')
+            abort(404, detail=f'user with id {id} does not exist')
 
         data = patch_args.parse_args()
         for key, value in data.items():
@@ -79,11 +80,11 @@ class HRByEmail(Resource):
         response = make_response(jsonify(result), 200)
 
         return response
-    
-    def delete(self, email):
-        HR = HR_Personel.query.filter_by(email=email).first()
+
+    def delete(self, id):
+        HR = HR_Personel.query.filter_by(id=id).first()
         if not HR:
-            abort(404, detail=f'HR with email {email} does not exist')
+            abort(404, detail=f'HR with id {id} does not exist')
         db.session.delete(HR)
         db.session.commit()
 
@@ -93,6 +94,4 @@ class HRByEmail(Resource):
 
         response = make_response(response_body, 200)
         return response
-
-
-api.add_resource(HRByEmail, '/hr_personnels/<string:email>')
+api.add_resource(HRById, '/hr_personnels/<string:id>')

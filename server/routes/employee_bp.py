@@ -51,23 +51,23 @@ class Employees(Resource):
         return response
 api.add_resource(Employees,'/employees')
 
-class EmployeeByEmail(Resource):
-    def get(self, email):
-        single_employee = Employee.query.filter_by(email=email).first()
+class EmployeeById(Resource): 
+    def get(self, id): 
+        single_employee = Employee.query.filter_by(id=id).first()
 
         if not single_employee:
-            abort(404, detail=f'user with email {email} does not exist')
+            abort(404, detail=f'user with  id {id} does not exist')
 
         else:
             result = employeeSchema.dump(single_employee)
             response = make_response(jsonify(result), 200)
             return response
 
-    def patch(self, email):
-        single_employee = Employee.query.filter_by(email=email).first()
+    def patch(self, id):
+        single_employee = Employee.query.filter_by(id=id).first()
 
         if not single_employee:
-            abort(404, detail=f'user with email {email} does not exist')
+            abort(404, detail=f'user with id {id} does not exist')
 
         data = patch_args.parse_args()
         for key, value in data.items():
@@ -79,11 +79,11 @@ class EmployeeByEmail(Resource):
         response = make_response(jsonify(result), 200)
 
         return response
-    
-    def delete(self, email):
-        employee = Employee.query.filter_by(email=email).first()
+
+    def delete(self, id):
+        employee = Employee.query.filter_by(id=id).first()
         if not employee:
-            abort(404, detail=f'employee with email {email} does not exist')
+            abort(404, detail=f'employee with id {id} does not exist')
         db.session.delete(employee)
         db.session.commit()
 
@@ -93,6 +93,4 @@ class EmployeeByEmail(Resource):
 
         response = make_response(response_body, 200)
         return response
-
-
-api.add_resource(EmployeeByEmail, '/employees/<string:email>')
+api.add_resource(EmployeeById, '/employees/<string:id>')

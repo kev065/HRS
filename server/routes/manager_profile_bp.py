@@ -107,4 +107,4 @@ class ManagerProfileById(Resource):
         return response
 
 
-api.add_resource(ManagerProfileById, '/managerProfiles/<int:id>')
+api.add_resource(ManagerProfileById, '/managerProfiles/<string:id>')

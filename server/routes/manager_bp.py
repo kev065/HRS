@@ -49,39 +49,39 @@ class Managers(Resource):
     
 api.add_resource(Managers,'/managers')
 
-class ManagerByEmail(Resource):
-    def get(self, email):
-        single_manager = Manager.query.filter_by(email=email).first()
+class ManagerById(Resource): 
+    def get(self, id): 
+        single_manager = Manager.query.filter_by(id=id).first()
 
         if not single_manager:
-            abort(404, detail=f'user with email {email} does not exist')
+            abort(404, detail=f'user with  id {id} does not exist')
 
         else:
             result = managerSchema.dump(single_manager)
             response = make_response(jsonify(result), 200)
             return response
 
-    def patch(self, email):
-        single_manager = Manager.query.filter_by(email=email).first()
+    def patch(self, id):
+        single_manager = Manager.query.filter_by(id=id).first()
 
         if not single_manager:
-            abort(404, detail=f'user with email {email} does not exist')
+            abort(404, detail=f'user with id {id} does not exist')
 
         data = patch_args.parse_args()
         for key, value in data.items():
             if value is None:
                 continue
-            setattr(single_manager, key, value)
+            setattr( single_manager, key, value)
         db.session.commit()
         result = managerSchema.dump(single_manager)
         response = make_response(jsonify(result), 200)
 
         return response
-    
-    def delete(self, email):
-        manager = Manager.query.filter_by(email=email).first()
+
+    def delete(self, id):
+        manager = Manager.query.filter_by(id=id).first()
         if not manager:
-            abort(404, detail=f'manager with email {email} does not exist')
+            abort(404, detail=f'manager with id {id} does not exist')
         db.session.delete(manager)
         db.session.commit()
 
@@ -91,6 +91,4 @@ class ManagerByEmail(Resource):
 
         response = make_response(response_body, 200)
         return response
-
-
-api.add_resource(ManagerByEmail, '/managers/<string:email>')
+api.add_resource(ManagerById, '/managers/<string:id>')

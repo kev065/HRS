@@ -16,15 +16,15 @@ post_args = reqparse.RequestParser()
 post_args.add_argument('start_date', type=str, required=True, help='Start date is required')
 post_args.add_argument('end_date', type=str, required=True, help='End date is required')
 post_args.add_argument('description', type=str, required=True, help='Description is required')
-post_args.add_argument('employee_id', type=int, required=True, help='Employee id is required')
+post_args.add_argument('employee_description', type=int, required=True, help='Employee description is required')
 post_args.add_argument('approved', type=bool, required=True, help='Approval slot is required')
 
 patch_args = reqparse.RequestParser()
-patch_args.add_argument('start_date', type=str, required=True, help='Start date is required')
-patch_args.add_argument('end_date', type=str, required=True, help='End date is required')
-patch_args.add_argument('description', type=str, required=True, help='Description is required')
-patch_args.add_argument('employee_id', type=int, required=True, help='Employee id is required')
-patch_args.add_argument('approved', type=bool, required=True, help='Approval slot is required')
+patch_args.add_argument('start_date', type=str)
+patch_args.add_argument('end_date', type=str)
+patch_args.add_argument('description', type=str)
+patch_args.add_argument('employee_description', type=int)
+patch_args.add_argument('approved', type=bool)
 
 class Leaves(Resource):
     def get(self):
@@ -38,10 +38,10 @@ class Leaves(Resource):
         data = post_args.parse_args()
 
         # error handling
-        leave = Leave.query.filter_by(employee_id=data.employee_id).first()
+        leave = Leave.query.filter_by(employee_description=data.employee_description).first()
         # if leave:
-        #     abort(409, detail="Profile with the same manager ID already exists")
-        new_leave = leave(start_date = data['start_date'], end_date=data['end_date'], employee_id=data['employee_id'], description=data['description'], approved=data['approved'])
+        #     abort(409, detail="Profile with the same manager description already exists")
+        new_leave = leave(start_date = data['start_date'], end_date=data['end_date'], employee_description=data['employee_description'], description=data['description'], approved=data['approved'])
         db.session.add(new_leave)
         db.session.commit()
 
@@ -52,23 +52,25 @@ class Leaves(Resource):
     
 api.add_resource(Leaves,'/leaves')
 
-class LeaveByDescription(Resource):
-    def get(self, description):
-        single_leave = Leave.query.filter_by(description=description).first()
+class LeaveById(Resource):
+    def get(self, id):
+
+        single_leave = Leave.query.filter_by(id=id).first()
+
 
         if not single_leave:
-            abort(404, detail=f'leave with description {description} does not exist')
+            abort(404, detail=f'leave with  id {id} does not exist')
 
         else:
             result = leaveSchema.dump(single_leave)
             response = make_response(jsonify(result), 200)
             return response
 
-    def patch(self, description):
-        single_leave = Leave.query.filter_by(description=description).first()
+    def patch(self, id):
+        single_leave = Leave.query.filter_by(id=id).first()
 
         if not single_leave:
-            abort(404, detail=f'leave with description {description} does not exist')
+            abort(404, detail=f'leave with id {id} does not exist')
 
         data = patch_args.parse_args()
         for key, value in data.items():
@@ -80,11 +82,11 @@ class LeaveByDescription(Resource):
         response = make_response(jsonify(result), 200)
 
         return response
-    
-    def delete(self, description):
-        leave = Leave.query.filter_by(description=description).first()
+
+    def delete(self, id):
+        leave = Leave.query.filter_by(id=id).first()
         if not leave:
-            abort(404, detail=f'leave with description {description} does not exist')
+            abort(404, detail=f'leave with id {id} does not exist')
         db.session.delete(leave)
         db.session.commit()
 
@@ -94,6 +96,4 @@ class LeaveByDescription(Resource):
 
         response = make_response(response_body, 200)
         return response
-
-
-api.add_resource(LeaveByDescription, '/leaves/<string:description>')
+api.add_resource(LeaveById, '/leaves/<string:id>')
