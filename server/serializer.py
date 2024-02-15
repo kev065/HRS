@@ -49,3 +49,4 @@ class EmployeeTrainingSchema(SQLAlchemyAutoSchema):
         model = EmployeeTraining
 
 employeeTrainingSchema = EmployeeTrainingSchema()
+
