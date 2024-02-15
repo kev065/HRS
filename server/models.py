@@ -220,23 +220,3 @@ class Department(db.Model):
      employees = db.relationship('Employee', backref='department')
      managers = db.relationship('Manager', backref='department', foreign_keys=[Manager.dept_id])
      hr_personnels = db.relationship('HR_Personel', backref='department')
-
-     
-
-
-
-
-
-
-     
-
-     
-
-     
-
-
-
-
-
-
-
