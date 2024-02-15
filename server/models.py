@@ -35,7 +35,7 @@ class Employee(db.Model):
     employee_trainings=db.relationship('EmployeeTraining', backref='employee')
     leaves=db.relationship('Leave', backref='employee')
     leave_approvals=db.relationship('LeaveApproval', backref='employee')
-    documents=db.relationship('Document', backref='employee')
+    documents=db.relationship('Documents', backref='employee')
     educations=db.relationship('Education', backref='employee')
 
    
@@ -213,14 +213,13 @@ class Education(db.Model):
      end_date=db.Column(db.DateTime,nullable=False)
 
 class Department(db.Model):
-     __tablename__='departments'
-     id=db.Column(db.String,primary_key=True,default=generate_uuid)  
-     name=db.Column(db.String,nullable=False)
-     dept_head=db.Column(db.String,db.ForeignKey('managers.id'),nullable=False) 
-     employees = db.relationship('Employee', backref='department')
-     managers = db.relationship('Manager', backref='department')
-     hr_personnels = db.relationship('HR_Personel', backref='department')
-
+    __tablename__='departments'
+    id=db.Column(db.String,primary_key=True,default=generate_uuid)  
+    name=db.Column(db.String,nullable=False)
+    dept_head=db.Column(db.String,db.ForeignKey('managers.id'),nullable=False) 
+    employees = db.relationship('Employee', backref='department')
+    managers = db.relationship('Manager', backref='department', foreign_keys=[dept_head])
+    hr_personnels = db.relationship('HR_Personel', backref='department')
      
 
 
