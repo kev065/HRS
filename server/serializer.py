@@ -36,3 +36,16 @@ class TrainingSchema(SQLAlchemyAutoSchema):
         model = Training
 
 trainingSchema = TrainingSchema()
+
+
+class LeaveApprovalSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = LeaveApproval
+
+leaveApprovalSchema = LeaveApprovalSchema()
+
+class EmployeeTrainingSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = EmployeeTraining
+
+employeeTrainingSchema = EmployeeTrainingSchema()
