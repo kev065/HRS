@@ -1,5 +1,4 @@
 from flask import Blueprint, make_response, jsonify
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
@@ -20,9 +19,9 @@ post_args.add_argument('dept_id', type=str, required=True, help='Departmemnt ID 
 
 
 patch_args = reqparse.RequestParser()
-patch_args.add_argument('email', type=str, required=True, help='email is required')
-patch_args.add_argument('password', type=str, required=True, help='password is required')
-patch_args.add_argument('dept_id', type=str, required=True, help='Departmemnt ID  is required')
+patch_args.add_argument('email', type=str)
+patch_args.add_argument('password', type=str)
+patch_args.add_argument('dept_id', type=str)
 
 
 
@@ -52,8 +51,8 @@ class Employees(Resource):
         return response
 api.add_resource(Employees,'/employees')
 
-class EmployeeById(Resource):
-    def get(self, id):
+class EmployeeById(Resource): 
+    def get(self, id): 
         single_employee = Employee.query.filter_by(id=id).first()
 
         if not single_employee:
@@ -80,9 +79,18 @@ class EmployeeById(Resource):
         response = make_response(jsonify(result), 200)
 
         return response
-    
-    
 
+    def delete(self, id):
+        employee = Employee.query.filter_by(id=id).first()
+        if not employee:
+            abort(404, detail=f'employee with id {id} does not exist')
+        db.session.delete(employee)
+        db.session.commit()
 
-api.add_resource(EmployeeById, '/users/<int:id>')
+        response_body = {
+            "message": "employee successfully deleted"
+        }
 
+        response = make_response(response_body, 200)
+        return response
+api.add_resource(EmployeeById, '/employees/<string:id>')
