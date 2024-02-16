@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
-
 from flask import Flask
 from flask_migrate import Migrate
-
 from models import db
+from dotenv import load_dotenv
+import os
+
 
 from routes.employee_bp import employee_bp
 from routes.documents_bp import document_bp
@@ -23,11 +24,6 @@ from routes.remuneration_bp import remuneration_bp
 from routes.remuneration_desc_bp import remunerationDescription_bp
 from routes.experience_bp import experience_bp
 from routes.employee_profile_bp import employeeProfile_bp
-
-
-from dotenv import load_dotenv
-
-import os
 
 
 def create_app():
