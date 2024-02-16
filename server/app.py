@@ -12,6 +12,12 @@ from routes.Goals_bp import goals_bp
 from routes.training_bp import training_bp
 from routes.employee_training_bp import employee_training_bp
 from routes.leave_approval_bp import leave_approval_bp
+from routes.hrProfile_bp import hrProfile_bp
+from routes.remuneration_bp import remuneration_bp
+from routes.remuneration_desc_bp import remunerationDescription_bp
+from routes.experience_bp import experience_bp
+from routes.employee_profile_bp import employeeProfile_bp
+
 
 from dotenv import load_dotenv
 
@@ -31,6 +37,11 @@ def create_app():
     app.register_blueprint(training_bp)
     app.register_blueprint(employee_training_bp)
     app.register_blueprint(leave_approval_bp)
+    app.register_blueprint(hrProfile_bp)
+    app.register_blueprint(remuneration_bp)
+    app.register_blueprint(remunerationDescription_bp)
+    app.register_blueprint(experience_bp)
+    app.register_blueprint(employeeProfile_bp)
 
 
     return app
