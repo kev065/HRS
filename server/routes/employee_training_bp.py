@@ -76,4 +76,4 @@ class EmployeeTrainingById(Resource):
         result = employeeTrainingSchema.dump(single_employee_training)
         return make_response(jsonify(result), 200)
 
-api.add_resource(EmployeeTrainingById, '/employee_trainings/<int:id>')
+api.add_resource(EmployeeTrainingById, '/employee_trainings/<string:id>')

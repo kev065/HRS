@@ -80,4 +80,4 @@ class GoalById(Resource):
         result = goalsSchema.dump(single_goal)
         return make_response(jsonify(result), 200)
 
-api.add_resource(GoalById, '/goals/<int:id>')
+api.add_resource(GoalById, '/goals/<string:id>')

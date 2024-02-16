@@ -84,4 +84,4 @@ class TrainingById(Resource):
         result = trainingSchema.dump(single_training)
         return make_response(jsonify(result), 200)
 
-api.add_resource(TrainingById, '/trainings/<int:id>')
+api.add_resource(TrainingById, '/trainings/<string:id>')

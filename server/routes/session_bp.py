@@ -96,4 +96,4 @@ class SessionById(Resource):
         result = sessionSchema.dump(single_session)
         return make_response(jsonify(result), 200)
 
-api.add_resource(SessionById, '/sessions/<int:id>')
+api.add_resource(SessionById, '/sessions/<string:id>')
