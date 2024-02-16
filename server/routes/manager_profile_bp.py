@@ -26,16 +26,16 @@ post_args.add_argument('date_created', type=str, required=True, help='Date creat
 post_args.add_argument('date_joined', type=str, required=True, help='Date joined is required')
 
 patch_args = reqparse.RequestParser()
-patch_args.add_argument('date_of_birth', type=str, required=True, help='Date of Bith is required')
-patch_args.add_argument('manager_id', type=str, required=True, help='Manager ID is required')
-patch_args.add_argument('firstname', type=str, required=True, help='Fisrt Name is required')
-patch_args.add_argument('lastname', type=str, required=True, help='Last Name is required')
-patch_args.add_argument('mantra', type=str, required=True, help='Mantra is required')
-patch_args.add_argument('phone_contact', type=int, required=True, help='Phone contact  is required')
-patch_args.add_argument('title', type=str, required=True, help='Job Title is required')
-patch_args.add_argument('profile_photo', type=str, required=True, help='Profile photo is required')
-patch_args.add_argument('date_created', type=str, required=True, help='Date created  is required')
-patch_args.add_argument('date_joined', type=str, required=True, help='Date joined is required')
+patch_args.add_argument('date_of_birth', type=str)
+patch_args.add_argument('manager_id', type=str)
+patch_args.add_argument('firstname', type=str)
+patch_args.add_argument('lastname', type=str)
+patch_args.add_argument('mantra', type=str)
+patch_args.add_argument('phone_contact', type=int)
+patch_args.add_argument('title', type=str)
+patch_args.add_argument('profile_photo')
+patch_args.add_argument('date_created', type=str)
+patch_args.add_argument('date_joined', type=str)
 
 class ManagerProfiles(Resource):
     def get(self):
