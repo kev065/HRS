@@ -16,14 +16,14 @@ post_args = reqparse.RequestParser()
 post_args.add_argument('start_date', type=str, required=True, help='Start date is required')
 post_args.add_argument('end_date', type=str, required=True, help='End date is required')
 post_args.add_argument('description', type=str, required=True, help='Description is required')
-post_args.add_argument('employee_description', type=int, required=True, help='Employee description is required')
+post_args.add_argument('employee_id', type=int, required=True, help='Employee description is required')
 post_args.add_argument('approved', type=bool, required=True, help='Approval slot is required')
 
 patch_args = reqparse.RequestParser()
 patch_args.add_argument('start_date', type=str)
 patch_args.add_argument('end_date', type=str)
 patch_args.add_argument('description', type=str)
-patch_args.add_argument('employee_description', type=int)
+patch_args.add_argument('employee_id', type=int)
 patch_args.add_argument('approved', type=bool)
 
 class Leaves(Resource):
@@ -38,10 +38,10 @@ class Leaves(Resource):
         data = post_args.parse_args()
 
         # error handling
-        leave = Leave.query.filter_by(employee_description=data.employee_description).first()
+        leave = Leave.query.filter_by(employee_id=data.employee_id).first()
         # if leave:
         #     abort(409, detail="Profile with the same manager description already exists")
-        new_leave = leave(start_date = data['start_date'], end_date=data['end_date'], employee_description=data['employee_description'], description=data['description'], approved=data['approved'])
+        new_leave = leave(start_date = data['start_date'], end_date=data['end_date'], employee_id=data['employee_id'], description=data['description'], approved=data['approved'])
         db.session.add(new_leave)
         db.session.commit()
 
