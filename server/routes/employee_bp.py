@@ -19,9 +19,9 @@ post_args.add_argument('dept_id', type=str, required=True, help='Departmemnt ID 
 
 
 patch_args = reqparse.RequestParser()
-patch_args.add_argument('email', type=str, required=True, help='email is required')
-patch_args.add_argument('password', type=str, required=True, help='password is required')
-patch_args.add_argument('dept_id', type=str, required=True, help='Departmemnt ID  is required')
+patch_args.add_argument('email', type=str)
+patch_args.add_argument('password', type=str)
+patch_args.add_argument('dept_id', type=str)
 
 
 
