@@ -23,6 +23,7 @@ employeeSchema = EmployeeSchema()
 class DocumentSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Documents
+        include_fk = True
 
 documentSchema = DocumentSchema()
 
@@ -30,6 +31,7 @@ documentSchema = DocumentSchema()
 class EducationSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Education
+        include_fk = True
 
 educationSchema = EducationSchema()
 
@@ -37,6 +39,7 @@ educationSchema = EducationSchema()
 class DepartmentSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Department
+        include_fk = True
 
 departmentSchema = DepartmentSchema()
 
