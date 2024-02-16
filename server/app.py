@@ -7,6 +7,11 @@ from flask_migrate import Migrate
 from models import db
 
 from routes.employee_bp import employee_bp
+from routes.hrProfile_bp import hrProfile_bp
+from routes.remuneration_bp import remuneration_bp
+from routes.remuneration_desc_bp import remunerationDescription_bp
+from routes.experience_bp import experience_bp
+from routes.employee_profile_bp import employeeProfile_bp
 
 from dotenv import load_dotenv
 
@@ -21,6 +26,11 @@ def create_app():
     db.init_app(app)
 
     app.register_blueprint(employee_bp)
+    app.register_blueprint(hrProfile_bp)
+    app.register_blueprint(remuneration_bp)
+    app.register_blueprint(remunerationDescription_bp)
+    app.register_blueprint(experience_bp)
+    app.register_blueprint(employeeProfile_bp)
 
 
     return app

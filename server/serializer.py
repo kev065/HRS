@@ -17,3 +17,42 @@ class EmployeeSchema(SQLAlchemyAutoSchema):
         model = Employee
 
 employeeSchema = EmployeeSchema()
+
+class HrProfileSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = HrProfile
+        include_fk = True
+
+hrProfileSchema =HrProfileSchema()
+
+class RemunerationSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Remuneration
+        include_fk = True
+
+
+remunerationSchema = RemunerationSchema()
+
+class RemunerationDescriptionSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = RemunerationDescription
+        include_fk = True
+
+
+remunerationDescriptionSchema = RemunerationDescriptionSchema()
+
+class ExperienceSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Experience
+        include_fk = True
+
+
+experienceSchema = ExperienceSchema()
+
+class EmployeeProfileSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = EmployeeProfile
+        include_fk = True
+
+
+employeeProfileSchema = EmployeeProfileSchema()
