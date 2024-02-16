@@ -3,10 +3,13 @@ from datetime import datetime,timedelta
 from flask import Flask
 from flask_migrate import Migrate
 
-
 from models import db
 
 from routes.employee_bp import employee_bp
+from routes.manager_bp import manager_bp
+from routes.hr_bp import hr_bp
+from routes.manager_profile_bp import manager_profile_bp
+from routes.leave_bp import leave_bp
 from routes.session_bp import session_bp
 from routes.Goals_bp import goals_bp
 from routes.training_bp import training_bp
@@ -32,6 +35,10 @@ def create_app():
     db.init_app(app)
 
     app.register_blueprint(employee_bp)
+    app.register_blueprint(hr_bp)
+    app.register_blueprint(manager_bp)
+    app.register_blueprint(manager_profile_bp)
+    app.register_blueprint(leave_bp)
     app.register_blueprint(session_bp)
     app.register_blueprint(goals_bp)
     app.register_blueprint(training_bp)
