@@ -3,7 +3,6 @@ from datetime import datetime,timedelta
 from flask import Flask
 from flask_migrate import Migrate
 
-
 from models import db
 
 from routes.employee_bp import employee_bp
