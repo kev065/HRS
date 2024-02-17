@@ -113,7 +113,7 @@ class HrProfile(db.Model):
     title = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     date_joined = db.Column(db.DateTime, nullable=False)
-
+     
 
 class Remuneration(db.Model):
     __tablename__ = 'remunerations'
