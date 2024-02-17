@@ -3,6 +3,8 @@ from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
 from serializer import departmentSchema
 from models import db, Department
+from auth_middleware import hr_required
+
 
 # create education blueprint
 department_bp = Blueprint('department_bp', __name__)
@@ -11,11 +13,16 @@ ma = Marshmallow(department_bp)
 api = Api(department_bp)
 
 
-parser = reqparse.RequestParser()
-parser.add_argument('name', type=str, required=True,
-                    help="name is required")
-parser.add_argument('dept_head', type=str, required=True,
-                    help="dept_head is required")
+post_args = reqparse.RequestParser()
+post_args.add_argument('name', type=str, required=True,
+                       help="name is required")
+post_args.add_argument('dept_head', type=str, required=True,
+                       help="dept_head is required")
+
+
+patch_args = reqparse.RequestParser()
+patch_args.add_argument('name', type=str)
+patch_args.add_argument('dept_head', type=str)
 
 
 class Departments(Resource):
@@ -25,8 +32,9 @@ class Departments(Resource):
         response = make_response(jsonify(result), 200)
         return response
 
+    @hr_required()
     def post(self):
-        data = parser.parse_args()
+        data = post_args.parse_args()
 
         new_department = Department(
             **data
@@ -55,13 +63,14 @@ class DepartmentByID(Resource):
         response = make_response(jsonify(result), 200)
         return response
 
+    @hr_required()
     def patch(self, id):
         department = Department.query.filter_by(id=id).first()
 
         if not department:
             abort(404, detail=f'department with id {id} does not exist')
 
-        data = parser.parse_args()
+        data = patch_args.parse_args()
         for key, value in data.items():
             if value is None:
                 continue
@@ -73,6 +82,7 @@ class DepartmentByID(Resource):
 
         return response
 
+    @hr_required()
     def delete(self):
         department = Department.query.filter_by(id=id).first()
 
