@@ -109,6 +109,8 @@ class Remuneration(db.Model):
      salary=db.Column(db.Float,nullable=False)
      employee_id=db.Column(db.String,db.ForeignKey('employees.id'),nullable=False)     
      remuneration_date=db.Column(db.DateTime)
+     month=db.Column(db.String,nullable=False)
+     year=db.Column(db.String,nullable=False)
      remunerations = db.relationship('RemunerationDescription', backref='remuneration')
 
 
@@ -122,6 +124,7 @@ class RemunerationDescription(db.Model):
      name=db.Column(db.String(30),nullable=False)
      description=db.Column(db.String,nullable=False)
      amount=db.Column(db.Float,nullable=False)
+   
 
 class Experience(db.Model):
      __tablename__='experiences'

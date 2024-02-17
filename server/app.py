@@ -24,6 +24,8 @@ from routes.remuneration_bp import remuneration_bp
 from routes.remuneration_desc_bp import remunerationDescription_bp
 from routes.experience_bp import experience_bp
 from routes.employee_profile_bp import employeeProfile_bp
+from routes.sessionGoals_bp import goals_session_bp
+from routes.payslip_bp import payslip_bp
 
 
 def create_app():
@@ -52,6 +54,10 @@ def create_app():
     app.register_blueprint(remunerationDescription_bp)
     app.register_blueprint(experience_bp)
     app.register_blueprint(employeeProfile_bp)
+    app.register_blueprint(goals_session_bp)
+    app.register_blueprint(payslip_bp)
+
+  
 
 
     return app
