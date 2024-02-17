@@ -1,8 +1,10 @@
 from flask import Blueprint, make_response, jsonify
 from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
+from flask_jwt_extended import get_jwt_identity
 from serializer import educationSchema
 from models import db, Education
+from auth_middleware import employee_required
 
 # create education blueprint
 education_bp = Blueprint('education_bp', __name__)
@@ -11,20 +13,27 @@ ma = Marshmallow(education_bp)
 api = Api(education_bp)
 
 
-parser = reqparse.RequestParser()
-parser.add_argument('employee_id', type=str, required=True,
-                    help="employee is required")
-parser.add_argument('institution', type=str, required=True,
-                    help="Institution is required")
-parser.add_argument('course', type=str, required=True,
-                    help="course is required")
-parser.add_argument('qualification', type=str, required=True,
-                    help="qualification is required")
+post_args = reqparse.RequestParser()
 
-parser.add_argument('start_date', type=str, required=True,
-                    help="start_date is required")
-parser.add_argument('end_date', type=str, required=True,
-                    help="end_date is required")
+post_args.add_argument('institution', type=str, required=True,
+                       help="Institution is required")
+post_args.add_argument('course', type=str, required=True,
+                       help="course is required")
+post_args.add_argument('qualification', type=str, required=True,
+                       help="qualification is required")
+
+post_args.add_argument('start_date', type=str, required=True,
+                       help="start_date is required")
+post_args.add_argument('end_date', type=str, required=True,
+                       help="end_date is required")
+
+patch_args = reqparse.RequestParser()
+
+patch_args.add_argument('institution', type=str)
+patch_args.add_argument('course', type=str)
+patch_args.add_argument('qualification', type=str)
+patch_args.add_argument('start_date', type=str)
+patch_args.add_argument('end_date', type=str)
 
 
 class EducationDetails(Resource):
@@ -34,11 +43,19 @@ class EducationDetails(Resource):
         response = make_response(jsonify(result), 200)
         return response
 
+    @employee_required()
     def post(self):
-        data = parser.parse_args()
+        current_user = get_jwt_identity()
+        data = post_args.parse_args()
 
         employee_education = Education(
-            **data
+            employee_id=current_user,
+            institution=data['institution'],
+            course=data['course'],
+            qualification=data['qualification'],
+            start_date=data["start_date"],
+            end_date=data["end_date"]
+
         )
 
         db.session.add(employee_education)
@@ -64,29 +81,39 @@ class EducationByID(Resource):
         response = make_response(jsonify(result), 200)
         return response
 
+    @employee_required()
     def patch(self, id):
-        educaction = Education.query.filter_by(id=id).first()
+        current_user = get_jwt_identity()
+        education = Education.query.filter_by(id=id).first()
 
-        if not educaction:
+        if not education:
             abort(404, detail=f'educaction with id {id} does not exist')
 
-        data = parser.parse_args()
+        if education.employee_id != current_user:
+            abort(400, detail="Unauthorized request")
+
+        data = patch_args.parse_args()
         for key, value in data.items():
             if value is None:
                 continue
-            setattr(educaction, key, value)
+            setattr(education, key, value)
 
         db.session.commit()
-        result = educationSchema.dump(educaction)
+        result = educationSchema.dump(education)
         response = make_response(jsonify(result), 200)
 
         return response
 
+    @employee_required()
     def delete(self):
+        current_user = get_jwt_identity()
         education = Education.query.filter_by(id=id).first()
 
         if not education:
             abort(404, detail=f'education with id {id} does not exist')
+
+        if education.employee_id != current_user:
+            abort(400, detail="Unauthorized request")
 
         db.session.delete(education)
         db.session.commit()
