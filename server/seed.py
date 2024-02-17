@@ -77,8 +77,7 @@ for employee in Employee.query.all():
         salary=50000.00, 
         employee_id=employee.id, 
         remuneration_date=datetime.utcnow(),        
-        month=1,
-        year=2023
+        month=1
     )
     db.session.add(remuneration)
 
@@ -89,7 +88,8 @@ for employee in Employee.query.all():
         type=remuneration_type, 
         name=f'Description for {remuneration.name}',  
         description=remuneration_description, 
-        amount=50000.00  
+        amount=50000.00,
+        month=1
     )
     db.session.add(description)
 
