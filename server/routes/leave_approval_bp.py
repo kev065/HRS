@@ -83,4 +83,4 @@ class LeaveApprovalById(Resource):
         result = leaveApprovalSchema.dump(single_leave_approval)
         return make_response(jsonify(result), 200)
 
-api.add_resource(LeaveApprovalById, '/leave_approvals/<int:id>')
+api.add_resource(LeaveApprovalById, '/leave_approvals/<string:id>')

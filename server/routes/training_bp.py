@@ -99,4 +99,5 @@ class TrainingById(Resource):
         return make_response(jsonify(result), 200)
 
 
-api.add_resource(TrainingById, '/trainings/<int:id>')
+api.add_resource(TrainingById, '/trainings/<string:id>')
+
