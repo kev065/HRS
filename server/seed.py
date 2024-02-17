@@ -76,7 +76,9 @@ for employee in Employee.query.all():
         name=f'Remuneration for {employee.email}',  
         salary=50000.00, 
         employee_id=employee.id, 
-        remuneration_date=datetime.utcnow()
+        remuneration_date=datetime.utcnow(),        
+        month=1,
+        year=2023
     )
     db.session.add(remuneration)
 
