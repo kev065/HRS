@@ -39,7 +39,7 @@ class Login(Resource):
 
             if bcrypt.check_password_hash(manager.password, password.encode('utf-8')):
                 access_token = create_access_token(identity=manager.id, additional_claims={
-                    "is_manager": True})
+                    "is_manager": True, "role": "manager"})
                 return jsonify(access_token=access_token)
             else:
                 abort(400, detail="Your password is incorrect")
@@ -53,7 +53,7 @@ class Login(Resource):
 
             if bcrypt.check_password_hash(employee.password, password.encode('utf-8')):
                 access_token = create_access_token(identity=employee.id, additional_claims={
-                    "is_employee": True})
+                    "is_employee": True, "role": "employee"})
                 return jsonify(access_token=access_token)
             else:
                 abort(400, detail="Your password is incorrect")
@@ -67,7 +67,7 @@ class Login(Resource):
 
             if bcrypt.check_password_hash(hr.password, password.encode('utf-8')):
                 access_token = create_access_token(identity=hr.id, additional_claims={
-                    "is_hr": True})
+                    "is_hr": True, "role": "hr"})
                 return jsonify(access_token=access_token)
             else:
                 abort(400, detail="Your password is incorrect")
