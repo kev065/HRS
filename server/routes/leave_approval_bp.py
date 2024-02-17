@@ -1,6 +1,7 @@
 from flask import Blueprint, make_response, jsonify
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
+from flask_jwt_extended import jwt_required
 from models import LeaveApproval, db
 from serializer import leaveApprovalSchema
 
@@ -26,7 +27,7 @@ class LeaveApprovalsResource(Resource):
         leave_approvals = LeaveApproval.query.all()
         result = leaveApprovalSchema.dump(leave_approvals, many=True)
         return make_response(jsonify(result), 200)
-    
+    @jwt_required()
     def post(self):
         data = post_args.parse_args()
 
@@ -54,7 +55,7 @@ class LeaveApprovalById(Resource):
         else:
             result = leaveApprovalSchema.dump(single_leave_approval)
             return make_response(jsonify(result), 200)
-
+    @jwt_required()
     def delete(self, id):
         single_leave_approval = LeaveApproval.query.filter_by(id=id).first()
 
@@ -65,7 +66,7 @@ class LeaveApprovalById(Resource):
         db.session.commit()
 
         return make_response(jsonify({"message": f"LeaveApproval with id {id} has been deleted"}), 200)
-
+    @jwt_required()
     def patch(self, id):
         single_leave_approval = LeaveApproval.query.filter_by(id=id).first()
 
