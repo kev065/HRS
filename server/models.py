@@ -204,11 +204,13 @@ class Leave(db.Model):
         'employees.id'), nullable=False)
     description = db.Column(db.String, nullable=False)
     approved = db.Column(db.Boolean)
+    leave_approval = db.relationship('LeaveApproval', backref='leave', lazy=True)
 
 
 class LeaveApproval(db.Model):
     __tablename__ = 'leave_approvals'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
+    leave_id = db.Column(db.String, db.ForeignKey('leaves.id'), nullable=False)
     employee_id = db.Column(db.String, db.ForeignKey(
         'employees.id'), nullable=False)
     manager_id = db.Column(db.String, db.ForeignKey(
@@ -217,6 +219,8 @@ class LeaveApproval(db.Model):
         'hr_personnels.id'), nullable=False)
     manager_app_date = db.Column(db.DateTime)
     hr_approval_date = db.Column(db.DateTime)
+
+    
 
 
 # class Documents(db.Model):
