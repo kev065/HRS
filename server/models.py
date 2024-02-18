@@ -126,6 +126,7 @@ class Remuneration(db.Model):
     remunerations = db.relationship(
         'RemunerationDescription', backref='remuneration')
     month = db.Column(db.String, nullable=False)
+    year = db.Column(db.String, nullable=False)
 
 
 class RemunerationDescription(db.Model):
@@ -138,7 +139,7 @@ class RemunerationDescription(db.Model):
     name = db.Column(db.String(30), nullable=False)
     description = db.Column(db.String, nullable=False)
     amount = db.Column(db.Float, nullable=False)
-    month = db.Column(db.String, nullable=False)
+    
 
 
 class Experience(db.Model):
