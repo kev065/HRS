@@ -153,11 +153,11 @@ for employee in Employee.query.all():
 for employee in Employee.query.all():
     leave = Leave(id=generate_uuid(), employee_id=employee.id, start_date=datetime.utcnow(), end_date=datetime.utcnow() + timedelta(days=1), description='Vacation', approved=False)
     db.session.add(leave)
+    db.session.commit()
 
 
 # Create LeaveApproval 
-for leave in Leave.query.all():
-    leave_approval = LeaveApproval(id=generate_uuid(), employee_id=leave.employee_id, hr_id=HR_Personel.query.first().id, manager_id=Manager.query.first().id, manager_app_date=datetime.utcnow(), hr_approval_date=datetime.utcnow())
+    leave_approval = LeaveApproval(id=generate_uuid(), leave_id=leave.id, employee_id=leave.employee_id, hr_id=HR_Personel.query.first().id, manager_id=Manager.query.first().id, manager_app_date=datetime.utcnow(), hr_approval_date=datetime.utcnow())
     db.session.add(leave_approval)
 
 
