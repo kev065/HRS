@@ -5,6 +5,9 @@ from flask_jwt_extended import JWTManager
 from models import db
 from dotenv import load_dotenv
 import os
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 
 from routes.employee_bp import employee_bp
@@ -32,6 +35,7 @@ from routes.payslip_bp import payslip_bp
 
 def create_app():
     app = Flask(__name__)
+    bcrypt.init_app(app)
     load_dotenv()
     app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv(
         'SQLALCHEMY_DATABASE_URI')
