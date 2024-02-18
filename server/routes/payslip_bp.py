@@ -45,11 +45,9 @@ class PayslipResource(Resource):
             return {'message': 'Unauthorized to perform this operation'}, 403
 
     def viewPayslip(self, role, employee_id=None):
-        data = request.get_json()
-        employee_id = data.get(
-            "employee_id") if not employee_id else employee_id
-        month = data.get("month")
-        year = data.get("year")
+        year = request.args.get('year')
+        month = request.args.get('month')
+        employee_id = request.args.get('employee_id')
 
         employee = Employee.query.filter_by(id=employee_id).first()
         if not employee:
