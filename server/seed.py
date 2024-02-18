@@ -3,6 +3,7 @@ from models import db, Employee, Manager, HR_Personel, EmployeeProfile, ManagerP
 from datetime import datetime, timedelta
 import uuid
 import random
+from app import create_app, bcrypt
 
 app = create_app()
 app.app_context().push()
@@ -17,7 +18,8 @@ db.create_all()
 # Create managers
 managers = []
 for i in range(3):
-    manager = Manager(id=generate_uuid(), email=f'manager{i}@example.com', password='password')
+    password_hash = bcrypt.generate_password_hash('password').decode('utf-8')
+    manager = Manager(id=generate_uuid(), email=f'manager{i}@example.com', password=password_hash)
     db.session.add(manager)
     managers.append(manager)
 
@@ -33,13 +35,15 @@ for i, dept in enumerate(departments):
 
 # Create employees
 for i in range(10):
-    employee = Employee(id=generate_uuid(), email=f'employee{i}@example.com', password='password', dept_id=department.id)
+    password_hash = bcrypt.generate_password_hash('password').decode('utf-8')
+    employee = Employee(id=generate_uuid(), email=f'employee{i}@example.com', password=password_hash, dept_id=department.id)
     db.session.add(employee)
 
 
 # Create HR personnel
 for i in range(2):
-    hr_personnel = HR_Personel(id=generate_uuid(), email=f'hr{i}@example.com', password='password', dept_id=department.id)
+    password_hash = bcrypt.generate_password_hash('password').decode('utf-8')
+    hr_personnel = HR_Personel(id=generate_uuid(), email=f'hr{i}@example.com', password=password_hash, dept_id=department.id)
     db.session.add(hr_personnel)
 
 
@@ -77,7 +81,8 @@ for employee in Employee.query.all():
         salary=50000.00, 
         employee_id=employee.id, 
         remuneration_date=datetime.utcnow(),        
-        month=1
+        month=1,
+        year=2022
     )
     db.session.add(remuneration)
 
@@ -88,8 +93,7 @@ for employee in Employee.query.all():
         type=remuneration_type, 
         name=f'Description for {remuneration.name}',  
         description=remuneration_description, 
-        amount=50000.00,
-        month=1
+        amount=50000.00
     )
     db.session.add(description)
 
