@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint, make_response, jsonify
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
@@ -46,8 +47,13 @@ class TrainingsResource(Resource):
         if training:
             return make_response(jsonify({"error": "Training with the same title already exists"}), 409)
 
-        new_training = Training(title=data['title'], description=data['description'], start_date=data['start_date'],
-                                start_time=data['start_time'], end_date=data['end_date'], end_time=data['end_time'])
+        start_date = datetime.strptime(data["start_date"], "%Y-%m-%d")
+        end_date = datetime.strptime(data["end_date"], "%Y-%m-%d")
+        start_time = datetime.strptime(data["start_time"], "%H:%M:%S").time()
+        end_time = datetime.strptime(data["end_time"], "%H:%M:%S").time()
+
+        new_training = Training(title=data['title'], description=data['description'], start_date=start_date,
+                                start_time=start_time, end_date=end_date, end_time=end_time)
         db.session.add(new_training)
         db.session.commit()
 
@@ -89,6 +95,20 @@ class TrainingById(Resource):
             return make_response(jsonify({"error": f"Training with id {id} does not exist"}), 404)
 
         data = patch_args.parse_args()
+        # strip date
+        if 'start_date' in data:
+            data['start_date'] = datetime.strptime(
+                data["start_date"], "%Y-%m-%d")
+        if 'end_date' in data:
+            data['end_date'] = datetime.strptime(data["end_date"], "%Y-%m-%d")
+        # strip time
+        if 'start_time' in data:
+            data['start_time'] = datetime.strptime(
+                data["start_time"], "%H:%M:%S").time()
+        if 'end_time' in data:
+            data['end_time'] = datetime.strptime(
+                data["end_time"], "%H:%M:%S").time()
+
         for key, value in data.items():
             if value is None:
                 continue
@@ -100,4 +120,3 @@ class TrainingById(Resource):
 
 
 api.add_resource(TrainingById, '/trainings/<string:id>')
-

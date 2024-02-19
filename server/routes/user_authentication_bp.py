@@ -60,7 +60,7 @@ class Login(Resource):
 
         elif role == "hr":
             # Login hr
-            hr = Employee.query.filter_by(email=email).first()
+            hr = HR_Personel.query.filter_by(email=email).first()
             if not hr:
                 abort(
                     404, detail="The email provided was not found. Please provide a valid email or sign in")

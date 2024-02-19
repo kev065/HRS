@@ -113,7 +113,7 @@ class HrProfile(db.Model):
     title = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     date_joined = db.Column(db.DateTime, nullable=False)
-     
+
 
 class Remuneration(db.Model):
     __tablename__ = 'remunerations'
@@ -122,11 +122,9 @@ class Remuneration(db.Model):
     salary = db.Column(db.Float, nullable=False)
     employee_id = db.Column(db.String, db.ForeignKey(
         'employees.id'), nullable=False)
-    remuneration_date = db.Column(db.DateTime)
+    remuneration_date = db.Column(db.DateTime, default=datetime.utcnow)
     remunerations = db.relationship(
         'RemunerationDescription', backref='remuneration')
-    month = db.Column(db.String, nullable=False)
-    year = db.Column(db.String, nullable=False)
 
 
 class RemunerationDescription(db.Model):
@@ -139,7 +137,6 @@ class RemunerationDescription(db.Model):
     name = db.Column(db.String(30), nullable=False)
     description = db.Column(db.String, nullable=False)
     amount = db.Column(db.Float, nullable=False)
-    
 
 
 class Experience(db.Model):
@@ -180,9 +177,9 @@ class Training(db.Model):
     title = db.Column(db.String(30), nullable=False)
     description = db.Column(db.String, nullable=False)
     start_date = db.Column(db.DateTime, nullable=False)
-    start_time = db.Column(db.DateTime, nullable=False)
+    start_time = db.Column(db.Time, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
-    end_time = db.Column(db.DateTime, nullable=False)
+    end_time = db.Column(db.Time, nullable=False)
     trainings = db.relationship('EmployeeTraining', backref='training')
 
 
@@ -203,8 +200,9 @@ class Leave(db.Model):
     employee_id = db.Column(db.String, db.ForeignKey(
         'employees.id'), nullable=False)
     description = db.Column(db.String, nullable=False)
-    approved = db.Column(db.Boolean)
-    leave_approval = db.relationship('LeaveApproval', backref='leave', lazy=True)
+    approved = db.Column(db.Boolean, default=False)
+    leave_approval = db.relationship(
+        'LeaveApproval', backref='leave', lazy=True)
 
 
 class LeaveApproval(db.Model):
@@ -217,20 +215,11 @@ class LeaveApproval(db.Model):
         'managers.id'), nullable=False)
     hr_id = db.Column(db.String, db.ForeignKey(
         'hr_personnels.id'), nullable=False)
+    approved_by_manager = db.Column(db.Boolean, default=False)
+    approved_by_hr = db.Column(db.Boolean, default=False)
     manager_app_date = db.Column(db.DateTime)
     hr_approval_date = db.Column(db.DateTime)
 
-    
-
-
-# class Documents(db.Model):
-#        __tablename__='documents'
-#        id=db.Column(db.String,primary_key=True,default=generate_uuid)
-#        employee_id=db.Column(db.String,db.ForeignKey('employees.id'),nullable=False)
-#        link_url=db.Column(db.String)
-#        name=db.Column(db.String,nullable=False)
-
-#        type = db.Column(Enum("official", "institution", "other"), nullable=False)
 
 class Education(db.Model):
     __tablename__ = 'educations'
