@@ -50,10 +50,17 @@ class Manager(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-    dept_id = db.Column(db.String, db.ForeignKey(
-        'departments.id'), nullable=False)
+    dept_id = db.Column(db.String, db.ForeignKey('departments.id'), nullable=False, unique=True)  
     leave_approvals = db.relationship('LeaveApproval', backref='manager')
-    manager_profiles = db.relationship('ManagerProfile', backref='manager')
+    manager_profile = db.relationship('ManagerProfile', uselist=False, backref='manager') 
+
+class Department(db.Model):
+    __tablename__ = 'departments'
+    id = db.Column(db.String, primary_key=True, default=generate_uuid)
+    name = db.Column(db.String, nullable=False)
+    dept_head = db.relationship('Manager', backref='department') 
+    employees = db.relationship('Employee', backref='department')
+    hr_personnels = db.relationship('HR_Personel', backref='department')
 
 
 class HR_Personel(db.Model):
@@ -212,9 +219,9 @@ class LeaveApproval(db.Model):
     employee_id = db.Column(db.String, db.ForeignKey(
         'employees.id'), nullable=False)
     manager_id = db.Column(db.String, db.ForeignKey(
-        'managers.id'), nullable=False)
+        'managers.id'))
     hr_id = db.Column(db.String, db.ForeignKey(
-        'hr_personnels.id'), nullable=False)
+        'hr_personnels.id'))
     approved_by_manager = db.Column(db.Boolean, default=False)
     approved_by_hr = db.Column(db.Boolean, default=False)
     manager_app_date = db.Column(db.DateTime)
@@ -233,13 +240,10 @@ class Education(db.Model):
     end_date = db.Column(db.DateTime, nullable=False)
 
 
-class Department(db.Model):
-    __tablename__ = 'departments'
-    id = db.Column(db.String, primary_key=True, default=generate_uuid)
-    name = db.Column(db.String, nullable=False)
-    dept_head = db.Column(db.String, db.ForeignKey(
-        'managers.id'), nullable=False)
-    employees = db.relationship('Employee', backref='department')
-    managers = db.relationship(
-        'Manager', backref='department', foreign_keys=[Manager.dept_id])
-    hr_personnels = db.relationship('HR_Personel', backref='department')
+
+
+class TokenBlocklist(db.Model):
+    __tablename__='tokenblocklist'
+    id = db.Column(db.Integer, primary_key=True)
+    jti= db.Column(db.String(36),nullable=False, index=True)
+    created_at=db.Column(db.DateTime,nullable=False)

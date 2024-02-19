@@ -19,6 +19,7 @@ from routes.education_bp import education_bp
 from routes.department_bp import department_bp
 from routes.documents_bp import document_bp
 from routes.employee_bp import employee_bp
+from routes.approveLeave_bp import approvalLeave_bp
 from datetime import datetime, timedelta
 from flask import Flask
 from flask_migrate import Migrate
@@ -65,6 +66,7 @@ def create_app():
     app.register_blueprint(authentication_bp)
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
+    app.register_blueprint(approvalLeave_bp)
 
     return app
 
