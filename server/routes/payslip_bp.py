@@ -8,6 +8,7 @@ from serializer import hrProfileSchema, remunerationSchema, remunerationDescript
 from models import Employee, Remuneration, db, EmployeeProfile, RemunerationDescription
 from auth_middleware import hr_required
 from routes.remuneration_bp import RemunerationById
+from routes.remuneration_desc_bp import RemunerationDescById
 
 payslip_bp = Blueprint('payslip', __name__)
 ma = Marshmallow(payslip_bp)
@@ -33,17 +34,17 @@ def validate_remuneration(value):
 
 
 def validate_remuneration_description(value):
-    print(value)
     if not isinstance(value, list):
         raise ValueError('Remuneration descriptions must be in a list')
 
-    # Define your required fields here
-    required_fields = ['type', 'name', 'description', 'amount']
+    # handle this logic for post methods only
+    if request.method == "POST":
+        required_fields = ['type', 'name', 'description', 'amount']
 
-    for remun_desc in value:
-        for field in required_fields:
-            if field not in remun_desc:
-                raise ValueError(f'Missing required field: {field}')
+        for remun_desc in value:
+            for field in required_fields:
+                if field not in remun_desc:
+                    raise ValueError(f'Missing required field: {field}')
 
     return value
 
@@ -57,7 +58,8 @@ post_args.add_argument('remuneration_descriptions', type=validate_remuneration_d
 
 patch_args = reqparse.RequestParser()
 patch_args.add_argument('remuneration', type=dict)
-patch_args.add_argument('remuneration_descriptions', type=list)
+patch_args.add_argument('remuneration_descriptions',
+                        type=validate_remuneration_description)
 
 
 class PayslipResource(Resource):
@@ -169,11 +171,11 @@ api.add_resource(PayslipResource, '/payslip')
 
 
 class PayslipByID(Resource):
+    @jwt_required()
     def get(self, remuneration_id):
         remuneration = RemunerationById.get(self, remuneration_id)
         # fetch all associated renumeration descriptions
-        remuneration_descriptions = RemunerationDescription.query.filter_by(
-            remuneration_id=remuneration_id).all()
+        remuneration_descriptions = remuneration.remunerations
         # Serialize remuneration data
         remuneration_data = remuneration.get_json()
         if not remuneration_descriptions:
@@ -190,43 +192,53 @@ class PayslipByID(Resource):
         remuneration_data = data['remuneration']
         # get remuneration descriptions
         remuneration_descriptions_data = data['remuneration_descriptions']
-        print(remuneration_descriptions_data)
 
         remuneration = Remuneration.query.filter_by(id=remuneration_id).first()
 
         if not remuneration:
             abort(
                 404, detail=f'leave with id {remuneration_id} does not exist')
-
-        for key, value in remuneration_data.items():
-            if value is None:
-                continue
-            setattr(remuneration, key, value)
-        db.session.commit()
+        # check if remuneration data is provided
+        if remuneration_data:
+            for key, value in remuneration_data.items():
+                if value is None:
+                    continue
+                setattr(remuneration, key, value)
+            db.session.commit()
 
         # check if renumeration has renumeration descriptions
-        for desc_data in remuneration_descriptions_data:
-            pass
+        if remuneration_descriptions_data:
+            for desc_data in remuneration_descriptions_data:
+                # ensure remuneration description has an id
+                if "id" not in desc_data:
+                    abort(400, detail="provide an id field")
+                # search for the renumeration in database
+                remuneration_description = RemunerationDescription.query.filter_by(
+                    id=desc_data['id']).first()
+                if not remuneration_description:
+                    abort(404, detail="renumeration description not found")
+                # proceed to update with new values
+                for key, value in desc_data.items():
+                    if value is None or key == "id":
+                        continue
+                    setattr(remuneration_description, key, value)
+                db.session.commit()
+        # this return uses the get method logic to return data
+        return self.get(remuneration_id=remuneration_id)
 
     @hr_required()
-    def delete(self):
-        data = request.get_json()
-        employee_id = data.get("employee_id")
-        month = data.get("month")
-        year = data.get("year")
-
-        remuneration = Remuneration.query.filter_by(employee_id=employee_id).filter(
-            db.extract('month', Remuneration.remuneration_date) == month,
-            db.extract('year', Remuneration.remuneration_date) == year
-        ).first()
-
+    def delete(self, remuneration_id):
+        remuneration = Remuneration.query.filter_by(id=remuneration_id).first()
         if not remuneration:
-            return {'message': 'Remuneration data not found for this employee, month, and year'}, 404
-
+            abort(
+                404, detail=f"renumeration with the id {remuneration_id} not found")
+        # delete all associated renumeration_descriptions data
+        for rem_desc in remuneration.remunerations:
+            db.session.delete(rem_desc)
         db.session.delete(remuneration)
         db.session.commit()
-
-        return {'message': 'Payslip deleted successfully'}, 200
+        response_body = {"message": "Remuneration successfully deleted"}
+        return make_response(response_body, 200)
 
 
 api.add_resource(PayslipByID, '/payslip/<string:remuneration_id>')
