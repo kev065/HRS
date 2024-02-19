@@ -79,8 +79,8 @@ class RemunerationDescById(Resource):
         else:
             result = remunerationDescriptionSchema.dump(
                 single_remuneration_desc)
-            response = make_response(jsonify(result), 200)
-            return response
+
+            return result
 
     @hr_required()
     def patch(self, id):
