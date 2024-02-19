@@ -1,12 +1,18 @@
+from datetime import datetime
 from flask import Blueprint, make_response, jsonify
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
+from flask_marshmallow import Marshmallow
 from flask_jwt_extended import jwt_required
-from models import Goals, db
 from serializer import goalsSchema
+from auth_middleware import hr_required
+
+from models import db, Goals
 
 goals_bp = Blueprint('goals_bp', __name__)
+ma = Marshmallow(goals_bp)
 api = Api(goals_bp)
+
 
 post_args = reqparse.RequestParser()
 post_args.add_argument('employee_id', type=str,
@@ -34,62 +40,70 @@ class GoalsResource(Resource):
     @jwt_required()
     def post(self):
         data = post_args.parse_args()
-
-        # error handling
-        goal = Goals.query.filter_by(name=data.name).first()
-        if goal:
-            return make_response(jsonify({"error": "Goal with the same name already exists"}), 409)
-
-        new_goal = Goals(employee_id=data['employee_id'], name=data['name'],
-                         description=data['description'], session_id=data['session_id'])
+       
+        employee_id = data["employee_id"]
+        name = data["name"]
+        description= data["description"]
+        session_id = data["session_id"]
+        
+        new_goal= Goals(employee_id=employee_id,name=name,description=description,session_id=session_id)
         db.session.add(new_goal)
         db.session.commit()
 
         result = goalsSchema.dump(new_goal)
-        return make_response(jsonify(result), 201)
+        response = make_response(jsonify(result), 201)
+
+        return response
 
 
 api.add_resource(GoalsResource, '/goals')
 
 
-class GoalById(Resource):
+class GoalsById(Resource):
     def get(self, id):
         single_goal = Goals.query.filter_by(id=id).first()
 
         if not single_goal:
-            return make_response(jsonify({"error": f"Goal with id {id} does not exist"}), 404)
+            abort(404, detail=f'Goal with  id {id} does not exist')
 
         else:
             result = goalsSchema.dump(single_goal)
-            return make_response(jsonify(result), 200)
-
-    @jwt_required()
-    def delete(self, id):
-        single_goal = Goals.query.filter_by(id=id).first()
-
-        if not single_goal:
-            return make_response(jsonify({"error": f"Goal with id {id} does not exist"}), 404)
-
-        db.session.delete(single_goal)
-        db.session.commit()
-
-        return make_response(jsonify({"message": f"Goal with id {id} has been deleted"}), 200)
+            response = make_response(jsonify(result), 200)
+            return response
 
     @jwt_required()
     def patch(self, id):
+      
         single_goal = Goals.query.filter_by(id=id).first()
 
         if not single_goal:
-            return make_response(jsonify({"error": f"Goal with id {id} does not exist"}), 404)
+            abort(404, detail=f'Goal with  id {id} does not exist')
 
         data = patch_args.parse_args()
+
+        
         for key, value in data.items():
             if value is None:
                 continue
             setattr(single_goal, key, value)
         db.session.commit()
-
         result = goalsSchema.dump(single_goal)
-        return make_response(jsonify(result), 200)
+        response = make_response(jsonify(result), 200)
 
-api.add_resource(GoalById, '/goals/<string:id>')
+        return response
+
+    @jwt_required()
+    def delete(self, id):
+       
+        single_goal = Goals.query.filter_by(id=id).first()
+        if not single_goal:
+            response_body = {"error": "Goal not found"}
+            return make_response(response_body, 404)
+
+        db.session.delete(single_goal)
+        db.session.commit()
+        response_body = {"message": "Goal successfully deleted"}
+        return make_response(response_body, 200)
+
+
+api.add_resource(GoalsById, '/goals/<string:id>')

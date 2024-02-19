@@ -19,7 +19,7 @@ from routes.hr_bp import hr_bp
 from routes.manager_profile_bp import manager_profile_bp
 from routes.leave_bp import leave_bp
 from routes.session_bp import session_bp
-from routes.Goals_bp import goals_bp
+from routes.goals_bp import goals_bp
 from routes.training_bp import training_bp
 from routes.employee_training_bp import employee_training_bp
 from routes.leave_approval_bp import leave_approval_bp
