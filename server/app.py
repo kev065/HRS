@@ -68,6 +68,8 @@ def create_app():
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
 
+    
+
     return app
 
 

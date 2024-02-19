@@ -88,7 +88,9 @@ class LeaveApprovalResourceByID(Resource):
 
         else:
             return {'message': 'Manager approval or HR approval required'}, 400
-        
+    
+    #updating a leave
+
     @jwt_required()
     def patch(self, leave_id):        
         data = patch_args.parse_args()
@@ -105,6 +107,8 @@ class LeaveApprovalResourceByID(Resource):
         result = leaveApprovalSchema.dump(leave_approval)
         return {'message': 'Leave Approval updated successfully', 'leave_approval': result}, 200
     
+    # deleting leave approval
+    
     @jwt_required()
     def delete(self, leave_id):
 
@@ -117,6 +121,8 @@ class LeaveApprovalResourceByID(Resource):
         db.session.commit()
 
         return {'message': 'Leave Approval deleted successfully'}, 200
+    
+    
     
 
       

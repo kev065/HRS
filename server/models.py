@@ -241,6 +241,7 @@ class Education(db.Model):
 
 
 
+# for handling Tokens
 
 class TokenBlocklist(db.Model):
     __tablename__='tokenblocklist'

@@ -87,6 +87,7 @@ def check_if_token_is_revoked(jwt_header, jwt_payload: dict):
     token = db.session.query(TokenBlocklist).filter_by(jti=jti).first()
     return token is not None
 
+#Logout fucntion
 
 class Logout(Resource):
     @jwt_required()
