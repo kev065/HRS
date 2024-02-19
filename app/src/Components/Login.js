@@ -1,5 +1,6 @@
-import React, {  useState } from 'react'
-import { NavLink, useNavigate} from 'react-router-dom';
+import React, {  useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import './login.css'
 
 const Login = () => {
 
@@ -7,6 +8,23 @@ const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isLoginFormActive, setIsLoginFormActive] = useState(true);
+
+    useEffect(() => {
+        
+        
+        const loginBtn = document.getElementById('login');
+    
+        loginBtn.addEventListener('click', () => {
+          setIsLoginFormActive(true);
+        });
+    
+        // Cleanup event listeners when the component is unmounted
+        return () => {
+          
+          loginBtn.removeEventListener('click', () => setIsLoginFormActive(true));
+        };
+      }, []);
 
     const SetData = (e) => {
         e.preventDefault()
@@ -31,37 +49,46 @@ const Login = () => {
 
 
     return (
-        <div className="container mt-5">
-                        <div className='row'>
+        <div className={`container ${isLoginFormActive ? 'active' : ''}`} id="container">
+          
+          <div className="form-container sign-in">
+            <form onSubmit={SetData}>
+              <h1>Sign In</h1>
+              <div className="social-icons">
+            <button type="button" className="icon">
+              <i className="fa-brands fa-google-plus-g"></i>
+            </button>
+            <button type="button" className="icon">
+              <i className="fa-brands fa-facebook-f"></i>
+            </button>
+            <button type="button" className="icon">
+              <i className="fa-brands fa-github"></i>
+            </button>
+            <button type="button" className="icon">
+              <i className="fa-brands fa-linkedin-in"></i>
+            </button>
+          </div>
+              <span>or use your email password</span>
+              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+              {/* <a href="#">Forget Your Password?</a> */}
+              <button>Sign In</button>
+            </form>
+          </div>
+          <div className="toggle-container">
+            <div className="toggle">
+              <div className="toggle-panel toggle-right">
+                <h1>Hello, Friend!</h1>
+                <p>Register with your personal details to use all of site features</p>
+                <button className="hidden" id="register">
+                  Sign Up
+                </button>
+              </div>
+            </div>
+            </div>
+          </div>
 
-                            <div className="col-sm-6 offset-md-3 offset-sm-1 ">
-                                <form method="POST">
-
-                                    <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <input type="email" className="form-control" id="email" name="email" value={email}
-                                            onChange={(e) => setEmail(e.target.value)}
-                                            placeholder="Enter your Email" />
-                                    </div>
-
-                                    <div className="form-group">
-                                        <label htmlFor="password">Password</label>
-                                        <input type="password" className="form-control" id="password" name="password" value={password}
-                                        onChange={(e) => setPassword(e.target.value)}
-                                           
-                                            placeholder="Enter your Password" />
-                                    </div>
-
-                                    <NavLink to='/register'>Didn't Register, then register here!</NavLink><br /><br />
-                                    <button type="submit" className="btn btn-primary" id='login' name='login' onClick={SetData} >Login</button>
-
-                                </form>
-                            </div>
-
-                        </div>
-
-                    </div>
-    )
+      );
 }
 
 export default Login
