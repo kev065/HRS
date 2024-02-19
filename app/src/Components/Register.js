@@ -1,81 +1,70 @@
-import React, { useState } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom';
-
-
+import React, {  useState } from 'react'
+import {  useNavigate} from 'react-router-dom';
+import './register.css'
 const Register = () => {
 
-  const navigate = useNavigate();
+    const navigate = useNavigate()
 
-  const [user, setUser] = useState({
-    firstname:"", lastname:"", email:"", password:"", confirmPassword:""
-  })
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
-  const handleInputs = (e) => {
-    let name = e.target.name;
-    let value = e.target.value;
-
-    setUser({ ...user, [name]: value })
-  }
-
-  const PostData = (e, firstname, lastname, email, password, confirmPassword) => {
-    e.preventDefault()
-
-    fetch('/register', {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            firstname, lastname, email, password, confirmPassword
+    const SetData = (e) => {
+        e.preventDefault()
+    
+        fetch('/login', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email, password
+            })
         })
-    })
-    .then(res => res.json())
-        
-    .then(data => {
-        console.log(data)
-            navigate('/')
-    })
-}
-    
-    
+        .then(res => res.json())
+        .then(data => {
+            console.log(data)
+            
+            navigate('/dashboard')
+        })
+    }
 
-  return (
-    <div className="container mt-5">
-    <div className='row'>
-        <div className='col-12 col-md-7 col-sm-6 ' >
-            <h1 className='mt-5'>
-                Welcome!
-            </h1>
+
+
+    return (
+        <div className="container" id="container">
+        <div className="form-container sign-up">
+          <form>
+            <h1>Create Account</h1>
+            <div className="social-icons">
+              <a href="#" className="icon">
+                <i className="fa-brands fa-google-plus-g"></i>
+              </a>
+              <a href="#" className="icon">
+                <i className="fa-brands fa-facebook-f"></i>
+              </a>
+              <a href="#" className="icon">
+                <i className="fa-brands fa-github"></i>
+              </a>
+              <a href="#" className="icon">
+                <i className="fa-brands fa-linkedin-in"></i>
+              </a>
+            </div>
+            <span>or use your email for registration</span>
+            <input type="text" placeholder="Name" />
+            <input type="email" placeholder="Email" />
+            <input type="password" placeholder="Password" />
+            <button>Sign Up</button>
+          </form>
         </div>
-
-        <div className="col-12 col-md-5 col-sm-6">
-            <form method='POST'>
-
-                <div className="form-group">
-                    <label htmlFor="email">Email</label>
-                    <input type="email" className="form-control" id="email" name='email' placeholder="Enter your Email" value={user.email} onChange={handleInputs}/>
+        <div class="toggle-container">
+                <div class="toggle-panel toggle-right">
+                    <h1>Hello, Friend!</h1>
+                    <p>Register with your personal details to use all of site features</p>
+                    <button class="hidden" id="register">Sign Up</button>
                 </div>
-
-              
-                <div className="form-group">
-                    <label htmlFor="password">Password</label>
-                    <input type="password" className="form-control" id="password" name='password' placeholder="Enter your Password" value={user.password} onChange={handleInputs}/>
-                </div>
-
-                <div className="form-group">
-                    <label htmlFor="cpassword">Confirm password</label>
-                    <input type="password" className="form-control" id="confirmPassword" name='confirmPassword' placeholder="Confirm password" value={user.confirmPassword} onChange={handleInputs}/>
-                </div>
-                <NavLink to='/login'>Already Registered, then Login here!</NavLink><br /><br />
-                <button type="submit" className="btn btn-primary" id='register' name='register' onClick={PostData}>Register</button>
-
-            </form>
         </div>
-
     </div>
-
-</div>
-  )
-}
+    );
+};
 
 export default Register
