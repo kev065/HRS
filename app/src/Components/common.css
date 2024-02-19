@@ -132,7 +132,7 @@ body{
     margin: 20px 0;
 }
 
-.social-icons a{
+.social-icons button{
     border: 1px solid #ccc;
     border-radius: 20%;
     display: inline-flex;

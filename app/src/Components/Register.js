@@ -1,6 +1,6 @@
 import React, {  useState, useEffect } from 'react'
-import {  useNavigate} from 'react-router-dom';
-import './register.css'
+import {  useNavigate } from 'react-router-dom';
+import './common.css'
 const Register = () => {
 
     const navigate = useNavigate()
@@ -9,21 +9,27 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [isRegisterFormActive, setIsRegisterFormActive] = useState(true);
 
+    // const redirectToLogin = () => {
+    //   // Redirect the user to the login page
+    //   navigate('/login');
+    // };
     useEffect(() => {
       const registerBtn = document.getElementById('register');
-  
+      
+      console.log('registerBtn:', registerBtn);
+
       const handleRegisterButtonClick = () => {
         setIsRegisterFormActive(false);
       };
-  
-      registerBtn.addEventListener('click', handleRegisterButtonClick);
-  
-  
-      // Cleanup event listeners when the component is unmounted
-      return () => {
-        registerBtn.removeEventListener('click', () => setIsRegisterFormActive(false));
-      
-      };
+
+      if (registerBtn) {
+        registerBtn.addEventListener('click', handleRegisterButtonClick);
+    
+        // Cleanup event listeners when the component is unmounted
+        return () => {
+          registerBtn.removeEventListener('click', handleRegisterButtonClick);
+        };
+      }
     }, []);
 
     const SetData = (e) => {
@@ -69,7 +75,7 @@ const Register = () => {
               <span>or use your email for registration</span>
               <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
               <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              <button type="submit">Sign Up</button>
+              <button type="submit" onClick={SetData}>Sign Up</button>
             </form>
           </div>
           <div className="toggle-container">
@@ -77,8 +83,8 @@ const Register = () => {
               <div className="toggle-panel toggle-left">
                 <h1>Welcome Back!</h1>
                 <p>Enter your personal details to use all of site features</p>
-                <button className="hidden" id="login">
-                  Sign In
+                <button className="hidden" id="register" name='register'>
+                  SIGN IN
                 </button>
               </div>
               </div>

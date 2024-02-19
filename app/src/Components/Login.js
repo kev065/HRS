@@ -1,6 +1,6 @@
 import React, {  useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
-import './login.css'
+import './common.css'
 
 const Login = () => {
 
@@ -15,16 +15,23 @@ const Login = () => {
         
         const loginBtn = document.getElementById('login');
     
-        loginBtn.addEventListener('click', () => {
+        console.log('loginBtn:', loginBtn);
+
+        const handleClick = () => {
           setIsLoginFormActive(true);
-        });
+        };
+        
+        if (loginBtn){
+          loginBtn.addEventListener('click', handleClick);
     
         // Cleanup event listeners when the component is unmounted
         return () => {
-          
-          loginBtn.removeEventListener('click', () => setIsLoginFormActive(true));
+          loginBtn.removeEventListener('click', handleClick);
         };
-      }, []);
+      } 
+    }, []);
+
+      console.log('isLoginFormActive:', isLoginFormActive);
 
     const SetData = (e) => {
         e.preventDefault()
@@ -72,7 +79,7 @@ const Login = () => {
               <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
               <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
               {/* <a href="#">Forget Your Password?</a> */}
-              <button>Sign In</button>
+              <button type="submit" onClick={SetData}>Sign In</button>
             </form>
           </div>
           <div className="toggle-container">
@@ -80,7 +87,7 @@ const Login = () => {
               <div className="toggle-panel toggle-right">
                 <h1>Hello, Friend!</h1>
                 <p>Register with your personal details to use all of site features</p>
-                <button className="hidden" id="register">
+                <button className="hidden" id="login" name='login'>
                   Sign Up
                 </button>
               </div>
