@@ -1,10 +1,15 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
+import axios from 'axios'; 
 
 const AddEmployeeForm = () => {
-  const handleSubmit = (values) => {
-    // will andle communication with flask backend here
-    console.log('New Employee:', values);
+  const handleSubmit = async (values) => {
+    try {
+      const response = await axios.post('http://localhost:5555/employees', values);
+      console.log('New Employee:', response.data);
+    } catch (error) {
+      console.error('Error adding employee:', error);
+    }
   };
 
   return (
