@@ -1,14 +1,17 @@
+from datetime import datetime
 from flask import Blueprint, make_response, jsonify
 from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
 from flask_bcrypt import Bcrypt
+from flask_jwt_extended import jwt_required,get_jwt,JWTManager
 from flask_jwt_extended import create_access_token
 
 
-from models import Employee, Manager, HR_Personel
+from models import Employee, Manager, HR_Personel,db,TokenBlocklist
 
 
 bcrypt = Bcrypt()
+jwt = JWTManager()
 
 
 authentication_bp = Blueprint('authentication_bp', __name__)
@@ -60,7 +63,7 @@ class Login(Resource):
 
         elif role == "hr":
             # Login hr
-            hr = Employee.query.filter_by(email=email).first()
+            hr = HR_Personel.query.filter_by(email=email).first()
             if not hr:
                 abort(
                     404, detail="The email provided was not found. Please provide a valid email or sign in")
@@ -78,10 +81,21 @@ class Login(Resource):
 api.add_resource(Login, '/login')
 
 
-class Logout(Resource):
-    def get(self):
-        # logout logic here
-        pass
+@jwt.token_in_blocklist_loader
+def check_if_token_is_revoked(jwt_header, jwt_payload: dict):
+    jti = jwt_payload["jti"]
+    token = db.session.query(TokenBlocklist).filter_by(jti=jti).first()
+    return token is not None
 
+#Logout fucntion
+
+class Logout(Resource):
+    @jwt_required()
+    def get(self):
+        token = get_jwt()
+        blocked_token = TokenBlocklist(jti=token['jti'], created_at=datetime.datetime.utcnow())
+        db.session.add(blocked_token)
+        db.session.commit()
+        return {'detail': "Token logged out"}
 
 api.add_resource(Logout, '/logout')

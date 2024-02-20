@@ -1,179 +1,252 @@
+from datetime import datetime
 from app import create_app
-from models import db, Employee, Manager, HR_Personel, EmployeeProfile, ManagerProfile, HrProfile, Remuneration, RemunerationDescription, Experience, Session, Goals, Training, EmployeeTraining, Leave, LeaveApproval, Documents, Education, Department
-from datetime import datetime, timedelta
-import uuid
-import random
-from app import create_app, bcrypt
+from models import (Employee, Manager, Department, HR_Personel, EmployeeProfile, ManagerProfile, HrProfile,
+                    Remuneration, RemunerationDescription, Experience, Session, Goals, Training, EmployeeTraining,
+                    Leave, LeaveApproval,Documents,Education, TokenBlocklist,db)
 
 app = create_app()
-app.app_context().push()
+def seed_database():
+    with app.app_context():
+        Employee.query.delete()
+        Manager.query.delete()
+        Department.query.delete()
+        HR_Personel.query.delete()
+        EmployeeProfile.query.delete()
+        ManagerProfile.query.delete()
+        HrProfile.query.delete()
+        Remuneration.query.delete()
+        RemunerationDescription.query.delete()
+        Experience.query.delete()
+        Session.query.delete()
+        Training.query.delete()
+        EmployeeTraining.query.delete()
+        Leave.query.delete()
+        LeaveApproval.query.delete()
+        Education.query.delete()   
+        db.create_all()
+        
+        # Departments
+        department_data = [
+            {"name": "Engineering"},
+            {"name": "Human Resources"},
+            {"name": "Finance"}
+        ]
+        departments = []
+        for dept_info in department_data:
+            department = Department(**dept_info)
+            departments.append(department)
+            db.session.add(department)
+        db.session.commit()
 
-def generate_uuid():
-    return str(uuid.uuid4())
+        # Managers
+        manager_data = [
+            {"email": "manager1@example.com", "password": "hashed_password_1", "dept_id": departments[0].id},
+            {"email": "manager2@example.com", "password": "hashed_password_2", "dept_id": departments[1].id},
+        ]
+        managers = []
+        for manager_info in manager_data:
+            manager = Manager(**manager_info)
+            managers.append(manager)
+            db.session.add(manager)
+        db.session.commit()
 
-# Clear the database
-db.drop_all()
-db.create_all()
+        # Employees
+        employee_data = [
+            {"email": "employee1@example.com", "password": "hashed_password_1", "dept_id": departments[0].id},
+            {"email": "employee2@example.com", "password": "hashed_password_2", "dept_id": departments[1].id},
+        ]
+        employees = []
+        for employee_info in employee_data:
+            employee = Employee(**employee_info)
+            employees.append(employee)
+            db.session.add(employee)
+        db.session.commit()
 
-# Create managers
-managers = []
-for i in range(3):
-    password_hash = bcrypt.generate_password_hash('password').decode('utf-8')
-    manager = Manager(id=generate_uuid(), email=f'manager{i}@example.com', password=password_hash)
-    db.session.add(manager)
-    managers.append(manager)
+        # Employee Profiles
+        employee_profile_data = [
+            {"date_of_birth": datetime(1990, 5, 15), "employee_id": employees[0].id, "first_name": "John", "last_name": "Doe",
+            "mantra": "Work hard, play hard", "phone_contact": 1234567890, "profile_photo": "profile1.jpg",
+            "title": "Software Engineer", "date_joined": datetime(2015, 3, 20)},
+            {"date_of_birth": datetime(1992, 8, 21), "employee_id": employees[1].id, "first_name": "Jane", "last_name": "Smith",
+            "mantra": "Continuous learning is the key", "phone_contact": 9876543210, "profile_photo": "profile2.jpg",
+            "title": "HR Coordinator", "date_joined": datetime(2018, 6, 10)}
+        ]
+        for profile_info in employee_profile_data:
+            profile = EmployeeProfile(**profile_info)
+            db.session.add(profile)
+        db.session.commit()
 
-# Create departments
-departments = ['HR', 'Sales', 'Marketing', 'Engineering']
-for i, dept in enumerate(departments):
-    department = Department(id=generate_uuid(), name=dept, dept_head=managers[i % len(managers)].id)
-    db.session.add(department)
+        # Manager Profiles
+        manager_profile_data = [
+            {"date_of_birth": datetime(1985, 10, 8), "manager_id": managers[0].id, "first_name": "Michael", "last_name": "Johnson",
+            "mantra": "Lead by example", "phone_contact": 5551234567, "profile_photo": "profile3.jpg",
+            "title": "Engineering Manager", "date_joined": datetime(2010, 12, 5)},
+            {"date_of_birth": datetime(1978, 3, 17), "manager_id": managers[1].id, "first_name": "Emily", "last_name": "Brown",
+            "mantra": "Empower your team", "phone_contact": 5559876543, "profile_photo": "profile4.jpg",
+            "title": "HR Manager", "date_joined": datetime(2005, 8, 15)}
+        ]
+        for profile_info in manager_profile_data:
+            profile = ManagerProfile(**profile_info)
+            db.session.add(profile)
+        db.session.commit()
 
-    # Update manager with department id
-    managers[i % len(managers)].dept_id = department.id
+        # HR Profiles
+        hr_profile_data = [
+            {"date_of_birth": datetime(1989, 7, 23), "hr_id": managers[0].id, "first_name": "Sarah", "last_name": "Williams",
+            "mantra": "Dedicated to employee well-being", "phone_contact": 5552468101, "profile_photo": "profile5.jpg",
+            "title": "HR Specialist", "date_joined": datetime(2013, 4, 30)}
+        ]
+        for profile_info in hr_profile_data:
+            profile = HrProfile(**profile_info)
+            db.session.add(profile)
+        db.session.commit()
 
+        # Remunerations
+        remuneration_data = [
+            {"name": "Monthly Salary", "salary": 5000.0, "employee_id": employees[0].id},
+            {"name": "Monthly Salary", "salary": 6000.0, "employee_id": employees[1].id},
+        ]
+        for remuneration_info in remuneration_data:
+            remuneration = Remuneration(**remuneration_info)
+            db.session.add(remuneration)
+        db.session.commit()
 
-# Create employees
-for i in range(10):
-    password_hash = bcrypt.generate_password_hash('password').decode('utf-8')
-    employee = Employee(id=generate_uuid(), email=f'employee{i}@example.com', password=password_hash, dept_id=department.id)
-    db.session.add(employee)
+        # Remuneration Descriptions
+        remuneration_desc_data = [
+            {"remuneration_id": 1, "type": "deduction", "name": "Insurance", "description": "Health insurance deduction", "amount": 200.0},
+            {"remuneration_id": 1, "type": "allowance", "name": "Transport", "description": "Transport allowance", "amount": 300.0},
+            {"remuneration_id": 2, "type": "deduction", "name": "Insurance", "description": "Health insurance deduction", "amount": 150.0},
+            {"remuneration_id": 2, "type": "allowance", "name": "Transport", "description": "Transport allowance", "amount": 350.0},
+        ]
+        for desc_info in remuneration_desc_data:
+            desc = RemunerationDescription(**desc_info)
+            db.session.add(desc)
+        db.session.commit()
 
+        # Experiences
+        experience_data = [
+            {"employee_id": employees[0].id, "name": "ABC Company", "job_title": "Software Developer",
+            "description": "Developed web applications using Python and Django", "start_date": datetime(2010, 5, 1),
+            "end_date": datetime(2015, 2, 28)},
+            {"employee_id": employees[1].id, "name": "XYZ Corporation", "job_title": "HR Assistant",
+            "description": "Assisted in recruitment and onboarding processes", "start_date": datetime(2016, 8, 15),
+            "end_date": datetime(2019, 12, 31)}
+        ]
+        for exp_info in experience_data:
+            experience = Experience(**exp_info)
+            db.session.add(experience)
+        db.session.commit()
 
-# Create HR personnel
-for i in range(2):
-    password_hash = bcrypt.generate_password_hash('password').decode('utf-8')
-    hr_personnel = HR_Personel(id=generate_uuid(), email=f'hr{i}@example.com', password=password_hash, dept_id=department.id)
-    db.session.add(hr_personnel)
+        # Goals
+        goal_data = [
+            {"employee_id": employees[0].id, "name": "Complete Python Certification", "description": "Earn certification in Python programming",
+            "session_id": 1},
+            {"employee_id": employees[1].id, "name": "Improve Recruitment Process", "description": "Optimize recruitment workflow",
+            "session_id": 2}
+        ]
+        for goal_info in goal_data:
+            goal = Goals(**goal_info)
+            db.session.add(goal)
+        db.session.commit()
 
+        # Trainings
+        training_data = [
+            {"title": "Python Fundamentals", "description": "Basic concepts and syntax of Python programming",
+            "start_date": datetime(2024, 3, 1), "start_time": datetime.strptime("09:00", "%H:%M").time(),
+            "end_date": datetime(2024, 3, 5), "end_time": datetime.strptime("17:00", "%H:%M").time()},
+            {"title": "Recruitment Strategies", "description": "Effective techniques for talent acquisition",
+            "start_date": datetime(2024, 3, 10), "start_time": datetime.strptime("10:00", "%H:%M").time(),
+            "end_date": datetime(2024, 3, 12), "end_time": datetime.strptime("16:00", "%H:%M").time()}
+        ]
+        for training_info in training_data:
+            training = Training(**training_info)
+            db.session.add(training)
+        db.session.commit()
 
-# Hardcoded names
-first_names = ['Makmende', 'Jane', 'Will', 'Iam', 'Charlie', 'Emily']
-last_names = ['Izbak', 'Njiru', 'Robya', 'Back', 'Day', 'Sungu']
+        # Employee Trainings
+        employee_training_data = [
+            {"employee_id": employees[0].id, "training_id": 1},
+            {"employee_id": employees[1].id, "training_id": 2}
+        ]
+        for et_info in employee_training_data:
+            et = EmployeeTraining(**et_info)
+            db.session.add(et)
+        db.session.commit()
 
-# Create EmployeeProfile, ManagerProfile, and HrProfile
-for i, employee in enumerate(Employee.query.all()):
-    profile = EmployeeProfile(id=generate_uuid(), date_of_birth=datetime.utcnow(), employee_id=employee.id, first_name=first_names[i % len(first_names)], last_name=last_names[i % len(last_names)], mantra='Live and let live', phone_contact=254720123456, profile_photo='path/to/photo', title='Employee', date_joined=datetime.utcnow(), date_created=datetime.utcnow())
-    db.session.add(profile)
+        # Leaves
+        leave_data = [
+            {"start_date": datetime(2024, 2, 1), "end_date": datetime(2024, 2, 5), "employee_id": employees[0].id,
+            "description": "Vacation leave"},
+            {"start_date": datetime(2024, 2, 10), "end_date": datetime(2024, 2, 15), "employee_id": employees[1].id,
+            "description": "Sick leave"}
+        ]
+        for leave_info in leave_data:
+            leave = Leave(**leave_info)
+            db.session.add(leave)
+        db.session.commit()
 
-for i, manager in enumerate(Manager.query.all()):
-    profile = ManagerProfile(id=generate_uuid(), date_of_birth=datetime.utcnow(), manager_id=manager.id, first_name=first_names[i % len(first_names)], last_name=last_names[i % len(last_names)], mantra='Live and let live', phone_contact=254721123456, profile_photo='path/to/photo', title='Manager', date_joined=datetime.utcnow(), date_created=datetime.utcnow())
-    db.session.add(profile)
+        # Leave Approvals
+        leave_approval_data = [
+            {"leave_id": 1, "employee_id": employees[0].id, "manager_id": managers[0].id, "approved_by_manager": True,
+            "manager_app_date": datetime(2024, 1, 30)},
+            {"leave_id": 2, "employee_id": employees[1].id, "hr_id": managers[0].id, "approved_by_hr": True,
+            "hr_approval_date": datetime(2024, 2, 8)}
+        ]
+        for approval_info in leave_approval_data:
+            approval = LeaveApproval(**approval_info)
+            db.session.add(approval)
+        db.session.commit()
 
-for i, hr_personnel in enumerate(HR_Personel.query.all()):
-    profile = HrProfile(id=generate_uuid(), date_of_birth=datetime.utcnow(), hr_id=hr_personnel.id, first_name=first_names[i % len(first_names)], last_name=last_names[i % len(last_names)], mantra='Live and let live', phone_contact=254734987654, profile_photo='path/to/photo', title='HR', date_joined=datetime.utcnow(), date_created=datetime.utcnow())
-    db.session.add(profile)
+        # Education
+        education_data = [
+            {"employee_id": employees[0].id, "institution": "University ABC", "course": "Computer Science",
+            "qualification": "Bachelor's Degree", "start_date": datetime(2010, 9, 1), "end_date": datetime(2014, 6, 30)},
+            {"employee_id": employees[1].id, "institution": "College XYZ", "course": "Human Resource Management",
+            "qualification": "Master's Degree", "start_date": datetime(2015, 9, 1), "end_date": datetime(2017, 6, 30)}
+        ]
+        for edu_info in education_data:
+            edu = Education(**edu_info)
+            db.session.add(edu)
+        db.session.commit()
 
+        # Token Blocklist (Sample Data - Manually added)
+        token_blocklist_data = [
+            {"jti": "sample_jti_1", "created_at": datetime.utcnow()},
+            {"jti": "sample_jti_2", "created_at": datetime.utcnow()}
+        ]
+        for token_info in token_blocklist_data:
+            token = TokenBlocklist(**token_info)
+            db.session.add(token)
+        db.session.commit()
+        document_data = [
+        {"employee_id": "employee_id_1", "link_url": "https://example.com/document1", "name": "Document 1", "type": "official"},
+        {"employee_id": "employee_id_2", "link_url": "https://example.com/document2", "name": "Document 2", "type": "institution"},
+        {"employee_id": "employee_id_3", "link_url": "https://example.com/document3", "name": "Document 3", "type": "other"},
+    ]
+        for doc_info in document_data:
+            document = Documents(**doc_info)
+            db.session.add(document)
+        db.session.commit()
 
-# Defines a list of potential remuneration types and descriptions
-remuneration_types = ['deduction', 'bonus', 'allowance', 'normal']
-remuneration_descriptions = ['Salary deduction due to absence', 'Performance bonus', 'Commuter allowance', 'Monthly salary']
+        # Seed data for HR Personnels
+        hr_personnel_data = [
+            {"email": "hr1@example.com", "password": "hashed_password_1", "dept_id": "department_id_1"},
+            {"email": "hr2@example.com", "password": "hashed_password_2", "dept_id": "department_id_2"},
+        ]
+        for hr_info in hr_personnel_data:
+            hr_personnel = HR_Personel(**hr_info)
+            db.session.add(hr_personnel)
+        db.session.commit()
 
-for employee in Employee.query.all():
-    # Randomly selects a remuneration type and description
-    remuneration_type = random.choice(remuneration_types)
-    remuneration_description = random.choice(remuneration_descriptions)
+        # Seed data for Sessions
+        session_data = [
+            {"name": "Session 1", "start_date": datetime(2024, 1, 1), "end_date": datetime(2024, 1, 30)},
+            {"name": "Session 2", "start_date": datetime(2024, 2, 1), "end_date": datetime(2024, 2, 29)},
+        ]
+        for session_info in session_data:
+            session = Session(**session_info)
+            db.session.add(session)
+        db.session.commit()
 
-    # Create Remuneration
-    remuneration = Remuneration(
-        id=generate_uuid(), 
-        name=f'Remuneration for {employee.email}',  
-        salary=50000.00, 
-        employee_id=employee.id, 
-        remuneration_date=datetime.utcnow(),        
-        month=1,
-        year=2022
-    )
-    db.session.add(remuneration)
-
-    # Create RemunerationDescription
-    description = RemunerationDescription(
-        id=generate_uuid(), 
-        remuneration_id=remuneration.id, 
-        type=remuneration_type, 
-        name=f'Description for {remuneration.name}',  
-        description=remuneration_description, 
-        amount=50000.00
-    )
-    db.session.add(description)
-
-
-# Create Experience
-for employee in Employee.query.all():
-    experience = Experience(
-        id=generate_uuid(), 
-        employee_id=employee.id, 
-        name=f'Experience for {employee.email}', 
-        job_title='Software Engineer', 
-        description='Developing cool stuff', 
-        start_date=datetime.utcnow(), 
-        end_date=datetime.utcnow()
-    )
-    db.session.add(experience)
-
-
-# Create session and goals
-session = Session(id=generate_uuid(), name='Q1', start_date=datetime.utcnow(), end_date=datetime.utcnow())
-db.session.add(session)
-
-# This defines a list of potential goals and descriptions
-goal_names = ['Improve coding skills', 'Learn a new language', 'Increase productivity', 'Reduce bugs in code', 'Improve communication skills']
-goal_descriptions = ['Attend coding workshops and complete online courses', 'Spend time each week studying a new language', 'Focus on time management and task prioritization', 'Implement more thorough testing procedures', 'Participate in team-building activities and improve report writing skills']
-
-for employee in Employee.query.all():
-    # Randomly selects a goal and description
-    goal_name = random.choice(goal_names)
-    goal_description = random.choice(goal_descriptions)
-
-    goal = Goals(
-        id=generate_uuid(), 
-        employee_id=employee.id, 
-        name=goal_name, 
-        description=goal_description, 
-        session_id=session.id
-    )
-    db.session.add(goal)
-
-
-# Create Training 
-trainings = []
-for i in range(3):
-    training = Training(id=generate_uuid(), title=f'Training{i}', description='Training Description', start_date=datetime.utcnow(), start_time=datetime.utcnow(), end_date=datetime.utcnow() + timedelta(days=1), end_time=datetime.utcnow() + timedelta(days=1))
-    db.session.add(training)
-    trainings.append(training)
-
-# Create EmployeeTraining 
-for employee in Employee.query.all():
-    for training in trainings:
-        employee_training = EmployeeTraining(id=generate_uuid(), employee_id=employee.id, training_id=training.id)
-        db.session.add(employee_training)
-
-
-# Create Leave 
-for employee in Employee.query.all():
-    leave = Leave(id=generate_uuid(), employee_id=employee.id, start_date=datetime.utcnow(), end_date=datetime.utcnow() + timedelta(days=1), description='Vacation', approved=False)
-    db.session.add(leave)
-    db.session.commit()
-
-
-# Create LeaveApproval 
-    leave_approval = LeaveApproval(id=generate_uuid(), leave_id=leave.id, employee_id=leave.employee_id, hr_id=HR_Personel.query.first().id, manager_id=Manager.query.first().id, manager_app_date=datetime.utcnow(), hr_approval_date=datetime.utcnow())
-    db.session.add(leave_approval)
-
-
-# Create Documents 
-for employee in Employee.query.all():
-    document = Documents(id=generate_uuid(), employee_id=employee.id, link_url='path/to/document', name='Document', type='official')
-    db.session.add(document)
-
-# Create Education 
-for employee in Employee.query.all():
-    education = Education(id=generate_uuid(), employee_id=employee.id, institution='University', course='Computer Science', qualification='Bachelor', start_date=datetime.utcnow(), end_date=datetime.utcnow() + timedelta(days=1))
-    db.session.add(education)
-
-
-try:
-    db.session.commit()
-    print("Data seeded successfully!")
-except Exception as e:
-    print("An error occurred while seeding data:", e)
+if __name__ == "__main__":
+            seed_database()

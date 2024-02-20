@@ -1,3 +1,25 @@
+from routes.payslip_bp import payslip_bp
+from routes.sessionGoals_bp import goals_session_bp
+from routes.user_authentication_bp import authentication_bp
+from routes.employee_profile_bp import employeeProfile_bp
+from routes.experience_bp import experience_bp
+from routes.remuneration_desc_bp import remunerationDescription_bp
+from routes.remuneration_bp import remuneration_bp
+from routes.hrProfile_bp import hrProfile_bp
+from routes.leave_approval_bp import leave_approval_bp
+from routes.employee_training_bp import employee_training_bp
+from routes.training_bp import training_bp
+from routes.Goals_bp import goals_bp
+from routes.session_bp import session_bp
+from routes.leave_bp import leave_bp
+from routes.manager_profile_bp import manager_profile_bp
+from routes.hr_bp import hr_bp
+from routes.manager_bp import manager_bp
+from routes.education_bp import education_bp
+from routes.department_bp import department_bp
+from routes.documents_bp import document_bp
+from routes.employee_bp import employee_bp
+from routes.approveLeave_bp import approvalLeave_bp
 from datetime import datetime, timedelta
 from flask import Flask
 from flask_migrate import Migrate
@@ -10,29 +32,6 @@ from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt()
 
 
-from routes.employee_bp import employee_bp
-from routes.documents_bp import document_bp
-from routes.department_bp import department_bp
-from routes.education_bp import education_bp
-from routes.manager_bp import manager_bp
-from routes.hr_bp import hr_bp
-from routes.manager_profile_bp import manager_profile_bp
-from routes.leave_bp import leave_bp
-from routes.session_bp import session_bp
-from routes.Goals_bp import goals_bp
-from routes.training_bp import training_bp
-from routes.employee_training_bp import employee_training_bp
-from routes.leave_approval_bp import leave_approval_bp
-from routes.hrProfile_bp import hrProfile_bp
-from routes.remuneration_bp import remuneration_bp
-from routes.remuneration_desc_bp import remunerationDescription_bp
-from routes.experience_bp import experience_bp
-from routes.employee_profile_bp import employeeProfile_bp
-from routes.user_authentication_bp import authentication_bp
-from routes.sessionGoals_bp import goals_session_bp
-from routes.payslip_bp import payslip_bp
-
-
 def create_app():
     app = Flask(__name__)
     bcrypt.init_app(app)
@@ -41,7 +40,7 @@ def create_app():
         'SQLALCHEMY_DATABASE_URI')
     app.config['JWT_SECRET_KEY'] = os.getenv(
         'JWT_SECRET_KEY')
-    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+    app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
     migrate = Migrate(app, db)
     db.init_app(app)
     jwt = JWTManager(app)
@@ -67,6 +66,9 @@ def create_app():
     app.register_blueprint(authentication_bp)
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
+    app.register_blueprint(approvalLeave_bp)
+
+    
 
     return app
 
