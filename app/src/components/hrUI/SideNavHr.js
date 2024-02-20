@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 const SideNavHr = () => {
   return (
     <div>
@@ -194,7 +195,7 @@ const SideNavHr = () => {
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-chalkboard-teacher" />
               <p>
-                Training Tracker
+               <Link to="/training_page">Training Tracker</Link> 
                 <i className="fas fa-angle-left right" />
               </p>
             </a>
