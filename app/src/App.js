@@ -1,27 +1,23 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import Footer from './components/Footer'
-import Header from './components/Header'
-import Home from './components/Home';
-import SideNav from './components/SideNav';
-function App() {
-  return (
-    <Router>
-      <div className="App">
-        Hello
-        <Header/>
-        <Home/>
-        <SideNav/>
-        <Footer/>
-        {/* <Routes>
-          <Route path="/home" element={<Header />} />
-          <Route path="/login" element={<Home/>} />
-          <Route path="/register" element={<SideNav />} />
-          <Route path="/footer" element={<Footer/>} />
+import MainPage from './components/MainPage';
+import Login from './components/Login';
+import DashBoardHr from './components/hrUI/DashBoardHr';
 
-        </Routes> */}
+function App() {
+
+  return (
+    
+      <div className="App">
+               
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/login" element={<Login/>} />    
+          <Route path="/hr_dashboard" element={<DashBoardHr/>}/>
+
+        </Routes>
       </div>
-    </Router>
+  
   );
 }
 
