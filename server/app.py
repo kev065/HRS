@@ -28,6 +28,7 @@ from models import db
 from dotenv import load_dotenv
 import os
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS
 
 bcrypt = Bcrypt()
 
@@ -44,6 +45,7 @@ def create_app():
     migrate = Migrate(app, db)
     db.init_app(app)
     jwt = JWTManager(app)
+    CORS(app)
 
     app.register_blueprint(employee_bp)
     app.register_blueprint(department_bp)
@@ -67,8 +69,6 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
-
-    
 
     return app
 
