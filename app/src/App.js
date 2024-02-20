@@ -1,10 +1,11 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route,useEffect } from 'react-router-dom';
 import './App.css';
 import MainPage from './components/MainPage';
 import Login from './components/Login';
 import DashBoardHr from './components/hrUI/DashBoardHr';
 
 function App() {
+
 
   return (
     
