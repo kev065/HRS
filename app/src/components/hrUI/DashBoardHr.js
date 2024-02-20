@@ -9,7 +9,7 @@ const DashBoardHr = () => {
     <div>
         <HeaderHr/>
         <HomeHr/>
-        <SideNavHr/>
+        <SideNavHr />
         <Footer/>
       
     </div>
