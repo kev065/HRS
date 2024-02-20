@@ -23,19 +23,21 @@
   function Sparkline(element, options) {
     this.element = element;
     this.options = extend(options || {}, Sparkline.options);
-
+  
     init: {
-      this.element.innerHTML = "<canvas></canvas>";
-      this.canvas = this.element.firstChild;
+      // Create a new canvas element instead of setting innerHTML
+      this.canvas = document.createElement('canvas');
+      this.element.appendChild(this.canvas);
       this.context = this.canvas.getContext("2d");
       this.ratio = window.devicePixelRatio || 1;
-
+  
       if (this.options.tooltip) {
         this.canvas.style.position = "relative";
         this.canvas.onmousemove = showTooltip.bind(this);
       }
     }
   }
+  
 
   Sparkline.options = {
     width: 100,

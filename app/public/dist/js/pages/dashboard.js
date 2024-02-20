@@ -7,6 +7,8 @@
 
 /* global moment:false, Chart:false, Sparkline:false */
 
+$(document).ready(function() {
+
 $(function () {
   'use strict'
 
@@ -265,3 +267,5 @@ $(function () {
     options: salesGraphChartOptions
   })
 })
+
+});
