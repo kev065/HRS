@@ -8,22 +8,22 @@ const Header = () => {
   {/* Left navbar links */}
   <ul className="navbar-nav">
     <li className="nav-item">
-      <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
+    <button className="nav-link" data-widget="pushmenu"><i className="fas fa-bars" /></button>
     </li>
     <li className="nav-item d-none d-sm-inline-block">
-      <a href="index3.html" className="nav-link">Home</a>
+      <a href="/home" className="nav-link">Home</a>
     </li>
     <li className="nav-item d-none d-sm-inline-block">
-      <a href="#" className="nav-link">Contact</a>
+      <button className="nav-link">Contact</button>
     </li>
   </ul>
   {/* Right navbar links */}
   <ul className="navbar-nav ml-auto">
     {/* Navbar Search */}
     <li className="nav-item">
-      <a className="nav-link" data-widget="navbar-search" href="#" role="button">
+    <button className="nav-link" data-widget="navbar-search">
         <i className="fas fa-search" />
-      </a>
+        </button>
       <div className="navbar-search-block">
         <form className="form-inline">
           <div className="input-group input-group-sm">
@@ -42,14 +42,14 @@ const Header = () => {
     </li>
     
     <li className="nav-item">
-      <a className="nav-link" data-widget="fullscreen" href="#" role="button">
+    <button className="nav-link" data-widget="fullscreen">
         <i className="fas fa-expand-arrows-alt" />
-      </a>
+      </button>
     </li>
     <li className="nav-item">
-      <a className="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
+    <button className="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true">
         <i className="fas fa-th-large" />
-      </a>
+      </button>
     </li>
   </ul>
 </nav>
