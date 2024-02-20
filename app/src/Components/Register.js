@@ -1,25 +1,24 @@
 import React, {  useState, useEffect } from 'react'
 import {  useNavigate } from 'react-router-dom';
 import './common.css'
-const Register = () => {
 
+
+
+const Register = ({toggleForm, isRegisterFormActive}) => {
     const navigate = useNavigate()
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isRegisterFormActive, setIsRegisterFormActive] = useState(true);
+    
 
-    // const redirectToLogin = () => {
-    //   // Redirect the user to the login page
-    //   navigate('/login');
-    // };
+
     useEffect(() => {
       const registerBtn = document.getElementById('register');
       
       console.log('registerBtn:', registerBtn);
 
       const handleRegisterButtonClick = () => {
-        setIsRegisterFormActive(false);
+        ;
       };
 
       if (registerBtn) {
@@ -79,14 +78,21 @@ const Register = () => {
             </form>
           </div>
           <div className="toggle-container">
-            <div className="toggle">
-              <div className="toggle-panel toggle-left">
-                <h1>Welcome Back!</h1>
-                <p>Enter your personal details to use all of site features</p>
-                <button className="hidden" id="register" name='register'>
-                  SIGN IN
-                </button>
-              </div>
+        <div className="toggle">
+          <div className="toggle-panel toggle-left">
+            <h1>Welcome Back!</h1>
+            <p>Enter your personal details to use all site features</p>
+            <button className="hidden" id="login" name="login" onClick={toggleForm}> 
+              SIGN IN
+            </button>
+          </div>
+          <div className="toggle-panel toggle-right">
+            <h1>Hello, Friend!</h1>
+            <p>Register with your personal details to use all site features</p>
+            <button className="hidden" id="register" name="register" onClick={toggleForm}>
+              SIGN UP
+            </button>
+          </div>
               </div>
              </div>
             </div>

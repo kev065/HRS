@@ -1,14 +1,15 @@
 import React, {  useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './common.css'
+import Register from './Register';
 
-const Login = () => {
+const Login = ({toggleForm, isRegisterFormActive}) => {
 
     const navigate = useNavigate()
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isLoginFormActive, setIsLoginFormActive] = useState(true);
+    const [isLoginFormActive, setIsLoginFormActive] = useState(false);
 
     useEffect(() => {
         
@@ -56,7 +57,7 @@ const Login = () => {
 
 
     return (
-        <div className={`container ${isLoginFormActive ? 'active' : ''}`} id="container">
+        <div className={`container ${isRegisterFormActive ? 'active' : ''}`} id="container">
           
           <div className="form-container sign-in">
             <form onSubmit={SetData}>
@@ -81,17 +82,26 @@ const Login = () => {
               {/* <a href="#">Forget Your Password?</a> */}
               <button type="submit" onClick={SetData}>Sign In</button>
             </form>
+            <Register toggleForm={toggleForm} isRegisterFormActive={isRegisterFormActive} />
           </div>
           <div className="toggle-container">
-            <div className="toggle">
-              <div className="toggle-panel toggle-right">
-                <h1>Hello, Friend!</h1>
-                <p>Register with your personal details to use all of site features</p>
-                <button className="hidden" id="login" name='login'>
-                  Sign Up
-                </button>
+          <div className="toggle">
+          <div className="toggle-panel toggle-right">
+            
+            <h1>Welcome Back!</h1>
+            <p>Enter your personal details to use all site features</p>
+            <button className="hidden" id="register" name="register" onClick={toggleForm}>
+              SIGN IN
+            </button>
+          </div>
+          <div className="toggle-panel toggle-left">
+            <h1>Hello, Friend!</h1>
+            <p>Register with your personal details to use all site features</p>
+            <button className="hidden" id="login" name="login" onClick={toggleForm}>
+              SIGN UP
+            </button>
+          </div>
               </div>
-            </div>
             </div>
           </div>
 
