@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import Home from './Components/Home';
-import Login from './Components/Login';
-import Register from './Components/Register';
+import Home from './components/Home';
+import Login from './components/Login';
+import Register from './components/Register';
 import Footer from './components/Footer'
 import Header from './components/Header'
-import Home from './components/Home';
 import SideNav from './components/SideNav';
 function App() {
   const [isRegisterFormActive, setIsRegisterFormActive] = useState(true);
@@ -24,11 +23,10 @@ function App() {
     <Router>
       <div className="App">
         <Routes>
-          <Header/>
-          <SideNav/>
-          <Footer/>
+          <Route element={<Header />} />
+          <Route element={<SideNav />} />
+          <Route element={<Footer />} />
           <Route path="/home" element={<Home />} />
-
           <Route 
             path="/login"
             element={<Login toggleForm={toggleForm} isRegisterFormActive={isRegisterFormActive} />}
