@@ -3,6 +3,7 @@ import React from 'react'
 const Header = () => {
   return (
     <div>
+<<<<<<< HEAD
 {/* Navbar */}
 <nav className="main-header navbar navbar-expand navbar-white navbar-light">
   {/* Left navbar links */}
@@ -55,6 +56,9 @@ const Header = () => {
 </nav>
 {/* /.navbar */}
 
+=======
+      
+>>>>>>> 4ff023eb0815bf7bba62eafd8e2b2a19df26f3c3
     </div>
   )
 }

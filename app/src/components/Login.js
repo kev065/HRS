@@ -1,111 +1,80 @@
-import React, {  useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
-import './common.css'
-import Register from './Register';
+import React from 'react'
 
-const Login = ({toggleForm, isRegisterFormActive}) => {
-
-    const navigate = useNavigate()
-
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoginFormActive, setIsLoginFormActive] = useState(false);
-
-    useEffect(() => {
-        
-        
-        const loginBtn = document.getElementById('login');
+const Login = () => {
     
-        console.log('loginBtn:', loginBtn);
-
-        const handleClick = () => {
-          setIsLoginFormActive(true);
-        };
-        
-        if (loginBtn){
-          loginBtn.addEventListener('click', handleClick);
-    
-        // Cleanup event listeners when the component is unmounted
-        return () => {
-          loginBtn.removeEventListener('click', handleClick);
-        };
-      } 
-    }, []);
-
-      console.log('isLoginFormActive:', isLoginFormActive);
-
-    const SetData = (e) => {
-        e.preventDefault()
-    
-        fetch('/login', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email, password
-            })
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            
-            navigate('/dashboard')
-        })
-    }
-
-
-
-    return (
-        <div className={`container ${isRegisterFormActive ? 'active' : ''}`} id="container">
-          
-          <div className="form-container sign-in">
-            <form onSubmit={SetData}>
-              <h1>Sign In</h1>
-              <div className="social-icons">
-            <button type="button" className="icon">
-              <i className="fa-brands fa-google-plus-g"></i>
-            </button>
-            <button type="button" className="icon">
-              <i className="fa-brands fa-facebook-f"></i>
-            </button>
-            <button type="button" className="icon">
-              <i className="fa-brands fa-github"></i>
-            </button>
-            <button type="button" className="icon">
-              <i className="fa-brands fa-linkedin-in"></i>
-            </button>
-          </div>
-              <span>or use your email password</span>
-              <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
-              {/* <a href="#">Forget Your Password?</a> */}
-              <button type="submit" onClick={SetData}>Sign In</button>
-            </form>
-            <Register toggleForm={toggleForm} isRegisterFormActive={isRegisterFormActive} />
-          </div>
-          <div className="toggle-container">
-          <div className="toggle">
-          <div className="toggle-panel toggle-right">
-            
-            <h1>Welcome Back!</h1>
-            <p>Enter your personal details to use all site features</p>
-            <button className="hidden" id="register" name="register" onClick={toggleForm}>
-              SIGN IN
-            </button>
-          </div>
-          <div className="toggle-panel toggle-left">
-            <h1>Hello, Friend!</h1>
-            <p>Register with your personal details to use all site features</p>
-            <button className="hidden" id="login" name="login" onClick={toggleForm}>
-              SIGN UP
-            </button>
-          </div>
-              </div>
+  return (
+    <div>
+   {/* Content Wrapper. Contains page content */}
+<div className="content-wrapper">
+  {/* Content Header (Page header) */}
+  <section className="content-header">
+    <div className="container-fluid">
+      <div className="row mb-2">
+        <div className="col-sm-6">
+          <h1>General Form</h1>
+        </div>
+        <div className="col-sm-6">
+          <ol className="breadcrumb float-sm-right">
+            <li className="breadcrumb-item"><a href="#">Home</a></li>
+            <li className="breadcrumb-item active">General Form</li>
+          </ol>
+        </div>
+      </div>
+    </div>{/* /.container-fluid */}
+  </section>
+  {/* Main content */}
+  <section className="content">
+    <div className="container-fluid">
+      <div className="row">
+        {/* left column */}
+        <div className="col-md-6">
+          {/* general form elements */}
+          <div className="card card-primary">
+            <div className="card-header">
+              <h3 className="card-title">Login</h3>
             </div>
+            {/* /.card-header */}
+            {/* form start */}
+            <form>
+              <div className="card-body">
+                <div className="form-group">
+                  <label htmlFor="exampleInputEmail1">Email address</label>
+                  <input type="email" className="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="exampleInputPassword1">Password</label>
+                  <input type="password" className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                </div>
+              
+                <div className="form-check">
+                  <input type="checkbox" className="form-check-input" id="exampleCheck1" />
+                  <label className="form-check-label" htmlFor="exampleCheck1">Remember</label>
+                </div>
+              </div>
+              {/* /.card-body */}
+              <div className="card-footer">
+                <button type="submit" className="btn btn-primary">Submit</button>
+              </div>
+            </form>
           </div>
+          {/* /.card */}
+          {/* general form elements */}
+         
+          
+          
+         
+        </div>
+        
+      </div>
+   
+    </div>
+  </section>
+ 
+</div>
 
-      );
+      
+    </div>
+  )
 }
 
 export default Login
