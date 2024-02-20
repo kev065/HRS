@@ -28,6 +28,8 @@ from models import db
 from dotenv import load_dotenv
 import os
 from flask_bcrypt import Bcrypt
+from flask_cors import CORS
+from models import TokenBlocklist
 
 bcrypt = Bcrypt()
 
@@ -40,10 +42,19 @@ def create_app():
         'SQLALCHEMY_DATABASE_URI')
     app.config['JWT_SECRET_KEY'] = os.getenv(
         'JWT_SECRET_KEY')
+    app.config['JWT_BLACKLIST_ENABLED'] = True
+    app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
     migrate = Migrate(app, db)
     db.init_app(app)
     jwt = JWTManager(app)
+    CORS(app)
+
+    @jwt.token_in_blocklist_loader
+    def check_if_token_is_revoked(jwt_header, jwt_payload: dict):
+        jti = jwt_payload["jti"]
+        token = db.session.query(TokenBlocklist).filter_by(jti=jti).first()
+        return token is not None
 
     app.register_blueprint(employee_bp)
     app.register_blueprint(department_bp)
@@ -67,8 +78,6 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
-
-    
 
     return app
 
