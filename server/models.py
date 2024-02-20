@@ -26,6 +26,8 @@ class Documents(db.Model):
     type = db.Column(Enum("official", "institution", "other"), nullable=False)
 
 
+    
+
 class Employee(db.Model):
     __tablename__ = 'employees'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
