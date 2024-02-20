@@ -19,7 +19,7 @@ const SideNavEmployee = () => {
         <img src="dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
       </div>
       <div className="info">
-        <a href="#" className="d-block">HR Personnel Name</a>
+        <a href="#" className="d-block">Employee Name</a>
       </div>
     </div>
     {/* SidebarSearch Form */}
@@ -37,7 +37,7 @@ const SideNavEmployee = () => {
     <nav className="mt-2">
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li className="nav-item">
-          <a href="./index.html" className="nav-link active">
+          <a href="./employee_dashboard" className="nav-link active">
             <i className="far fa-circle nav-icon" />
             <p>Dashboard</p>
           </a>
@@ -68,31 +68,6 @@ const SideNavEmployee = () => {
         </li>
 
 
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-users" />
-            <p>
-              Employees
-              <i className="fas fa-angle-left right" />
-            </p>
-          </a>
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-              <a href="pages/examples/add-employee.html" className="nav-link">
-                <i className="fas fa-plus nav-icon" />
-                <p>Add Employee</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="pages/examples/employee-details.html" className="nav-link">
-                <i className="fas fa-user nav-icon" />
-                <p>Employee Details</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-
-
 
         <li className="nav-item">
           <a href="#" className="nav-link">
@@ -106,32 +81,7 @@ const SideNavEmployee = () => {
             <li className="nav-item">
               <a href="pages/examples/view-managers.html" className="nav-link">
                 <i className="fas fa-binoculars nav-icon" />
-                <p>View Managers</p>
-              </a>
-            </li>
-          </ul>
-        </li>
-
-
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-building" />
-            <p>
-              Departments
-              <i className="fas fa-angle-left right" />
-            </p>
-          </a>
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-              <a href="pages/examples/list-departments.html" className="nav-link">
-                <i className="fas fa-list nav-icon" />
-                <p>List Departments</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="pages/examples/view-department-heads.html" className="nav-link">
-                <i className="fas fa-user-tie nav-icon" />
-                <p>View Department Heads</p>
+                <p>My Managers</p>
               </a>
             </li>
           </ul>
@@ -141,7 +91,7 @@ const SideNavEmployee = () => {
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-money-check-alt" /> 
             <p>
-              Payroll
+              Payslips
               <i className="fas fa-angle-left right" />
             </p>
           </a>
@@ -149,19 +99,7 @@ const SideNavEmployee = () => {
             <li className="nav-item">
               <a href="pages/examples/employee-salaries.html" className="nav-link">
                 <i className="fas fa-list-ol nav-icon" /> 
-                <p>Employee Salaries</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="pages/examples/bonus-and-deductions.html" className="nav-link">
-                <i className="fas fa-gift nav-icon" /> 
-                <p>Bonus and Deductions</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="pages/examples/generate-payslips.html" className="nav-link">
-                <i className="fas fa-file-invoice-dollar nav-icon" /> 
-                <p>Generate Payslips</p>
+                <p>View Payslips</p>
               </a>
             </li>
           </ul>
@@ -202,12 +140,6 @@ const SideNavEmployee = () => {
               </p>
             </a>
             <ul className="nav nav-treeview">
-              <li className="nav-item">
-                <a href="pages/examples/create-training.html" className="nav-link">
-                  <i className="fas fa-plus-circle nav-icon" /> 
-                  <p>Create Training</p>
-                </a>
-              </li>
               <li className="nav-item">
                 <a href="pages/examples/upcoming-training.html" className="nav-link">
                   <i className="fas fa-calendar nav-icon" /> 
