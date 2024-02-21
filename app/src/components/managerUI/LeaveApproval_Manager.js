@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const PendingLeaves = () => {
+const ManagerPendingLeaves = () => {
   const [leaves, setLeaves] = useState([]);
   const [error, setError] = useState(null);
 
@@ -24,7 +24,7 @@ const PendingLeaves = () => {
 
   const handleApprove = async (leaveId) => {
     try {
-      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: true });
+      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { manager_approval: true });
       console.log('Leave approved:', response.data);
     } catch (error) {
       if (error.response) {
@@ -37,7 +37,7 @@ const PendingLeaves = () => {
 
   const handleDecline = async (leaveId) => {
     try {
-      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: false });
+      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { manager_approval: false });
       console.log('Leave declined:', response.data);
     } catch (error) {
       if (error.response) {
@@ -65,4 +65,4 @@ const PendingLeaves = () => {
   );
 };
 
-export default PendingLeaves;
+export default ManagerPendingLeaves;
