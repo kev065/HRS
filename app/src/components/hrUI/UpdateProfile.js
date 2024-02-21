@@ -14,47 +14,44 @@ const UpdateProfile = () => {
     title: '',
   });
 
-  const fetchUserProfile = async () => {
-    try {
-      const response = await fetch('http://127.0.0.1:5555/hrProfiles', {
-        method: 'GET',
-        // You may need to include headers or authentication token based on your backend requirements
-        headers: {
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5555/hrProfiles/<string:id>', {
+          headers: {
             'Authorization': "Bearer " + localStorage.getItem("jwt")
+          },
+        });
+  
+        if (response.ok) {
+          const userProfileData = await response.json();
+          setUserProfile(userProfileData);
+        } else {
+          console.error('Failed to fetch user profile');
         }
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        setUserProfile(userData);
-      } else {
-        console.error('Failed to fetch user profile');
+      } catch (error) {
+        console.error('Error fetching user profile:', error);
       }
-    } catch (error) {
-      console.error('Error fetching user profile:', error);
-    }
-  };
+    };
+  
+    fetchUserProfile();
+  }, []);
 
-  const updateProfile = async () => {
+  const updateProfile = async (userId) => {
     try {
-      const response = await fetch('http://127.0.0.1:5555/hrProfiles/<string:id>', {
+      const response = await fetch(`http://127.0.0.1:5555/hrProfiles/${userId}`, {
         method: 'PATCH',
         headers: {
-            'Authorization': "Bearer " + localStorage.getItem("jwt")
+          'Authorization': "Bearer " + localStorage.getItem("jwt"),
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(userProfile),
       });
-
-      if (response.ok) {
-        console.log('User profile updated successfully');
-      } else {
-        console.error('Failed to update user profile');
-      }
+  
     } catch (error) {
       console.error('Error updating user profile:', error);
     }
   };
-
   const handleChange = (field, value) => {
     setUserProfile((prevProfile) => ({
       ...prevProfile,
@@ -62,9 +59,6 @@ const UpdateProfile = () => {
     }));
   };
 
-  useEffect(() => {
-    fetchUserProfile();
-  }, []); // Fetch user profile data when the component mounts
 
   return (
     <div>
