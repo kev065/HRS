@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import CreateTraining from './CreateTraining';
+import { Navigate,useNavigate } from 'react-router-dom';
+const { id } = useParams();
+
 
 const ViewTrainings = ({ trainings, setTrainings }) => {
     const [showCreateTraining, setShowCreateTraining] = useState(false);
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
+    const navigate=Navigate()
 
     useEffect(() => {
         const fetchTrainings = () => {
@@ -30,7 +34,35 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
         setShowCreateTraining(false);
     };
 
-  
+    const handleUpdateTraining =(training)=>{
+        navigate(`/update_trainings/${training.id}`);
+    }
+    const handleDeleteTraining =(trainingId)=>{
+        fetch(`/trainings/${trainingId}`, {
+      method: "DELETE",
+      headers: {
+        'Authorization': "Bearer "+ localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => {
+        console.log("RES: ", res);
+       
+      })
+      .then((data)=>{
+        const updatedTrainings = trainings.filter(training => training.id !== trainingId);
+        setTrainings(updatedTrainings)
+        
+      })
+      .catch((err) => {
+        console.log(err);
+        throw new Error(err);
+      });
+        
+    }
+
+
+    
+
     const filteredTrainings = trainings.filter(training => {
         const startDate = new Date(training.start_date);
         const endDate = new Date(training.end_date);
@@ -53,14 +85,37 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
                 <input type="date" id="toDate" value={toDate} onChange={e => setToDate(e.target.value)} />
             </div>
             <button onClick={() => setShowCreateTraining(true)}>Add Training</button>
-            <ul>
-                {filteredTrainings.map(training => (
-                    <li key={training.id}>
-                        {training.title} - {training.start_date} {training.start_time} to {training.end_date} {training.end_time}
-                    </li>
-                ))}
-            </ul>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Start Date</th>
+                        <th>Start Time</th>
+                        <th>End Date</th>
+                        <th>End Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {filteredTrainings.map(training => (
+                        <tr key={training.id}>
+                            <td>{training.title}</td>
+                            <td>{training.description}</td>
+                            <td>{training.start_date}</td>
+                            <td>{training.start_time}</td>
+                            <td>{training.end_date}</td>
+                            <td>{training.end_time}</td>
+                            <td>
+                                <button onClick={() => handleUpdateTraining(training)}>Update</button>
+                                <button onClick={() => handleDeleteTraining(training.id)}>Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
             {showCreateTraining && <CreateTraining onClose={handleCreateTrainingClose} trainings={trainings} setTrainings={setTrainings} />}
+            {id && <UpdateTrainings trainingId={id} trainings={trainings} setTrainings={setTrainings} />}
         </div>
     );
 };
