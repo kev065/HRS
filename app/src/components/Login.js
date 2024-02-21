@@ -1,55 +1,7 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-
+import React from 'react'
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Create an object with the user's credentials
-    const credentials = {
-      email: email,
-      password: password,
-    };
-
-    try {
-      // Make a POST request to your backend API endpoint
-      const response = await fetch('http://127.0.0.1:5555', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
-
-      // Check if the request was successful
-      if (response.ok) {
-        // Handle successful login, e.g., redirect the user or update the UI
-        console.log('Login successful!');
-        navigate.push('/dashboard');
-      } else {
-        // Handle failed login, e.g., show an error message
-        console.error('Login failed');
-      }
-    } catch (error) {
-      // Handle any network or unexpected errors
-      console.error('Error during login:', error);
-    }
-  };
-
-
+    
   return (
     <div>
    {/* Content Wrapper. Contains page content */}
