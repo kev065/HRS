@@ -26,7 +26,7 @@ const Login = () => {
 
     try {
       // Make a POST request to your backend API endpoint
-      const response = await fetch('http://127.0.0.1:5555', {
+      const response = await fetch('http://127.0.0.1:5555/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
