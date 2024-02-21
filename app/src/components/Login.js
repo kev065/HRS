@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import {store,retrieve} from "./Encryption" 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -53,12 +54,13 @@ const Login = () => {
     .then((result) => {
       // Check the role and access token from the response
       console.log('Backend Response:', result);
+      store(result)
       const { role, accessToken } = result;
 
 
       // Store the access token in the local storage
       storeAccessToken(accessToken);
-      console.log('Stored Access Token:', localStorage.getItem('accessToken'));
+      
 
       // Redirect the user based on their role
       switch (role) {
