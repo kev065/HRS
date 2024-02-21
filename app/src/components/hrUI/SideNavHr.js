@@ -76,7 +76,7 @@ const SideNavHr = () => {
           </a>
           <ul className="nav nav-treeview">
             <li className="nav-item">
-              <a href="pages/examples/add-employee.html" className="nav-link">
+              <a href="add_employee" className="nav-link">
                 <i className="fas fa-plus nav-icon" />
                 <p>Add Employee</p>
               </a>
@@ -182,7 +182,7 @@ const SideNavHr = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a href="pages/examples/pending.html" className="nav-link">
+              <a href="leave_approval" className="nav-link">
                 <i className="fas fa-hourglass-half nav-icon" />
                 <p>Pending</p>
               </a>

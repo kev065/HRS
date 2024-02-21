@@ -10,6 +10,7 @@ import AddEmployeeForm from './components/hrUI/AddEmployee';
 import Session from './components/hrUI/Session';
 import Profile from './components/hrUI/Profile'
 import UpdateProfile from './components/hrUI/UpdateProfile';
+import LeaveApprovalForm from './components/hrUI/LeaveApproval';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -29,6 +30,7 @@ function App() {
           <Route path="/session" element={<Session />}/>
           <Route path="/hr_profile" element={<Profile />}/>
           <Route path="/hr_update_profile" element={<UpdateProfile />}/>
+          <Route path="/leave_approval" element={<LeaveApprovalForm />}/>
         </Routes>
       </div>
   
