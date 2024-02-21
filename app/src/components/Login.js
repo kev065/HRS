@@ -15,6 +15,11 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const storeAccessToken = (token) => {
+    // Store the access token in the local storage
+    localStorage.setItem('accessToken', token);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
   
@@ -39,8 +44,11 @@ const Login = () => {
         // Parse the JSON response
         const result = await response.json();
   
-        // Check the role from the response
-        const { role } = result;
+         // Check the role and access token from the response
+         const { role, accessToken } = result;
+
+         // Store the access token in the local storage
+         storeAccessToken(accessToken);
   
         // Redirect the user based on their role
         switch (role) {
