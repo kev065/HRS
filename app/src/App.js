@@ -24,6 +24,7 @@ function App() {
           <Route path="/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings}/>}/>
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="/update_trainings/:id" element={<UpdateTrainings  />} />
           
         </Routes>
       </div>
