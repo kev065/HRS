@@ -66,5 +66,3 @@ const PendingLeaves = () => {
 };
 
 export default PendingLeaves;
-
-
