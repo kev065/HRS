@@ -16,10 +16,14 @@ function App() {
       <div className="App">
                
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<Login/>} />    
+          <Route path="/" element={<MainPage />} />   
           <Route path="/hr_dashboard" element={<DashBoardHr/>}/>
+<<<<<<< HEAD
           <Route path="/employee_dashboard" element={<DashBoardEmployee/>} />
+=======
+         
+          <Route path="/login" element={<Login />} />
+>>>>>>> 96a1c37fe772061b3daddd4c97f2e75192d7cb2d
           <Route path="/hr_dashboard" element={<DashBoardHr />}/>
           <Route path="/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings}/>}/>
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
