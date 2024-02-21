@@ -1,7 +1,7 @@
 import React from 'react'
 import HeaderHr from './HeaderHr'
 import HomeHr from './HomeHr'
-import Footer from '../Footer'
+import FooterHr from './FooterHr'
 import SideNavHr from './SideNavHr'
 
 const DashBoardHr = () => {
@@ -10,7 +10,7 @@ const DashBoardHr = () => {
         <HeaderHr/>
         <HomeHr/>
         <SideNavHr />
-        <Footer/>
+        <FooterHr/>
       
     </div>
   )

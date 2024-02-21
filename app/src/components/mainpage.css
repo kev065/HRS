@@ -1,0 +1,153 @@
+/* FONTS */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --primary-color: #fead53;
+  --text-dark: #333333;
+  --text-light: #ffffff33;
+  --extra-light: #f3f4f6;
+
+  --max-width: 1300px;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.main-page {
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+    url(../assets/banner.jpg);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+nav.main-nav {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 1;
+}
+
+.nav-logo a {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--extra-light);
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.nav-list .link {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--extra-light);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.nav-list .link:hover {
+  color: var(--primary-color);
+}
+
+.main-container {
+  display: flex;
+  min-height: 100vh;
+  max-width: var(--max-width);
+  margin: auto;
+  padding: 2rem;
+  padding-top: 100px;
+  position: relative;
+}
+
+.left-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.left-col .content {
+  max-width: 600px;
+  display: grid;
+  gap: 2rem;
+}
+
+.content .main-title {
+  font-size: 4rem;
+  line-height: 4rem;
+  color: var(--extra-light);
+  font-weight: 700;
+}
+
+.content .main-paragraph {
+  color: var(--extra-light);
+}
+
+.main-buttons {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.main-buttons button {
+  padding: 0.5rem 2rem;
+  color: var(--extra-light);
+  font-size: 1rem;
+  background-color: transparent;
+  outline: none;
+  border: 2px solid var(--extra-light);
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button.about {
+  background-color: var(--extra-light);
+  color: var(--text-dark);
+}
+
+button.contact-us:hover {
+  background-color: var(--text-light);
+}
+
+.chevrons {
+  display: flex;
+  gap: 1rem;
+}
+
+.chevrons span {
+  height: 40px;
+  width: 40px;
+  font-size: 1.5rem;
+  color: var(--extra-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--extra-light);
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.chevrons span:hover {
+  background-color: var(--text-light);
+}
