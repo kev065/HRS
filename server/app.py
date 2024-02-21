@@ -45,6 +45,15 @@ def create_app():
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+    cloudinary_url = os.getenv('CLOUDINARY_URL')
+    cloudinary_cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME')
+    cloudinary_api_key = os.getenv('CLOUDINARY_API_KEY')
+    cloudinary_api_secret = os.getenv('CLOUDINARY_API_SECRET')
+
+    app.config['CLOUDINARY_URL'] = cloudinary_url
+    app.config['CLOUDINARY_CLOUD_NAME'] = cloudinary_cloud_name
+    app.config['CLOUDINARY_API_KEY'] = cloudinary_api_key
+    app.config['CLOUDINARY_API_SECRET'] = cloudinary_api_secret
     migrate = Migrate(app, db)
     db.init_app(app)
     jwt = JWTManager(app)
@@ -78,6 +87,9 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
+
+ 
+
 
     return app
 

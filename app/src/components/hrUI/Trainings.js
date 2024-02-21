@@ -1,7 +1,7 @@
 import React from 'react'
-import ViewTrainings from './ViewTainings'
+import ViewTrainings from './ViewTrainings'
 
-const Training = ({trainings,setTrainings}) => {
+const Trainings = ({trainings,setTrainings}) => {
       return (
     <div>
         <ViewTrainings trainings={trainings} setTrainings={setTrainings}/>
@@ -10,4 +10,4 @@ const Training = ({trainings,setTrainings}) => {
   )
 }
 
-export default Training
+export default Trainings
