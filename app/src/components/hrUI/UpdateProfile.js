@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 
-const Profile = () => {
+const UpdateProfile = () => {
 
   const [userProfile, setUserProfile] = useState({
     dateOfBirth: '',
@@ -16,9 +16,12 @@ const Profile = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch('http://your-backend-api/user-profile', {
+      const response = await fetch('http://127.0.0.1:5555/hrProfiles', {
         method: 'GET',
         // You may need to include headers or authentication token based on your backend requirements
+        headers: {
+            'Authorization': "Bearer " + localStorage.getItem("jwt")
+        }
       });
 
       if (response.ok) {
@@ -34,10 +37,10 @@ const Profile = () => {
 
   const updateProfile = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5555/hrProfiles', {
-        method: 'PUT',
+      const response = await fetch('http://127.0.0.1:5555/hrProfiles/<string:id>', {
+        method: 'PATCH',
         headers: {
-          'Content-Type': 'application/json',
+            'Authorization': "Bearer " + localStorage.getItem("jwt")
         },
         body: JSON.stringify(userProfile),
       });
@@ -146,4 +149,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default UpdateProfile
