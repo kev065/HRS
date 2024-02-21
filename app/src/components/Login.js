@@ -15,30 +15,57 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const storeAccessToken = (token) => {
+    // Store the access token in the local storage
+    localStorage.setItem('accessToken', token);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Create an object with the user's credentials
     const credentials = {
       email: email,
       password: password,
     };
-
+  
     try {
       // Make a POST request to your backend API endpoint
-      const response = await fetch('http://127.0.0.1:5555', {
+      const response = await fetch('http://127.0.0.1:5555/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
       });
-
+  
       // Check if the request was successful
       if (response.ok) {
-        // Handle successful login, e.g., redirect the user or update the UI
+        // Parse the JSON response
+        const result = await response.json();
+  
+         // Check the role and access token from the response
+         const { role, accessToken } = result;
+
+         // Store the access token in the local storage
+         storeAccessToken(accessToken);
+  
+        // Redirect the user based on their role
+        switch (role) {
+          case 'manager':
+            navigate('/manager_dashboard');
+            break;
+          case 'employee':
+            navigate('/employee_dashboard');
+            break;
+          case 'hr':
+            navigate('/hr_dashboard');
+            break;
+          default:
+            console.error('Unknown role:', role);
+        }
+  
         console.log('Login successful!');
-        navigate.push('/dashboard');
       } else {
         // Handle failed login, e.g., show an error message
         console.error('Login failed');
@@ -46,10 +73,8 @@ const Login = () => {
     } catch (error) {
       // Handle any network or unexpected errors
       console.error('Error during login:', error);
-    }  
-
-
-  }
+    }
+  };
   return (
     <div>
    {/* Content Wrapper. Contains page content */}

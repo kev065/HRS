@@ -16,10 +16,10 @@ function App() {
       <div className="App">
                
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/login" element={<Login/>} />    
+          <Route path="/" element={<MainPage />} />   
           <Route path="/hr_dashboard" element={<DashBoardHr/>}/>
           <Route path="/employee_dashboard" element={DashBoardEmployee} />
+          <Route path="/login" element={<Login />} />
           <Route path="/hr_dashboard" element={<DashBoardHr />}/>
           <Route path="/training_page" element={<Training trainings={trainings} setTrainings={setTrainings}/>}/>
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
