@@ -4,13 +4,14 @@ import axios from 'axios';
 const ManagerApprovedLeaves = () => {
   const [leaves, setLeaves] = useState([]);
   const [error, setError] = useState(null);
-  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
 
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get(`http://localhost:5555/leave/approvals?date=${date}`);
-        const approvedLeaves = response.data.leave_approvals.filter(leave => leave.approved_by_manager);
+        const response = await axios.get('http://localhost:5555/leave/approvals');
+        const approvedLeaves = response.data.leave_approvals
+          .filter(leave => leave.approved_by_manager)
+          .sort((a, b) => new Date(b.manager_app_date) - new Date(a.manager_app_date)); // Sort by date in descending order
         setLeaves(approvedLeaves);
       } catch (error) {
         if (error.response) {
@@ -22,18 +23,10 @@ const ManagerApprovedLeaves = () => {
     };
 
     fetchLeaves();
-  }, [date]);
-
-  const handleDateChange = (event) => {
-    setDate(event.target.value);
-  };
+  }, []);
 
   return (
     <div>
-      <label>
-        Date:
-        <input type="date" value={date} onChange={handleDateChange} />
-      </label>
       {error && <p>{error}</p>}
       {leaves.map((leave) => (
         <div key={leave.leave_id}>
@@ -47,3 +40,4 @@ const ManagerApprovedLeaves = () => {
 };
 
 export default ManagerApprovedLeaves;
+
