@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
+import {store,retrieve} from "./Encryption" 
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,6 +19,9 @@ const Login = () => {
   const storeAccessToken = (token) => {
     // Store the access token in the local storage
     localStorage.setItem('accessToken', token);
+    console.log('Stored Access Token:', token);
+
+    console.log('Stored Access Token from localStorage:', localStorage.getItem('accessToken'));
   };
 
   const handleSubmit = async (e) => {
@@ -29,51 +33,56 @@ const Login = () => {
       password: password,
     };
   
-    try {
-      // Make a POST request to your backend API endpoint
-      const response = await fetch('http://127.0.0.1:5555/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(credentials),
-      });
-  
+    fetch('http://127.0.0.1:5555/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  })
+    .then((response) => {
       // Check if the request was successful
       if (response.ok) {
         // Parse the JSON response
-        const result = await response.json();
-  
-         // Check the role and access token from the response
-         const { role, accessToken } = result;
-
-         // Store the access token in the local storage
-         storeAccessToken(accessToken);
-  
-        // Redirect the user based on their role
-        switch (role) {
-          case 'manager':
-            navigate('/manager_dashboard');
-            break;
-          case 'employee':
-            navigate('/employee_dashboard');
-            break;
-          case 'hr':
-            navigate('/hr_dashboard');
-            break;
-          default:
-            console.error('Unknown role:', role);
-        }
-  
-        console.log('Login successful!');
+        return response.json();
       } else {
         // Handle failed login, e.g., show an error message
         console.error('Login failed');
+        throw new Error('Login failed');
       }
-    } catch (error) {
+    })
+    .then((result) => {
+      // Check the role and access token from the response
+      console.log('Backend Response:', result);
+      store(result)
+      const { role, accessToken } = result;
+
+
+      // Store the access token in the local storage
+      storeAccessToken(accessToken);
+      
+
+      // Redirect the user based on their role
+      switch (role) {
+        case 'manager':
+          navigate('/manager_dashboard');
+          break;
+        case 'employee':
+          navigate('/employee_dashboard');
+          break;
+        case 'hr':
+          navigate('/hr_dashboard');
+          break;
+        default:
+          console.error('Unknown role:', role);
+      }
+
+      console.log('Login successful!');
+    })
+    .catch((error) => {
       // Handle any network or unexpected errors
       console.error('Error during login:', error);
-    }
+    });
   };
   return (
     <div>
@@ -88,8 +97,8 @@ const Login = () => {
               </div>
               <div className="col-sm-6">
                 <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item"><a href="#">Home</a></li>
-                  <li className="breadcrumb-item active">General Form</li>
+                  <li className="breadcrumb-item"><a href="/">Home</a></li>
+                  
                 </ol>
               </div>
             </div>
@@ -103,9 +112,7 @@ const Login = () => {
               <div className="col-md-6">
                 {/* general form elements */}
                 <div className="card card-primary">
-                  <div className="card-header">
-                    <h3 className="card-title"></h3>
-                  </div>
+        
                   {/* /.card-header */}
                   {/* form start */}
                   <form onSubmit={handleSubmit}>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const Session = () => {
-
+   
     const [name, setName] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [ setData ] = useState(null);
+    const [data, setData] = useState(null);
 
     const handleNameChange = (event) => {
         setName(event.target.value);
