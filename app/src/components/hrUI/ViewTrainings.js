@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import CreateTraining from './CreateTraining';
-import { Navigate,useNavigate } from 'react-router-dom';
-const { id } = useParams();
+import { useNavigate,useParams } from 'react-router-dom';
+import UpdateTrainings from './UpdateTrainings';
+
 
 
 const ViewTrainings = ({ trainings, setTrainings }) => {
     const [showCreateTraining, setShowCreateTraining] = useState(false);
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
-    const navigate=Navigate()
+    const navigate=useNavigate()
+    const { id } = useParams()
 
     useEffect(() => {
         const fetchTrainings = () => {

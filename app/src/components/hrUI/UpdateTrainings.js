@@ -37,7 +37,7 @@ const UpdateTrainings = ({ training, trainings, setTrainings }) => {
             })
             .then((updatedData) => {
                 console.log('Updated Training:', updatedData);
-                // Update the trainings state with the updated data
+              
                 const updatedTrainings = trainings.map((trainingItem) => {
                     if (trainingItem.id === updatedData.id) {
                         return updatedData;
