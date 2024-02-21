@@ -86,7 +86,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
                 <label htmlFor="toDate">To: </label>
                 <input type="date" id="toDate" value={toDate} onChange={e => setToDate(e.target.value)} />
             </div>
-            <button onClick={() => setShowCreateTraining(true)}>Add Training</button>
+            
             <table>
                 <thead>
                     <tr>
@@ -118,6 +118,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
             </table>
             {showCreateTraining && <CreateTraining onClose={handleCreateTrainingClose} trainings={trainings} setTrainings={setTrainings} />}
             {id && <UpdateTrainings trainingId={id} trainings={trainings} setTrainings={setTrainings} />}
+            <button onClick={() => setShowCreateTraining(true)}>Add Training</button>
         </div>
     );
 };
