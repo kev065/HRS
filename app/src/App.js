@@ -8,6 +8,12 @@ import DashBoardEmployee from './components/employeeUI/DashBoardEmployee';
 import Trainings from './components/hrUI/Trainings';
 import AddEmployeeForm from './components/hrUI/AddEmployee';
 import UpdateTrainings from './components/hrUI/UpdateTrainings';
+import Session from './components/hrUI/Session';
+import Profile from './components/hrUI/Profile'
+import UpdateProfile from './components/hrUI/UpdateProfile';
+import LeaveApprovalForm from './components/hrUI/LeaveApproval';
+import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
+import DashBoardManager from './components/managerUI/DashBoardManager';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -25,7 +31,12 @@ function App() {
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/update_trainings/:id" element={<UpdateTrainings  />} />
-          
+          <Route path="/session" element={<Session />}/>
+          <Route path="/hr_profile" element={<Profile />}/>
+          <Route path="/hr_update_profile" element={<UpdateProfile />}/>
+          <Route path="/leave_approval" element={<LeaveApprovalForm />}/>
+          <Route path="/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
+          <Route path="/manager_dashboard" element={<DashBoardManager />}/>
         </Routes>
       </div>
   
