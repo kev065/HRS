@@ -6,7 +6,7 @@ const VerifyDocuments = ({ employeeId }) => {
   useEffect(() => {
     fetch(`/documents/${employeeId}`, {
       headers: {
-        'Authorization': "Bearer "+ localStorage.getItem("jwt")
+        "Authorization": "Bearer " + retrieve().access_token,
       }
     })
       .then(response => {

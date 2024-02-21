@@ -1,31 +1,68 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { retrieve } from "../Encryption";
 
-const UpdateTrainings = ({ training, trainings, setTrainings }) => {
-    const [title, setTitle] = useState(training.title);
-    const [description, setDescription] = useState(training.description);
-    const [startDate, setStartDate] = useState(training.start_date);
-    const [startTime, setStartTime] = useState(training.start_time);
-    const [endDate, setEndDate] = useState(training.end_date);
-    const [endTime, setEndTime] = useState(training.end_time);
+const UpdateTrainings = () => {
+    const { id } = useParams();
+    const [training, setTraining] = useState(null);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [start_date, setStartDate] = useState('');
+    const [end_date, setEndDate] = useState('');
+    const [start_time, setStartTime] = useState('');
+    const [end_time, setEndTime] = useState('');
+    
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        fetch(`/trainings/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer " + retrieve().access_token,
+            },
+        })
+            .then((resp) => {
+                if (!resp.ok) {
+                    throw new Error('Failed to update training');
+                }
+                return resp.json();
+            })
+            .then((data) => {
+                // Format the dates received from the server
+                const formattedStartDate = data.start_date.split('T')[0];
+                const formattedEndDate = data.end_date.split('T')[0];
+                setTraining(data);
+                setTitle(data.title);
+                setDescription(data.description);
+                setStartDate(formattedStartDate);
+                setEndDate(formattedEndDate);
+                setStartTime(data.start_time.substring(0, 5));
+                setEndTime(data.end_time.substring(0, 5));
+            })
+            .catch((error) => {
+                console.error('Error updating training:', error);
+            });
+
+    }, [id]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const updatedTraining = {
-            id: training.id,
-            title,
-            description,
-            start_date: startDate,
-            start_time: startTime,
-            end_date: endDate,
-            end_time: endTime,
+            id: id,
+            title: title,
+            description: description,
+            start_date: start_date,
+            start_time: start_time + ":00",
+            end_date: end_date,
+            end_time: end_time + ":00",
         };
 
         fetch(`/trainings/${training.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': "Bearer " + localStorage.getItem("jwt")
+                "Authorization": "Bearer " + retrieve().access_token,
             },
             body: JSON.stringify(updatedTraining),
         })
@@ -37,14 +74,7 @@ const UpdateTrainings = ({ training, trainings, setTrainings }) => {
             })
             .then((updatedData) => {
                 console.log('Updated Training:', updatedData);
-              
-                const updatedTrainings = trainings.map((trainingItem) => {
-                    if (trainingItem.id === updatedData.id) {
-                        return updatedData;
-                    }
-                    return trainingItem;
-                });
-                setTrainings(updatedTrainings);
+                navigate('/training_page');
             })
             .catch((error) => {
                 console.error('Error updating training:', error);
@@ -53,10 +83,10 @@ const UpdateTrainings = ({ training, trainings, setTrainings }) => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            {training && <form onSubmit={handleSubmit}>
                 <label>
                     Title:
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                    <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </label>
                 <br />
                 <label>
@@ -66,27 +96,26 @@ const UpdateTrainings = ({ training, trainings, setTrainings }) => {
                 <br />
                 <label>
                     Start Date:
-                    <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+                    <input type="date" value={start_date} onChange={(e) => setStartDate(e.target.value)} required />
                 </label>
                 <br />
                 <label>
                     Start Time:
-                    <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+                    <input type="time" value={start_time} onChange={(e) => setStartTime(e.target.value)} required />
                 </label>
                 <br />
                 <label>
                     End Date:
-                    <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+                    <input type="date" value={end_date} onChange={(e) => setEndDate(e.target.value)} required />
                 </label>
                 <br />
                 <label>
                     End Time:
-                    <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
+                    <input type="time" value={end_time} onChange={(e) => setEndTime(e.target.value)} required />
                 </label>
                 <br />
                 <button type="submit">Update Training</button>
-            </form>
-
+            </form>}
         </div>
     );
 };

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CreateTraining from './CreateTraining';
 import { useNavigate,useParams } from 'react-router-dom';
 import UpdateTrainings from './UpdateTrainings';
+import {retrieve} from "../Encryption"
 
 
 
@@ -16,7 +17,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
         const fetchTrainings = () => {
             fetch('/trainings', {
                 headers: {
-                    'Authorization': "Bearer " + localStorage.getItem("jwt")
+                    Authorization: "Bearer " + retrieve().access_token,
                 }
             })
                 .then(response => {
@@ -43,7 +44,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
         fetch(`/trainings/${trainingId}`, {
       method: "DELETE",
       headers: {
-        'Authorization': "Bearer "+ localStorage.getItem("jwt"),
+        Authorization: "Bearer " + retrieve().access_token,
       },
     })
       .then((res) => {
@@ -117,7 +118,8 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
                 </tbody>
             </table>
             {showCreateTraining && <CreateTraining onClose={handleCreateTrainingClose} trainings={trainings} setTrainings={setTrainings} />}
-            {id && <UpdateTrainings trainingId={id} trainings={trainings} setTrainings={setTrainings} />}
+            {/* {id && <UpdateTrainings training={trainings.find(training => training.id === id)} trainings={trainings} setTrainings={setTrainings} />} */}
+
             <button onClick={() => setShowCreateTraining(true)}>Add Training</button>
         </div>
     );

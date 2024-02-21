@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import {retrieve} from "../Encryption"
 
 const CreateTraining = ({ trainings, setTrainings, onClose }) => {
     const [title, setTitle] = useState('');
@@ -15,16 +16,16 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
             title,
             description,
             start_date: startDate,
-            start_time: startTime,
+            start_time: startTime + ":00",
             end_date: endDate,
-            end_time: endTime,
+            end_time: endTime + ":00",
         };
 
         fetch('/trainings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': "Bearer "+ localStorage.getItem("jwt")
+                 "Authorization": "Bearer " + retrieve().access_token,
             },
             body: JSON.stringify(newTraining),
         })
