@@ -8,6 +8,8 @@ import DashBoardEmployee from './components/employeeUI/DashBoardEmployee';
 import Trainings from './components/hrUI/Trainings';
 import AddEmployeeForm from './components/hrUI/AddEmployee';
 import UpdateTrainings from './components/hrUI/UpdateTrainings';
+import ViewEmployees from './components/hrUI/ViewEmployees';
+import VerifyDocuments from './components/hrUI/VerifyDocuments';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -25,6 +27,11 @@ function App() {
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
           <Route path="/login" element={<Login />}/>
           <Route path="/update_trainings/:id" element={<UpdateTrainings  />} />
+          <Route path="/view_employees" element={<ViewEmployees  />} />
+          <Route path="/verify_documents/:employeeId" element={<VerifyDocuments />} />
+
+     
+
           
         </Routes>
       </div>

@@ -156,3 +156,16 @@ class DocumentUpload(Resource):
      
         
 api.add_resource(DocumentUpload, "/upload/<string:id>")
+
+
+class EmployeeDocument(Resource):
+      def get(self, employee_id):  
+        documents = Documents.query.filter_by(employee_id=employee_id).all()
+
+        if not documents:
+            abort(404, detail=f'No documents found for employee with ID {employee_id}')
+
+        result = documentSchema.dump(documents, many=True)
+        response = make_response(jsonify(result), 200)
+        return response
+api.add_resource(EmployeeDocument, '/documents/employee/<string:employee_id>')
