@@ -11,6 +11,8 @@ import Session from './components/hrUI/Session';
 import Profile from './components/hrUI/Profile'
 import UpdateProfile from './components/hrUI/UpdateProfile';
 import LeaveApprovalForm from './components/hrUI/LeaveApproval';
+import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
+import DashBoardManager from './components/managerUI/DashBoardManager';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -31,6 +33,8 @@ function App() {
           <Route path="/hr_profile" element={<Profile />}/>
           <Route path="/hr_update_profile" element={<UpdateProfile />}/>
           <Route path="/leave_approval" element={<LeaveApprovalForm />}/>
+          <Route path="/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
+          <Route path="/manager_dashboard" element={<DashBoardManager />}/>
         </Routes>
       </div>
   
