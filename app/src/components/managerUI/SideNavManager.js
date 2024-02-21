@@ -121,7 +121,7 @@ const SideNavManager = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a href="pages/examples/pending.html" className="nav-link">
+              <a href="manager_pending_leaves" className="nav-link">
                 <i className="fas fa-hourglass-half nav-icon" />
                 <p>Pending</p>
               </a>
