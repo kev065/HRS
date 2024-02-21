@@ -1,7 +1,6 @@
 import React from 'react'
 import Footer from "./Footer"
 import Header from "./Header"
-import Login from './Login'
 
 
 const MainPage = () => {
@@ -9,8 +8,6 @@ const MainPage = () => {
     <div>
         <Header/>
         <div> Welcome to HRS  </div>
-        <Login />
-
         <Footer/>
       
     </div>

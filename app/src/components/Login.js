@@ -17,13 +17,13 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Create an object with the user's credentials
     const credentials = {
       email: email,
       password: password,
     };
-
+  
     try {
       // Make a POST request to your backend API endpoint
       const response = await fetch('http://127.0.0.1:5555/login', {
@@ -33,12 +33,31 @@ const Login = () => {
         },
         body: JSON.stringify(credentials),
       });
-
+  
       // Check if the request was successful
       if (response.ok) {
-        // Handle successful login, e.g., redirect the user or update the UI
+        // Parse the JSON response
+        const result = await response.json();
+  
+        // Check the role from the response
+        const { role } = result;
+  
+        // Redirect the user based on their role
+        switch (role) {
+          case 'manager':
+            navigate('/manager-dashboard');
+            break;
+          case 'employee':
+            navigate('/employee-dashboard');
+            break;
+          case 'hr':
+            navigate('/hr-dashboard');
+            break;
+          default:
+            console.error('Unknown role:', role);
+        }
+  
         console.log('Login successful!');
-        navigate.push('/dashboard');
       } else {
         // Handle failed login, e.g., show an error message
         console.error('Login failed');
@@ -46,10 +65,8 @@ const Login = () => {
     } catch (error) {
       // Handle any network or unexpected errors
       console.error('Error during login:', error);
-    }  
-
-
-  }
+    }
+  };
   return (
     <div>
    {/* Content Wrapper. Contains page content */}
