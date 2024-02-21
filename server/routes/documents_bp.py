@@ -1,10 +1,12 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint, make_response, jsonify,request
 from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_jwt_identity,jwt_required,current_user
 from serializer import documentSchema
 from models import db, Documents
 from auth_middleware import employee_required
+from flask_cors import cross_origin
+from cloudinary.uploader import upload
 
 # create document blueprint
 document_bp = Blueprint('document_bp', __name__)
@@ -111,3 +113,46 @@ class DocumentById(Resource):
 
 
 api.add_resource(DocumentById, '/documents/<string:id>')
+
+
+class DocumentUpload(Resource):
+    @cross_origin()
+    @jwt_required()
+    def post(self, id):
+        if 'document' not in request.files:
+            return make_response(jsonify({"error": "No document part"}), 400)
+        document = request.files['document']
+        if document.filename == '':
+            return make_response(jsonify({"error": "No selected document"}), 400)
+
+        try:
+           
+            cloudinary_upload_result = upload(document)
+
+            
+            document_url = cloudinary_upload_result.get("url")
+            print(document_url)
+
+            data = request.form
+
+            new_document = Documents(
+                link_url=document_url,
+                name=data["name"],
+                type=data["type"],
+                employee_id=current_user.id
+            )
+
+            db.session.add(new_document)
+            db.session.commit()
+
+            result = documentSchema.dump(new_document)
+            return make_response(jsonify(result), 201)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            db.session.rollback()
+            return make_response(jsonify({"error": str(e)}), 500)
+      
+     
+        
+api.add_resource(DocumentUpload, "/upload/<string:id>")

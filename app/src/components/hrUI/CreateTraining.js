@@ -24,7 +24,7 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                 "Authorization": "Bearer " + "jwt"
+                'Authorization': "Bearer "+ localStorage.getItem("jwt")
             },
             body: JSON.stringify(newTraining),
         })
