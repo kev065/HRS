@@ -35,7 +35,7 @@ const SideNavHr = () => {
     <nav className="mt-2">
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <li className="nav-item">
-          <a href="./index.html" className="nav-link active">
+          <a href="hr_dashboard" className="nav-link active">
             <i className="far fa-circle nav-icon" />
             <p>Dashboard</p>
           </a>
@@ -51,7 +51,7 @@ const SideNavHr = () => {
           </a>
           <ul className="nav nav-treeview">
             <li className="nav-item">
-              <a href="pages/examples/view-profile.html" className="nav-link">
+              <a href="/hr_profile" className="nav-link">
                 <i className="fas fa-eye nav-icon" />
                 <p>View Profile Details</p>
               </a>
