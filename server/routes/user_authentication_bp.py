@@ -6,6 +6,7 @@ from flask_jwt_extended import jwt_required, get_jwt
 from flask_jwt_extended import create_access_token
 
 from models import Employee, Manager, HR_Personel, db, TokenBlocklist
+from serializer import managerSchema, hrSchema, employeeSchema
 
 bcrypt = Bcrypt()
 
@@ -17,18 +18,18 @@ login_args.add_argument('email', type=str, required=True,
                         help="email is required")
 login_args.add_argument('password', type=str, required=True,
                         help="password is required")
-login_args.add_argument('role', type=str, required=True,
-                        help="role is required")
+# login_args.add_argument('role', type=str, required=True,
+#                         help="role is required")
 
 
 class Login(Resource):
     def post(self):
         data = login_args.parse_args()
         email = data['email']
-        role = data['role']
+
         password = data['password']
 
-        if role == "manager":
+        if "@manager" in email:
             # Login manager
             manager = Manager.query.filter_by(email=email).first()
             if not manager:
@@ -38,11 +39,12 @@ class Login(Resource):
             if bcrypt.check_password_hash(manager.password, password.encode('utf-8')):
                 access_token = create_access_token(identity=manager.id, additional_claims={
                     "is_manager": True, "role": "manager"})
-                return jsonify(access_token=access_token)
+                result = managerSchema.dump(manager)
+                return jsonify(access_token=access_token, manager=result, role="manager")
             else:
                 abort(400, detail="Your password is incorrect")
 
-        elif role == "employee":
+        elif "@employee" in email:
             # Login employee
             employee = Employee.query.filter_by(email=email).first()
             if not employee:
@@ -52,11 +54,12 @@ class Login(Resource):
             if bcrypt.check_password_hash(employee.password, password.encode('utf-8')):
                 access_token = create_access_token(identity=employee.id, additional_claims={
                     "is_employee": True, "role": "employee"})
-                return jsonify(access_token=access_token)
+                result = employeeSchema.dump(employee)
+                return jsonify(access_token=access_token, employee=result, role="employee")
             else:
                 abort(400, detail="Your password is incorrect")
 
-        elif role == "hr":
+        elif "@hr" in email:
             # Login hr
             hr = HR_Personel.query.filter_by(email=email).first()
             if not hr:
@@ -66,11 +69,12 @@ class Login(Resource):
             if bcrypt.check_password_hash(hr.password, password.encode('utf-8')):
                 access_token = create_access_token(identity=hr.id, additional_claims={
                     "is_hr": True, "role": "hr"})
-                return jsonify(access_token=access_token)
+                result = hrSchema.dump(hr)
+                return jsonify(access_token=access_token, hr=result, role="hr")
             else:
                 abort(400, detail="Your password is incorrect")
         else:
-            abort(401, detail="Unauthorized login request. user role is required")
+            abort(401, detail="Unauthorized login request. Please contact admin")
 
 
 api.add_resource(Login, '/login')
