@@ -159,12 +159,13 @@ class EmployeeSchema(SQLAlchemyAutoSchema):
         include_fk = True
         exclude = ('password',)
     # associated data
-    profile = Nested(EmployeeProfileSchema, many=True)
+    employee_profiles = Nested(EmployeeProfileSchema, many=True)
     experiences = Nested(ExperienceSchema, many=True)
     documents = Nested(DocumentSchema, many=True)
     leaves = Nested(LeaveSchema, many=True)
     goals = Nested(GoalsSchema, many=True)
     educations = Nested(EducationSchema, many=True)
+    remunerations = Nested(RemunerationSchema, many=True)
 
 
 employeeSchema = EmployeeSchema()
