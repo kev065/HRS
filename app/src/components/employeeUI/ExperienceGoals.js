@@ -4,8 +4,26 @@ import axios from 'axios';
 // formats the date
 const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toISOString().slice(0, -1);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 };
+
+
+const formatDateForBackend = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed in JavaScript
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    const milliseconds = String(date.getMilliseconds()).padStart(3, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
+};
+
+
 
 // Experience
 const Experience = () => {
@@ -28,26 +46,34 @@ const Experience = () => {
             }
         })
         .then(res => {
-            setExperiences(res.data);
+            // Format the dates
+            const formattedExperiences = res.data.map(exp => ({
+                ...exp,
+                start_date: formatDate(exp.start_date),
+                end_date: formatDate(exp.end_date)
+            }));
+            setExperiences(formattedExperiences);
         })
         .catch(err => {
             console.error(err);
         });
     }, []);
+    
 
     const handleChange = (e, index) => {
         const updatedExperiences = [...experiences];
         updatedExperiences[index][e.target.name] = e.target.value;
         setExperiences(updatedExperiences);
     };
+    
 
     const handleSubmit = e => {
         e.preventDefault();
         // Make a POST request flask backend for each experience
         experiences.forEach(experience => {
             // format the dates
-            experience.start_date = formatDate(experience.start_date);
-            experience.end_date = formatDate(experience.end_date);
+            experience.start_date = formatDateForBackend(experience.start_date);
+            experience.end_date = formatDateForBackend(experience.end_date);
             axios.post('http://localhost:5555/experiences', experience, {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -68,7 +94,27 @@ const Experience = () => {
             start_date: '',
             end_date: ''
         }]);
+        // Fetch experiences from the database
+        axios.get('http://localhost:5555/experiences', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            // Format the dates
+            const formattedExperiences = res.data.map(exp => ({
+                ...exp,
+                start_date: formatDate(exp.start_date),
+                end_date: formatDate(exp.end_date)
+            }));
+            setExperiences(formattedExperiences);
+        })
+        .catch(err => {
+            console.error(err);
+        });
     };
+    
+
 
     const handleUpdate = (id, updatedExperience) => {
         axios.put(`http://localhost:5555/experiences/${id}`, updatedExperience, {
