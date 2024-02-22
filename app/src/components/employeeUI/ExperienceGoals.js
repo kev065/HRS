@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 // formats the date
@@ -6,7 +6,6 @@ const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toISOString().slice(0, -1);
 };
-
 
 // Experience
 const Experience = () => {
@@ -18,6 +17,24 @@ const Experience = () => {
         end_date: ''
     }]);
 
+    // token
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwODU5NjcyMywianRpIjoiN2RlZWNlY2YtZDJmNy00YzkzLWFiOGQtYjhiYjZhZDIxZGEzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjNlMjFiOTVjLTQ5MzgtNDE1Mi1iNTIxLTAwYzU1ZTYwOThkNCIsIm5iZiI6MTcwODU5NjcyMywiY3NyZiI6IjIzNmFmOWFkLTMyNjYtNDA5My05Mjg3LWMyZWYxNDdhOTVkYiIsImV4cCI6MTcwODY4MzEyMywiaXNfZW1wbG95ZWUiOnRydWUsInJvbGUiOiJlbXBsb3llZSJ9.rND706TWSYOZ1Cz3I3PwiARiIKia9G8JxflZQmMkYQg";
+
+    // fetch experiences
+    useEffect(() => {
+        axios.get('http://localhost:5555/experiences', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            setExperiences(res.data);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }, []);
+
     const handleChange = (e, index) => {
         const updatedExperiences = [...experiences];
         updatedExperiences[index][e.target.name] = e.target.value;
@@ -26,8 +43,6 @@ const Experience = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        // Gets the token
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwODU5NjcyMywianRpIjoiN2RlZWNlY2YtZDJmNy00YzkzLWFiOGQtYjhiYjZhZDIxZGEzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjNlMjFiOTVjLTQ5MzgtNDE1Mi1iNTIxLTAwYzU1ZTYwOThkNCIsIm5iZiI6MTcwODU5NjcyMywiY3NyZiI6IjIzNmFmOWFkLTMyNjYtNDA5My05Mjg3LWMyZWYxNDdhOTVkYiIsImV4cCI6MTcwODY4MzEyMywiaXNfZW1wbG95ZWUiOnRydWUsInJvbGUiOiJlbXBsb3llZSJ9.rND706TWSYOZ1Cz3I3PwiARiIKia9G8JxflZQmMkYQg";
         // Make a POST request flask backend for each experience
         experiences.forEach(experience => {
             // format the dates
@@ -53,6 +68,36 @@ const Experience = () => {
             start_date: '',
             end_date: ''
         }]);
+    };
+
+    const handleUpdate = (id, updatedExperience) => {
+        axios.put(`http://localhost:5555/experiences/${id}`, updatedExperience, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            // Update the experiences state with the updated experience
+            setExperiences(experiences.map(exp => exp.id === id ? res.data : exp));
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    };
+
+    const handleDelete = (id) => {
+        axios.delete(`http://localhost:5555/experiences/${id}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(res => {
+            // Remove the deleted experience 
+            setExperiences(experiences.filter(exp => exp.id !== id));
+        })
+        .catch(err => {
+            console.error(err);
+        });
     };
 
     const addExperience = () => {
@@ -81,6 +126,8 @@ const Experience = () => {
                         End Date:
                         <input type="date" name="end_date" value={experience.end_date} onChange={e => handleChange(e, index)} required />
                     </label>
+                    <button onClick={() => handleUpdate(experience.id, experience)}>Update</button>
+                    <button onClick={() => handleDelete(experience.id)}>Delete</button>
                 </div>
             ))}
             <button type="button" onClick={addExperience}>Add Another Experience</button>
