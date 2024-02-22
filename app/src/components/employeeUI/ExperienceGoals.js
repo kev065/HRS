@@ -1,6 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+// formats the date
+const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toISOString().slice(0, -1);
+};
+
+
 // Experience
 const Experience = () => {
     const [experiences, setExperiences] = useState([{
@@ -19,15 +26,24 @@ const Experience = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        // POST request to Flask backend for each experience
+        // Gets the token
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwODU5NjcyMywianRpIjoiN2RlZWNlY2YtZDJmNy00YzkzLWFiOGQtYjhiYjZhZDIxZGEzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjNlMjFiOTVjLTQ5MzgtNDE1Mi1iNTIxLTAwYzU1ZTYwOThkNCIsIm5iZiI6MTcwODU5NjcyMywiY3NyZiI6IjIzNmFmOWFkLTMyNjYtNDA5My05Mjg3LWMyZWYxNDdhOTVkYiIsImV4cCI6MTcwODY4MzEyMywiaXNfZW1wbG95ZWUiOnRydWUsInJvbGUiOiJlbXBsb3llZSJ9.rND706TWSYOZ1Cz3I3PwiARiIKia9G8JxflZQmMkYQg";
+        // Make a POST request flask backend for each experience
         experiences.forEach(experience => {
-            axios.post('http://localhost:5555/experiences', experience)
-                .then(res => {
-                    console.log(res.data);
-                })
-                .catch(err => {
-                    console.error(err);
-                });
+            // format the dates
+            experience.start_date = formatDate(experience.start_date);
+            experience.end_date = formatDate(experience.end_date);
+            axios.post('http://localhost:5555/experiences', experience, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => {
+                console.error(err);
+            });
         });
         // Clear the form
         setExperiences([{
@@ -49,6 +65,7 @@ const Experience = () => {
         }]);
     };
 
+    // Experience
     return (
         <form onSubmit={handleSubmit}>
             {experiences.map((experience, index) => (
@@ -70,7 +87,6 @@ const Experience = () => {
             <button type="submit">Submit</button>
         </form>
     );
-
 };
 
 // Goals
