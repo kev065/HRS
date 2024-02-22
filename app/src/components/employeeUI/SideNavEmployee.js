@@ -1,6 +1,9 @@
 import React from 'react'
+import { Link,useParams } from 'react-router-dom'
+
 
 const SideNavEmployee = () => {
+  const {employeeId} =useParams()
   return (
     <div>
          <div>
@@ -103,6 +106,36 @@ const SideNavEmployee = () => {
               </a>
             </li>
           </ul>
+        </li>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
+            <i className="nav-icon fas fa-money-check-alt" /> 
+            <p>
+           
+            <Link to={`/view_education/${employeeId}`}>Education</Link>
+
+         
+          
+          
+              <i className="fas fa-angle-left right" />
+            </p>
+          </a>
+          
+        </li>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
+            <i className="nav-icon fas fa-money-check-alt" /> 
+            <p>
+           
+            <Link to={`/view_documents/${employeeId}`}>Documents</Link>
+
+         
+          
+          
+              <i className="fas fa-angle-left right" />
+            </p>
+          </a>
+          
         </li>
 
 

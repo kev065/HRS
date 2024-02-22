@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Blueprint, jsonify
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import jwt_required, get_jwt
+from flask_jwt_extended import jwt_required, get_jwt,JWTManager
 from flask_jwt_extended import create_access_token
 
 from models import Employee, Manager, HR_Personel, db, TokenBlocklist
@@ -13,6 +13,7 @@ bcrypt = Bcrypt()
 authentication_bp = Blueprint('authentication_bp', __name__)
 api = Api(authentication_bp)
 
+
 login_args = reqparse.RequestParser()
 login_args.add_argument('email', type=str, required=True,
                         help="email is required")
@@ -20,6 +21,9 @@ login_args.add_argument('password', type=str, required=True,
                         help="password is required")
 # login_args.add_argument('role', type=str, required=True,
 #                         help="role is required")
+
+
+
 
 
 class Login(Resource):
@@ -93,3 +97,5 @@ class Logout(Resource):
 
 
 api.add_resource(Logout, '/logout')
+
+

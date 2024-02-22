@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link } from 'react-router-dom'; 
 import VerifyDocuments from './VerifyDocuments';
 import { retrieve } from "../Encryption";
 

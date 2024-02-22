@@ -52,7 +52,7 @@ const Login = () => {
       // Check the role and access token from the response
       console.log('Backend Response:', result);
       store(result)
-      const { role, } = result;
+      const { role,employee } = result;
 
 
     localStorage.setItem('accessToken', result);
@@ -67,7 +67,9 @@ const Login = () => {
           navigate('/manager_dashboard');
           break;
         case 'employee':
-          navigate('/employee_dashboard');
+        
+          navigate(`/employee_dashboard/${employee.id}`);
+          
           break;
         case 'hr':
           navigate('/hr_dashboard');
