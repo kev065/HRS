@@ -48,7 +48,7 @@ const Login = () => {
       } else {
         // Handle failed login, e.g., show an error message
         console.error('Login failed');
-        throw new Error('Login failed');
+        throw new Error('Email and password combination is not authorized.');
       }
     })
     .then((result) => {
