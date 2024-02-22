@@ -5,6 +5,7 @@ from flask_jwt_extended import get_jwt_identity
 from serializer import educationSchema
 from models import db, Education
 from auth_middleware import employee_required
+from datetime import datetime
 
 # create education blueprint
 education_bp = Blueprint('education_bp', __name__)
@@ -53,8 +54,11 @@ class EducationDetails(Resource):
             institution=data['institution'],
             course=data['course'],
             qualification=data['qualification'],
-            start_date=data["start_date"],
-            end_date=data["end_date"]
+            start_date = datetime.strptime(
+            data["start_date"], "%Y-%m-%d"),
+            end_date = datetime.strptime(
+            data["end_date"], "%Y-%m-%d")
+       
 
         )
 
@@ -72,12 +76,12 @@ api.add_resource(EducationDetails, '/education')
 
 class EducationByID(Resource):
     def get(self, id):
-        educaction = Education.query.filter_by(id=id).first()
+        education = Education.query.filter_by(id=id).first()
 
-        if not educaction:
+        if not education:
             abort(404, detail=f'education with  id {id} does not exist')
 
-        result = educationSchema.dump(educaction)
+        result = educationSchema.dump(education)
         response = make_response(jsonify(result), 200)
         return response
 
@@ -91,8 +95,16 @@ class EducationByID(Resource):
 
         if education.employee_id != current_user:
             abort(400, detail="Unauthorized request")
-
         data = patch_args.parse_args()
+
+        if 'start_date' in data:
+            data['start_date'] = datetime.strptime(
+                data['start_date'], "%Y-%m-%d")
+        if 'end_date' in data:
+            data['end_date'] = datetime.strptime(
+                data['end_date'], "%Y-%m-%d")
+
+       
         for key, value in data.items():
             if value is None:
                 continue
@@ -122,3 +134,19 @@ class EducationByID(Resource):
 
 
 api.add_resource(EducationByID, '/education/<string:id>')
+
+class EmployeeEducationDetails(Resource):
+    @employee_required()
+    def get(self, employee_id):
+        current_user = get_jwt_identity()
+        if current_user != employee_id:
+            abort(403, detail="Forbidden: You can only access your own education details.")
+
+        employee_education = Education.query.filter_by(employee_id=current_user).all()
+        result = educationSchema.dump(employee_education, many=True)
+        response = make_response(jsonify(result), 200)
+        return response
+api.add_resource(EmployeeEducationDetails, '/education/employee/<string:employee_id>')
+
+
+
