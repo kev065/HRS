@@ -143,10 +143,13 @@ const SideNavEmployee = () => {
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-calendar-check" />
             <p>
-              Leave Tracker
+            <Link to={`/view_leaves/${employeeId}`}>Leave Tracker</Link>
+
+            
               <i className="fas fa-angle-left right" />
             </p>
           </a>
+        
           <ul className="nav nav-treeview">
             <li className="nav-item">
               <a href="pages/examples/approved.html" className="nav-link">

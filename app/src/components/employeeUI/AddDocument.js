@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { retrieve } from "../Encryption";
 import { useNavigate } from 'react-router-dom';
 
-const AddDocument = ({documents,setDocuments}) => {
+const AddDocument = ({documents,setDocuments,onClose}) => {
   const [newDocument, setNewDocument] = useState(null);
   const [documentName, setDocumentName] = useState('');
   const [documentType, setDocumentType] = useState('');
@@ -53,6 +53,9 @@ const AddDocument = ({documents,setDocuments}) => {
         console.error('Error adding document:', error);
       });
   };
+  const handleExit = () => {
+    onClose();
+};
 
   return (
     <div>
@@ -77,6 +80,7 @@ const AddDocument = ({documents,setDocuments}) => {
         <br />
         <button type="submit">Submit</button>
       </form>
+      <button onClick={handleExit}>Exit</button>
     </div>
   );
 };
