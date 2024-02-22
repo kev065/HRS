@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { retrieve } from "../Encryption";
+import "./employeeform.css";
 
 const EmployeeProfileForm = () => {
   const navigate = useNavigate();
@@ -17,6 +19,7 @@ const EmployeeProfileForm = () => {
       phone_contact: "",
       title: "",
       date_of_birth: "",
+      profile_photo: "",
     },
     validationSchema: yup.object().shape({
       first_name: yup.string().required(),
@@ -28,6 +31,7 @@ const EmployeeProfileForm = () => {
         .min(10, "Phone contact must be atleast 10 characters"),
       title: yup.string().required(),
       date_of_birth: yup.date().required(),
+      profile_photo: yup.string().required(),
     }),
     onSubmit: (values) => {
       console.log(values);
@@ -35,7 +39,7 @@ const EmployeeProfileForm = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("AccessToken")}`,
+          Authorization: "Bearer " + retrieve().access_token,
           Accept: "application/json",
         },
         body: JSON.stringify(values),
@@ -64,12 +68,28 @@ const EmployeeProfileForm = () => {
           {error ? <h3 className="error">{error}</h3> : null}
           {success ? <h4 className="secondary-title">{success}</h4> : null}
           <div className="form-control">
+            <label htmlFor="profile_photo">Upload photo</label>
+            <br />
+            <input
+              type="file"
+              id="profile_photo"
+              name="profile_photo"
+              value={formik.values.profile_photo}
+              onChange={formik.handleChange}
+            />
+            {formik.touched.date_of_birth &&
+            formik.errors.mantrdate_of_birth ? (
+              <div className="error">{formik.errors.mantrdate_of_birth}</div>
+            ) : null}
+          </div>
+          <div className="form-control">
             <label htmlFor="first_name">First Name</label>
             <br />
             <input
               type="text"
               id="first_name"
               name="first_name"
+              placeholder="eg. John"
               value={formik.values.first_name}
               onChange={formik.handleChange}
             />
@@ -85,6 +105,7 @@ const EmployeeProfileForm = () => {
               type="text"
               id="last_name"
               name="last_name"
+              placeholder="eg. Doe"
               value={formik.values.last_name}
               onChange={formik.handleChange}
             />
@@ -100,6 +121,7 @@ const EmployeeProfileForm = () => {
               type="text"
               id="mantra"
               name="mantra"
+              placeholder="mantra goes here..."
               value={formik.values.mantra}
               onChange={formik.handleChange}
             />
@@ -115,6 +137,7 @@ const EmployeeProfileForm = () => {
               type="tel"
               id="phone_contact"
               name="phone_contact"
+              placeholder="eg. +2547920911"
               value={formik.values.phone_contact}
               onChange={formik.handleChange}
             />
@@ -130,6 +153,7 @@ const EmployeeProfileForm = () => {
               type="text"
               id="title"
               name="title"
+              placeholder="eg. Mr. Mrs"
               value={formik.values.title}
               onChange={formik.handleChange}
             />
@@ -147,14 +171,13 @@ const EmployeeProfileForm = () => {
               value={formik.values.date_of_birth}
               onChange={formik.handleChange}
             />
-            {formik.touched.date_of_birth &&
-            formik.errors.mantrdate_of_birth ? (
-              <div className="error">{formik.errors.mantrdate_of_birth}</div>
+            {formik.touched.date_of_birth && formik.errors.date_of_birth ? (
+              <div className="error">{formik.errors.date_of_birth}</div>
             ) : null}
           </div>
-          <div className="create-account-container">
+          <div className="update-account-container">
             {/* <input type="submit" /> */}
-            <button className="create-account-btn" type="submit">
+            <button className="update-btn" type="submit">
               Update Profile
             </button>
           </div>
