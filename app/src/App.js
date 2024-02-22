@@ -25,7 +25,6 @@ function App() {
                
         <Routes>
           <Route path="/" element={<MainPage />} />   
-          <Route path="/hr_dashboard" element={<DashBoardHr/>}/>
           <Route path="/employee_dashboard/:employeeId" element={<DashBoardEmployee/>} />
           <Route path="/hr_dashboard" element={<DashBoardHr />}/>
           <Route path="/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings}/>}/>
