@@ -15,8 +15,10 @@ import LeaveApprovalForm from './components/hrUI/LeaveApproval';
 import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
 import DashBoardManager from './components/managerUI/DashBoardManager';
 import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
-import { Experience } from './components/employeeUI/ExperienceGoals';
-import { Goals } from './components/employeeUI/ExperienceGoals';
+import Experience from './components/employeeUI/AddExperience';
+
+
+import Goals from './components/employeeUI/AddGoalsEmployee';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -41,7 +43,7 @@ function App() {
           <Route path="/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
           <Route path="/manager_dashboard" element={<DashBoardManager />}/>
           <Route path="/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
-          <Route path="/experience_goals" element={<Experience />}/>
+          <Route path="/experience" element={<Experience />}/>
           <Route path="/goals" element={<Goals />}/>
         </Routes>
       </div>
