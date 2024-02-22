@@ -57,7 +57,7 @@ const SideNavHr = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a href="pages/examples/update-profile.html" className="nav-link">
+              <a href="/hr_update_profile" className="nav-link">
                 <i className="fas fa-user-edit nav-icon" />
                 <p>Update Profile</p>
               </a>

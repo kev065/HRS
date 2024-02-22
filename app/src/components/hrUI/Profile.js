@@ -17,7 +17,7 @@ const Profile = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const response = await fetch('http://your-backend-api/user-profile', {
+      const response = await fetch('http://127.0.0.1:5555/hrProfiles', {
         method: 'GET',
         // You may need to include headers or authentication token based on your backend requirements
       });
@@ -60,7 +60,7 @@ const Profile = () => {
                   </div>
                   <div className="media">
                     <label>Name</label>
-                    <p>Jane Njiru</p>
+                    <p>John Doe</p>
                   </div>
                   <div className="media">
                     <label>Joined Date</label>
@@ -70,7 +70,7 @@ const Profile = () => {
                 <div className="col-md-6">
                   <div className="media">
                     <label>E-mail</label>
-                    <p>info@domain.com</p>
+                    <p>JohnDoe@hr.com</p>
                   </div>
                   <div className="media">
                     <label>Phone</label>
