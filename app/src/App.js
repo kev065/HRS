@@ -13,6 +13,8 @@ import VerifyDocuments from './components/hrUI/VerifyDocuments';
 import EducationDocumentUpload from './components/employeeUI/EducationDocumentUpload';
 import ViewEducation from './components/employeeUI/ViewEducation';
 import UpdateEducation from './components/employeeUI/UpdateEducation';
+import ViewDocuments from './components/employeeUI/ViewDocuments';
+import UpdateDocuments from './components/employeeUI/UpdateDocuments';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -35,6 +37,10 @@ function App() {
           <Route path="/education/document/upload" element={<EducationDocumentUpload/>}/>
           <Route path="/view_education/:employeeId" element={<ViewEducation/>}/>
           <Route path="/update_education/:id" element={<UpdateEducation/>}/>
+          <Route path="/view_documents/:id" element={<ViewDocuments/>}/>
+          <Route path="/update_document/:id" element={<UpdateDocuments/>}/>
+      
+       
           
 
      

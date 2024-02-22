@@ -42,7 +42,7 @@ const EducationDocumentUpload = ({onClose}) => {
     })
     .then(response => response.json())
     .then(educationData => {
-      // Upload document
+
       const formData = new FormData();
       formData.append('document', document);
       formData.append('name', documentName);

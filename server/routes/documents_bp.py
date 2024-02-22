@@ -96,7 +96,7 @@ class DocumentById(Resource):
         return response
 
     @employee_required()
-    def delete(self):
+    def delete(self,id):
         current_user = get_jwt_identity()
         document = Documents.query.filter_by(id=id).first()
 
@@ -118,7 +118,7 @@ api.add_resource(DocumentById, '/documents/<string:id>')
 class DocumentUpload(Resource):
     @cross_origin()
     @jwt_required()
-    def post(self, id):
+    def post(self):
         if 'document' not in request.files:
             return make_response(jsonify({"error": "No document part"}), 400)
         document = request.files['document']
@@ -152,10 +152,11 @@ class DocumentUpload(Resource):
             print(f"Error: {e}")
             db.session.rollback()
             return make_response(jsonify({"error": str(e)}), 500)
+        
       
      
         
-api.add_resource(DocumentUpload, "/upload/<string:id>")
+api.add_resource(DocumentUpload, "/upload")
 
 
 class EmployeeDocument(Resource):
@@ -169,3 +170,37 @@ class EmployeeDocument(Resource):
         response = make_response(jsonify(result), 200)
         return response
 api.add_resource(EmployeeDocument, '/documents/employee/<string:employee_id>')
+
+
+class DocumentUpdate(Resource):
+    @cross_origin()
+    @jwt_required()
+    def patch(self, id):
+        document = Documents.query.get(id)
+        if not document:
+            return make_response(jsonify({"error": "Document not found"}), 404)
+        
+        if 'document' not in request.files:
+            return make_response(jsonify({"error": "No document part"}), 400)
+        new_document = request.files['document']
+        if new_document.filename == '':
+            return make_response(jsonify({"error": "No selected document"}), 400)
+
+        try:
+            cloudinary_upload_result = upload(new_document)
+
+            document.link_url = cloudinary_upload_result.get("url")
+            document.name = request.form.get("name")
+            document.type = request.form.get("type")
+
+            db.session.commit()
+
+            result = documentSchema.dump(document)
+            return make_response(jsonify(result), 200)
+
+        except Exception as e:
+            print(f"Error: {e}")
+            db.session.rollback()
+            return make_response(jsonify({"error": str(e)}), 500)
+
+api.add_resource(DocumentUpdate, "/update_document/upload/<string:id>")
