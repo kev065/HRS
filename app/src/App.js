@@ -15,6 +15,8 @@ import ViewEducation from "./components/employeeUI/ViewEducation";
 import UpdateEducation from "./components/employeeUI/UpdateEducation";
 import ViewDocuments from "./components/employeeUI/ViewDocuments";
 import UpdateDocuments from "./components/employeeUI/UpdateDocuments";
+import EmployeeProfileForm from "./components/employeeUI/EmployeeProfileForm";
+import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -51,6 +53,8 @@ function App() {
         <Route path="/update_education/:id" element={<UpdateEducation />} />
         <Route path="/view_documents/:id" element={<ViewDocuments />} />
         <Route path="/update_document/:id" element={<UpdateDocuments />} />
+        <Route path="profile" element={<EmployeeProfile />} />
+        <Route path="/profile/create" element={<EmployeeProfileForm />} />
       </Routes>
     </div>
   );
