@@ -24,12 +24,13 @@ from datetime import datetime, timedelta
 from flask import Flask
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from models import db
+from models import db,Employee
 from dotenv import load_dotenv
 import os
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from models import TokenBlocklist
+
 
 bcrypt = Bcrypt()
 
@@ -64,6 +65,11 @@ def create_app():
         jti = jwt_payload["jti"]
         token = db.session.query(TokenBlocklist).filter_by(jti=jti).first()
         return token is not None
+    
+    @jwt.user_lookup_loader
+    def user_lookup_callback(_jwt_header, jwt_data):
+        identity = jwt_data["sub"]
+        return Employee.query.filter_by(id=identity).first()
 
     app.register_blueprint(employee_bp)
     app.register_blueprint(department_bp)
