@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import {store,retrieve} from "./Encryption" 
+import {store,retrieve} from "./Encryption"
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -16,18 +16,15 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const storeAccessToken = (token) => {
-    // Store the access token in the local storage
-    localStorage.setItem('accessToken', token);
-    console.log('Stored Access Token:', token);
-
-    console.log('Stored Access Token from localStorage:', localStorage.getItem('accessToken'));
-  };
+  
+    
+   
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    // Create an object with the user's credentials
+   
     const credentials = {
       email: email,
       password: password,
@@ -41,12 +38,12 @@ const Login = () => {
     body: JSON.stringify(credentials),
   })
     .then((response) => {
-      // Check if the request was successful
+    
       if (response.ok) {
-        // Parse the JSON response
+     
         return response.json();
       } else {
-        // Handle failed login, e.g., show an error message
+        
         console.error('Login failed');
         throw new Error('Email and password combination is not authorized.');
       }
@@ -55,11 +52,13 @@ const Login = () => {
       // Check the role and access token from the response
       console.log('Backend Response:', result);
       store(result)
-      const { role, accessToken } = result;
+      const { role,employee } = result;
 
 
-      // Store the access token in the local storage
-      storeAccessToken(accessToken);
+    localStorage.setItem('accessToken', result);
+    console.log('Stored Access Token:', result);
+
+    console.log('Stored Access Token from localStorage:', localStorage.getItem('accessToken'));
       
 
       // Redirect the user based on their role
@@ -68,7 +67,9 @@ const Login = () => {
           navigate('/manager_dashboard');
           break;
         case 'employee':
-          navigate('/employee_dashboard');
+        
+          navigate(`/employee_dashboard/${employee.id}`);
+          
           break;
         case 'hr':
           navigate('/hr_dashboard');

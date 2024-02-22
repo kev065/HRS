@@ -5,14 +5,16 @@ import MainPage from './components/MainPage';
 import Login from './components/Login';
 import DashBoardHr from './components/hrUI/DashBoardHr';
 import DashBoardEmployee from './components/employeeUI/DashBoardEmployee';
-import Training from './components/hrUI/Training';
+import Trainings from './components/hrUI/Trainings';
 import AddEmployeeForm from './components/hrUI/AddEmployee';
-import Session from './components/hrUI/Session';
-import Profile from './components/hrUI/Profile'
-import UpdateProfile from './components/hrUI/UpdateProfile';
-import LeaveApprovalForm from './components/hrUI/LeaveApproval';
-import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
-import DashBoardManager from './components/managerUI/DashBoardManager';
+import UpdateTrainings from './components/hrUI/UpdateTrainings';
+import ViewEmployees from './components/hrUI/ViewEmployees';
+import VerifyDocuments from './components/hrUI/VerifyDocuments';
+import EducationDocumentUpload from './components/employeeUI/EducationDocumentUpload';
+import ViewEducation from './components/employeeUI/ViewEducation';
+import UpdateEducation from './components/employeeUI/UpdateEducation';
+import ViewDocuments from './components/employeeUI/ViewDocuments';
+import UpdateDocuments from './components/employeeUI/UpdateDocuments';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -24,17 +26,26 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />   
           <Route path="/hr_dashboard" element={<DashBoardHr/>}/>
-          <Route path="/employee_dashboard" element={<DashBoardEmployee />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/employee_dashboard/:employeeId" element={<DashBoardEmployee/>} />
           <Route path="/hr_dashboard" element={<DashBoardHr />}/>
-          <Route path="/training_page" element={<Training trainings={trainings} setTrainings={setTrainings}/>}/>
+          <Route path="/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings}/>}/>
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
-          <Route path="/session" element={<Session />}/>
-          <Route path="/hr_profile" element={<Profile />}/>
-          <Route path="/hr_update_profile" element={<UpdateProfile />}/>
-          <Route path="/leave_approval" element={<LeaveApprovalForm />}/>
-          <Route path="/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
-          <Route path="/manager_dashboard" element={<DashBoardManager />}/>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/update_trainings/:id" element={<UpdateTrainings  />} />
+          <Route path="/view_employees" element={<ViewEmployees  />} />
+          <Route path="/verify_documents/:employeeId" element={<VerifyDocuments />} />
+          <Route path="/education/document/upload" element={<EducationDocumentUpload/>}/>
+          <Route path="/view_education/:employeeId" element={<ViewEducation/>}/>
+          <Route path="/update_education/:id" element={<UpdateEducation/>}/>
+          <Route path="/view_documents/:id" element={<ViewDocuments/>}/>
+          <Route path="/update_document/:id" element={<UpdateDocuments/>}/>
+      
+       
+          
+
+     
+
+          
         </Routes>
       </div>
   

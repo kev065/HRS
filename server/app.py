@@ -24,12 +24,13 @@ from datetime import datetime, timedelta
 from flask import Flask
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
-from models import db
+from models import db,Employee
 from dotenv import load_dotenv
 import os
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from models import TokenBlocklist
+
 
 bcrypt = Bcrypt()
 
@@ -45,6 +46,15 @@ def create_app():
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+    cloudinary_url = os.getenv('CLOUDINARY_URL')
+    cloudinary_cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME')
+    cloudinary_api_key = os.getenv('CLOUDINARY_API_KEY')
+    cloudinary_api_secret = os.getenv('CLOUDINARY_API_SECRET')
+
+    app.config['CLOUDINARY_URL'] = cloudinary_url
+    app.config['CLOUDINARY_CLOUD_NAME'] = cloudinary_cloud_name
+    app.config['CLOUDINARY_API_KEY'] = cloudinary_api_key
+    app.config['CLOUDINARY_API_SECRET'] = cloudinary_api_secret
     migrate = Migrate(app, db)
     db.init_app(app)
     jwt = JWTManager(app)
@@ -55,6 +65,11 @@ def create_app():
         jti = jwt_payload["jti"]
         token = db.session.query(TokenBlocklist).filter_by(jti=jti).first()
         return token is not None
+    
+    @jwt.user_lookup_loader
+    def user_lookup_callback(_jwt_header, jwt_data):
+        identity = jwt_data["sub"]
+        return Employee.query.filter_by(id=identity).first()
 
     app.register_blueprint(employee_bp)
     app.register_blueprint(department_bp)
@@ -78,6 +93,9 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
+
+ 
+
 
     return app
 

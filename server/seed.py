@@ -219,8 +219,8 @@ def seed_database():
             db.session.add(token)
         db.session.commit()
         document_data = [
-        {"employee_id": "employee_id_1", "link_url": "https://example.com/document1", "name": "Document 1", "type": "official"},
-        {"employee_id": "employee_id_2", "link_url": "https://example.com/document2", "name": "Document 2", "type": "institution"},
+        {"employee_id": "8d0af51c-ee16-4ce8-bea9-7f35f8cd3194", "link_url": "https://res.cloudinary.com/dpl7juq3s/image/upload/v1708540851/certificate_sample_mx3baz.jpg", "name": "Document 1", "type": "official"},
+        {"employee_id": "8d0af51c-ee16-4ce8-bea9-7f35f8cd3194", "link_url": "https://res.cloudinary.com/dpl7juq3s/image/upload/v1708542594/certificate_sample2_jj1go7.jpg", "name": "Document 2", "type": "institution"},
         {"employee_id": "employee_id_3", "link_url": "https://example.com/document3", "name": "Document 3", "type": "other"},
     ]
         for doc_info in document_data:
