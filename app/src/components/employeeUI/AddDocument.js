@@ -6,6 +6,7 @@ const AddDocument = ({documents,setDocuments,onClose}) => {
   const [newDocument, setNewDocument] = useState(null);
   const [documentName, setDocumentName] = useState('');
   const [documentType, setDocumentType] = useState('');
+  const [showAddButton, setShowAddButton] = useState(true);
   const navigate = useNavigate();
 
   const handleDocumentChange = (e) => {
@@ -58,12 +59,14 @@ const AddDocument = ({documents,setDocuments,onClose}) => {
 };
 
   return (
-    <div>
+    <div >
+        <div className="ui centered card" style={{ marginTop:'20px' ,width:"700px"}}>
+            <div className='card_container'>
       <h2>Add Document</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleDocumentChange} required />
-        <br />
-        <label>
+      <form onSubmit={handleSubmit} className='form_container'>
+        <div className='form-details-container'>
+       
+        <label className='label_css'>
           Document Name:
           <input type="text" value={documentName} onChange={(e) => setDocumentName(e.target.value)} required />
         </label>
@@ -78,9 +81,16 @@ const AddDocument = ({documents,setDocuments,onClose}) => {
           </select>
         </label>
         <br />
-        <button type="submit">Submit</button>
+        <input type="file" onChange={handleDocumentChange} required />
+        <br />
+        <button type="submit" className="mini ui teal button" style={{ marginBottom:'20px', marginTop:'20px'}}>Submit</button>
+        </div>
       </form>
-      <button onClick={handleExit}>Exit</button>
+      <div>
+      <button onClick={handleExit} className="mini ui teal button">Exit</button>
+      </div>
+      </div>
+    </div>
     </div>
   );
 };

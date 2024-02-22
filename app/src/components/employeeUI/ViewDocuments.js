@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { retrieve } from "../Encryption";
 import { useParams, useNavigate } from 'react-router-dom';
 import AddDocument from './AddDocument';
-
+import 'semantic-ui-css/semantic.min.css'
 const ViewDocuments = () => {
   const [documents, setDocuments] = useState([]);
   const [showAddDocument,setShowAddDocument] = useState(false);
@@ -46,7 +46,7 @@ const ViewDocuments = () => {
     })
       .then((res) => {
         console.log("RES: ", res);
-        // Update documents state after deletion
+       
         setDocuments(documents.filter(doc => doc.id !== documentId));
       })
       .catch((err) => {
@@ -59,9 +59,9 @@ const ViewDocuments = () => {
 };
 
   return (
-    <div>
-      <h2>Documents</h2>
-      <table>
+    <div className='main_container'>
+      <h2 className='header2'>My Documents</h2>
+      <table className="ui celled striped table">
         <thead>
           <tr>
             <th>Name</th>
