@@ -2,8 +2,8 @@ from flask import Blueprint, make_response, jsonify
 from flask_marshmallow import Marshmallow
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
-from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-
+from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field, fields
+from marshmallow.fields import Nested
 from models import db, Employee, Department, Documents, Experience, EmployeeTraining, EmployeeProfile, HR_Personel, HrProfile, Manager, ManagerProfile, Leave, LeaveApproval, Session, Training, Remuneration, RemunerationDescription, Goals, Education
 
 serializer_bp = Blueprint('serializer_bp', __name__)
@@ -12,13 +12,22 @@ bcrypt = Bcrypt()
 api = Api(serializer_bp)
 
 
-class EmployeeSchema(SQLAlchemyAutoSchema):
+class ExperienceSchema(SQLAlchemyAutoSchema):
     class Meta:
-        model = Employee
+        model = Experience
         include_fk = True
 
 
-employeeSchema = EmployeeSchema()
+experienceSchema = ExperienceSchema()
+
+
+class EmployeeProfileSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = EmployeeProfile
+        include_fk = True
+
+
+employeeProfileSchema = EmployeeProfileSchema()
 
 
 class DocumentSchema(SQLAlchemyAutoSchema):
@@ -48,15 +57,6 @@ class DepartmentSchema(SQLAlchemyAutoSchema):
 departmentSchema = DepartmentSchema()
 
 
-class SessionSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Session
-        include_fk = True
-
-
-sessionSchema = SessionSchema()
-
-
 class GoalsSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Goals
@@ -66,13 +66,14 @@ class GoalsSchema(SQLAlchemyAutoSchema):
 goalsSchema = GoalsSchema()
 
 
-class TrainingSchema(SQLAlchemyAutoSchema):
+class SessionSchema(SQLAlchemyAutoSchema):
     class Meta:
-        model = Training
+        model = Session
         include_fk = True
+    goals = Nested(GoalsSchema, many=True)
 
 
-trainingSchema = TrainingSchema()
+sessionSchema = SessionSchema()
 
 
 class LeaveApprovalSchema(SQLAlchemyAutoSchema):
@@ -93,22 +94,14 @@ class EmployeeTrainingSchema(SQLAlchemyAutoSchema):
 employeeTrainingSchema = EmployeeTrainingSchema()
 
 
-class HrProfileSchema(SQLAlchemyAutoSchema):
+class TrainingSchema(SQLAlchemyAutoSchema):
     class Meta:
-        model = HrProfile
+        model = Training
         include_fk = True
+    trainings = Nested(EmployeeTrainingSchema, many=True)
 
 
-hrProfileSchema = HrProfileSchema()
-
-
-class RemunerationSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Remuneration
-        include_fk = True
-
-
-remunerationSchema = RemunerationSchema()
+trainingSchema = TrainingSchema()
 
 
 class RemunerationDescriptionSchema(SQLAlchemyAutoSchema):
@@ -120,40 +113,23 @@ class RemunerationDescriptionSchema(SQLAlchemyAutoSchema):
 remunerationDescriptionSchema = RemunerationDescriptionSchema()
 
 
-class ExperienceSchema(SQLAlchemyAutoSchema):
+class RemunerationSchema(SQLAlchemyAutoSchema):
     class Meta:
-        model = Experience
+        model = Remuneration
+        include_fk = True
+    remunerations = Nested(RemunerationDescriptionSchema, many=True)
+
+
+remunerationSchema = RemunerationSchema()
+
+
+class HrProfileSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = HrProfile
         include_fk = True
 
 
-experienceSchema = ExperienceSchema()
-
-
-class EmployeeProfileSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = EmployeeProfile
-        include_fk = True
-
-
-employeeProfileSchema = EmployeeProfileSchema()
-
-
-class HrSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = HR_Personel
-        include_fk = True
-
-
-hrSchema = HrSchema()
-
-
-class ManagerSchema(SQLAlchemyAutoSchema):
-    class Meta:
-        model = Manager
-        include_fk = True
-
-
-managerSchema = ManagerSchema()
+hrProfileSchema = HrProfileSchema()
 
 
 class ManagerProfileSchema(SQLAlchemyAutoSchema):
@@ -171,6 +147,49 @@ class LeaveSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Leave
         include_fk = True
+    leave = Nested(LeaveApprovalSchema, many=True)
 
 
 leaveSchema = LeaveSchema()
+
+
+class EmployeeSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Employee
+        include_fk = True
+        exclude = ('password',)
+    # associated data
+    profile = Nested(EmployeeProfileSchema, many=True)
+    experiences = Nested(ExperienceSchema, many=True)
+    documents = Nested(DocumentSchema, many=True)
+    leaves = Nested(LeaveSchema, many=True)
+    goals = Nested(GoalsSchema, many=True)
+    educations = Nested(EducationSchema, many=True)
+
+
+employeeSchema = EmployeeSchema()
+
+
+class ManagerSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Manager
+        include_fk = True
+        exclude = ('password',)
+    leave_approvals = Nested(LeaveApprovalSchema, many=True)
+    profile = Nested(ManagerProfileSchema, many=True)
+
+
+managerSchema = ManagerSchema()
+
+
+class HrSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = HR_Personel
+        include_fk = True
+        exclude = ('password',)
+
+    leave_approvals = Nested(LeaveApprovalSchema, many=True)
+    profile = Nested(HrProfileSchema, many=True)
+
+
+hrSchema = HrSchema()
