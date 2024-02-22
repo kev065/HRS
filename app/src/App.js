@@ -16,9 +16,7 @@ import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
 import DashBoardManager from './components/managerUI/DashBoardManager';
 import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
 import Experience from './components/employeeUI/AddExperience';
-
-
-import Goals from './components/employeeUI/AddGoalsEmployee';
+import Goals from './components/employeeUI/ViewGoalsEmployee';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
