@@ -18,9 +18,9 @@
 }
 
 .profile-sidebar {
-  background-color: var(--gray);
+  background-color: #ddd;
   color: var(--extra-light);
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .profile-sidebar a {
