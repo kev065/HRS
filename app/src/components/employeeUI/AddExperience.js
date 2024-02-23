@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { retrieve } from "../Encryption";
+import './Experience.css';
 
 // formats the date
 const formatDate = (dateString) => {
@@ -154,7 +155,7 @@ const Experience = () => {
     return (
         <form onSubmit={handleSubmit}>
             {experiences.map((experience, index) => (
-                <div key={index}>
+                <div key={index} className="experience">
                     <input type="text" name="name" value={experience.name} onChange={e => handleChange(e, index)} placeholder="Name" required />
                     <input type="text" name="job_title" value={experience.job_title} onChange={e => handleChange(e, index)} placeholder="Job Title" required />
                     <textarea name="description" value={experience.description} onChange={e => handleChange(e, index)} placeholder="Description" required />
