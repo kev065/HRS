@@ -32,6 +32,7 @@ const EmployeeProfile = () => {
       },
     }).then((resp) => {
       if (resp.ok) {
+        localStorage.clear();
         navigate("/login");
       }
     });
@@ -42,7 +43,6 @@ const EmployeeProfile = () => {
       <div className="main">
         <div className="topbar">
           <Link onClick={handleLogout}>Logout</Link>
-          <a href="">Edit Profile</a>
           <a href="">Dashboard</a>
         </div>
         <div className="row">
@@ -58,6 +58,12 @@ const EmployeeProfile = () => {
                 <div className="mt-3">
                   <h3>{employee.email}</h3>
                   <p>{employeeProfileData.mantra}</p>
+                </div>
+                <div className="mt-3">
+                  <button className="sidebar-btn">Edit Profile</button>
+                </div>
+                <div className="mt-3">
+                  <button className="sidebar-btn del">Delete Profile</button>
                 </div>
               </div>
             </div>

@@ -77,9 +77,8 @@ const EmployeeProfileForm = () => {
               value={formik.values.profile_photo}
               onChange={formik.handleChange}
             />
-            {formik.touched.date_of_birth &&
-            formik.errors.mantrdate_of_birth ? (
-              <div className="error">{formik.errors.mantrdate_of_birth}</div>
+            {formik.touched.profile_photo && formik.errors.profile_photo ? (
+              <div className="error">{formik.errors.profile_photo}</div>
             ) : null}
           </div>
           <div className="form-control">
