@@ -1,6 +1,6 @@
 .experience {
     margin: 1em 0;
-    background-color: #f0f8ff; /* AliceBlue */
+    background-color: #f0f8ff; 
     border-radius: 5px;
     padding: 1em;
 }
@@ -19,18 +19,35 @@
     padding: 0.5em 1em;
     border-radius: 5px;
     border: none;
-    color: white;
-}
-
-.experience button[type="submit"] {
-    background-color: #008000; /* Green */
-}
-
-.experience button[type="button"] {
-    background-color: #1e90ff; /* DodgerBlue */
 }
 
 .experience button:not([type]) {
-    background-color: #ff4500; /* OrangeRed */
+    background-color: #ff4500; 
 }
+
+.experience .update-button {
+    background-color: #008000; 
+}
+
+.experience .delete-button {
+    background-color: #ff0000; 
+}
+
+.experience .add-button {
+    background-color: #1e90ff; 
+    color: white;
+}
+
+.experience .submit-button {
+    background-color: #008000; 
+    color: white;
+}
+
+
+
+
+
+
+
+
 
