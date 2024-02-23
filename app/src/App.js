@@ -17,7 +17,8 @@ import ViewDocuments from './components/employeeUI/ViewDocuments';
 import UpdateDocuments from './components/employeeUI/UpdateDocuments';
 import ViewLeaves from './components/employeeUI/ViewLeaves';
 import UpdateLeave from './components/employeeUI/UpdateLeave';
-
+import Profile from './components/hrUI/Profile';
+import CreateProfile from './components/hrUI/CreateProfile'
 function App() {
   const [trainings, setTrainings] = useState([]);
 
@@ -27,9 +28,10 @@ function App() {
                
         <Routes>
           <Route path="/" element={<MainPage />} />   
-          <Route path="/hr_dashboard" element={<DashBoardHr/>}/>
+          <Route path="/hr_dashboard/:hrId" element={<DashBoardHr/>}/>
+          <Route path="/hr_profile/:hrId" element={<Profile/>}/>
+          <Route path="/create_profile/:hrId" element={<CreateProfile/>}/>
           <Route path="/employee_dashboard/:employeeId" element={<DashBoardEmployee/>} />
-          <Route path="/hr_dashboard" element={<DashBoardHr />}/>
           <Route path="/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings}/>}/>
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
           <Route path="/login" element={<Login />}/>

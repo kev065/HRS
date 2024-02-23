@@ -41,7 +41,8 @@ const Login = () => {
       .then((result) => {
         // Check the role and access token from the response
         store(result);
-        const { role, employee } = result;
+        const { role, employee, hr, manager } = result;
+  
 
         localStorage.setItem(
           "accessToken",
@@ -50,14 +51,14 @@ const Login = () => {
         // Redirect the user based on their role
         switch (role) {
           case "manager":
-            navigate("/manager_dashboard");
+            navigate(`/manager_dashboard/${manager.id}`);
             break;
           case "employee":
             navigate(`/employee_dashboard/${employee.id}`);
 
             break;
           case "hr":
-            navigate("/hr_dashboard");
+            navigate(`/hr_dashboard/${hr.id}`);
             break;
           default:
             console.error("Unknown role:", role);
