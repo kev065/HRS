@@ -28,10 +28,6 @@ post_args.add_argument('profile_photo', type=str,
                        required=True, help='Photo is required')
 post_args.add_argument('title', type=str, required=True,
                        help='Title is required')
-post_args.add_argument('date_created', type=str,
-                       required=True, help='Date created is required')
-post_args.add_argument('date_joined', type=str,
-                       required=True, help='Date Joined is required')
 
 
 patch_args = reqparse.RequestParser()
@@ -42,7 +38,6 @@ patch_args.add_argument('mantra', type=str)
 patch_args.add_argument('phone_contact', type=str)
 patch_args.add_argument('profile_photo', type=str)
 patch_args.add_argument('title', type=str)
-patch_args.add_argument('date_joined', type=str)
 
 
 class EmployeeProfiles(Resource):
@@ -66,13 +61,11 @@ class EmployeeProfiles(Resource):
         profile_photo = data["profile_photo"]
         title = data["title"]
         date_of_birth = datetime.strptime(
-            data["date_of_birth"], "%Y-%m-%dT%H:%M:%S.%f")
-        date_joined = datetime.strptime(
-            data["date_joined"], "%Y-%m-%dT%H:%M:%S.%f")
+            data["date_of_birth"], "%Y-%m-%d")
         date_created = datetime.utcnow()
 
         new_experience_profile = EmployeeProfile(date_of_birth=date_of_birth, employee_id=employee_id, first_name=first_name, last_name=last_name,
-                                                 mantra=mantra, phone_contact=phone_contact, profile_photo=profile_photo, title=title, date_created=date_created, date_joined=date_joined)
+                                                 mantra=mantra, phone_contact=phone_contact, profile_photo=profile_photo, title=title, date_created=date_created)
         db.session.add(new_experience_profile)
         db.session.commit()
 
@@ -107,17 +100,14 @@ class EmployeeProfileById(Resource):
         if not single_employee_profile:
             abort(404, detail=f'Employee Profile with id {id} does not exist')
 
-        if single_employee_profile.id != current_user:
+        if single_employee_profile.employee_id != current_user:
             abort(401, detail="Unauthorized request")
 
         data = patch_args.parse_args()
 
         if 'date_of_birth' in data:
             data['date_of_birth'] = datetime.strptime(
-                data['date_of_birth'], "%Y-%m-%dT%H:%M:%S.%f")
-        if 'date_joined' in data:
-            data['date_joined'] = datetime.strptime(
-                data['date_joined'], "%Y-%m-%dT%H:%M:%S.%f")
+                data['date_of_birth'], "%Y-%m-%d")
 
         for key, value in data.items():
             if value is None:
@@ -138,7 +128,7 @@ class EmployeeProfileById(Resource):
             response_body = {"error": "Employee Profile not found"}
             return make_response(response_body, 404)
 
-        if single_employee_profile.id != current_user:
+        if single_employee_profile.employee_id != current_user:
             abort(401, detail="Unauthorized request")
 
         db.session.delete(single_employee_profile)

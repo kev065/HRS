@@ -30,10 +30,7 @@ post_args.add_argument('title', type=str, required=True,
                        help='Job Title is required')
 post_args.add_argument('profile_photo', type=str,
                        required=True, help='Profile photo is required')
-post_args.add_argument('date_created', type=str,
-                       required=True, help='Date created  is required')
-post_args.add_argument('date_joined', type=str,
-                       required=True, help='Date joined is required')
+
 
 patch_args = reqparse.RequestParser()
 patch_args.add_argument('date_of_birth', type=str)
@@ -43,8 +40,6 @@ patch_args.add_argument('mantra', type=str)
 patch_args.add_argument('phone_contact', type=int)
 patch_args.add_argument('title', type=str)
 patch_args.add_argument('profile_photo')
-patch_args.add_argument('date_created', type=str)
-patch_args.add_argument('date_joined', type=str)
 
 
 class ManagerProfiles(Resource):
@@ -65,8 +60,11 @@ class ManagerProfiles(Resource):
             manager_id=data.manager_id).first()
         if managerProfile:
             abort(409, detail="Profile with the same manager ID already exists")
-        new_managerProfile = ManagerProfile(first_name=data['first_name'], last_name=data['last_name'], date_of_birth=data['date_of_birth'], manager_id=current_user, mantra=data['mantra'],
-                                            phone_contact=data['phone_contact'], title=data['title'], profile_photo=data['profile_photo'], date_created=datetime.utcnow(), date_joined=data['date_joined'])
+        date_of_birth = datetime.strptime(
+            data["date_of_birth"], "%Y-%m-%d")
+
+        new_managerProfile = ManagerProfile(first_name=data['first_name'], last_name=data['last_name'], date_of_birth=date_of_birth, manager_id=current_user, mantra=data['mantra'],
+                                            phone_contact=data['phone_contact'], title=data['title'], profile_photo=data['profile_photo'], date_created=datetime.utcnow())
         db.session.add(new_managerProfile)
         db.session.commit()
 
@@ -103,6 +101,9 @@ class ManagerProfileById(Resource):
             abort(401, detail="Unauthorized request")
 
         data = patch_args.parse_args()
+        if 'date_of_birth' in data:
+            data['date_of_birth'] = datetime.strptime(
+                data['date_of_birth'], "%Y-%m-%d")
         for key, value in data.items():
             if value is None:
                 continue

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom'; 
 import VerifyDocuments from './VerifyDocuments';
+import { retrieve } from "../Encryption";
 
 const ViewEmployees = () => {
   const [employees, setEmployees] = useState([]);
@@ -7,7 +9,7 @@ const ViewEmployees = () => {
   useEffect(() => {
     fetch('/employeeProfiles', {
       headers: {
-        'Authorization': "Bearer "+ localStorage.getItem("jwt")
+        "Authorization": "Bearer " + retrieve().access_token,
       }
     })
       .then(response => {
@@ -39,7 +41,7 @@ const ViewEmployees = () => {
             <td>{employee.id}</td>
             <td>{employee.first_name} {employee.last_name}</td>
             <td>
-              <VerifyDocuments employeeId={employee.id} />
+              <Link to={`/verify_documents/${employee.id}`}>Verify documents</Link> 
             </td>
           </tr>
         ))}

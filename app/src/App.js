@@ -8,6 +8,18 @@ import DashBoardEmployee from './components/employeeUI/DashBoardEmployee';
 import Trainings from './components/hrUI/Trainings';
 import AddEmployeeForm from './components/hrUI/AddEmployee';
 import UpdateTrainings from './components/hrUI/UpdateTrainings';
+import ViewEmployees from "./components/hrUI/ViewEmployees";
+import VerifyDocuments from "./components/hrUI/VerifyDocuments";
+import EducationDocumentUpload from "./components/employeeUI/EducationDocumentUpload";
+import ViewEducation from "./components/employeeUI/ViewEducation";
+import UpdateEducation from "./components/employeeUI/UpdateEducation";
+import ViewDocuments from "./components/employeeUI/ViewDocuments";
+import UpdateDocuments from "./components/employeeUI/UpdateDocuments";
+import ViewLeaves from "./components/employeeUI/ViewLeaves";
+import UpdateLeave from "./components/employeeUI/UpdateLeave";
+import EmployeeProfileForm from "./components/employeeUI/EmployeeProfileForm";
+import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
+import EditProfileForm from "./components/employeeUI/EditProfileForm";
 import Session from './components/hrUI/Session';
 import Profile from './components/hrUI/Profile'
 import UpdateProfile from './components/hrUI/UpdateProfile';
@@ -27,13 +39,12 @@ function App() {
                
         <Routes>
           <Route path="/" element={<MainPage />} />   
-          <Route path="/hr_dashboard" element={<DashBoardHr/>}/>
-          <Route path="/employee_dashboard" element={<DashBoardEmployee/>} />
           <Route path="/hr_dashboard" element={<DashBoardHr />}/>
+          <Route path="/employee_dashboard/:employeeId" element={<DashBoardEmployee />}/>
           <Route path="/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings}/>}/>
           <Route path="/add_employee" element={<AddEmployeeForm />}/>
           <Route path="/login" element={<Login />}/>
-          <Route path="/update_trainings/:id" element={<UpdateTrainings  />} />
+          <Route path="/update_trainings/:id" element={<UpdateTrainings />} />
           <Route path="/session" element={<Session />}/>
           <Route path="/hr_profile" element={<Profile />}/>
           <Route path="/hr_update_profile" element={<UpdateProfile />}/>
@@ -43,9 +54,20 @@ function App() {
           <Route path="/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
           <Route path="/experience" element={<Experience />}/>
           <Route path="/goals" element={<Goals />}/>
+          <Route path="/view_employees" element={<ViewEmployees />} />
+          <Route path="/verify_documents/:employeeId" element={<VerifyDocuments />}/>
+          <Route path="/education/document/upload" element={<EducationDocumentUpload />}/>
+          <Route path="/view_education/:employeeId" element={<ViewEducation />} />
+          <Route path="/update_education/:id" element={<UpdateEducation />} />
+          <Route path="/view_documents/:id" element={<ViewDocuments />} />
+          <Route path="/update_document/:id" element={<UpdateDocuments />} />
+          <Route path="/view_leaves/:id" element={<ViewLeaves />} />
+          <Route path="/update_leave/:id" element={<UpdateLeave />} />
+          <Route path="profile" element={<EmployeeProfile />} />
+          <Route path="/profile/create" element={<EmployeeProfileForm />} />
+          <Route path="/profile/edit" element={<EditProfileForm />} />
         </Routes>
       </div>
-  
   );
 }
 

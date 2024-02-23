@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
-
-const VerifyDocuments = ({ employeeId }) => {
+import {retrieve} from "../Encryption"
+import { useParams } from "react-router-dom";
+const VerifyDocuments = () => {
   const [documents, setDocuments] = useState([]);
+  const{employeeId}=useParams()
 
   useEffect(() => {
-    fetch(`/documents/${employeeId}`, {
+    fetch(`/documents/employee/${employeeId}`, {
       headers: {
         "Authorization": "Bearer " + retrieve().access_token,
       }
