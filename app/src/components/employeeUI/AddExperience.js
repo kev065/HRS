@@ -65,45 +65,26 @@ const Experience = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        // Make a POST request flask backend for each experience
-        experiences.forEach(experience => {
-            // format the dates
-            experience.start_date = formatDateForBackend(experience.start_date);
-            experience.end_date = formatDateForBackend(experience.end_date);
-            axios.post('http://localhost:5555/experiences', experience, {
-                headers: {
-                    'Authorization': `Bearer ${retrieve().access_token}`
-                }
-            })
-            .then(res => {
-                console.log(res.data);
-            })
-            .catch(err => {
-                console.error(err);
-            });
-        });
-        // Clear the form
-        setExperiences([{
-            name: '',
-            job_title: '',
-            description: '',
-            start_date: '',
-            end_date: ''
-        }]);
-        // Fetch experiences from the database
-        axios.get('http://localhost:5555/experiences', {
+        // Make a POST request flask backend for the new experience
+        const newExperience = experiences[experiences.length - 1];
+        // format the dates
+        newExperience.start_date = formatDateForBackend(newExperience.start_date);
+        newExperience.end_date = formatDateForBackend(newExperience.end_date);
+        axios.post('http://localhost:5555/experiences', newExperience, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
         })
         .then(res => {
-            // Format the dates
-            const formattedExperiences = res.data.map(exp => ({
-                ...exp,
-                start_date: formatDate(exp.start_date),
-                end_date: formatDate(exp.end_date)
-            }));
-            setExperiences(formattedExperiences);
+            console.log(res.data);
+            // Clear the form
+            setExperiences([{
+                name: '',
+                job_title: '',
+                description: '',
+                start_date: '',
+                end_date: ''
+            }]);
         })
         .catch(err => {
             console.error(err);
@@ -111,7 +92,8 @@ const Experience = () => {
     };
     
 
-    const handleUpdate = (id, updatedExperience) => {
+    const handleUpdate = (event, id, updatedExperience) => {
+        event.preventDefault();
         axios.put(`http://localhost:5555/experiences/${id}`, updatedExperience, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
@@ -125,8 +107,9 @@ const Experience = () => {
             console.error(err);
         });
     };
-
-    const handleDelete = (id) => {
+    
+    const handleDelete = (event, id) => {
+        event.preventDefault();
         axios.delete(`http://localhost:5555/experiences/${id}`, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
@@ -151,7 +134,7 @@ const Experience = () => {
         }]);
     };
 
-    // Experience
+
     return (
         <form onSubmit={handleSubmit}>
             {experiences.map((experience, index) => (
@@ -167,8 +150,8 @@ const Experience = () => {
                         End Date:
                         <input type="date" name="end_date" value={experience.end_date} onChange={e => handleChange(e, index)} required />
                     </label>
-                    <button onClick={() => handleUpdate(experience.id, experience)}>Update</button>
-                    <button onClick={() => handleDelete(experience.id)}>Delete</button>
+                    <button type="button" onClick={(event) => handleUpdate(event, experience.id, experience)}>Update</button>
+                    <button type="button" onClick={(event) => handleDelete(event, experience.id)}>Delete</button>
                 </div>
             ))}
             <button type="button" onClick={addExperience}>Add Another Experience</button>
