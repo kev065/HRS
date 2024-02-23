@@ -77,8 +77,10 @@ const Experience = () => {
         })
         .then(res => {
             console.log(res.data);
-            // Clear the form
-            setExperiences([{
+            // Add the new experience to the state
+            setExperiences(prevExperiences => [...prevExperiences, res.data]);
+            // Add a new empty experience to the state for the form
+            setExperiences(prevExperiences => [...prevExperiences, {
                 name: '',
                 job_title: '',
                 description: '',
@@ -150,12 +152,14 @@ const Experience = () => {
                         End Date:
                         <input type="date" name="end_date" value={experience.end_date} onChange={e => handleChange(e, index)} required />
                     </label>
-                    <button type="button" onClick={(event) => handleUpdate(event, experience.id, experience)}>Update</button>
-                    <button type="button" onClick={(event) => handleDelete(event, experience.id)}>Delete</button>
+                    <button type="button" className="update-button" onClick={(event) => handleUpdate(event, experience.id, experience)}>Update</button>
+                    <button type="button" className="delete-button" onClick={(event) => handleDelete(event, experience.id)}>Delete</button>
+
                 </div>
             ))}
-            <button type="button" onClick={addExperience}>Add Another Experience</button>
-            <button type="submit">Submit</button>
+            <button type="button" className="add-button" onClick={addExperience}>Add Another Experience</button>
+            <button type="submit" className="submit-button">Submit</button>
+
         </form>
     );
 };
