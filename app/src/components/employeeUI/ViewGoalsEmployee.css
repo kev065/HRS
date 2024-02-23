@@ -1,0 +1,62 @@
+.container {
+  margin: 20px;
+  background-color: #f0f8ff; 
+  color: #333; 
+  text-align: center; 
+}
+
+.goal {
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f0f8ff; 
+}
+
+.goal h2 {
+  margin: 0;
+  color: #008080; 
+}
+
+.goal p {
+  margin: 0;
+  color: #6c757d;
+}
+
+.title-container {
+    display: inline-block;
+    position: relative;
+}
+
+.title-animation {
+    text-align: center;
+    text-decoration: none;
+}
+
+.title-animation::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 8px;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #ddd; 
+}
+
+.title-animation span {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background-color: #008080; 
+    animation: goalAnim 5s linear infinite;
+    z-index: 1;
+}
+
+@keyframes goalAnim {
+    0% { left: 0; }
+    100% { left: calc(100% - 8px); }
+}
