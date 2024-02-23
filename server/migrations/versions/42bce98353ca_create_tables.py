@@ -1,8 +1,8 @@
-"""add employees table
+"""create tables
 
-Revision ID: a79dbbe0bbb8
-Revises: 9d412f1dccdf
-Create Date: 2024-02-21 14:24:47.300407
+Revision ID: 42bce98353ca
+Revises: 
+Create Date: 2024-02-23 09:58:10.695990
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a79dbbe0bbb8'
-down_revision = '9d412f1dccdf'
+revision = '42bce98353ca'
+down_revision = None
 branch_labels = None
 depends_on = None
 
