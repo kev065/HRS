@@ -73,7 +73,7 @@ const UpdateDocument = () => {
   };
 
   return (
-    <div>
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Update Document</h2>
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleDocumentChange} required />

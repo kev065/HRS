@@ -69,7 +69,7 @@ const ViewLeaves = () => {
   };
 
   return (
-    <div>
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Leave Applications</h2>
       <table>
         <thead>

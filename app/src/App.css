@@ -16,6 +16,9 @@
 .h2{
     text-align: center;
 }
+.h1{
+  text-align: center;
+}
 .card_container{
     display: flex;
     flex-direction: column;
@@ -32,10 +35,6 @@
   }
 
   
-  .label_css {
-
-  }
-  
   input[type="text"],
   select,
   input[type="file"] {
@@ -44,4 +43,9 @@
   
   button {
     margin-top: 20px; }
-  
+  .main_container_login{
+      margin-top: 90px;
+      width:1600px;
+   
+    }
+ 

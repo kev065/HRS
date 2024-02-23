@@ -39,6 +39,7 @@ const EmployeeProfile = () => {
   }
 
   return (
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
     <div className="profile-container">
       <div className="main">
         <div className="topbar">
@@ -170,6 +171,7 @@ const EmployeeProfile = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

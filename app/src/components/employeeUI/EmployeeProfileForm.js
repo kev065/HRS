@@ -62,6 +62,7 @@ const EmployeeProfileForm = () => {
   });
 
   return (
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
     <div className="container">
       <div className="form-container">
         <form className="profile-form" onSubmit={formik.handleSubmit}>
@@ -182,6 +183,7 @@ const EmployeeProfileForm = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };
