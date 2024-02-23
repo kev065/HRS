@@ -3,12 +3,13 @@ import HeaderEmployee from './HeaderEmployee'
 import HomeEmployee from './HomeEmployee'
 import SideNavEmployee from './SideNavEmployee'
 import Footeremployee from './Footeremployee'
+import { Outlet } from 'react-router-dom'
 
 const DashBoardEmployee = () => {
   return (
     <div>
         <HeaderEmployee />
-        <HomeEmployee />
+        <Outlet />
         <SideNavEmployee />
         <Footeremployee />
     </div>

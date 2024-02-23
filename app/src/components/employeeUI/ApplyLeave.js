@@ -45,7 +45,7 @@ const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
     };
 
     return (
-        <div>
+        <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
             <h2>Apply for Leave</h2>
             <form onSubmit={handleSubmit}>
                 <label>

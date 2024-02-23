@@ -1,8 +1,8 @@
-"""add employees table
+"""create tables
 
-Revision ID: a79dbbe0bbb8
-Revises: 9d412f1dccdf
-Create Date: 2024-02-21 14:24:47.300407
+Revision ID: 4ab53fee4c0b
+Revises: 
+Create Date: 2024-02-23 11:34:04.122991
 
 """
 from alembic import op
@@ -10,8 +10,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a79dbbe0bbb8'
-down_revision = '9d412f1dccdf'
+revision = '4ab53fee4c0b'
+down_revision = None
 branch_labels = None
 depends_on = None
 
@@ -99,7 +99,7 @@ def upgrade():
     )
     op.create_table('employee_profiles',
     sa.Column('id', sa.String(), nullable=False),
-    sa.Column('date_of_birth', sa.DateTime(), nullable=False),
+    sa.Column('date_of_birth', sa.Date(), nullable=False),
     sa.Column('employee_id', sa.String(), nullable=False),
     sa.Column('first_name', sa.String(length=30), nullable=False),
     sa.Column('last_name', sa.String(length=30), nullable=False),
@@ -108,7 +108,6 @@ def upgrade():
     sa.Column('profile_photo', sa.String(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('date_created', sa.DateTime(), nullable=True),
-    sa.Column('date_joined', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['employee_id'], ['employees.id'], name=op.f('fk_employee_profiles_employee_id_employees')),
     sa.PrimaryKeyConstraint('id')
     )
@@ -143,7 +142,7 @@ def upgrade():
     )
     op.create_table('hr_profiles',
     sa.Column('id', sa.String(), nullable=False),
-    sa.Column('date_of_birth', sa.DateTime(), nullable=False),
+    sa.Column('date_of_birth', sa.Date(), nullable=False),
     sa.Column('hr_id', sa.String(), nullable=False),
     sa.Column('first_name', sa.String(length=30), nullable=False),
     sa.Column('last_name', sa.String(length=30), nullable=False),
@@ -152,7 +151,6 @@ def upgrade():
     sa.Column('profile_photo', sa.String(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('date_created', sa.DateTime(), nullable=True),
-    sa.Column('date_joined', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['hr_id'], ['hr_personnels.id'], name=op.f('fk_hr_profiles_hr_id_hr_personnels')),
     sa.PrimaryKeyConstraint('id')
     )
@@ -168,7 +166,7 @@ def upgrade():
     )
     op.create_table('manager_profiles',
     sa.Column('id', sa.String(), nullable=False),
-    sa.Column('date_of_birth', sa.DateTime(), nullable=False),
+    sa.Column('date_of_birth', sa.Date(), nullable=False),
     sa.Column('manager_id', sa.String(), nullable=False),
     sa.Column('first_name', sa.String(length=30), nullable=False),
     sa.Column('last_name', sa.String(length=30), nullable=False),
@@ -177,7 +175,6 @@ def upgrade():
     sa.Column('profile_photo', sa.String(), nullable=False),
     sa.Column('title', sa.String(), nullable=False),
     sa.Column('date_created', sa.DateTime(), nullable=True),
-    sa.Column('date_joined', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['manager_id'], ['managers.id'], name=op.f('fk_manager_profiles_manager_id_managers')),
     sa.PrimaryKeyConstraint('id')
     )

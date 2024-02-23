@@ -62,7 +62,7 @@ const ViewEducation = () => {
 }
 
   return (
-    <div>
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Education</h2>
       <table>
         <thead>

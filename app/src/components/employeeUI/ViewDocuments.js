@@ -59,6 +59,7 @@ const ViewDocuments = () => {
 };
 
   return (
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
     <div className='main_container'>
       <h2 className='header2'>My Documents</h2>
       <table className="ui celled striped table">
@@ -86,6 +87,7 @@ const ViewDocuments = () => {
       </table>
       {showAddDocument && <AddDocument onClose={handleAddDocumentClose}  documents={documents} setDocuments={setDocuments} />}
       <button onClick={() => setShowAddDocument(true)}>Add Document</button>
+    </div>
     </div>
   );
 };

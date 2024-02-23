@@ -50,14 +50,14 @@ const Login = () => {
         // Redirect the user based on their role
         switch (role) {
           case "manager":
-            navigate("/manager_dashboard");
+            navigate("/manager");
             break;
           case "employee":
-            navigate(`/employee_dashboard/${employee.id}`);
+            navigate("/employee");
 
             break;
           case "hr":
-            navigate("/hr_dashboard");
+            navigate("/hr");
             break;
           default:
             console.error("Unknown role:", role);
@@ -66,44 +66,19 @@ const Login = () => {
         console.log("Login successful!");
       })
       .catch((error) => {
-        // Handle any network or unexpected errors
+       
         console.error("Error during login:", error);
       });
   };
   return (
-    <div>
-      {/* Content Wrapper. Contains page content */}
-      <div className="content-wrapper">
-        {/* Content Header (Page header) */}
-        <section className="content-header">
-          <div className="container-fluid">
-            <div className="row mb-2">
-              <div className="col-sm-6">
-                <h1>LOGIN Form</h1>
-              </div>
-              <div className="col-sm-6">
-                <ol className="breadcrumb float-sm-right">
-                  <li className="breadcrumb-item">
-                    <a href="/">Home</a>
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-          {/* /.container-fluid */}
-        </section>
-        {/* Main content */}
-        <section className="content">
-          <div className="container-fluid">
-            <div className="row">
-              {/* left column */}
-              <div className="col-md-6">
-                {/* general form elements */}
-                <div className="card card-primary">
-                  {/* /.card-header */}
-                  {/* form start */}
+    <div className="main_container_login">
+      <div className="ui column">
+      <h1 style={{ textAlign: "center" , marginBottom:"30px"}}>Login Form</h1>    
+      <div className="ui centered card " style={{ width: "400px" }}>
+      
+      <div className="loginForm_container" style={{ margin: "20px", textAlign: "center" }}>
+             
                   <form onSubmit={handleSubmit}>
-                    <div className="card-body">
                       <div className="form-group">
                         <label htmlFor="exampleInputEmail1">
                           Email address
@@ -139,26 +114,24 @@ const Login = () => {
                           className="form-check-label"
                           htmlFor="exampleCheck1"
                         >
-                          Remember
+                          Remember Me
                         </label>
                       </div>
-                    </div>
-                    {/* /.card-body */}
-                    <div className="card-footer">
-                      <button type="submit" className="btn btn-primary">
+                
+                    <div className="">
+                      <button type="submit" className="ui teal button" style={{ marginTop: "20px", textAlign: "center" }}>
                         Submit
                       </button>
                     </div>
                   </form>
-                </div>
-                {/* /.card */}
-                {/* general form elements */}
+                
               </div>
-            </div>
-          </div>
-        </section>
-      </div>
+          
+              </div>
+     </div>
+  
     </div>
+    
   );
 };
 

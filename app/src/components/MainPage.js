@@ -1,7 +1,7 @@
 import React from "react";
 import banner from "../assets/banner.jpg";
 import "./mainpage.css";
-
+import { Link} from 'react-router-dom'
 const MainPage = () => {
   return (
     <>
@@ -14,7 +14,7 @@ const MainPage = () => {
             <li className="link">Home</li>
             <li className="link">About</li>
             <li className="link">Contact Us</li>
-            <li className="link">LOGIN</li>
+            <Link className="link" to={"/Login"}>LOGIN</Link>
           </ul>
         </nav>
         <div className="main-container">
