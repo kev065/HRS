@@ -36,5 +36,9 @@
   .button.decline {
     background-color: #dc3545; /* red */
   }
+  .success {
+    color: green;
+  }
+  
   
   
