@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './PendingLeavesHr.css';
 
 const PendingLeaves = () => {
   const [leaves, setLeaves] = useState([]);
@@ -49,16 +50,16 @@ const PendingLeaves = () => {
   };
 
   return (
-    <div>
-      {error && <p>{error}</p>}
+    <div className="container">
+      {error && <p className="error">{error}</p>}
       {leaves.map((leave) => (
-        <div key={leave.id}>
+        <div key={leave.id} className="leave">
           <p>Employee ID: {leave.employee_id}</p>
           <p>Start Date: {new Date(leave.start_date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
           <p>End Date: {new Date(leave.end_date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
           <p>Description: {leave.description}</p>
-          <button onClick={() => handleApprove(leave.id)}>Approve</button>
-          <button onClick={() => handleDecline(leave.id)}>Decline</button>
+          <button className="button approve" onClick={() => handleApprove(leave.id)}>Approve</button>
+          <button className="button decline" onClick={() => handleDecline(leave.id)}>Decline</button>
         </div>
       ))}
     </div>
