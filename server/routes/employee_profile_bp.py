@@ -100,7 +100,7 @@ class EmployeeProfileById(Resource):
         if not single_employee_profile:
             abort(404, detail=f'Employee Profile with id {id} does not exist')
 
-        if single_employee_profile.id != current_user:
+        if single_employee_profile.employee_id != current_user:
             abort(401, detail="Unauthorized request")
 
         data = patch_args.parse_args()
@@ -128,7 +128,7 @@ class EmployeeProfileById(Resource):
             response_body = {"error": "Employee Profile not found"}
             return make_response(response_body, 404)
 
-        if single_employee_profile.id != current_user:
+        if single_employee_profile.employee_id != current_user:
             abort(401, detail="Unauthorized request")
 
         db.session.delete(single_employee_profile)
