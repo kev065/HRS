@@ -3,7 +3,7 @@ from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
 from serializer import departmentSchema
 from models import db, Department
-from auth_middleware import hr_required
+from auth_middleware import manager_required
 
 
 # create education blueprint
@@ -32,7 +32,7 @@ class Departments(Resource):
         response = make_response(jsonify(result), 200)
         return response
 
-    @hr_required()
+    @manager_required()
     def post(self):
         data = post_args.parse_args()
 
@@ -63,7 +63,7 @@ class DepartmentByID(Resource):
         response = make_response(jsonify(result), 200)
         return response
 
-    @hr_required()
+    @manager_required()
     def patch(self, id):
         department = Department.query.filter_by(id=id).first()
 
@@ -82,7 +82,7 @@ class DepartmentByID(Resource):
 
         return response
 
-    @hr_required()
+    @manager_required()
     def delete(self):
         department = Department.query.filter_by(id=id).first()
 
