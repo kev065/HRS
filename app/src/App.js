@@ -19,6 +19,10 @@ import ViewLeaves from './components/employeeUI/ViewLeaves';
 import UpdateLeave from './components/employeeUI/UpdateLeave';
 import Profile from './components/hrUI/Profile';
 import CreateProfile from './components/hrUI/CreateProfile'
+import DashBoardManager from './components/managerUI/DashBoardManager'
+import ManagerProfile from './components/managerUI/ManagerProfile';
+import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile';
+import ManagerEditProfile from './components/managerUI/ManagerEditProfile'
 function App() {
   const [trainings, setTrainings] = useState([]);
 
@@ -45,6 +49,10 @@ function App() {
           <Route path="/update_document/:id" element={<UpdateDocuments/>}/>
           <Route path="/view_leaves/:id" element={<ViewLeaves/>}/>
           <Route path="/update_leave/:id" element={<UpdateLeave/>}/>
+          <Route path="/manager_dashboard/:managerId" element={<DashBoardManager/>}/>
+          <Route path="/manager_profile/:managerId" element={<ManagerProfile/>}/>
+          <Route path="/manager_create_profile/:managerId" element={<ManagerCreateProfile/>}/>
+          <Route path="/manager_update_profile/:managerId" element={<ManagerEditProfile/>}/>
       
        
           
