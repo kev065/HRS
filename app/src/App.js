@@ -15,6 +15,8 @@ import ViewEducation from './components/employeeUI/ViewEducation';
 import UpdateEducation from './components/employeeUI/UpdateEducation';
 import ViewDocuments from './components/employeeUI/ViewDocuments';
 import UpdateDocuments from './components/employeeUI/UpdateDocuments';
+import ViewLeaves from './components/employeeUI/ViewLeaves';
+import UpdateLeave from './components/employeeUI/UpdateLeave';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -38,6 +40,8 @@ function App() {
           <Route path="/update_education/:id" element={<UpdateEducation/>}/>
           <Route path="/view_documents/:id" element={<ViewDocuments/>}/>
           <Route path="/update_document/:id" element={<UpdateDocuments/>}/>
+          <Route path="/view_leaves/:id" element={<ViewLeaves/>}/>
+          <Route path="/update_leave/:id" element={<UpdateLeave/>}/>
       
        
           
