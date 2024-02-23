@@ -206,28 +206,23 @@ class Leave(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     start_date = db.Column(db.DateTime, nullable=False)
     end_date = db.Column(db.DateTime, nullable=False)
-    employee_id = db.Column(db.String, db.ForeignKey(
-        'employees.id'), nullable=False)
+    employee_id = db.Column(db.String, db.ForeignKey('employees.id'), nullable=False)
     description = db.Column(db.String, nullable=False)
     approved = db.Column(db.Boolean, default=False)
-    leave_approval = db.relationship(
-        'LeaveApproval', backref='leave', lazy=True)
-
+    leave_approval = db.relationship('LeaveApproval', backref='leave', uselist=False)
 
 class LeaveApproval(db.Model):
     __tablename__ = 'leave_approvals'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     leave_id = db.Column(db.String, db.ForeignKey('leaves.id'), nullable=False)
-    employee_id = db.Column(db.String, db.ForeignKey(
-        'employees.id'), nullable=False)
-    manager_id = db.Column(db.String, db.ForeignKey(
-        'managers.id'))
-    hr_id = db.Column(db.String, db.ForeignKey(
-        'hr_personnels.id'))
+    employee_id = db.Column(db.String, db.ForeignKey('employees.id'), nullable=False)
+    manager_id = db.Column(db.String, db.ForeignKey('managers.id'))
+    hr_id = db.Column(db.String, db.ForeignKey('hr_personnels.id'))
     approved_by_manager = db.Column(db.Boolean, default=False)
     approved_by_hr = db.Column(db.Boolean, default=False)
     manager_app_date = db.Column(db.DateTime)
     hr_approval_date = db.Column(db.DateTime)
+
 
 
 class Education(db.Model):
