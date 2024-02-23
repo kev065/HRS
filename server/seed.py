@@ -1,10 +1,12 @@
-from datetime import datetime
+from datetime import datetime, date
 from app import create_app
 from models import (Employee, Manager, Department, HR_Personel, EmployeeProfile, ManagerProfile, HrProfile,
                     Remuneration, RemunerationDescription, Experience, Session, Goals, Training, EmployeeTraining,
-                    Leave, LeaveApproval,Documents,Education, TokenBlocklist,db)
+                    Leave, LeaveApproval, Documents, Education, TokenBlocklist, db)
 
 app = create_app()
+
+
 def seed_database():
     with app.app_context():
         Employee.query.delete()
@@ -22,18 +24,14 @@ def seed_database():
         EmployeeTraining.query.delete()
         Leave.query.delete()
         LeaveApproval.query.delete()
-        Education.query.delete()   
+        Education.query.delete()
         db.create_all()
-        
+
         # Departments
         department_data = [
             {"name": "Engineering"},
             {"name": "Human Resources"},
-            {"name": "Finance"},
-            {"name": "Marketing"},
-            {"name": "Sales"},
-            {"name": "Product"},
-            {"name": "Operations"}
+            {"name": "Finance"}
         ]
         departments = []
         for dept_info in department_data:
@@ -44,13 +42,10 @@ def seed_database():
 
         # Managers
         manager_data = [
-            {"email": "manager1@manager.com", "password": "password1", "dept_id": departments[0].id},
-            {"email": "manager2@manager.com", "password": "password1", "dept_id": departments[1].id},
-            {"email": "manager3@manager.com", "password": "password1", "dept_id": departments[2].id},
-            {"email": "manager4@manager.com", "password": "password1", "dept_id": departments[3].id},
-            {"email": "manager5@manager.com", "password": "password1", "dept_id": departments[4].id},
-            {"email": "manager6@manager.com", "password": "password1", "dept_id": departments[5].id},
-            {"email": "manager7@manager.com", "password": "password1", "dept_id": departments[6].id},
+            {"email": "manager1@example.com", "password": "hashed_password_1",
+                "dept_id": departments[0].id},
+            {"email": "manager2@example.com", "password": "hashed_password_2",
+                "dept_id": departments[1].id},
         ]
         managers = []
         for manager_info in manager_data:
@@ -61,13 +56,10 @@ def seed_database():
 
         # Employees
         employee_data = [
-            {"email": "employee1@employee.com", "password": "password1", "dept_id": departments[0].id},
-            {"email": "employee2@employee.com", "password": "password1", "dept_id": departments[1].id},
-            {"email": "employee3@employee.com", "password": "password1", "dept_id": departments[0].id},
-            {"email": "employee4@employee.com", "password": "password1", "dept_id": departments[1].id},
-            {"email": "employee5@employee.com", "password": "password1", "dept_id": departments[0].id},
-            {"email": "employee6@employee.com", "password": "password1", "dept_id": departments[1].id},
-            {"email": "employee7@employee.com", "password": "password1", "dept_id": departments[0].id},
+            {"email": "employee1@example.com",
+                "password": "hashed_password_1", "dept_id": departments[0].id},
+            {"email": "employee2@example.com",
+                "password": "hashed_password_2", "dept_id": departments[1].id},
         ]
         employees = []
         for employee_info in employee_data:
@@ -78,59 +70,26 @@ def seed_database():
 
         # Employee Profiles
         employee_profile_data = [
-            {"date_of_birth": datetime(1990, 5, 15), "employee_id": employees[0].id, "first_name": "John", "last_name": "Doe",
-            "mantra": "Work hard, play hard", "phone_contact": 1234567890, "profile_photo": "profile1.jpg",
-            "title": "Software Engineer", "date_joined": datetime(2015, 3, 20)},
-            {"date_of_birth": datetime(1992, 8, 21), "employee_id": employees[1].id, "first_name": "Jane", "last_name": "Smith",
-            "mantra": "Continuous learning is the key", "phone_contact": 9876543210, "profile_photo": "profile2.jpg",
-            "title": "HR Coordinator", "date_joined": datetime(2018, 6, 10)},
-            # Add more employee profiles here...
-            {"date_of_birth": datetime(1990, 5, 15), "employee_id": employees[2].id, "first_name": "Alice", "last_name": "Johnson",
-            "mantra": "Always strive for excellence", "phone_contact": 1234567891, "profile_photo": "profile3.jpg",
-            "title": "Product Manager", "date_joined": datetime(2016, 4, 22)},
-            {"date_of_birth": datetime(1992, 8, 21), "employee_id": employees[3].id, "first_name": "Bob", "last_name": "Williams",
-            "mantra": "Innovation is the key", "phone_contact": 9876543211, "profile_photo": "profile4.jpg",
-            "title": "Software Engineer", "date_joined": datetime(2019, 7, 11)},
-            {"date_of_birth": datetime(1990, 5, 15), "employee_id": employees[4].id, "first_name": "Charlie", "last_name": "Brown",
-            "mantra": "Stay focused and never give up", "phone_contact": 1234567892, "profile_photo": "profile5.jpg",
-            "title": "Data Scientist", "date_joined": datetime(2017, 5, 30)},
-            {"date_of_birth": datetime(1992, 8, 21), "employee_id": employees[5].id, "first_name": "David", "last_name": "Davis",
-            "mantra": "Believe in yourself", "phone_contact": 9876543212, "profile_photo": "profile6.jpg",
-            "title": "HR Coordinator", "date_joined": datetime(2020, 8, 20)},
-            {"date_of_birth": datetime(1990, 5, 15), "employee_id": employees[6].id, "first_name": "Eva", "last_name": "Evans",
-            "mantra": "Hard work pays off", "phone_contact": 1234567893, "profile_photo": "profile7.jpg",
-            "title": "Product Manager", "date_joined": datetime(2021, 9, 30)}
+            {"date_of_birth": date(1990, 5, 15), "employee_id": employees[0].id, "first_name": "John", "last_name": "Doe",
+             "mantra": "Work hard, play hard", "phone_contact": 1234567890, "profile_photo": "profile1.jpg",
+             "title": "Software Engineer"},
+            {"date_of_birth": date(1992, 8, 21), "employee_id": employees[1].id, "first_name": "Jane", "last_name": "Smith",
+             "mantra": "Continuous learning is the key", "phone_contact": 9876543210, "profile_photo": "profile2.jpg",
+             "title": "HR Coordinator"}
         ]
         for profile_info in employee_profile_data:
             profile = EmployeeProfile(**profile_info)
             db.session.add(profile)
         db.session.commit()
 
-
-
         # Manager Profiles
         manager_profile_data = [
-            {"date_of_birth": datetime(1985, 10, 8), "manager_id": managers[0].id, "first_name": "Michael", "last_name": "Johnson",
-            "mantra": "Lead by example", "phone_contact": 5551234567, "profile_photo": "profile3.jpg",
-            "title": "Engineering Manager", "date_joined": datetime(2010, 12, 5)},
-            {"date_of_birth": datetime(1978, 3, 17), "manager_id": managers[1].id, "first_name": "Emily", "last_name": "Brown",
-            "mantra": "Empower your team", "phone_contact": 5559876543, "profile_photo": "profile4.jpg",
-            "title": "HR Manager", "date_joined": datetime(2005, 8, 15)},
-            {"date_of_birth": datetime(1980, 6, 12), "manager_id": managers[2].id, "first_name": "John", "last_name": "Doe",
-            "mantra": "Success is a journey, not a destination", "phone_contact": 5551234568, "profile_photo": "profile5.jpg",
-            "title": "Product Manager", "date_joined": datetime(2011, 1, 10)},
-            {"date_of_birth": datetime(1982, 7, 22), "manager_id": managers[3].id, "first_name": "Alice", "last_name": "Smith",
-            "mantra": "Believe you can and you're halfway there", "phone_contact": 5559876544, "profile_photo": "profile6.jpg",
-            "title": "Marketing Manager", "date_joined": datetime(2006, 9, 20)},
-            {"date_of_birth": datetime(1983, 8, 2), "manager_id": managers[4].id, "first_name": "Bob", "last_name": "Williams",
-            "mantra": "The only way to do great work is to love what you do", "phone_contact": 5551234569, "profile_photo": "profile7.jpg",
-            "title": "Sales Manager", "date_joined": datetime(2012, 2, 15)},
-            {"date_of_birth": datetime(1984, 9, 13), "manager_id": managers[5].id, "first_name": "Charlie", "last_name": "Davis",
-            "mantra": "Don't watch the clock; do what it does. Keep going", "phone_contact": 5559876545, "profile_photo": "profile8.jpg",
-            "title": "Operations Manager", "date_joined": datetime(2007, 10, 25)},
-            {"date_of_birth": datetime(1985, 10, 24), "manager_id": managers[6].id, "first_name": "David", "last_name": "Johnson",
-            "mantra": "The secret of getting ahead is getting started", "phone_contact": 5551234570, "profile_photo": "profile9.jpg",
-            "title": "Finance Manager", "date_joined": datetime(2013, 3, 30)}
+            {"date_of_birth": date(1985, 10, 8), "manager_id": managers[0].id, "first_name": "Michael", "last_name": "Johnson",
+             "mantra": "Lead by example", "phone_contact": 5551234567, "profile_photo": "profile3.jpg",
+             "title": "Engineering Manager"},
+            {"date_of_birth": date(1978, 3, 17), "manager_id": managers[1].id, "first_name": "Emily", "last_name": "Brown",
+             "mantra": "Empower your team", "phone_contact": 5559876543, "profile_photo": "profile4.jpg",
+             "title": "HR Manager"}
         ]
         for profile_info in manager_profile_data:
             profile = ManagerProfile(**profile_info)
@@ -139,9 +98,9 @@ def seed_database():
 
         # HR Profiles
         hr_profile_data = [
-            {"date_of_birth": datetime(1989, 7, 23), "hr_id": managers[0].id, "first_name": "Sarah", "last_name": "Williams",
-            "mantra": "Dedicated to employee well-being", "phone_contact": 5552468101, "profile_photo": "profile5.jpg",
-            "title": "HR Specialist", "date_joined": datetime(2013, 4, 30)}
+            {"date_of_birth": date(1989, 7, 23), "hr_id": managers[0].id, "first_name": "Sarah", "last_name": "Williams",
+             "mantra": "Dedicated to employee well-being", "phone_contact": 5552468101, "profile_photo": "profile5.jpg",
+             "title": "HR Specialist"}
         ]
         for profile_info in hr_profile_data:
             profile = HrProfile(**profile_info)
@@ -150,8 +109,10 @@ def seed_database():
 
         # Remunerations
         remuneration_data = [
-            {"name": "Monthly Salary", "salary": 5000.0, "employee_id": employees[0].id},
-            {"name": "Monthly Salary", "salary": 6000.0, "employee_id": employees[1].id},
+            {"name": "Monthly Salary", "salary": 5000.0,
+                "employee_id": employees[0].id},
+            {"name": "Monthly Salary", "salary": 6000.0,
+                "employee_id": employees[1].id},
         ]
         for remuneration_info in remuneration_data:
             remuneration = Remuneration(**remuneration_info)
@@ -160,10 +121,14 @@ def seed_database():
 
         # Remuneration Descriptions
         remuneration_desc_data = [
-            {"remuneration_id": 1, "type": "deduction", "name": "Insurance", "description": "Health insurance deduction", "amount": 200.0},
-            {"remuneration_id": 1, "type": "allowance", "name": "Transport", "description": "Transport allowance", "amount": 300.0},
-            {"remuneration_id": 2, "type": "deduction", "name": "Insurance", "description": "Health insurance deduction", "amount": 150.0},
-            {"remuneration_id": 2, "type": "allowance", "name": "Transport", "description": "Transport allowance", "amount": 350.0},
+            {"remuneration_id": 1, "type": "deduction", "name": "Insurance",
+                "description": "Health insurance deduction", "amount": 200.0},
+            {"remuneration_id": 1, "type": "allowance", "name": "Transport",
+                "description": "Transport allowance", "amount": 300.0},
+            {"remuneration_id": 2, "type": "deduction", "name": "Insurance",
+                "description": "Health insurance deduction", "amount": 150.0},
+            {"remuneration_id": 2, "type": "allowance", "name": "Transport",
+                "description": "Transport allowance", "amount": 350.0},
         ]
         for desc_info in remuneration_desc_data:
             desc = RemunerationDescription(**desc_info)
@@ -173,11 +138,11 @@ def seed_database():
         # Experiences
         experience_data = [
             {"employee_id": employees[0].id, "name": "ABC Company", "job_title": "Software Developer",
-            "description": "Developed web applications using Python and Django", "start_date": datetime(2010, 5, 1),
-            "end_date": datetime(2015, 2, 28)},
+             "description": "Developed web applications using Python and Django", "start_date": datetime(2010, 5, 1),
+             "end_date": datetime(2015, 2, 28)},
             {"employee_id": employees[1].id, "name": "XYZ Corporation", "job_title": "HR Assistant",
-            "description": "Assisted in recruitment and onboarding processes", "start_date": datetime(2016, 8, 15),
-            "end_date": datetime(2019, 12, 31)}
+             "description": "Assisted in recruitment and onboarding processes", "start_date": datetime(2016, 8, 15),
+             "end_date": datetime(2019, 12, 31)}
         ]
         for exp_info in experience_data:
             experience = Experience(**exp_info)
@@ -187,9 +152,9 @@ def seed_database():
         # Goals
         goal_data = [
             {"employee_id": employees[0].id, "name": "Complete Python Certification", "description": "Earn certification in Python programming",
-            "session_id": 1},
+             "session_id": 1},
             {"employee_id": employees[1].id, "name": "Improve Recruitment Process", "description": "Optimize recruitment workflow",
-            "session_id": 2}
+             "session_id": 2}
         ]
         for goal_info in goal_data:
             goal = Goals(**goal_info)
@@ -199,11 +164,11 @@ def seed_database():
         # Trainings
         training_data = [
             {"title": "Python Fundamentals", "description": "Basic concepts and syntax of Python programming",
-            "start_date": datetime(2024, 3, 1), "start_time": datetime.strptime("09:00", "%H:%M").time(),
-            "end_date": datetime(2024, 3, 5), "end_time": datetime.strptime("17:00", "%H:%M").time()},
+             "start_date": datetime(2024, 3, 1), "start_time": datetime.strptime("09:00", "%H:%M").time(),
+             "end_date": datetime(2024, 3, 5), "end_time": datetime.strptime("17:00", "%H:%M").time()},
             {"title": "Recruitment Strategies", "description": "Effective techniques for talent acquisition",
-            "start_date": datetime(2024, 3, 10), "start_time": datetime.strptime("10:00", "%H:%M").time(),
-            "end_date": datetime(2024, 3, 12), "end_time": datetime.strptime("16:00", "%H:%M").time()}
+             "start_date": datetime(2024, 3, 10), "start_time": datetime.strptime("10:00", "%H:%M").time(),
+             "end_date": datetime(2024, 3, 12), "end_time": datetime.strptime("16:00", "%H:%M").time()}
         ]
         for training_info in training_data:
             training = Training(**training_info)
@@ -223,19 +188,9 @@ def seed_database():
         # Leaves
         leave_data = [
             {"start_date": datetime(2024, 2, 1), "end_date": datetime(2024, 2, 5), "employee_id": employees[0].id,
-            "description": "Vacation leave"},
+             "description": "Vacation leave"},
             {"start_date": datetime(2024, 2, 10), "end_date": datetime(2024, 2, 15), "employee_id": employees[1].id,
-            "description": "Sick leave"},
-            {"start_date": datetime(2024, 3, 1), "end_date": datetime(2024, 3, 5), "employee_id": employees[2].id,
-            "description": "Vacation leave"},
-            {"start_date": datetime(2024, 3, 10), "end_date": datetime(2024, 3, 15), "employee_id": employees[3].id,
-            "description": "Sick leave"},
-            {"start_date": datetime(2024, 4, 1), "end_date": datetime(2024, 4, 5), "employee_id": employees[4].id,
-            "description": "Vacation leave"},
-            {"start_date": datetime(2024, 4, 10), "end_date": datetime(2024, 4, 15), "employee_id": employees[5].id,
-            "description": "Sick leave"},
-            {"start_date": datetime(2024, 5, 1), "end_date": datetime(2024, 5, 5), "employee_id": employees[6].id,
-            "description": "Vacation leave"}
+             "description": "Sick leave"}
         ]
         for leave_info in leave_data:
             leave = Leave(**leave_info)
@@ -245,32 +200,21 @@ def seed_database():
         # Leave Approvals
         leave_approval_data = [
             {"leave_id": 1, "employee_id": employees[0].id, "manager_id": managers[0].id, "approved_by_manager": True,
-            "manager_app_date": datetime(2024, 1, 30)},
+             "manager_app_date": datetime(2024, 1, 30)},
             {"leave_id": 2, "employee_id": employees[1].id, "hr_id": managers[0].id, "approved_by_hr": True,
-            "hr_approval_date": datetime(2024, 2, 8)},
-            {"leave_id": 3, "employee_id": employees[2].id, "manager_id": managers[1].id, "approved_by_manager": True,
-            "manager_app_date": datetime(2024, 2, 28)},
-            {"leave_id": 4, "employee_id": employees[3].id, "hr_id": managers[1].id, "approved_by_hr": True,
-            "hr_approval_date": datetime(2024, 3, 8)},
-            {"leave_id": 5, "employee_id": employees[4].id, "manager_id": managers[2].id, "approved_by_manager": True,
-            "manager_app_date": datetime(2024, 3, 30)},
-            {"leave_id": 6, "employee_id": employees[5].id, "hr_id": managers[2].id, "approved_by_hr": True,
-            "hr_approval_date": datetime(2024, 4, 8)},
-            {"leave_id": 7, "employee_id": employees[6].id, "manager_id": managers[0].id, "approved_by_manager": True,
-            "manager_app_date": datetime(2024, 4, 30)}
+             "hr_approval_date": datetime(2024, 2, 8)}
         ]
         for approval_info in leave_approval_data:
             approval = LeaveApproval(**approval_info)
             db.session.add(approval)
         db.session.commit()
 
-
         # Education
         education_data = [
             {"employee_id": employees[0].id, "institution": "University ABC", "course": "Computer Science",
-            "qualification": "Bachelor's Degree", "start_date": datetime(2010, 9, 1), "end_date": datetime(2014, 6, 30)},
+             "qualification": "Bachelor's Degree", "start_date": datetime(2010, 9, 1), "end_date": datetime(2014, 6, 30)},
             {"employee_id": employees[1].id, "institution": "College XYZ", "course": "Human Resource Management",
-            "qualification": "Master's Degree", "start_date": datetime(2015, 9, 1), "end_date": datetime(2017, 6, 30)}
+             "qualification": "Master's Degree", "start_date": datetime(2015, 9, 1), "end_date": datetime(2017, 6, 30)}
         ]
         for edu_info in education_data:
             edu = Education(**edu_info)
@@ -287,10 +231,13 @@ def seed_database():
             db.session.add(token)
         db.session.commit()
         document_data = [
-        {"employee_id": "employee_id_1", "link_url": "https://example.com/document1", "name": "Document 1", "type": "official"},
-        {"employee_id": "employee_id_2", "link_url": "https://example.com/document2", "name": "Document 2", "type": "institution"},
-        {"employee_id": "employee_id_3", "link_url": "https://example.com/document3", "name": "Document 3", "type": "other"},
-    ]
+            {"employee_id": "employee_id_1", "link_url": "https://example.com/document1",
+                "name": "Document 1", "type": "official"},
+            {"employee_id": "employee_id_2", "link_url": "https://example.com/document2",
+                "name": "Document 2", "type": "institution"},
+            {"employee_id": "employee_id_3", "link_url": "https://example.com/document3",
+                "name": "Document 3", "type": "other"},
+        ]
         for doc_info in document_data:
             document = Documents(**doc_info)
             db.session.add(document)
@@ -298,8 +245,10 @@ def seed_database():
 
         # Seed data for HR Personnels
         hr_personnel_data = [
-            {"email": "hr1@hr.com", "password": "password1", "dept_id": "department_id_1"},
-            {"email": "hr2@hr.com", "password": "password1", "dept_id": "department_id_2"},
+            {"email": "hr1@example.com", "password": "hashed_password_1",
+                "dept_id": "department_id_1"},
+            {"email": "hr2@example.com", "password": "hashed_password_2",
+                "dept_id": "department_id_2"},
         ]
         for hr_info in hr_personnel_data:
             hr_personnel = HR_Personel(**hr_info)
@@ -308,13 +257,16 @@ def seed_database():
 
         # Seed data for Sessions
         session_data = [
-            {"name": "Session 1", "start_date": datetime(2024, 1, 1), "end_date": datetime(2024, 1, 30)},
-            {"name": "Session 2", "start_date": datetime(2024, 2, 1), "end_date": datetime(2024, 2, 29)},
+            {"name": "Session 1", "start_date": datetime(
+                2024, 1, 1), "end_date": datetime(2024, 1, 30)},
+            {"name": "Session 2", "start_date": datetime(
+                2024, 2, 1), "end_date": datetime(2024, 2, 29)},
         ]
         for session_info in session_data:
             session = Session(**session_info)
             db.session.add(session)
         db.session.commit()
 
+
 if __name__ == "__main__":
-            seed_database()
+    seed_database()
