@@ -19,6 +19,7 @@ import ViewLeaves from "./components/employeeUI/ViewLeaves";
 import UpdateLeave from "./components/employeeUI/UpdateLeave";
 import EmployeeProfileForm from "./components/employeeUI/EmployeeProfileForm";
 import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
+import EditProfileForm from "./components/employeeUI/EditProfileForm";
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -59,6 +60,7 @@ function App() {
         <Route path="/update_leave/:id" element={<UpdateLeave />} />
         <Route path="profile" element={<EmployeeProfile />} />
         <Route path="/profile/create" element={<EmployeeProfileForm />} />
+        <Route path="/profile/edit" element={<EditProfileForm />} />
       </Routes>
     </div>
   );
