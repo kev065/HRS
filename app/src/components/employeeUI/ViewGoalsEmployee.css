@@ -1,0 +1,24 @@
+.container {
+    margin: 20px;
+    background-color: #f8f9fa; /* light gray */
+    color: #333; /* dark gray */
+  }
+  
+  .goal {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fff; /* white */
+  }
+  
+  .goal h2 {
+    margin: 0;
+    color: #007bff; /* blue */
+  }
+  
+  .goal p {
+    margin: 0;
+    color: #6c757d; /* gray */
+  }
+  
