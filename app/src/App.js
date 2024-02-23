@@ -11,7 +11,7 @@ import UpdateTrainings from './components/hrUI/UpdateTrainings';
 import Session from './components/hrUI/Session';
 import Profile from './components/hrUI/Profile'
 import UpdateProfile from './components/hrUI/UpdateProfile';
-import LeaveApprovalForm from './components/hrUI/LeaveApproval';
+import LeaveApprovalForm from './components/hrUI/PendingLeavesHr';
 import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
 import DashBoardManager from './components/managerUI/DashBoardManager';
 import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
@@ -37,7 +37,7 @@ function App() {
           <Route path="/session" element={<Session />}/>
           <Route path="/hr_profile" element={<Profile />}/>
           <Route path="/hr_update_profile" element={<UpdateProfile />}/>
-          <Route path="/leave_approval" element={<LeaveApprovalForm />}/>
+          <Route path="/hr_pending_leaves" element={<LeaveApprovalForm />}/>
           <Route path="/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
           <Route path="/manager_dashboard" element={<DashBoardManager />}/>
           <Route path="/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
