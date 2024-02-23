@@ -26,8 +26,6 @@ class Documents(db.Model):
     type = db.Column(Enum("official", "institution", "other"), nullable=False)
 
 
-    
-
 class Employee(db.Model):
     __tablename__ = 'employees'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
@@ -52,15 +50,18 @@ class Manager(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-    dept_id = db.Column(db.String, db.ForeignKey('departments.id'), nullable=False, unique=True)  
+    dept_id = db.Column(db.String, db.ForeignKey(
+        'departments.id'), nullable=False, unique=True)
     leave_approvals = db.relationship('LeaveApproval', backref='manager')
-    manager_profile = db.relationship('ManagerProfile', uselist=False, backref='manager') 
+    manager_profile = db.relationship(
+        'ManagerProfile', uselist=False, backref='manager')
+
 
 class Department(db.Model):
     __tablename__ = 'departments'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     name = db.Column(db.String, nullable=False)
-    dept_head = db.relationship('Manager', backref='department') 
+    dept_head = db.relationship('Manager', backref='department')
     employees = db.relationship('Employee', backref='department')
     hr_personnels = db.relationship('HR_Personel', backref='department')
 
@@ -79,7 +80,7 @@ class HR_Personel(db.Model):
 class EmployeeProfile(db.Model):
     __tablename__ = 'employee_profiles'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
-    date_of_birth = db.Column(db.DateTime, nullable=False)
+    date_of_birth = db.Column(db.Date, nullable=False)
     employee_id = db.Column(db.String, db.ForeignKey(
         'employees.id'), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
@@ -89,13 +90,12 @@ class EmployeeProfile(db.Model):
     profile_photo = db.Column(db.String, nullable=False)
     title = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    date_joined = db.Column(db.DateTime, nullable=False)
 
 
 class ManagerProfile(db.Model):
     __tablename__ = 'manager_profiles'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
-    date_of_birth = db.Column(db.DateTime, nullable=False)
+    date_of_birth = db.Column(db.Date, nullable=False)
     manager_id = db.Column(db.String, db.ForeignKey(
         'managers.id'), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
@@ -105,13 +105,12 @@ class ManagerProfile(db.Model):
     profile_photo = db.Column(db.String(), nullable=False)
     title = db.Column(db.String(), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    date_joined = db.Column(db.DateTime, nullable=False)
 
 
 class HrProfile(db.Model):
     __tablename__ = 'hr_profiles'
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
-    date_of_birth = db.Column(db.DateTime, nullable=False)
+    date_of_birth = db.Column(db.Date, nullable=False)
     hr_id = db.Column(db.String, db.ForeignKey(
         'hr_personnels.id'), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
@@ -121,7 +120,6 @@ class HrProfile(db.Model):
     profile_photo = db.Column(db.String(), nullable=False)
     title = db.Column(db.String, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    date_joined = db.Column(db.DateTime, nullable=False)
 
 
 class Remuneration(db.Model):
@@ -242,11 +240,10 @@ class Education(db.Model):
     end_date = db.Column(db.DateTime, nullable=False)
 
 
-
 # for handling Tokens
 
 class TokenBlocklist(db.Model):
-    __tablename__='tokenblocklist'
+    __tablename__ = 'tokenblocklist'
     id = db.Column(db.Integer, primary_key=True)
-    jti= db.Column(db.String(36),nullable=False, index=True)
-    created_at=db.Column(db.DateTime,nullable=False)
+    jti = db.Column(db.String(36), nullable=False, index=True)
+    created_at = db.Column(db.DateTime, nullable=False)

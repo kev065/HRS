@@ -1,0 +1,77 @@
+.form-container {
+  font-family: "Poppins", sans-serif;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-form {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(2, 2fr);
+  gap: 30px;
+  padding: 2%;
+  box-shadow: 0 0 1px black;
+  height: 70vh;
+}
+
+.form-control label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-color);
+}
+
+.form-control input {
+  width: 90%;
+  height: 2rem;
+  box-shadow: 0 0 1px var(--primary-color);
+  outline: none;
+  text-indent: 0.5rem;
+  font-size: 200;
+  font-family: "Poppins", sans-serif;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.form-control input[type="file"] {
+  width: fit-content;
+  height: 150px;
+}
+.form-control input[type="file"]::file-selector-button {
+  background-color: aliceblue;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--text-dark);
+  background: url(../../assets/profile.png);
+  background-position: center center;
+  cursor: pointer;
+}
+
+.form-control input::placeholder {
+  color: #333f;
+  font-style: italic;
+}
+
+button.update-btn {
+  width: 150px;
+  background-color: #fff;
+  margin-top: 1.5rem;
+  color: var(--text-dark);
+  padding: 5px 5px;
+  height: 2.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.error {
+  color: rgba(255, 0, 0, 0.5);
+  font-weight: 300;
+}
