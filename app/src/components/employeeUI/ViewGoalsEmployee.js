@@ -22,7 +22,7 @@ const Goals = () => {
 
     return (
         <div className="container">
-          <h1>My Goals</h1>
+          <h1 className="title-animation">My Goals</h1>
           <div>
             {goals.map((goal, index) => (
               <div key={index} className="goal">
