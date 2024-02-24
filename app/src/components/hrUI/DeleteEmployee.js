@@ -22,7 +22,7 @@ const DeleteEmployeeForm = () => {
     };
 
     return (
-        <div>
+        <div style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
             <form onSubmit={handleSubmit}>
                 <label>
                     Employee ID:
@@ -36,3 +36,4 @@ const DeleteEmployeeForm = () => {
 };
 
 export default DeleteEmployeeForm;
+
