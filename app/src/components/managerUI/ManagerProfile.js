@@ -14,11 +14,9 @@ const ManagerProfile = () => {
   useEffect(() => {
     fetch(`/managers/${id}`, {
       headers: {
-  
         'Authorization': 'Bearer ' + retrieve().access_token,
       },
     })
-      
       .then((res) => {
         if(!res.ok){
           throw new Error(`HTTP error! Status: ${res.status}`)
@@ -35,7 +33,7 @@ const ManagerProfile = () => {
   if (!manager) return <div>Loading...</div>;
   console.log(manager);
   if (!manager || !manager.manager_profiles || manager.manager_profiles.length === 0)
-    return navigate(`/manager/manager_create_profile/${id}`);
+    return navigate(`/manager/create_profile`);
   const managerProfileData = manager.manager_profiles[0];
 
   function handleLogout(e) {

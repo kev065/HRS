@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { retrieve } from "../Encryption";
 import './create_profile.css'
@@ -10,17 +10,20 @@ const EditProfile = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const hrProfileData = retrieve().hr.hr_profiles[0];
+  const {hrId} = useParams
+
+  const hrProfiles = retrieve().hr.hr_profiles;
+  const initialProfileData = hrProfiles && hrProfiles.length > 0 ? hrProfiles[0] : {};
 
   const formik = useFormik({
     initialValues: {
-      first_name: hrProfileData.first_name,
-      last_name: hrProfileData.last_name,
-      mantra: hrProfileData.mantra,
-      phone_contact: hrProfileData.phone_contact,
-      title: hrProfileData.title,
-      date_of_birth: hrProfileData.date_of_birth,
-      profile_photo: "",
+      first_name: initialProfileData.first_name || '',
+      last_name: initialProfileData.last_name || '',
+      mantra: initialProfileData.mantra || '',
+      phone_contact: initialProfileData.phone_contact || '',
+      title: initialProfileData.title || '',
+      date_of_birth: initialProfileData.date_of_birth || '',
+      profile_photo: '',
     },
     validationSchema: yup.object().shape({
       first_name: yup.string(),
@@ -36,7 +39,7 @@ const EditProfile = () => {
     }),
     onSubmit: (values) => {
       console.log(values);
-      fetch(`/hrProfiles/${hrProfileData.id}`, {
+      fetch(`/hrProfiles/${hrId}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +55,7 @@ const EditProfile = () => {
           setSuccess("Successfully Updated account!!");
           //navigate user to home page
           setTimeout(() => {
-            navigate("/profile");
+            navigate(`/hr/hr_profile${hrId}`);
           }, 2000);
           response.json().then((data) => console.log(data));
         } else {

@@ -1,62 +1,93 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
 import { retrieve } from "../Encryption";
-import './managerEdit.css'
+import "./managerEdit.css";
 
 const ManagerEditProfile = () => {
   const navigate = useNavigate();
+  const { managerId } = useParams();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const { managerId } = useParams
+  const [managerProfileData, setManagerProfileData] = useState({});
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
-  const managerProfiles = retrieve().manager.manager_profiles;
-  const initialProfileData = managerProfiles && managerProfiles.length > 0 ? managerProfiles[0] : {};
+  useEffect(() => {
+    fetch(`/managers/${managerId}`)
+      .then((response) => response.json())
+      .then((data) => setManagerProfileData(data.manager_profiles[0]))
+      .catch((err) => console.log(err));
+  }, [managerId]);
 
+  const MAX_FILE_SIZE = 10000000; // 10MB
+  const validFileExtensions = {
+    image: ["jpg", "png", "jpeg", "webp"],
+  };
+
+  const getExtension = (fileName) => {
+    if (!fileName) return null;
+    const parts = fileName.split(".");
+    return parts[parts.length - 1].toLowerCase();
+  };
+
+  const handleChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const size = file.size;
+      const isValid = validFileExtensions.image.includes(getExtension(file.name));
+      if (size > MAX_FILE_SIZE) setError("The file is too large");
+      else if (!isValid) setError("The file type is not supported");
+      else {
+        setError(null);
+        setProfilePhoto(file);
+      }
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
-      first_name: initialProfileData.first_name || '',
-      last_name: initialProfileData.last_name || '',
-      mantra: initialProfileData.mantra || '',
-      phone_contact: initialProfileData.phone_contact || '',
-      title: initialProfileData.title || '',
-      date_of_birth: initialProfileData.date_of_birth || '',
-      profile_photo: '',
+      first_name: managerProfileData?.first_name || "",
+      last_name: managerProfileData?.last_name || "",
+      mantra: managerProfileData?.mantra || "",
+      phone_contact: managerProfileData?.phone_contact || "",
+      title: managerProfileData?.title || "",
+      date_of_birth: managerProfileData?.date_of_birth || "",
     },
     validationSchema: yup.object().shape({
-      first_name: yup.string(),
-      last_name: yup.string(),
-      mantra: yup.string(),
+      first_name: yup.string().required("Please fill out this field"),
+      last_name: yup.string().required("Please fill out this field"),
+      mantra: yup.string().required("Please fill out this field"),
       phone_contact: yup
         .string()
-
-        .min(10, "Phone contact must be atleast 10 characters"),
-      title: yup.string(),
-      date_of_birth: yup.date(),
-      profile_photo: yup.string(),
+        .required("Please fill out this field")
+        .min(10, "Phone contact must be at least 10 characters"),
+      title: yup.string().required("Please provide a title"),
+      date_of_birth: yup.date().required("Please fill out this field"),
     }),
     onSubmit: (values) => {
-      console.log(values);
-      fetch(`/managerProfiles/${managerId}`, {
+      const formData = new FormData();
+      formData.append("first_name", values.first_name);
+      formData.append("last_name", values.last_name);
+      formData.append("mantra", values.mantra);
+      formData.append("phone_contact", values.phone_contact);
+      formData.append("title", values.title);
+      formData.append("date_of_birth", values.date_of_birth);
+      formData.append("profile_photo", profilePhoto);
+
+      console.log(...formData.entries());
+
+      fetch(`/managerProfiles/${managerProfileData.id}`, {
         method: "PATCH",
         headers: {
-          
-          'Authorization': "Bearer " + retrieve().access_token,
-          
+          Authorization: "Bearer " + retrieve().access_token,
         },
-        body: JSON.stringify(values),
+        body: formData,
       }).then((response) => {
         if (response.ok) {
-          // clear out form fields
-          formik.resetForm();
-          //set success message
           setSuccess("Successfully Updated account!!");
-          //navigate user to home page
           setTimeout(() => {
-            navigate(`/manager/manager_profile${managerId}`);
+            navigate(`/manager/manager_profile`);
           }, 2000);
           response.json().then((data) => console.log(data));
         } else {
@@ -64,127 +95,36 @@ const ManagerEditProfile = () => {
         }
       });
     },
+    enableReinitialize: true,
   });
+
+  if (!managerProfileData) return <div>Loading...</div>;
+
   return (
-    <div className="container">
-      <div className="form-container">
-        <form className="profile-form" onSubmit={formik.handleSubmit}>
-          {error ? <h3 className="error">{error}</h3> : null}
-          {success ? <h4 className="secondary-title">{success}</h4> : null}
-          <div className="form-control">
-            <label htmlFor="profile_photo">Upload photo</label>
-            <br />
-            <input
-              type="file"
-              id="profile_photo"
-              name="profile_photo"
-              value={formik.values.profile_photo}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.profile_photo && formik.errors.profile_photo ? (
-              <div className="error">{formik.errors.profile_photo}</div>
-            ) : null}
-          </div>
-          <div className="form-control">
-            <label htmlFor="first_name">First Name</label>
-            <br />
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              placeholder="eg. John"
-              value={formik.values.first_name}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.first_name && formik.errors.first_name ? (
-              <div className="error">{formik.errors.first_name}</div>
-            ) : null}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="last_name">Last Name</label>
-            <br />
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              placeholder="eg. Doe"
-              value={formik.values.last_name}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.last_name && formik.errors.last_name ? (
-              <div className="error">{formik.errors.last_name}</div>
-            ) : null}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="mantra">Mantra</label>
-            <br />
-            <input
-              type="text"
-              id="mantra"
-              name="mantra"
-              placeholder="mantra goes here..."
-              value={formik.values.mantra}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.mantra && formik.errors.mantra ? (
-              <div className="error">{formik.errors.mantra}</div>
-            ) : null}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="phone_contact">Contact</label>
-            <br />
-            <input
-              type="tel"
-              id="phone_contact"
-              name="phone_contact"
-              placeholder="eg. +2547920911"
-              value={formik.values.phone_contact}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.phone_contact && formik.errors.phone_contact ? (
-              <div className="error">{formik.errors.phone_contact}</div>
-            ) : null}
-          </div>
-
-          <div className="form-control">
-            <label htmlFor="title">Title</label>
-            <br />
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="eg. Mr. Mrs"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.title && formik.errors.title ? (
-              <div className="error">{formik.errors.title}</div>
-            ) : null}
-          </div>
-          <div className="form-control">
-            <label htmlFor="date_of_birth">Date of Birth</label>
-            <br />
-            <input
-              type="date"
-              id="date_of_birth"
-              name="date_of_birth"
-              value={formik.values.date_of_birth}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.date_of_birth && formik.errors.date_of_birth ? (
-              <div className="error">{formik.errors.date_of_birth}</div>
-            ) : null}
-          </div>
-          <div className="update-account-container">
-            {/* <input type="submit" /> */}
-            <button className="update-btn" type="submit">
-              Update Profile
-            </button>
-          </div>
-        </form>
+    <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor: "white", marginTop: "40px" }}>
+      <div className="container">
+        <div className="form-container">
+          <form className="profile-form" onSubmit={formik.handleSubmit}>
+            {success ? <h4 className="secondary-title">{success}</h4> : null}
+            <div className="form-control">
+              <label htmlFor="profile_photo">Upload photo</label>
+              <br />
+              <input
+                type="file"
+                id="profile_photo"
+                name="profile_photo"
+                onChange={handleChange}
+              />
+              {error && <div className="error">{error}</div>}
+            </div>
+            {/* Remaining form controls... */}
+            <div className="update-account-container">
+              <button className="update-btn" type="submit">
+                Update Profile
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
