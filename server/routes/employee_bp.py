@@ -6,7 +6,7 @@ from flask_jwt_extended import get_jwt_identity
 from serializer import employeeSchema
 from auth_middleware import employee_required, hr_required
 
-from models import Employee, db
+from models import Employee, db,EmployeeProfile
 
 employee_bp = Blueprint('employee_bp', __name__)
 ma = Marshmallow(employee_bp)
@@ -109,3 +109,30 @@ class EmployeeById(Resource):
 
 
 api.add_resource(EmployeeById, '/employees/<string:id>')
+
+class EmployeesDetails(Resource):
+    def get(self):
+       
+        employees_with_profiles = db.session.query(Employee, EmployeeProfile).outerjoin(EmployeeProfile, Employee.id == EmployeeProfile.employee_id).all()
+        
+       
+        result = []
+        for employee, profile in employees_with_profiles:
+            employee_data = employeeSchema.dump(employee)
+            employee_id = employee_data.get('id') 
+            if profile:  
+                profile_data = {
+                    'employee_id':profile.employee_id, 
+                   
+                    'first_name': profile.first_name,
+                    'last_name': profile.last_name
+                    
+                }
+                employee_data['profile'] = profile_data
+            result.append(employee_data)
+        
+        response = make_response(jsonify(result), 200)
+        return response
+
+
+api.add_resource(EmployeesDetails, '/employees_details')
