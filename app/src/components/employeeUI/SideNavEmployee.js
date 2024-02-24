@@ -71,7 +71,9 @@ const SideNavEmployee = () => {
                 <li className="nav-item">
                   <a href="#" className="nav-link">
                     <i className="nav-icon fas fa-money-check-alt" />
-                    <p>Payslips</p>
+                    <p>
+                      <Link to={"/employee/payslip"}>Payslips</Link>
+                    </p>
                   </a>
                 </li>
 
