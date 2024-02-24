@@ -15,7 +15,7 @@ const AddEmployeeForm = () => {
   };
 
   return (
-    <div className='add-employee-form' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+    <div className='add-employee-form' style={{ marginLeft: "280px", marginTop:"20px"}}>
       <Formik
         initialValues={{
           email: '',
