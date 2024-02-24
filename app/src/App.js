@@ -30,6 +30,16 @@ import ManagerApprovedLeaves from "./components/managerUI/ManagerApprovedLeaves"
 import Experience from "./components/employeeUI/AddExperience";
 import Goals from "./components/employeeUI/ViewGoalsEmployee";
 import ViewPayslipEmployee from "./components/employeeUI/ViewPayslipEmployee";
+import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
+import Session from "./components/hrUI/Session";
+import Profile from "./components/hrUI/Profile";
+import UpdateProfile from "./components/hrUI/UpdateProfile";
+import LeaveApprovalForm from "./components/hrUI/PendingLeavesHr";
+import ManagerPendingLeaves from "./components/managerUI/LeaveApproval_Manager";
+import DashBoardManager from "./components/managerUI/DashBoardManager";
+import ManagerApprovedLeaves from "./components/managerUI/ManagerApprovedLeaves";
+import Experience from "./components/employeeUI/AddExperience";
+import Goals from "./components/employeeUI/ViewGoalsEmployee";
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -46,7 +56,7 @@ function App() {
             element={<ViewEducation />}
           />
           <Route
-            path="/employee/education/document/upload"
+            path="/employee/add_education"
             element={<EducationDocumentUpload />}
           />
           <Route
@@ -64,6 +74,14 @@ function App() {
           <Route
             path="/employee/view_documents/:id"
             element={<ViewDocuments />}
+          />
+          <Route
+            path="/employee/view_education/:id"
+            element={<ViewEducation />}
+          />
+          <Route
+            path="/employee/view_trainings/:id"
+            element={<EmployeeViewTrainings />}
           />
           <Route
             path="/employee/update_education/:id"

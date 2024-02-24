@@ -113,17 +113,17 @@ const SideNavEmployee = () => {
                 <li className="nav-item">
                   <a href="#" className="nav-link">
                     <i className="nav-icon fas fa-chalkboard-teacher" />
-                    <p>Training Tracker</p>
+                    <p>
+                      <Link to={`/employee/view_trainings/${employeeId}`}>
+                        Training Tracker
+                      </Link>
+                    </p>
                   </a>
                 </li>
-
                 <li className="nav-item">
-                  <a href="pages/calendar.html" className="nav-link">
-                    <i className="nav-icon far fa-calendar-alt" />
-                    <p>
-                      Calendar
-                      <span className="badge badge-info right">2</span>
-                    </p>
+                  <a href="#" className="nav-link">
+                    <i className="nav-icon fas fa-chalkboard-teacher" />
+                    <p>Training Tracker</p>
                   </a>
                 </li>
               </ul>

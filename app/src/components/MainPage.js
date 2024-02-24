@@ -50,7 +50,7 @@ const MainPage = () => {
             </h1>
             <div className="service-cards">
               <div className="service-card">
-                <i class="ri-shake-hands-fill"></i>
+                <i className="ri-shake-hands-fill"></i>
                 <h2>Onboarding</h2>
                 <p>
                   Seamlessly integrate new team members with our intuitive
@@ -60,7 +60,7 @@ const MainPage = () => {
                 </p>
               </div>
               <div className="service-card">
-                <i class="ri-bank-card-2-line"></i>
+                <i className="ri-bank-card-2-line"></i>
                 <h2>Automated Payslips</h2>
                 <p>
                   Simplify payroll management with our automated payslip
@@ -70,7 +70,7 @@ const MainPage = () => {
                 </p>
               </div>
               <div className="service-card">
-                <i class="ri-rest-time-line"></i>
+                <i className="ri-rest-time-line"></i>
                 <h2>Leave Tracker</h2>
                 <p>
                   Empower your workforce with convenient leave management
@@ -81,7 +81,7 @@ const MainPage = () => {
                 </p>
               </div>
               <div className="service-card">
-                <i class="ri-line-chart-fill"></i>
+                <i className="ri-line-chart-fill"></i>
                 <h2>Goal Tracker</h2>
                 <p>
                   Foster professional growth and development within your
@@ -92,7 +92,7 @@ const MainPage = () => {
                 </p>
               </div>
               <div className="service-card">
-                <i class="ri-profile-line"></i>
+                <i className="ri-profile-line"></i>
                 <h2>Employee Profiles</h2>
                 <p>
                   Elevate employee engagement and satisfaction with personalized
@@ -103,7 +103,7 @@ const MainPage = () => {
                 </p>
               </div>
               <div className="service-card">
-                <i class="ri-user-add-fill"></i>
+                <i className="ri-user-add-fill"></i>
                 <h2>Hiring</h2>
                 <p>
                   Streamline your hiring process with our vacancies and
@@ -120,7 +120,7 @@ const MainPage = () => {
       <div className="main-contact-us" id="Contacts">
         <div className="footer-container">
           <div className="row">
-            <div class="footer-col">
+            <div className="footer-col">
               <h4>HRS</h4>
               <ul>
                 <li className="links">
@@ -131,24 +131,24 @@ const MainPage = () => {
                 </li>
               </ul>
             </div>
-            <div class="footer-col">
+            <div className="footer-col">
               <h4>Contacts</h4>
               <ul>
                 <li>
-                  <i class="ri-customer-service-fill"></i>
+                  <i className="ri-customer-service-fill"></i>
                   000-132-877-090
                 </li>
                 <li>
-                  <i class="ri-customer-service-fill"></i>
+                  <i className="ri-customer-service-fill"></i>
                   009-888-122-999
                 </li>
                 <li>
-                  <i class="ri-customer-service-fill"></i>
+                  <i className="ri-customer-service-fill"></i>
                   993-455-877-122
                 </li>
               </ul>
             </div>
-            <div class="footer-col">
+            <div className="footer-col">
               <h4>Newsletter</h4>
               <form action="" className="newsletter">
                 <input
