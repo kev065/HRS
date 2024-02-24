@@ -104,6 +104,7 @@ const EditProfileForm = () => {
   });
   if (!employeeProfileData) return <div>Loading...</div>;
   return (
+    <div className='content-wrapper' sstyle={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
     <div className="container">
       <div className="form-container">
         <form className="profile-form" onSubmit={formik.handleSubmit}>
@@ -220,6 +221,7 @@ const EditProfileForm = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };
