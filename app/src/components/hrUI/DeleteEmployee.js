@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { retrieve } from "../Encryption";
+import './DeleteEmployee.css';
 
 const DeleteEmployeeForm = () => {
     const [employeeId, setEmployeeId] = useState('');
@@ -22,7 +23,7 @@ const DeleteEmployeeForm = () => {
     };
 
     return (
-        <div style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+        <div className='delete-employee-form' style={{ marginLeft: "280px", marginTop:"20px"}}>
             <form onSubmit={handleSubmit}>
                 <label>
                     Employee ID:
