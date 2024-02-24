@@ -1,11 +1,13 @@
 .form-container {
   font-family: "Poppins", sans-serif;
-  width: 100%;
-  min-height: 100vh;
+  min-height: 88vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
+  width: 100%;
+  margin-left: 9rem;
 }
 
 .profile-form {
@@ -18,17 +20,17 @@
   height: 70vh;
 }
 
-.form-control label {
+.form-div label {
   font-size: 1rem;
   font-weight: 600;
   color: var(--primary-color);
 }
 
-.form-control input {
+.form-div input {
   width: 90%;
   height: 2rem;
-  box-shadow: 0 0 1px var(--primary-color);
-  outline: none;
+  border: rgba(13, 152, 186, 0.25) solid 1px;
+  padding: 15px;
   text-indent: 0.5rem;
   font-size: 200;
   font-family: "Poppins", sans-serif;
@@ -36,14 +38,17 @@
   margin-bottom: 5px;
 }
 
-.form-control input[type="file"] {
+.form-div input[type="file"] {
   width: fit-content;
-  height: 150px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.form-control input[type="file"]::file-selector-button {
+.form-div input[type="file"]::file-selector-button {
   background-color: aliceblue;
-  width: 150px;
-  height: 150px;
+  width: 145px;
+  height: 145px;
   border-radius: 50%;
   background-size: cover;
   background-repeat: no-repeat;
@@ -53,22 +58,21 @@
   cursor: pointer;
 }
 
-.form-control input::placeholder {
+.form-div input::placeholder {
   color: #333f;
   font-style: italic;
 }
 
 button.update-btn {
   width: 150px;
-  background-color: #fff;
+  background: rgb(13, 152, 186);
   margin-top: 1.5rem;
-  color: var(--text-dark);
+  color: var(--extra-light);
   padding: 5px 5px;
   height: 2.5rem;
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.3);
 }
 
 .error {
