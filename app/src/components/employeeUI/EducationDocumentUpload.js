@@ -15,6 +15,7 @@ const EducationDocumentUpload = ({onClose}) => {
   const [document, setDocument] = useState(null);
   const [documentName, setDocumentName] = useState('');
   const [documentType, setDocumentType] = useState('official');
+  const employeeId=retrieve().employee.id
 
 
   const handleEducationChange = (e) => {
@@ -53,7 +54,7 @@ const EducationDocumentUpload = ({onClose}) => {
       formData.append('name', documentName);
       formData.append('type', documentType);
   
-      fetch(`/upload_document/${educationData.id}`, {
+      fetch(`/upload/${educationData.id}`, {
         method: 'POST',
         headers: {
           "Authorization": "Bearer " + retrieve().access_token,
@@ -61,14 +62,10 @@ const EducationDocumentUpload = ({onClose}) => {
         body: formData
       });
     })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return response.json();
-    })
+ 
     .then(documentData => {
       console.log('Document upload response:', documentData);
+      navigate(`/employee/view_education/${employeeId}`)
      
   
       setEducationDetails({

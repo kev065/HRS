@@ -140,7 +140,7 @@ class DocumentUpload(Resource):
                 link_url=document_url,
                 name=data["name"],
                 type=data["type"],
-                employee_id=current_user.id
+                employee_id=current_user
             )
 
             db.session.add(new_document)
@@ -157,7 +157,7 @@ class DocumentUpload(Resource):
       
      
         
-api.add_resource(DocumentUpload, "/upload_document/<string:id>")
+api.add_resource(DocumentUpload, "/upload/<string:id>")
 
 
 class EmployeeDocument(Resource):

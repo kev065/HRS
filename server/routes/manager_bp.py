@@ -114,7 +114,7 @@ class ManagerById(Resource):
 api.add_resource(ManagerById, '/managers/<string:id>')
 
 
-class EmployeesInMyDepartment(Resource):
+class TrainingsPerDepartment(Resource):
     @manager_required()
     def get(self, manager_id):
         manager = Manager.query.get(manager_id)
@@ -157,4 +157,42 @@ class EmployeesInMyDepartment(Resource):
 
         return jsonify(employees_details)
 
-api.add_resource(EmployeesInMyDepartment, '/manager/employees/<string:manager_id>')
+api.add_resource(TrainingsPerDepartment, '/manager/employees/<string:manager_id>')
+
+
+class EmployeesPerDepartment(Resource):
+    @manager_required()
+    def get(self, manager_id):
+        manager = Manager.query.get(manager_id)
+        if not manager:
+            return make_response(jsonify({"message": "Manager not found"}), 404)
+
+        department = Department.query.get(manager.dept_id)
+        if not department:
+            return make_response(jsonify({"message": "Department not found"}), 404)
+
+        employees = Employee.query.filter_by(dept_id=department.id).all()
+        if not employees:
+            return make_response(jsonify({"message": "No employees found in this department"}), 404)
+
+        employees_details = []
+
+        for employee in employees:
+            employee_profile = EmployeeProfile.query.filter_by(employee_id=employee.id).first()
+
+            employee_details = {
+                "id": employee.id,
+                "email": employee.email,
+                "first_name": employee_profile.first_name if employee_profile else None,
+                "last_name": employee_profile.last_name if employee_profile else None,
+                "phone_contact": employee_profile.phone_contact if employee_profile else None
+            }
+
+         
+           
+            employees_details.append(employee_details)
+
+        return jsonify(employees_details)
+
+api.add_resource(EmployeesPerDepartment, '/employees_department/<string:manager_id>')
+

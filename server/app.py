@@ -66,20 +66,7 @@ def create_app():
         token = db.session.query(TokenBlocklist).filter_by(jti=jti).first()
         return token is not None
     
-    # @jwt.user_lookup_loader
-    # def user_lookup_callback(_jwt_header, jwt_data):
-    #     identity = jwt_data["sub"]    
-    #     return Employee.query.filter_by(id=identity).first()
-    
-    @jwt.user_lookup_loader
-    def user_lookup_callback(_jwt_header, jwt_data):
-         identity = jwt_data["sub"]
-         if jwt_data["is_manager"]:
-                return Manager.query.filter_by(id=identity).first()
-         elif jwt_data["is_hr"]:
-                return HR_Personel.query.filter_by(id=identity).first()
-         else:
-                return Employee.query.filter_by(id=identity).first()
+ 
 
     app.register_blueprint(employee_bp)
     app.register_blueprint(department_bp)

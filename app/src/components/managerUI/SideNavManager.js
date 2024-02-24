@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 
+
 const SideNavManager = () => {
+  
   return (
     <div>
          <div>
@@ -58,7 +60,8 @@ const SideNavManager = () => {
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-users" />
             <p>
-             Departments
+        
+            <Link to="/manager/department_employees/managerId">Team</Link> 
            
             </p>
           </a>
@@ -69,7 +72,7 @@ const SideNavManager = () => {
             <i className="nav-icon fas fa-users" />
             <p>
         
-             <Link to="/manager/view_department_employees">Training Tracker</Link> 
+             <Link to="/manager/view_department_trainings">Training Tracker</Link> 
             </p>
           </a>
          

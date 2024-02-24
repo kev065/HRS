@@ -34,7 +34,7 @@ const ViewDocuments = () => {
   }, [employeeId]);
 
   const handleUpdateDocument = (document) => {
-    navigate(`/update_document/${document.id}`);
+    navigate(`/employee/update_document/${document.id}`);
   };
 
   const handleDeleteDocument = (documentId) => {

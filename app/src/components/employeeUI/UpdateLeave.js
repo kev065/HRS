@@ -59,7 +59,7 @@ const UpdateLeave = () => {
       })
       .then((updatedData) => {
         console.log('Updated Leave:', updatedData);
-        navigate(`/view_leaves/${retrieve().employee.id}`);
+        navigate(`/employee/view_leaves/${retrieve().employee.id}`);
       })
       .catch((error) => {
         console.error('Error updating leave:', error);

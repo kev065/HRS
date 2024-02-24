@@ -31,8 +31,10 @@ import DashBoardManager from './components/managerUI/DashBoardManager';
 import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
 import Experience from './components/employeeUI/AddExperience';
 import Goals from './components/employeeUI/ViewGoalsEmployee';
-import ViewDepartmentEmployees from './components/managerUI/ViewDepartmentEmployees';
+import ViewDepartmentTrainings from './components/managerUI/ViewDepartmentTrainings';
 import RecommendTraining from './components/managerUI/RecommendTraining';
+import ViewEmployeesPerDepartment from './components/managerUI/ViewEmployeesPerDepartment';
+import ViewStaffEducation from './components/hrUI/ViewStaffEducation';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -68,13 +70,15 @@ function App() {
         <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
         <Route path="/hr/hr_update_profile" element={<UpdateProfile />}/>
         <Route path="/hr/hr_profile" element={<Profile />}/>
+        <Route path="/hr/staff_education" element={<ViewStaffEducation />}/>
         </Route>   
 
         <Route path="/manager" element={<DashBoardManager />} >
         <Route path="/manager/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
         <Route path="/manager/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
-        <Route path="/manager/view_department_employees" element={<ViewDepartmentEmployees />}/>
+        <Route path="/manager/view_department_trainings" element={<ViewDepartmentTrainings />}/>
         <Route path="/manager/recommend_training/:employeeId" element={<RecommendTraining />}/>
+        <Route path="/manager/department_employees/:managerId" element={<ViewEmployeesPerDepartment/>}/>
         </Route>
              
         </Routes>

@@ -40,6 +40,7 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
                 setStartTime('');
                 setEndDate('');
                 setEndTime('');
+                onClose()
             })
             .catch((error) => {
                 console.error('Error creating training:', error);
@@ -51,7 +52,8 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
     };
 
     return (
-        <div>
+        <div >
+            <h3>Add Training</h3>
             <form onSubmit={handleSubmit}>
                 <label>
                     Title:

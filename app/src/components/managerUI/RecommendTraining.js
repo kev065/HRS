@@ -59,7 +59,7 @@ const RecommendTraining = () => {
         setTimeout(() => {
           setSuccessMessage('');
         }, 15000);
-        navigate('/manager/view_department_employees')
+        navigate('/manager/view_department_trainings')
        
         setTrainings(prevTrainings =>
           prevTrainings.map(training =>

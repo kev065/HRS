@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { retrieve } from '../Encryption';
 import { useNavigate } from 'react-router-dom';
 
-function ViewDepartmentEmployees() {
+function ViewDepartmentTrainings() {
     const [employees, setEmployees] = useState([]);
     const [error, setError] = useState(null);
     const managerId = retrieve().manager.id;
@@ -37,7 +37,7 @@ function ViewDepartmentEmployees() {
 
     return (
         <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-            <h1>Training for your Department Employees </h1>
+            <h1>Training for my Department Staff </h1>
             {error && <p>{error}</p>}
             <table>
                 <thead>
@@ -78,4 +78,4 @@ function ViewDepartmentEmployees() {
     );
 }
 
-export default ViewDepartmentEmployees;
+export default ViewDepartmentTrainings;
