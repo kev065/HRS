@@ -13,33 +13,35 @@ const AddEmployeeForm = () => {
   };
 
   return (
-    <Formik
-      initialValues={{
-        email: '',
-        password: '',
-        dept_id: ''
-      }}
-      onSubmit={handleSubmit}
-    >
-      <Form>
-        <label>
-          Email:
-          <Field type="email" name="email" required />
-        </label>
-        <br />
-        <label>
-          Password:
-          <Field type="password" name="password" required />
-        </label>
-        <br />
-        <label>
-          Department ID:
-          <Field type="text" name="dept_id" required />
-        </label>
-        <br />
-        <button type="submit">Add Employee</button>
-      </Form>
-    </Formik>
+    <div style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+          dept_id: ''
+        }}
+        onSubmit={handleSubmit}
+      >
+        <Form>
+          <label>
+            Email:
+            <Field type="email" name="email" required />
+          </label>
+          <br />
+          <label>
+            Password:
+            <Field type="password" name="password" required />
+          </label>
+          <br />
+          <label>
+            Department ID:
+            <Field type="text" name="dept_id" required />
+          </label>
+          <br />
+          <button type="submit">Add Employee</button>
+        </Form>
+      </Formik>
+    </div>
   );
 };
 
