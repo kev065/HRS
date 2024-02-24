@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 const SideNavHr = () => {
+  const {hrId} = useParams()
   return (
     <div>
  {/* Main Sidebar Container */}
@@ -47,7 +48,30 @@ const SideNavHr = () => {
              
             </p>
           </a>
-         
+          <ul className="nav nav-treeview">
+            <li className="nav-item">
+            <Link to={`/hr_profile/${hrId}`} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          View HR Profile
+        </Link>
+                <i className="fas fa-eye nav-icon" />
+                <p>View Profile Details</p>
+            </li>
+
+            <li className="nav-item">
+            <Link to={`/create_profile/${hrId}`} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          Create HR Profile
+        </Link>
+            </li>
+
+            <li className="nav-item">
+            <Link to={`/Edit_profile/${hrId}`} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          Edit HR Profile
+        </Link>
+            </li>
+          </ul>
         </li>
 
 
