@@ -1,6 +1,8 @@
 import React from 'react';
 import { Formik, Field, Form } from 'formik';
 import axios from 'axios'; 
+import './AddEmployee.css';
+
 
 const AddEmployeeForm = () => {
   const handleSubmit = async (values) => {
@@ -13,7 +15,7 @@ const AddEmployeeForm = () => {
   };
 
   return (
-    <div style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+    <div className='add-employee-form' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <Formik
         initialValues={{
           email: '',
@@ -42,7 +44,8 @@ const AddEmployeeForm = () => {
         </Form>
       </Formik>
     </div>
-  );
+);
+
 };
 
 export default AddEmployeeForm;
