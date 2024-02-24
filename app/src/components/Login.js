@@ -72,7 +72,7 @@ const Login = () => {
       });
   };
   return (
-    <div className="main_container_login">
+    <div className="main_container_login" style={{ marginRight:"20px" }} >
       <div className="ui column">
       <h1 style={{ textAlign: "center" , marginBottom:"30px"}}>Login Form</h1>    
       <div className="ui centered card " style={{ width: "400px" }}>

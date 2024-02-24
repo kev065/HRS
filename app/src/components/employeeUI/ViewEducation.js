@@ -60,6 +60,9 @@ const ViewEducation = () => {
   });
     
 }
+const handleAddEducation=()=>{
+  navigate('/employee/add_education')
+}
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
@@ -92,7 +95,7 @@ const ViewEducation = () => {
         </tbody>
       </table>
       {showAddEducation && <EducationDocumentUpload onClose={handleCreateEducationClose} />}
-      <button onClick={() => setShowAddEducation(true)}>Add Education</button>
+      <button onClick={() =>handleAddEducation() }>Add Education</button>
     </div>
   );
 };

@@ -3,12 +3,13 @@ import HeaderHr from './HeaderHr'
 import HomeHr from './HomeHr'
 import FooterHr from './FooterHr'
 import SideNavHr from './SideNavHr'
+import { Outlet } from 'react-router-dom'
 
 const DashBoardHr = () => {
   return (
     <div>
         <HeaderHr/>
-        <HomeHr/>
+        <Outlet/>
         <SideNavHr />
         <FooterHr/>
       

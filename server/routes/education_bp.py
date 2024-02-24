@@ -117,7 +117,7 @@ class EducationByID(Resource):
         return response
 
     @employee_required()
-    def delete(self):
+    def delete(self,id):
         current_user = get_jwt_identity()
         education = Education.query.filter_by(id=id).first()
 

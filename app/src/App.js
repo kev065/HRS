@@ -20,6 +20,7 @@ import UpdateLeave from "./components/employeeUI/UpdateLeave";
 import EmployeeProfileForm from "./components/employeeUI/EmployeeProfileForm";
 import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
 import EditProfileForm from "./components/employeeUI/EditProfileForm";
+import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
 import Session from './components/hrUI/Session';
 import Profile from './components/hrUI/Profile'
 import CreateProfile from './components/hrUI/CreateProfile';
@@ -30,9 +31,8 @@ import DashBoardManager from './components/managerUI/DashBoardManager';
 import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
 import Experience from './components/employeeUI/AddExperience';
 import Goals from './components/employeeUI/ViewGoalsEmployee';
-import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
-import ManagerProfile from './components/managerUI/ManagerProfile'
-import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
+
+
 function App() {
   const [trainings, setTrainings] = useState([]);
 
@@ -44,7 +44,7 @@ function App() {
         <Route path="/session" element={<Session />}/>
         <Route path="/employee" element={<DashBoardEmployee />}>
        <Route path="/employee/view_education/:employeeId" element={<ViewEducation />} />
-       <Route path="/employee/education/document/upload" element={<EducationDocumentUpload />}/>
+       <Route path="/employee/add_education" element={<EducationDocumentUpload />}/>
        <Route path="/employee/update_document/:id" element={<UpdateDocuments />} />
        <Route path="/employee/view_leaves/:id" element={<ViewLeaves />} />
        <Route path="/employee/update_leave/:id" element={<UpdateLeave />} />
@@ -52,9 +52,12 @@ function App() {
         <Route path="/employee/profile/create" element={<EmployeeProfileForm />} />
         <Route path="/employee/profile/edit" element={<EditProfileForm />} />
         <Route path="/employee/view_documents/:id" element={<ViewDocuments />} />
+        <Route path="/employee/view_education/:id" element={<ViewEducation />} />
+        <Route path="/employee/view_trainings/:id" element={<EmployeeViewTrainings/>} />
         <Route path="/employee/update_education/:id" element={<UpdateEducation />} />
         <Route path="/employee/goals" element={<Goals />}/>
         <Route path="/employee/experience" element={<Experience />}/>
+
        </Route>
         <Route path="/hr" element={<DashBoardHr />} >
         <Route path="/hr/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings} />  } />

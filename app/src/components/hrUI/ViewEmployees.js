@@ -7,7 +7,7 @@ const ViewEmployees = () => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    fetch('/employeeProfiles', {
+    fetch('/employees_details', {
       headers: {
         "Authorization": "Bearer " + retrieve().access_token,
       }
@@ -19,7 +19,15 @@ const ViewEmployees = () => {
         return response.json();
       })
       .then(data => {
-        setEmployees(data); 
+        console.log(data); 
+     
+        const extractedEmployees = data.map(employee => ({
+          id: employee.id,
+          first_name: employee.profile ? employee.profile.first_name : null,
+          last_name: employee.profile ? employee.profile.last_name : null
+        }));
+        setEmployees(extractedEmployees);
+        console.log(extractedEmployees);
       })
       .catch(error => {
         console.error('Error fetching employee profiles:', error);
@@ -27,26 +35,33 @@ const ViewEmployees = () => {
   }, []);
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Documents</th>
-        </tr>
-      </thead>
-      <tbody>
-        {employees.map(employee => (
-          <tr key={employee.id}>
-            <td>{employee.id}</td>
-            <td>{employee.first_name} {employee.last_name}</td>
-            <td>
-              <Link to={`/verify_documents/${employee.id}`}>Verify documents</Link> 
-            </td>
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Documents</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {employees.map(employee => (
+            <tr key={employee.id}>
+              <td>{employee.id}</td>
+              <td>
+                {employee.first_name && employee.last_name ? 
+                  `${employee.first_name} ${employee.last_name}` : 
+                  'N/A'
+                }
+              </td>
+              <td>
+                <Link to={`/hr/verify_documents/${employee.id}`}>Verify documents</Link> 
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

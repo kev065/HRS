@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { retrieve } from "../Encryption";
+import { useNavigate} from 'react-router-dom';
 
 const EducationDocumentUpload = ({onClose}) => {
   const [educationDetails, setEducationDetails] = useState({
@@ -9,6 +10,7 @@ const EducationDocumentUpload = ({onClose}) => {
     start_date: '',
     end_date: ''
   });
+ const navigate =useNavigate()
 
   const [document, setDocument] = useState(null);
   const [documentName, setDocumentName] = useState('');
@@ -30,8 +32,7 @@ const EducationDocumentUpload = ({onClose}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    
+  
     fetch('/education', {
       method: 'POST',
       headers: {
@@ -40,27 +41,36 @@ const EducationDocumentUpload = ({onClose}) => {
       },
       body: JSON.stringify(educationDetails)
     })
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(educationData => {
-
       const formData = new FormData();
       formData.append('document', document);
       formData.append('name', documentName);
       formData.append('type', documentType);
-
-      return fetch(`/upload/${educationData.id}`, {
+  
+      fetch(`/upload/${educationData.id}`, {
         method: 'POST',
-        headers: {           
-            "Authorization": "Bearer " + retrieve().access_token,
-          },
+        headers: {
+          "Authorization": "Bearer " + retrieve().access_token,
+        },
         body: formData
       });
     })
-    .then(documentResponse => documentResponse.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
     .then(documentData => {
       console.log('Document upload response:', documentData);
-
-    
+     
+  
       setEducationDetails({
         institution: '',
         course: '',
@@ -71,20 +81,19 @@ const EducationDocumentUpload = ({onClose}) => {
       setDocument(null);
       setDocumentName('');
       setDocumentType('official');
-
     })
     .catch(error => {
       console.error('Error:', error);
-     
     });
   };
+  
   const handleExit = () => {
     onClose();
 };
 
 
   return (
-    <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Add Education</h2>
       <form onSubmit={handleSubmit}>
         <label>
