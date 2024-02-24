@@ -30,6 +30,7 @@ import DashBoardManager from './components/managerUI/DashBoardManager';
 import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
 import Experience from './components/employeeUI/AddExperience';
 import Goals from './components/employeeUI/ViewGoalsEmployee';
+import DeleteEmployeeForm from './components/hrUI/DeleteEmployee';
 
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
         <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
         <Route path="/hr/hr_update_profile" element={<UpdateProfile />}/>
         <Route path="/hr/hr_profile" element={<Profile />}/>
+        <Route path="/hr/hr_delete_employee" element={<DeleteEmployeeForm />}/>
         </Route>   
 
         <Route path="/manager" element={<DashBoardManager />} >
