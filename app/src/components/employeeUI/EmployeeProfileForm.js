@@ -10,6 +10,34 @@ const EmployeeProfileForm = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [profilePhoto, setProfilePhoto] = useState(null);
+
+  // image upload check size and extension type
+  const MAX_FILE_SIZE = 10000000; //10MB
+  const validFileExtensions = {
+    image: ["jpg", "png", "jpeg", "webp"],
+  };
+  const getExtension = (fileName) => {
+    if (!fileName) return null;
+    const parts = fileName.split(".");
+    return parts[parts.length - 1].toLowerCase();
+  };
+  const handleChange = (event) => {
+    const file = event.target.files[0]; // get the file object
+    if (file) {
+      const size = file.size; // get the file size in bytes
+      //check file extension
+      const isValid = validFileExtensions.image.includes(
+        getExtension(file.name)
+      );
+      if (size > MAX_FILE_SIZE) setError("The file is too large");
+      else if (!isValid) setError("The file type is not supported");
+      else {
+        setError(null);
+        setProfilePhoto(file);
+      }
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
@@ -19,41 +47,43 @@ const EmployeeProfileForm = () => {
       phone_contact: "",
       title: "",
       date_of_birth: "",
-      profile_photo: "",
     },
     validationSchema: yup.object().shape({
-      first_name: yup.string().required(),
-      last_name: yup.string().required(),
-      mantra: yup.string().required(),
+      first_name: yup.string().required("Please fill out this field"),
+      last_name: yup.string().required("Please fill out this field"),
+      mantra: yup.string().required("Please fill out this field"),
       phone_contact: yup
         .string()
-        .required()
+        .required("Please fill out this field")
         .min(10, "Phone contact must be atleast 10 characters"),
-      title: yup.string().required(),
-      date_of_birth: yup.date().required(),
-      profile_photo: yup.string().required(),
+      title: yup.string().required("Please provide a title"),
+      date_of_birth: yup.date().required("Please fill out this field"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      // form data
+      const formData = new FormData();
+      formData.append("first_name", values.first_name);
+      formData.append("last_name", values.last_name);
+      formData.append("mantra", values.mantra);
+      formData.append("phone_contact", values.phone_contact);
+      formData.append("title", values.title);
+      formData.append("date_of_birth", values.date_of_birth);
+      formData.append("profile_photo", profilePhoto);
+      console.log(...formData.entries());
       fetch("/employeeProfiles", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: "Bearer " + retrieve().access_token,
-          Accept: "application/json",
         },
-        body: JSON.stringify(values),
+        body: formData,
       }).then((response) => {
         if (response.ok) {
           // clear out form fields
           formik.resetForm();
           //set success message
-          setSuccess("Successfully Updated account!!");
-          //navigate user to home page
-          setTimeout(() => {
-            navigate("/profile");
-          }, 2000);
-          response.json().then((data) => console.log(data));
+          setSuccess("Successfully created account!!");
+          //navigate user to profile
+          navigate("/profile");
         } else {
           return response.json().then((err) => console.log(err));
         }
@@ -65,7 +95,6 @@ const EmployeeProfileForm = () => {
     <div className="container">
       <div className="form-container">
         <form className="profile-form" onSubmit={formik.handleSubmit}>
-          {error ? <h3 className="error">{error}</h3> : null}
           {success ? <h4 className="secondary-title">{success}</h4> : null}
           <div className="form-control">
             <label htmlFor="profile_photo">Upload photo</label>
@@ -74,12 +103,10 @@ const EmployeeProfileForm = () => {
               type="file"
               id="profile_photo"
               name="profile_photo"
-              value={formik.values.profile_photo}
-              onChange={formik.handleChange}
+              onChange={handleChange}
+              required
             />
-            {formik.touched.profile_photo && formik.errors.profile_photo ? (
-              <div className="error">{formik.errors.profile_photo}</div>
-            ) : null}
+            {error && <div className="error">{error}</div>}
           </div>
           <div className="form-control">
             <label htmlFor="first_name">First Name</label>
