@@ -33,6 +33,7 @@ const Experience = () => {
         start_date: '',
         end_date: ''
     }]);
+    const [message, setMessage] = useState(''); 
 
     // fetch experiences
     useEffect(() => {
@@ -87,9 +88,11 @@ const Experience = () => {
                 start_date: '',
                 end_date: ''
             }]);
+            setMessage('Experience added successfully!'); 
         })
         .catch(err => {
             console.error(err);
+            setMessage('Error adding experience.'); 
         });
     };
     
@@ -120,9 +123,11 @@ const Experience = () => {
         .then(res => {
             // Remove the deleted experience 
             setExperiences(experiences.filter(exp => exp.id !== id));
+            setMessage('Experience deleted successfully!');
         })
         .catch(err => {
             console.error(err);
+            setMessage('Error deleting experience.'); 
         });
     };
 
@@ -160,9 +165,9 @@ const Experience = () => {
                 <button type="button" className="add-button" onClick={addExperience}>Add Another Experience</button>
                 <button type="submit" className="submit-button">Submit</button>
             </form>
+            {message && <p>{message}</p>} 
         </div>
     );
-    
 };
 
 export default Experience;
