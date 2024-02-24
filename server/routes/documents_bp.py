@@ -118,7 +118,7 @@ api.add_resource(DocumentById, '/documents/<string:id>')
 class DocumentUpload(Resource):
     @cross_origin()
     @jwt_required()
-    def post(self):
+    def post(self,id):
         if 'document' not in request.files:
             return make_response(jsonify({"error": "No document part"}), 400)
         document = request.files['document']
@@ -156,7 +156,7 @@ class DocumentUpload(Resource):
       
      
         
-api.add_resource(DocumentUpload, "/upload")
+api.add_resource(DocumentUpload, "/upload/<string:id>")
 
 
 class EmployeeDocument(Resource):
