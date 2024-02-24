@@ -84,7 +84,7 @@ const EducationDocumentUpload = ({onClose}) => {
 
 
   return (
-    <div>
+    <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
       <h2>Add Education</h2>
       <form onSubmit={handleSubmit}>
         <label>

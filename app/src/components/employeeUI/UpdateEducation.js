@@ -82,7 +82,7 @@ const UpdateEducation = () => {
     };
 
     return (
-        <div>
+        <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
             {education && <form onSubmit={handleSubmit}>
                 <label>
                     Institution:

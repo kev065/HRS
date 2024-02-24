@@ -59,7 +59,7 @@ const AddDocument = ({documents,setDocuments,onClose}) => {
 };
 
   return (
-    <div >
+    <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
         <div className="ui centered card" style={{ marginTop:'20px' ,width:"700px"}}>
             <div className='card_container'>
       <h2>Add Document</h2>

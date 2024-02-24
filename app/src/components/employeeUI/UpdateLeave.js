@@ -67,7 +67,7 @@ const UpdateLeave = () => {
   };
 
   return (
-    <div>
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Update Leave</h2>
       <form onSubmit={handleSubmit}>
         <label>

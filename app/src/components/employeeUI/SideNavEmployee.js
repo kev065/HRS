@@ -1,29 +1,28 @@
 import React from 'react'
 import { Link,useParams } from 'react-router-dom'
+import { retrieve } from '../Encryption'
+
 
 
 const SideNavEmployee = () => {
-  const {employeeId} =useParams()
+  // const {employeeId} =useParams().id
+  const employeeId=retrieve().employee.id
   return (
     <div>
          <div>
  {/* Main Sidebar Container */}
 <aside className="main-sidebar sidebar-dark-primary elevation-4">
-  {/* Brand Logo */}
+ 
   <a href="index3.html" className="brand-link">
-    <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" className="brand-image img-circle elevation-3" style={{opacity: '.8'}} />
-    <span className="brand-text font-weight-light">HRS</span>
+   
+    <span className="brand-text font-weight-light" style={{ marginLeft: "70px"}}>HRS</span>
   </a>
-  {/* Sidebar */}
+  
   <div className="sidebar">
-    {/* Sidebar user panel (optional) */}
+   
     <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div className="image">
-        <img src="dist/img/user2-160x160.jpg" className="img-circle elevation-2" alt="User Image" />
-      </div>
-      <div className="info">
-        <a href="#" className="d-block">Employee Name</a>
-      </div>
+      
+    
     </div>
     {/* SidebarSearch Form */}
     <div className="form-inline">
@@ -50,24 +49,12 @@ const SideNavEmployee = () => {
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-user-circle" />
             <p>
-              Profile
-              <i className="fas fa-angle-left right" />
+          
+              <Link to={"/employee/profile"}>Profile</Link>
+              
             </p>
           </a>
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-              <a href="pages/examples/view-profile.html" className="nav-link">
-                <i className="fas fa-eye nav-icon" />
-                <p>View Profile Details</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="pages/examples/update-profile.html" className="nav-link">
-                <i className="fas fa-user-edit nav-icon" />
-                <p>Update Profile</p>
-              </a>
-            </li>
-          </ul>
+      
         </li>
 
 
@@ -77,17 +64,10 @@ const SideNavEmployee = () => {
             <i className="nav-icon fas fa-users-cog" />
             <p>
               Managers
-              <i className="fas fa-angle-left right" />
+          
             </p>
           </a>
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-              <a href="pages/examples/view-managers.html" className="nav-link">
-                <i className="fas fa-binoculars nav-icon" />
-                <p>My Managers</p>
-              </a>
-            </li>
-          </ul>
+       
         </li>
 
         <li className="nav-item">
@@ -95,76 +75,56 @@ const SideNavEmployee = () => {
             <i className="nav-icon fas fa-money-check-alt" /> 
             <p>
               Payslips
-              <i className="fas fa-angle-left right" />
+          
             </p>
           </a>
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-              <a href="pages/examples/employee-salaries.html" className="nav-link">
-                <i className="fas fa-list-ol nav-icon" /> 
-                <p>View Payslips</p>
-              </a>
-            </li>
-          </ul>
+     
         </li>
+
         <li className="nav-item">
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-money-check-alt" /> 
             <p>
            
-            <Link to={`/view_education/${employeeId}`}>Education</Link>
-
-         
+            <Link to={`/employee/view_education/${employeeId}`}>Education</Link>
+       
           
           
-              <i className="fas fa-angle-left right" />
             </p>
           </a>
           
         </li>
+
+
         <li className="nav-item">
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-money-check-alt" /> 
             <p>
            
-            <Link to={`/view_documents/${employeeId}`}>Documents</Link>
+            <Link to={`/employee/view_documents/${employeeId}`}>Documents</Link>
 
-         
-          
-          
-              <i className="fas fa-angle-left right" />
+                          
+             
             </p>
           </a>
           
         </li>
-
-
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-calendar-check" />
-            <p>
-            <Link to={`/view_leaves/${employeeId}`}>Leave Tracker</Link>
-
-            
-              <i className="fas fa-angle-left right" />
-            </p>
-          </a>
         
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-              <a href="pages/examples/approved.html" className="nav-link">
-                <i className="fas fa-check-circle nav-icon" />
-                <p>Approved</p>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a href="pages/examples/pending.html" className="nav-link">
-                <i className="fas fa-hourglass-half nav-icon" />
-                <p>Pending</p>
-              </a>
-            </li>
-          </ul>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
+            <i className="nav-icon fas fa-chalkboard-teacher" /> 
+            <p>
+           
+            <Link to={`/employee/view_leaves/${employeeId}` }>Leave Tracker</Link>
+                          
+             
+            </p>
+          </a>
+          
         </li>
+
+
+
 
 
         <li className="nav-item">
@@ -172,23 +132,10 @@ const SideNavEmployee = () => {
             <i className="nav-icon fas fa-chalkboard-teacher" />
               <p>
                 Training Tracker
-                <i className="fas fa-angle-left right" />
+             
               </p>
             </a>
-            <ul className="nav nav-treeview">
-              <li className="nav-item">
-                <a href="pages/examples/upcoming-training.html" className="nav-link">
-                  <i className="fas fa-calendar nav-icon" /> 
-                  <p>Upcoming Training</p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="pages/examples/past-training.html" className="nav-link">
-                  <i className="fas fa-history nav-icon" /> 
-                  <p>Past Training</p>
-                </a>
-              </li>
-            </ul>
+          
           </li>
 
 
@@ -204,9 +151,9 @@ const SideNavEmployee = () => {
          
       </ul>
     </nav>
-    {/* /.sidebar-menu */}
+    
   </div>
-  {/* /.sidebar */}
+
 </aside>
 
       
