@@ -56,7 +56,7 @@ const ManagerEditProfile = () => {
           setSuccess("Successfully Updated account!!");
           //navigate user to home page
           setTimeout(() => {
-            navigate("/profile");
+            navigate(`/manager/manager_profile${managerId}`);
           }, 2000);
           response.json().then((data) => console.log(data));
         } else {

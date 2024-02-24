@@ -35,7 +35,7 @@ const ManagerProfile = () => {
   if (!manager) return <div>Loading...</div>;
   console.log(manager);
   if (!manager || !manager.manager_profiles || manager.manager_profiles.length === 0)
-    return navigate(`/manager_create_profile/${id}`);
+    return navigate(`/manager/manager_create_profile/${id}`);
   const managerProfileData = manager.manager_profiles[0];
 
   function handleLogout(e) {
