@@ -83,7 +83,7 @@ const EmployeeProfileForm = () => {
           //set success message
           setSuccess("Successfully created account!!");
           //navigate user to profile
-          navigate("/profile");
+          navigate("/employee/profile");
         } else {
           return response.json().then((err) => console.log(err));
         }
@@ -176,9 +176,9 @@ const EmployeeProfileForm = () => {
           <br />
           <input
             type="text"
-            id="title"
+            id="form-title"
             name="title"
-            placeholder="eg. Mr. Mrs"
+            placeholder="eg. software engineer"
             value={formik.values.title}
             onChange={formik.handleChange}
           />

@@ -19,7 +19,7 @@ const EmployeeProfile = () => {
   if (!employee) return <div>Loading...</div>;
   console.log(employee);
   if (employee.employee_profiles.length === 0)
-    return navigate("/profile/create");
+    return navigate("/employee/profile/create");
   const employeeProfileData = employee.employee_profiles[0];
 
   function handleLogout(e) {
