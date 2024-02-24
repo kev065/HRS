@@ -11,34 +11,77 @@ const EditProfile = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const {hrId} = useParams
+  const [profilePhoto, setProfilePhoto] = useState(null);
+  const [hrProfileData, setHrProfileData] = useState({});
 
-  const hrProfiles = retrieve().hr.hr_profiles;
-  const initialProfileData = hrProfiles && hrProfiles.length > 0 ? hrProfiles[0] : {};
+  useEffect(() => {
+    fetch(`/hr_personnels/${hrId}`)
+      .then((response) => response.json())
+      .then((data) => setHrProfileData(data.hr_profiles[0]))
+      .catch((err) => console.log(err));
+  }, []);
+
+  // image upload check size and extension type
+  const MAX_FILE_SIZE = 10000000; //10MB
+  const validFileExtensions = {
+    image: ["jpg", "png", "jpeg", "webp"],
+  };
+  const getExtension = (fileName) => {
+    console.log(fileName);
+    if (!fileName) return null;
+    const parts = fileName.split(".");
+    return parts[parts.length - 1].toLowerCase();
+  };
+  // handle profile photo
+  const handleChange = (event) => {
+    const file = event.target.files[0]; // get the file object
+    if (file) {
+      const size = file.size; // get the file size in bytes
+      //check file extension
+      const isValid = validFileExtensions.image.includes(
+        getExtension(file.name)
+      );
+      if (size > MAX_FILE_SIZE) setError("The file is too large");
+      else if (!isValid) setError("The file type is not supported");
+      else {
+        setError(null);
+        setProfilePhoto(file);
+      }
+    }
+  };
 
   const formik = useFormik({
     initialValues: {
-      first_name: initialProfileData.first_name || '',
-      last_name: initialProfileData.last_name || '',
-      mantra: initialProfileData.mantra || '',
-      phone_contact: initialProfileData.phone_contact || '',
-      title: initialProfileData.title || '',
-      date_of_birth: initialProfileData.date_of_birth || '',
-      profile_photo: '',
+      first_name: hrProfileData.first_name || '',
+      last_name: hrProfileData.last_name || '',
+      mantra: hrProfileData.mantra || '',
+      phone_contact: hrProfileData.phone_contact || '',
+      title: hrProfileData.title || '',
+      date_of_birth: hrProfileData.date_of_birth || '',
     },
     validationSchema: yup.object().shape({
-      first_name: yup.string(),
-      last_name: yup.string(),
-      mantra: yup.string(),
+      first_name: yup.string().required("Please fill out this field"),
+      last_name: yup.string().required("Please fill out this field"),
+      mantra: yup.string().required("Please fill out this field"),
       phone_contact: yup
         .string()
-
+        .required("Please fill out this field")
         .min(10, "Phone contact must be atleast 10 characters"),
-      title: yup.string(),
-      date_of_birth: yup.date(),
-      profile_photo: yup.string(),
+      title: yup.string().required("Please fill out this field"),
+      date_of_birth: yup.date().required("Please fill out this field"),
     }),
     onSubmit: (values) => {
-      console.log(values);
+      const formData = new FormData();
+      formData.append("first_name", values.first_name);
+      formData.append("last_name", values.last_name);
+      formData.append("mantra", values.mantra);
+      formData.append("phone_contact", values.phone_contact);
+      formData.append("title", values.title);
+      formData.append("date_of_birth", values.date_of_birth);
+      formData.append("profile_photo", profilePhoto);
+
+      console.log(...formData.entries());
+
       fetch(`/hrProfiles/${hrId}`, {
         method: "PATCH",
         headers: {
@@ -54,21 +97,20 @@ const EditProfile = () => {
           //set success message
           setSuccess("Successfully Updated account!!");
           //navigate user to home page
-          setTimeout(() => {
-            navigate(`/hr/hr_profile${hrId}`);
-          }, 2000);
-          response.json().then((data) => console.log(data));
+          navigate(`/hr/hr_profile${hrId}`);
         } else {
           return response.json().then((err) => console.log(err));
         }
       });
     },
+    enableReinitialize: true,
   });
+  if (!hrProfileData) return <div>Loading...</div>;
   return (
+    <div className='content-wrapper' sstyle={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
     <div className="container">
       <div className="form-container">
         <form className="profile-form" onSubmit={formik.handleSubmit}>
-          {error ? <h3 className="error">{error}</h3> : null}
           {success ? <h4 className="secondary-title">{success}</h4> : null}
           <div className="form-control">
             <label htmlFor="profile_photo">Upload photo</label>
@@ -77,12 +119,9 @@ const EditProfile = () => {
               type="file"
               id="profile_photo"
               name="profile_photo"
-              value={formik.values.profile_photo}
-              onChange={formik.handleChange}
+              onChange={handleChange}
             />
-            {formik.touched.profile_photo && formik.errors.profile_photo ? (
-              <div className="error">{formik.errors.profile_photo}</div>
-            ) : null}
+            {error && <div className="error">{error}</div>}
           </div>
           <div className="form-control">
             <label htmlFor="first_name">First Name</label>
@@ -185,6 +224,7 @@ const EditProfile = () => {
           </div>
         </form>
       </div>
+    </div>
     </div>
   );
 };

@@ -68,7 +68,6 @@ function App() {
         <Route path="/hr/view_employees" element={<ViewEmployees />} />
         <Route path="/hr/verify_documents/:employeeId"  element={<VerifyDocuments />} />
         <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
-        <Route path="hr/hr_dashboard/:hrId" element={<DashBoardHr/>}/>
           <Route path="/hr/hr_profile" element={<Profile/>}/>
           <Route path="/hr/create_profile" element={<CreateProfile/>}/>
           <Route path="/hr/edit_profile" element={<EditProfile/>}/>

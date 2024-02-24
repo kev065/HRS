@@ -48,7 +48,6 @@ const ManagerCreateProfile = () => {
       phone_contact: "",
       title: "",
       date_of_birth: "",
-      profile_photo: "",
     },
     validationSchema: yup.object().shape({
       first_name: yup.string().required("First name is required"),
@@ -60,7 +59,6 @@ const ManagerCreateProfile = () => {
         .min(10, "Phone contact must be atleast 10 characters"),
       title: yup.string().required("Title is required"),
       date_of_birth: yup.date().required("Date of birth is required"),
-      profile_photo: yup.mixed().required("Photo url is required"),
     }),
 
 

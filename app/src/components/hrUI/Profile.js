@@ -17,7 +17,6 @@ const Profile = () => {
         'Authorization': 'Bearer ' + retrieve().access_token,
       },
     })
-      
       .then((res) => {
         if(!res.ok){
           throw new Error(`HTTP error! Status: ${res.status}`)
@@ -30,11 +29,10 @@ const Profile = () => {
       });
   }, []); 
 
-
   if (!hr) return <div>Loading...</div>;
   console.log(hr);
   if (!hr || !hr.hr_profiles || hr.hr_profiles.length === 0)
-    return navigate(`/create_profile/${id}`);
+    return navigate(`/hr/create_profile`);
   const hrProfileData = hr.hr_profiles[0];
 
   function handleLogout(e) {
