@@ -1,7 +1,11 @@
 import React from "react";
 import "./payslipEmployee.css";
+import { retrieve } from "../Encryption";
 
-const PaySlipEmployee = () => {
+const PaySlipEmployee = ({ payslip }) => {
+  const employee = retrieve().employee;
+  console.log(payslip);
+
   return (
     <div id="payslip">
       <div id="title">Payslip</div>
@@ -18,36 +22,37 @@ const PaySlipEmployee = () => {
       <div class="payslip-content">
         <div class="left-panel">
           <div id="employee">
-            <div id="name">Piven El'Sync</div>
-            <div id="email">mary.ann+Regr06@salarium.com</div>
+            <div id="name">{employee.employee_profiles[0]?.first_name}</div>
+            <div id="name">{employee.employee_profiles[0]?.last_name}</div>
+            <div id="email">{employee?.email}</div>
           </div>
           <div class="details">
             <div class="entry">
               <div class="label">Employee ID</div>
-              <div class="value">Reg-006</div>
+              <div class="value">{employee?.id}</div>
             </div>
             <div class="entry">
               <div class="label">Company Name</div>
-              <div class="value">Not a Shady One</div>
+              <div class="value">HRS</div>
             </div>
             <div class="entry">
               <div class="label">Position</div>
-              <div class="value">Point Guard</div>
+              <div class="value">{employee.employee_profiles[0]?.title}</div>
             </div>
             <div class="entry">
               <div class="label">Department</div>
-              <div class="value">1st String</div>
+              <div class="value">department here</div>
             </div>
             <div class="entry">
               <div class="label">Prepared by</div>
-              <div class="value">Piven Himself</div>
+              <div class="value">Allan Himself</div>
             </div>
           </div>
           <div class="gross">
             <div class="title">Total Income</div>
             <div class="entry">
-              <div class="label"></div>
-              <div class="value">92,823.86</div>
+              <div class="label">KSH</div>
+              <div class="value">total income here</div>
             </div>
           </div>
         </div>
@@ -57,8 +62,8 @@ const PaySlipEmployee = () => {
               <div class="entry">
                 <div class="label">Basic Pay</div>
                 <div class="detail"></div>
-                <div class="rate">45,000.00/Month</div>
-                <div class="amount">45,000.00</div>
+                <div class="rate">{payslip?.basic_salary}/Month</div>
+                <div class="amount">KSH {payslip?.basic_salary}.00</div>
               </div>
             </div>
             <div class="taxable_commission"></div>
@@ -68,81 +73,51 @@ const PaySlipEmployee = () => {
               </div>
             </div>
             <div class="withholding_tax">
-              <div class="entry">
-                <div class="label">Withholding Tax</div>
-                <div class="detail"></div>
-                <div class="rate"></div>
-                <div class="amount">(21,548.85)</div>
-              </div>
+              {payslip.bonus?.map((bonus) => (
+                <div class="entry">
+                  <div class="label">Bonus</div>
+                  <div class="detail">{bonus.name}</div>
+                  <div class="rate">{bonus.description}</div>
+                  <div class="amount">{bonus.amount}</div>
+                </div>
+              ))}
             </div>
             <div class="non_taxable_allowance">
-              <div class="entry">
-                <div class="label">Non-Taxable Allowance</div>
-                <div class="detail"></div>
-                <div class="rate"></div>
-                <div class="amount"></div>
-              </div>
-              <div class="entry">
-                <div class="label"></div>
-                <div class="detail">Allowance Name</div>
-                <div class="rate"></div>
-                <div class="amount">1,500.00</div>
-              </div>
+              {payslip.allowance?.map((allowance) => (
+                <div class="entry">
+                  <div class="label">Allowance</div>
+                  <div class="detail">{allowance?.name}</div>
+                  <div class="rate">{allowance.description}</div>
+                  <div class="amount">{allowance.amount}</div>
+                </div>
+              ))}
             </div>
             <div class="non_taxable_bonus">
-              <div class="entry">
-                <div class="label">Non-Taxable Bonus</div>
-                <div class="detail"></div>
-                <div class="rate"></div>
-                <div class="amount"></div>
-              </div>
-              <div class="entry">
-                <div class="label"></div>
-                <div class="detail">Bonus Name</div>
-                <div class="rate"></div>
-                <div class="amount">2,000.00</div>
-              </div>
-            </div>
-            <div class="non_taxable_commission">
-              <div class="entry">
-                <div class="label">Non-Taxable Commission</div>
-                <div class="detail"></div>
-                <div class="rate"></div>
-                <div class="amount"></div>
-              </div>
-              <div class="entry">
-                <div class="label"></div>
-                <div class="detail">Commission Name 1</div>
-                <div class="rate"></div>
-                <div class="amount">3,000.00</div>
-              </div>
-              <div class="entry">
-                <div class="label"></div>
-                <div class="detail">Commission Name 2</div>
-                <div class="rate"></div>
-                <div class="amount">2,500.00</div>
-              </div>
+              {payslip.normal?.map((normal) => (
+                <div class="entry">
+                  <div class="label">Normal</div>
+                  <div class="detail">{normal.name}</div>
+                  <div class="rate">{normal.description}</div>
+                  <div class="amount">{normal.amount}</div>
+                </div>
+              ))}
             </div>
             <div class="deductions">
-              <div class="entry">
-                <div class="label">Deductions</div>
-                <div class="detail"></div>
-                <div class="rate"></div>
-                <div class="amount"></div>
-              </div>
-              <div class="entry">
-                <div class="label"></div>
-                <div class="detail">HMO</div>
-                <div class="rate"></div>
-                <div class="amount">(500.00)</div>
-              </div>
+              {payslip.deduction?.map((deduction) => (
+                <div class="entry">
+                  <div class="label">deduction</div>
+                  <div class="detail">{deduction.name}</div>
+                  <div class="rate">{deduction.description}</div>
+                  <div class="amount">{deduction.amount}</div>
+                </div>
+              ))}
             </div>
             <div class="net_pay">
               <div class="entry">
                 <div class="label">NET PAY</div>
                 <div class="detail"></div>
                 <div class="rate"></div>
-                <div class="amount">69,656.21</div>
+                <div class="amount">net pay here</div>
               </div>
             </div>
           </div>
