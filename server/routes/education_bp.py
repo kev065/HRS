@@ -54,11 +54,11 @@ class EducationDetails(Resource):
             institution=data['institution'],
             course=data['course'],
             qualification=data['qualification'],
-            start_date = datetime.strptime(
-            data["start_date"], "%Y-%m-%d"),
-            end_date = datetime.strptime(
-            data["end_date"], "%Y-%m-%d")
-       
+            start_date=datetime.strptime(
+                data["start_date"], "%Y-%m-%d"),
+            end_date=datetime.strptime(
+                data["end_date"], "%Y-%m-%d")
+
 
         )
 
@@ -104,7 +104,6 @@ class EducationByID(Resource):
             data['end_date'] = datetime.strptime(
                 data['end_date'], "%Y-%m-%d")
 
-       
         for key, value in data.items():
             if value is None:
                 continue
@@ -117,7 +116,7 @@ class EducationByID(Resource):
         return response
 
     @employee_required()
-    def delete(self):
+    def delete(self, id):
         current_user = get_jwt_identity()
         education = Education.query.filter_by(id=id).first()
 
@@ -135,18 +134,21 @@ class EducationByID(Resource):
 
 api.add_resource(EducationByID, '/education/<string:id>')
 
+
 class EmployeeEducationDetails(Resource):
     @employee_required()
     def get(self, employee_id):
         current_user = get_jwt_identity()
         if current_user != employee_id:
-            abort(403, detail="Forbidden: You can only access your own education details.")
+            abort(
+                403, detail="Forbidden: You can only access your own education details.")
 
-        employee_education = Education.query.filter_by(employee_id=current_user).all()
+        employee_education = Education.query.filter_by(
+            employee_id=current_user).all()
         result = educationSchema.dump(employee_education, many=True)
         response = make_response(jsonify(result), 200)
         return response
-api.add_resource(EmployeeEducationDetails, '/education/employee/<string:employee_id>')
 
 
-
+api.add_resource(EmployeeEducationDetails,
+                 '/education/employee/<string:employee_id>')
