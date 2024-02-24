@@ -53,7 +53,7 @@ const EducationDocumentUpload = ({onClose}) => {
       formData.append('name', documentName);
       formData.append('type', documentType);
   
-      fetch(`/upload/${educationData.id}`, {
+      fetch(`/upload_document/${educationData.id}`, {
         method: 'POST',
         headers: {
           "Authorization": "Bearer " + retrieve().access_token,

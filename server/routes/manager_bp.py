@@ -1,11 +1,11 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint, make_response, jsonify,Response
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import get_jwt_identity
 from serializer import managerSchema
 from auth_middleware import manager_required
-from models import Manager, db
+from models import Manager, db,Employee,Department,EmployeeProfile,EmployeeTraining
 
 manager_bp = Blueprint('manager_bp', __name__)
 ma = Marshmallow(manager_bp)
@@ -112,3 +112,49 @@ class ManagerById(Resource):
 
 
 api.add_resource(ManagerById, '/managers/<string:id>')
+
+
+class EmployeesInMyDepartment(Resource):
+    @manager_required()
+    def get(self, manager_id):
+        manager = Manager.query.get(manager_id)
+        if not manager:
+            return make_response(jsonify({"message": "Manager not found"}), 404)
+
+        department = Department.query.get(manager.dept_id)
+        if not department:
+            return make_response(jsonify({"message": "Department not found"}), 404)
+
+        employees = Employee.query.filter_by(dept_id=department.id).all()
+        if not employees:
+            return make_response(jsonify({"message": "No employees found in this department"}), 404)
+
+        employees_details = []
+
+        for employee in employees:
+            employee_profile = EmployeeProfile.query.filter_by(employee_id=employee.id).first()
+
+            employee_details = {
+                "id": employee.id,
+                "email": employee.email,
+                "first_name": employee_profile.first_name if employee_profile else None,
+                "last_name": employee_profile.last_name if employee_profile else None,
+                "phone_contact": employee_profile.phone_contact if employee_profile else None
+            }
+
+         
+            assigned_trainings = EmployeeTraining.query.filter_by(employee_id=employee.id).all()
+            employee_details["assigned_trainings"] = [{
+                "title": training.training.title,
+                "description": training.training.description,
+                "start_date": training.training.start_date.strftime('%Y-%m-%d'),
+                "start_time": training.training.start_time.strftime('%H:%M:%S'),
+                "end_date": training.training.end_date.strftime('%Y-%m-%d'),
+                "end_time": training.training.end_time.strftime('%H:%M:%S')
+            } for training in assigned_trainings]
+
+            employees_details.append(employee_details)
+
+        return jsonify(employees_details)
+
+api.add_resource(EmployeesInMyDepartment, '/manager/employees/<string:manager_id>')

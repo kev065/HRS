@@ -3,11 +3,11 @@ from flask import Blueprint, make_response, jsonify
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import get_jwt_identity,jwt_required,current_user
 from serializer import employeeProfileSchema
 
 from models import db, EmployeeProfile
-from auth_middleware import employee_required
+from auth_middleware import hr_required,employee_required
 
 employeeProfile_bp = Blueprint('employeeProfile_bp', __name__)
 ma = Marshmallow(employeeProfile_bp)
@@ -15,6 +15,8 @@ api = Api(employeeProfile_bp)
 
 
 post_args = reqparse.RequestParser()
+post_args.add_argument('employee_id', type=str,
+                       required=True, help='Employee ID is required')
 post_args.add_argument('date_of_birth', type=str,
                        required=True, help='Date of Birth is required')
 post_args.add_argument('first_name', type=str,
@@ -50,10 +52,10 @@ class EmployeeProfiles(Resource):
 
     @employee_required()
     def post(self):
-        current_user = get_jwt_identity()
+        
         data = post_args.parse_args()
 
-        employee_id = current_user
+        employee_id = current_user.id
         first_name = data["first_name"]
         last_name = data["last_name"]
         mantra = data["mantra"]

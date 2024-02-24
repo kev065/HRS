@@ -136,3 +136,5 @@ class EmployeesDetails(Resource):
 
 
 api.add_resource(EmployeesDetails, '/employees_details')
+
+

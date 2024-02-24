@@ -5,7 +5,7 @@ import { store, retrieve } from "./Encryption";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate("/profile/create");
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -42,6 +42,7 @@ const Login = () => {
         // Check the role and access token from the response
         store(result);
         const { role, employee } = result;
+        console.log(result)
 
         localStorage.setItem(
           "accessToken",
@@ -64,6 +65,7 @@ const Login = () => {
         }
 
         console.log("Login successful!");
+        console.log()
       })
       .catch((error) => {
        

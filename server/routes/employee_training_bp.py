@@ -1,7 +1,7 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint, make_response, jsonify,request
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
-from models import EmployeeTraining, db
+from models import EmployeeTraining, db,Training
 from serializer import employeeTrainingSchema
 from auth_middleware import hr_required,employee_required
 from flask_jwt_extended import current_user
@@ -107,6 +107,7 @@ class TrainingForSingleEmployee(Resource):
         for emp_training in employee_trainings:
           
             training_details = {
+                "id":emp_training.training.id,
                 "title": emp_training.training.title,
                 "description": emp_training.training.description,
                 "start_date": emp_training.training.start_date.strftime('%Y-%m-%d'),
@@ -119,3 +120,63 @@ class TrainingForSingleEmployee(Resource):
         return make_response(jsonify(training_data), 200)
 
 api.add_resource(TrainingForSingleEmployee, '/single_employee_trainings/<string:id>')
+
+class RecommendEmployee(Resource):
+    def post(self):
+        data = request.json
+        employee_id = data.get('employeeId')
+        training_id = data.get('trainingId')
+
+       
+        training = Training.query.get(training_id)
+        if not training:
+            return {"message": "Training not found"}, 404
+
+        
+        employee_training = EmployeeTraining(employee_id=employee_id, training_id=training_id)
+        db.session.add(employee_training)
+        db.session.commit()
+
+        return {"message": "Employee recommended for training successfully"}, 200
+api.add_resource(RecommendEmployee, '/recommend-employee')
+
+class AvailableTrainings(Resource):
+    def get(self):
+       
+        trainings = Training.query.all()
+
+      
+        available_trainings = []
+        for training in trainings:
+         
+            if not training.trainings:
+               
+                available_trainings.append({
+                    "id": training.id,
+                    "title": training.title,
+                    "description": training.description,
+                    "start_date": training.start_date.strftime('%Y-%m-%d'),
+                    "start_time": training.start_time.strftime('%H:%M:%S'),
+                    "end_date": training.end_date.strftime('%Y-%m-%d'),
+                    "end_time": training.end_time.strftime('%H:%M:%S')
+                })
+
+        return available_trainings, 200
+
+api.add_resource(AvailableTrainings, '/available-trainings')
+
+
+class DeleteTrainingForEmployee(Resource):
+    def delete(self, id, training_id):
+        single_employee_training = EmployeeTraining.query.filter_by(
+            id=id).first()
+
+        if not single_employee_training:
+            return make_response(jsonify({"error": f"EmployeeTraining with id {id} does not exist"}), 404)
+
+        db.session.delete(single_employee_training)
+        db.session.commit()
+
+        return make_response(jsonify({"message": f"EmployeeTraining with id {id} has been deleted"}), 200)
+
+api.add_resource(DeleteTrainingForEmployee, '/delete_trainings/<string:id>/<string:training_id>')
