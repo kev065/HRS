@@ -23,7 +23,8 @@ import EditProfileForm from "./components/employeeUI/EditProfileForm";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
 import Session from './components/hrUI/Session';
 import Profile from './components/hrUI/Profile'
-import UpdateProfile from './components/hrUI/UpdateProfile';
+import CreateProfile from './components/hrUI/CreateProfile';
+import EditProfile from './components/hrUI/EditProfile'
 import LeaveApprovalForm from './components/hrUI/PendingLeavesHr';
 import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
 import DashBoardManager from './components/managerUI/DashBoardManager';
@@ -31,7 +32,9 @@ import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves'
 import Experience from './components/employeeUI/AddExperience';
 import Goals from './components/employeeUI/ViewGoalsEmployee';
 import DeleteEmployeeForm from './components/hrUI/DeleteEmployee';
-
+import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
+import ManagerProfile from './components/managerUI/ManagerProfile'
+import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -69,11 +72,16 @@ function App() {
         <Route path="/hr/hr_update_profile" element={<UpdateProfile />}/>
         <Route path="/hr/hr_profile" element={<Profile />}/>
         <Route path="/hr/hr_delete_employee" element={<DeleteEmployeeForm />}/>
-        </Route>   
+        <Route path="/hr/create_profile" element={<CreateProfile/>}/>
+        <Route path="/hr/edit_profile" element={<EditProfile/>}/>
 
+        </Route>   
         <Route path="/manager" element={<DashBoardManager />} >
         <Route path="/manager/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
         <Route path="/manager/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
+        <Route path="/manager/manager_profile" element={<ManagerProfile/>}/>
+        <Route path="/manager/create_profile" element={<ManagerCreateProfile/>}/>
+        <Route path="/manager/manager_update_profile" element={<ManagerEditProfile/>}/>
         </Route>
              
         </Routes>
