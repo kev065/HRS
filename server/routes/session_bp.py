@@ -38,8 +38,8 @@ class Sessions(Resource):
         data = post_args.parse_args()
 
         # Name validation
-        assert re.match(r'Q[1-4]', data['name']
-                        ), "Session name must be a quarter (Q1, Q2, Q3, Q4)"
+        # assert re.match(r'Q[1-4]', data['name']
+        #                 ), "Session name must be a quarter (Q1, Q2, Q3, Q4)"
 
         # Date validation
         start_date = datetime.strptime(data['start_date'], "%Y-%m-%d")
@@ -59,7 +59,7 @@ class Sessions(Resource):
             return make_response(jsonify({"error": "The associated goal does not exist"}), 409)
 
         new_session = Session(
-            name=data['name'], start_date=start_date, end_date=end_date, goals=goal)
+            name=data['name'], start_date=start_date, end_date=end_date, goals=[goal])
         db.session.add(new_session)
         db.session.commit()
 

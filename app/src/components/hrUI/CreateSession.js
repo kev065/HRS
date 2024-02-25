@@ -29,7 +29,7 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
         e.preventDefault();
 
         const newSession = {
-            name,
+            name: name,
             start_date: startDate,
             end_date: endDate,
             goals: selectedGoal,
