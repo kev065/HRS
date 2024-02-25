@@ -25,6 +25,9 @@ const CreatePayslip = () => {
       .then((data) => setEmployees(data));
   }, []);
 
+  const toggleForm = () => {
+    setIsPresent(!isPresent);
+  };
   //get employee names
   const employeeNames = employees?.map((employee) => (
     <option key={employee.id} value={employee.employee_id}>
@@ -33,8 +36,6 @@ const CreatePayslip = () => {
   ));
   // add remuneration func
   const addRemuneration = () => {
-    //toggle form
-    setIsPresent(true);
     if (
       remunerationDescription.name === "" ||
       remunerationDescription.type === "" ||
@@ -86,7 +87,7 @@ const CreatePayslip = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(remuneration);
-    console.log(remunerationDescriptions);
+    console.log([...remunerationDescriptions]);
     fetch("/payslip", {
       method: "POST",
       headers: {
@@ -100,6 +101,12 @@ const CreatePayslip = () => {
     })
       .then((resp) => resp.json())
       .then((data) => console.log(data));
+    console.log(
+      JSON.stringify({
+        remuneration: remuneration,
+        remuneration_descriptions: remunerationDescriptions,
+      })
+    );
   };
 
   return (
@@ -217,7 +224,6 @@ const CreatePayslip = () => {
                   placeholder="eg. Basic Salary"
                   value={remunerationDescription.name}
                   onChange={handleRemunerationDescriptionChange}
-                  required
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -230,7 +236,6 @@ const CreatePayslip = () => {
                   placeholder="eg. sales commission"
                   value={remunerationDescription.description}
                   onChange={handleRemunerationDescriptionChange}
-                  required
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -243,7 +248,6 @@ const CreatePayslip = () => {
                   placeholder="eg. bonus, allowance"
                   value={remunerationDescription.type}
                   onChange={handleRemunerationDescriptionChange}
-                  required
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -256,7 +260,6 @@ const CreatePayslip = () => {
                   placeholder="eg. 2000"
                   value={remunerationDescription.amount}
                   onChange={handleRemunerationDescriptionChange}
-                  required
                 />
               </div>
             </div>
@@ -264,7 +267,14 @@ const CreatePayslip = () => {
         </div>
         <button
           type="button"
-          className="btn btn-primary btn-sm"
+          className="btn btn-secondary btn-sm"
+          onClick={toggleForm}
+        >
+          Toggle
+        </button>
+        <button
+          type="button"
+          className="btn btn-primary btn-sm ml-3"
           onClick={addRemuneration}
         >
           Add Remuneration

@@ -77,9 +77,7 @@ class PayslipResource(Resource):
     def viewPayslip(self, role, employee_id=None):
         year = request.args.get('year')
         month = request.args.get('month')
-        # get id from request params when role is hr
-        if role == 'hr':
-            employee_id = request.args.get('employee_id')
+        employee_id = request.args.get('employee_id')
 
         employee = Employee.query.filter_by(id=employee_id).first()
         if not employee:

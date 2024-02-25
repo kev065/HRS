@@ -32,6 +32,16 @@ import ViewPayslipEmployee from "./components/employeeUI/ViewPayslipEmployee";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
 import CreatePayslip from "./components/hrUI/CreatePayslip";
 import ViewStaffEducation from "./components/hrUI/ViewStaffEducation";
+import DeleteEmployeeForm from "./components/hrUI/DeleteEmployee";
+import CreateProfile from "./components/hrUI/CreateProfile";
+import EditProfile from "./components/hrUI/EditProfile";
+import ViewDepartmentTrainings from "./components/managerUI/ViewDepartmentTrainings";
+import RecommendTraining from "./components/managerUI/RecommendTraining";
+import ViewEmployeesPerDepartment from "./components/managerUI/ViewEmployeesPerDepartment";
+import ManagerProfile from "./components/managerUI/ManagerProfile";
+import ManagerEditProfile from "./components/managerUI/ManagerEditProfile";
+import ManagerCreateProfile from "./components/managerUI/ManagerCreateProfile";
+import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -106,10 +116,14 @@ function App() {
           <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />} />
           <Route path="/hr/hr_profile" element={<Profile />} />
           <Route path="/hr/staff_education" element={<ViewStaffEducation />} />
-          <Route path="/hr/hr_delete_employee" element={<DeleteEmployee />} />
+          <Route
+            path="/hr/hr_delete_employee"
+            element={<DeleteEmployeeForm />}
+          />
           <Route path="/hr/create_profile" element={<CreateProfile />} />
           <Route path="/hr/edit_profile" element={<EditProfile />} />
           <Route path="/hr/create_payslip" element={<CreatePayslip />} />
+          <Route path="/hr/view_employee_payslip" element={<ViewPayslipHr />} />
         </Route>
 
         <Route path="/manager" element={<DashBoardManager />}>
