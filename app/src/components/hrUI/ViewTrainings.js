@@ -80,15 +80,15 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
 
     return (
         <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-            <h2>Trainings</h2>
-            <div>
+            <h2 style={{ marginLeft:"500px", marginBottom:"50px"}}>Trainings</h2>
+            <div style={{ marginLeft:"450px", marginBottom:"50px"}}>
                 <label htmlFor="fromDate">From: </label>
                 <input type="date" id="fromDate" value={fromDate} onChange={e => setFromDate(e.target.value)} />
                 <label htmlFor="toDate">To: </label>
                 <input type="date" id="toDate" value={toDate} onChange={e => setToDate(e.target.value)} />
             </div>
             
-            <table>
+            <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -110,8 +110,8 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
                             <td>{training.end_date}</td>
                             <td>{training.end_time}</td>
                             <td>
-                                <button onClick={() => handleUpdateTraining(training)}>Update</button>
-                                <button onClick={() => handleDeleteTraining(training.id)}>Delete</button>
+                                <button className='ui mini teal button' style={{ marginLeft:"10px"}} onClick={() => handleUpdateTraining(training)}>Update</button>
+                                <button  className='ui mini teal button' style={{ marginLeft:"10px"}}onClick={() => handleDeleteTraining(training.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
@@ -120,7 +120,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
             {showCreateTraining && <CreateTraining onClose={handleCreateTrainingClose} trainings={trainings} setTrainings={setTrainings} />}
             {/* {id && <UpdateTrainings training={trainings.find(training => training.id === id)} trainings={trainings} setTrainings={setTrainings} />} */}
 
-            <button onClick={() => setShowCreateTraining(true)}>Add Training</button>
+            <button className='ui teal button'style={{ width: "200px", marginLeft:"500px",marginTop:"60px"}}onClick={() => setShowCreateTraining(true)}>Add Training</button>
         </div>
     );
 };

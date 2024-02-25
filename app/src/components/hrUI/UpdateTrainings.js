@@ -83,40 +83,54 @@ const UpdateTrainings = () => {
 
     return (
         <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-            <h3>Update Training</h3>
+            <h3 style={{ marginLeft:"570px",marginTop:"60px"}}>Update Training</h3>
+            <div className="ui equal width form" style={{ marginLeft:"450px",marginTop:"60px"}}>
             {training && <form onSubmit={handleSubmit}>
+            <div className="eight wide field">
                 <label>
                     Title:
                     <input id="title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
                 <label>
                     Description:
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
                 <label>
                     Start Date:
                     <input type="date" value={start_date} onChange={(e) => setStartDate(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
                 <label>
                     Start Time:
                     <input type="time" value={start_time} onChange={(e) => setStartTime(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
                 <label>
                     End Date:
                     <input type="date" value={end_date} onChange={(e) => setEndDate(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
                 <label>
                     End Time:
                     <input type="time" value={end_time} onChange={(e) => setEndTime(e.target.value)} required />
                 </label>
+                </div>
                 <br />
-                <button type="submit">Update Training</button>
+                <button className='ui teal button'style={{ width: "200px", marginLeft:"110px",marginTop:"20px"}} type="submit">Update</button>
             </form>}
+            </div>
         </div>
     );
 };

@@ -68,25 +68,33 @@ const UpdateLeave = () => {
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2>Update Leave</h2>
+      <h2 style={{ marginLeft:"570px",marginTop:"60px"}}>Update Leave</h2>
+      <div className="ui equal width form" style={{ marginLeft:"450px",marginTop:"60px"}}>
       <form onSubmit={handleSubmit}>
+      <div className="eight wide field">
         <label>
           Start Date:
           <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
         </label>
+        </div>
         <br />
+        <div className="eight wide field">
         <label>
           End Date:
           <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
         </label>
+        </div>
         <br />
+        <div className="eight wide field">
         <label>
           Description:
           <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required />
         </label>
+        </div>
         <br />
-        <button type="submit">Update Leave</button>
+        <button type="submit" className='ui teal button'style={{ width: "200px", marginLeft:"110px",marginTop:"20px"}}>Update Leave</button>
       </form>
+      </div>
     </div>
   );
 };

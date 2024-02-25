@@ -54,7 +54,7 @@ const Login = () => {
             navigate("/manager");
             break;
           case "employee":
-            navigate("/employee");
+            navigate("/employee/profile");
 
             break;
           case "hr":

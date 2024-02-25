@@ -3,6 +3,7 @@ import { retrieve } from "../Encryption";
 import { useParams,useNavigate } from 'react-router-dom';
 import EducationDocumentUpload from './EducationDocumentUpload';
 
+
 const ViewEducation = () => {
   const [educations, setEducations] = useState([]);
   const [showAddEducation, setShowAddEducation] = useState(false);
@@ -29,9 +30,10 @@ const ViewEducation = () => {
       });
   }, [setEducations]);
 
-  const handleCreateEducationClose = () => {
-    setShowAddEducation(false);
-  };
+ 
+  const handleEducationClose =()=>{
+    setShowAddEducation(false)
+  }
 
 
   const handleUpdateEducation = (education) => {
@@ -67,7 +69,7 @@ const handleAddEducation=()=>{
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Education</h2>
-      <table>
+      <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
             <th>Institution</th>
@@ -87,15 +89,17 @@ const handleAddEducation=()=>{
               <td>{new Date(education.start_date).toLocaleDateString()}</td>
               <td>{new Date(education.end_date).toLocaleDateString()}</td>
               <td>
-                <button onClick={() => handleUpdateEducation(education)}>Update</button>
-                <button onClick={() => handleDeleteEducation(education.id)}>Delete</button>
+                <button className='ui mini teal button' style={{ marginLeft:"10px"}}onClick={() => handleUpdateEducation(education)}>Update</button>
+                <button className='ui mini teal button' style={{ marginLeft:"10px"}}onClick={() => handleDeleteEducation(education.id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {showAddEducation && <EducationDocumentUpload onClose={handleCreateEducationClose} />}
-      <button onClick={() =>handleAddEducation() }>Add Education</button>
+      {showAddEducation && <EducationDocumentUpload close={handleEducationClose} />}
+     <div>
+     <button className='ui teal button'style={{ width: "200px", marginLeft:"500px",marginTop:"60px"}} onClick={() =>handleAddEducation() }>Add Education</button>
+     </div>
     </div>
   );
 };

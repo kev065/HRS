@@ -8,7 +8,7 @@ import DashBoardEmployee from './components/employeeUI/DashBoardEmployee';
 import Trainings from './components/hrUI/Trainings';
 import AddEmployeeForm from './components/hrUI/AddEmployee';
 import UpdateTrainings from './components/hrUI/UpdateTrainings';
-import ViewEmployees from "./components/hrUI/ViewEmployees";
+import ViewEmployeesDocuments from "./components/hrUI/ViewEmployeesDocuments"
 import VerifyDocuments from "./components/hrUI/VerifyDocuments";
 import EducationDocumentUpload from "./components/employeeUI/EducationDocumentUpload";
 import ViewEducation from "./components/employeeUI/ViewEducation";
@@ -21,7 +21,7 @@ import EmployeeProfileForm from "./components/employeeUI/EmployeeProfileForm";
 import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
 import EditProfileForm from "./components/employeeUI/EditProfileForm";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
-
+import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import Session from './components/hrUI/Session';
 import Profile from './components/hrUI/Profile'
 import UpdateProfile from './components/hrUI/UpdateProfile';
@@ -65,12 +65,13 @@ function App() {
         <Route path="/hr/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings} />  } />
         <Route path="/hr/add_employee" element={<AddEmployeeForm />} />      
         <Route path="/hr/update_trainings/:id" element={<UpdateTrainings />} />
-        <Route path="/hr/view_employees" element={<ViewEmployees />} />
+        <Route path="/hr/view_employees_documents" element={<ViewEmployeesDocuments />} />
         <Route path="/hr/verify_documents/:employeeId"  element={<VerifyDocuments />} />
         <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
         <Route path="/hr/hr_update_profile" element={<UpdateProfile />}/>
         <Route path="/hr/hr_profile" element={<Profile />}/>
         <Route path="/hr/staff_education" element={<ViewStaffEducation />}/>
+        <Route path="/hr/view_staff_details" element={<ViewStaffDetails/>}/>
         </Route>   
 
         <Route path="/manager" element={<DashBoardManager />} >

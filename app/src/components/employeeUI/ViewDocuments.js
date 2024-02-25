@@ -59,10 +59,10 @@ const ViewDocuments = () => {
 };
 
   return (
-    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+    <div className='content-wrapper' style={{ marginLeft: "100px", backgroundColor:"white", marginTop:"20px"}}>
     <div className='main_container'>
-      <h2 className='header2'>My Documents</h2>
-      <table className="ui celled striped table">
+      <h2 className='header2' style={{ marginLeft:"10px"}}>My Documents</h2>
+      <table className="ui striped table" style={{ width: "1200px",marginBottom:"20px"}}>
         <thead>
           <tr>
             <th>Name</th>
@@ -78,15 +78,15 @@ const ViewDocuments = () => {
               <td>{document.type}</td>
               <td><a href={document.link_url} target="_blank" rel="noopener noreferrer">{document.link_url}</a></td>
               <td>
-                <button onClick={() => handleUpdateDocument(document)}>Update</button>
-                <button onClick={() => handleDeleteDocument(document.id)}>Delete</button>
+                <button className='ui mini teal button' style={{ marginLeft:"10px"}} onClick={() => handleUpdateDocument(document)}>Update</button>
+                <button  className='ui mini teal button' style={{ marginLeft:"10px"}}onClick={() => handleDeleteDocument(document.id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
       {showAddDocument && <AddDocument onClose={handleAddDocumentClose}  documents={documents} setDocuments={setDocuments} />}
-      <button onClick={() => setShowAddDocument(true)}>Add Document</button>
+      <button className='ui teal button'style={{ width: "200px", marginLeft:"60px",marginTop:"60px"}} onClick={() => setShowAddDocument(true)}>Add Document</button>
     </div>
     </div>
   );
