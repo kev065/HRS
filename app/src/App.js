@@ -31,15 +31,7 @@ import Experience from "./components/employeeUI/AddExperience";
 import Goals from "./components/employeeUI/ViewGoalsEmployee";
 import ViewPayslipEmployee from "./components/employeeUI/ViewPayslipEmployee";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
-import Session from "./components/hrUI/Session";
-import Profile from "./components/hrUI/Profile";
-import UpdateProfile from "./components/hrUI/UpdateProfile";
-import LeaveApprovalForm from "./components/hrUI/PendingLeavesHr";
-import ManagerPendingLeaves from "./components/managerUI/LeaveApproval_Manager";
-import DashBoardManager from "./components/managerUI/DashBoardManager";
-import ManagerApprovedLeaves from "./components/managerUI/ManagerApprovedLeaves";
-import Experience from "./components/employeeUI/AddExperience";
-import Goals from "./components/employeeUI/ViewGoalsEmployee";
+import CreatePayslip from "./components/hrUI/CreatePayslip";
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -111,6 +103,7 @@ function App() {
           <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />} />
           <Route path="/hr/hr_update_profile" element={<UpdateProfile />} />
           <Route path="/hr/hr_profile" element={<Profile />} />
+          <Route path="/hr/create_payslip" element={<CreatePayslip />} />
         </Route>
 
         <Route path="/manager" element={<DashBoardManager />}>
