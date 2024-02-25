@@ -22,7 +22,6 @@ import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
 import EditProfileForm from "./components/employeeUI/EditProfileForm";
 import Session from "./components/hrUI/Session";
 import Profile from "./components/hrUI/Profile";
-import UpdateProfile from "./components/hrUI/UpdateProfile";
 import LeaveApprovalForm from "./components/hrUI/PendingLeavesHr";
 import ManagerPendingLeaves from "./components/managerUI/LeaveApproval_Manager";
 import DashBoardManager from "./components/managerUI/DashBoardManager";
@@ -68,10 +67,6 @@ function App() {
             element={<ViewDocuments />}
           />
           <Route
-            path="/employee/view_education/:id"
-            element={<ViewEducation />}
-          />
-          <Route
             path="/employee/view_trainings/:id"
             element={<EmployeeViewTrainings />}
           />
@@ -81,8 +76,15 @@ function App() {
           />
           <Route path="/employee/goals" element={<Goals />} />
           <Route path="/employee/experience" element={<Experience />} />
+          <Route
+            path="/employee/view_education/:id"
+            element={<ViewEducation />}
+          />
+          <Route path="/employee/goals" element={<Goals />} />
+          <Route path="/employee/experience" element={<Experience />} />
           <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
         </Route>
+
         <Route path="/hr" element={<DashBoardHr />}>
           <Route
             path="/hr/training_page"
@@ -101,9 +103,14 @@ function App() {
             element={<VerifyDocuments />}
           />
           <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />} />
-          <Route path="/hr/hr_update_profile" element={<UpdateProfile />} />
           <Route path="/hr/hr_profile" element={<Profile />} />
-          <Route path="/hr/create_payslip" element={<CreatePayslip />} />
+          <Route path="/hr/staff_education" element={<ViewStaffEducation />} />
+          <Route
+            path="/hr/hr_delete_employee"
+            element={<DeleteEmployeeForm />}
+          />
+          <Route path="/hr/create_profile" element={<CreateProfile />} />
+          <Route path="/hr/edit_profile" element={<EditProfile />} />
         </Route>
 
         <Route path="/manager" element={<DashBoardManager />}>
