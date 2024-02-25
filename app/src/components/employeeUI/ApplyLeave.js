@@ -32,6 +32,7 @@ const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
                 setEndDate("")
                 setStartDate("")
                 setDescription("")
+                onClose()
 
                
             })

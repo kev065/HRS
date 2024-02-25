@@ -137,8 +137,8 @@ api.add_resource(LeaveById, '/leaves/<string:id>')
 class EmployeeLeaves(Resource):
     @employee_required()
     def get(self, id):
-        current_user_id = current_user.id  
-        leaves = Leave.query.filter_by(employee_id=current_user_id).all()
+        current_user=get_jwt_identity()
+        leaves = Leave.query.filter_by(employee_id=id).all()
 
         if not leaves:
             abort(404, detail=f'You have no applied Leaves')

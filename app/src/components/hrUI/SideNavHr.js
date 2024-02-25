@@ -109,6 +109,19 @@ const SideNavHr = () => {
           </a>
       
         </li>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
+            <i className="nav-icon fas fa-money-check-alt" /> 
+            <p>
+           
+            <Link to={"/hr/staff_education"}>Education</Link>
+
+                          
+             
+            </p>
+          </a>
+          
+        </li>
 
 
         <li className="nav-item">
@@ -150,7 +163,7 @@ const SideNavHr = () => {
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-chalkboard-teacher" />
               <p>
-               <Link to="/training_page">Training Tracker</Link> 
+               <Link to="/hr/training_page">Training Tracker</Link> 
                
               </p>
             </a>

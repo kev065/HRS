@@ -65,7 +65,7 @@ const UpdateDocument = () => {
       })
       .then((updatedData) => {
         console.log('Updated Document:', updatedData);
-        navigate(`/view_documents/${retrieve().employee.id}`);
+        navigate(`/employee/view_documents/${retrieve().employee.id}`);
       })
       .catch((error) => {
         console.error('Error updating document:', error);

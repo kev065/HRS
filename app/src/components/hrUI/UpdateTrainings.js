@@ -74,7 +74,7 @@ const UpdateTrainings = () => {
             })
             .then((updatedData) => {
                 console.log('Updated Training:', updatedData);
-                navigate('/training_page');
+                navigate('/hr/training_page');
             })
             .catch((error) => {
                 console.error('Error updating training:', error);
@@ -82,7 +82,8 @@ const UpdateTrainings = () => {
     };
 
     return (
-        <div>
+        <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+            <h3>Update Training</h3>
             {training && <form onSubmit={handleSubmit}>
                 <label>
                     Title:

@@ -38,7 +38,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
     };
 
     const handleUpdateTraining =(training)=>{
-        navigate(`/hr/update_trainings/${training.id}`);
+        navigate(`/update_trainings/${training.id}`);
     }
     const handleDeleteTraining =(trainingId)=>{
         fetch(`/trainings/${trainingId}`, {

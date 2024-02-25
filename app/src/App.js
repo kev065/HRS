@@ -31,6 +31,10 @@ import DashBoardManager from './components/managerUI/DashBoardManager';
 import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
 import Experience from './components/employeeUI/AddExperience';
 import Goals from './components/employeeUI/ViewGoalsEmployee';
+import ViewDepartmentTrainings from './components/managerUI/ViewDepartmentTrainings';
+import RecommendTraining from './components/managerUI/RecommendTraining';
+import ViewEmployeesPerDepartment from './components/managerUI/ViewEmployeesPerDepartment';
+import ViewStaffEducation from './components/hrUI/ViewStaffEducation';
 import DeleteEmployeeForm from './components/hrUI/DeleteEmployee';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerProfile from './components/managerUI/ManagerProfile'
@@ -55,13 +59,16 @@ function App() {
         <Route path="/employee/profile/create" element={<EmployeeProfileForm />} />
         <Route path="/employee/profile/edit" element={<EditProfileForm />} />
         <Route path="/employee/view_documents/:id" element={<ViewDocuments />} />
-        <Route path="/employee/view_education/:id" element={<ViewEducation />} />
-        <Route path="/employee/view_trainings/:id" element={<EmployeeViewTrainings/>} />
+        <Route path="/employee/view_trainings/:id" element={<EmployeeViewTrainings/>} /> 
         <Route path="/employee/update_education/:id" element={<UpdateEducation />} />
+        <Route path="/employee/goals" element={<Goals />}/>
+        <Route path="/employee/experience" element={<Experience />}/>
+        <Route path="/employee/view_education/:id" element={<ViewEducation />} />
         <Route path="/employee/goals" element={<Goals />}/>
         <Route path="/employee/experience" element={<Experience />}/>
 
        </Route>
+
         <Route path="/hr" element={<DashBoardHr />} >
         <Route path="/hr/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings} />  } />
         <Route path="/hr/add_employee" element={<AddEmployeeForm />} />      
@@ -71,14 +78,19 @@ function App() {
         <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
         <Route path="/hr/hr_update_profile" element={<UpdateProfile />}/>
         <Route path="/hr/hr_profile" element={<Profile />}/>
+        <Route path="/hr/staff_education" element={<ViewStaffEducation />}/>
         <Route path="/hr/hr_delete_employee" element={<DeleteEmployeeForm />}/>
         <Route path="/hr/create_profile" element={<CreateProfile/>}/>
         <Route path="/hr/edit_profile" element={<EditProfile/>}/>
 
         </Route>   
+
         <Route path="/manager" element={<DashBoardManager />} >
         <Route path="/manager/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
         <Route path="/manager/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
+        <Route path="/manager/view_department_trainings" element={<ViewDepartmentTrainings />}/>
+        <Route path="/manager/recommend_training/:employeeId" element={<RecommendTraining />}/>
+        <Route path="/manager/department_employees/:managerId" element={<ViewEmployeesPerDepartment/>}/>
         <Route path="/manager/manager_profile" element={<ManagerProfile/>}/>
         <Route path="/manager/create_profile" element={<ManagerCreateProfile/>}/>
         <Route path="/manager/manager_update_profile" element={<ManagerEditProfile/>}/>

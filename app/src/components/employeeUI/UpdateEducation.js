@@ -73,7 +73,7 @@ const UpdateEducation = () => {
             .then((updatedData) => {
                 const employeeId=retrieve().employee.id
                 console.log('Updated Education:', updatedData);
-                navigate(`/view_education/${employeeId}`);
+                navigate(`/employee/view_education/${employeeId}`);
                
             })
             .catch((error) => {
