@@ -16,13 +16,13 @@ api = Api(department_bp)
 post_args = reqparse.RequestParser()
 post_args.add_argument('name', type=str, required=True,
                        help="name is required")
-post_args.add_argument('dept_head', type=str, required=True,
-                       help="dept_head is required")
+# post_args.add_argument('dept_head', type=str, required=True,
+#                        help="dept_head is required")
 
 
 patch_args = reqparse.RequestParser()
 patch_args.add_argument('name', type=str)
-patch_args.add_argument('dept_head', type=str)
+# patch_args.add_argument('dept_head', type=str)
 
 
 class Departments(Resource):
@@ -36,8 +36,9 @@ class Departments(Resource):
     def post(self):
         data = post_args.parse_args()
 
+
         new_department = Department(
-            **data
+            name=data["name"]
         )
 
         db.session.add(new_department)
@@ -96,3 +97,7 @@ class DepartmentByID(Resource):
 
 
 api.add_resource(DepartmentByID, '/departments/<string:id>')
+
+
+
+

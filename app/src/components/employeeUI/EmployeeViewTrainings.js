@@ -38,7 +38,7 @@ const EmployeeViewTrainings = () => {
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
 
       {loading && <div>Loading...</div>}
-      {!loading && trainings.length === 0 && <h3>No trainings found.</h3>}
+      {!loading && trainings.length === 0 && <h3>No trainings found for you.</h3>}
       {trainings.length > 0 && (
         <div>
           <h2>Trainings for Employee ID: {employeeId}</h2>

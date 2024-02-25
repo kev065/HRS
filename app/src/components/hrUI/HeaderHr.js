@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const HeaderHr = () => {
   return (
@@ -11,9 +12,10 @@ const HeaderHr = () => {
     <li className="nav-item">
       <a className="nav-link" data-widget="pushmenu" href="#" role="button"><i className="fas fa-bars" /></a>
     </li>
-    <li className="nav-item d-none d-sm-inline-block">
-      <a href="index3.html" className="nav-link"  style={{ color: "white" }}>Home</a>
-    </li>
+    <li className="nav-item d-none d-sm-inline-block" style={{ marginTop: "10px" }}>
+     
+     <Link to={"/"} style={{ color: "white" }}>Home</Link>
+   </li>
     
   </ul>
   {/* Right navbar links */}
