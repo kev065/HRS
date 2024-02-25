@@ -34,6 +34,7 @@ def validate_remuneration(value):
 
 
 def validate_remuneration_description(value):
+    print(value)
     if not isinstance(value, list):
         raise ValueError('Remuneration descriptions must be in a list')
 
@@ -42,6 +43,10 @@ def validate_remuneration_description(value):
         required_fields = ['type', 'name', 'description', 'amount']
 
         for remun_desc in value:
+            if not isinstance(remun_desc, dict):
+                raise ValueError(
+                    'Each remuneration description must be a dictionary')
+
             for field in required_fields:
                 if field not in remun_desc:
                     raise ValueError(f'Missing required field: {field}')
@@ -82,11 +87,11 @@ class PayslipResource(Resource):
         employee = Employee.query.filter_by(id=employee_id).first()
         if not employee:
             return {'message': 'Employee not found'}, 404
-
+        # get the latest remuneration
         remuneration = Remuneration.query.filter_by(employee_id=employee_id).filter(
             db.extract('month', Remuneration.remuneration_date) == month,
             db.extract('year', Remuneration.remuneration_date) == year
-        ).first()
+        ).order_by(Remuneration.remuneration_date.desc()).first()
 
         if not remuneration:
             return {'message': 'Remuneration data not found for this employee, month, and year'}, 404

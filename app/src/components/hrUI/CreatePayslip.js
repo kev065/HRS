@@ -2,6 +2,7 @@ import React from "react";
 import "./createPayslip.css";
 import { useState, useEffect } from "react";
 import { retrieve } from "../Encryption";
+import { useNavigate } from "react-router-dom";
 
 const CreatePayslip = () => {
   const [remunerationDescriptions, setRemunerationDescriptions] = useState([]);
@@ -16,8 +17,9 @@ const CreatePayslip = () => {
     description: "",
     amount: "",
   });
-  const [isPresent, setIsPresent] = useState(false);
+  const [isShown, setIsShown] = useState(false);
   const [employees, setEmployees] = useState([]);
+  const navigate = useNavigate();
   //fetch employee profiles
   useEffect(() => {
     fetch("/employeeProfiles")
@@ -26,7 +28,7 @@ const CreatePayslip = () => {
   }, []);
 
   const toggleForm = () => {
-    setIsPresent(!isPresent);
+    setIsShown(!isShown);
   };
   //get employee names
   const employeeNames = employees?.map((employee) => (
@@ -64,7 +66,7 @@ const CreatePayslip = () => {
     setRemunerationDescriptions(updatedRemunerations);
     // toggle form
     if (remunerationDescriptions.length === 0) {
-      setIsPresent(false);
+      setIsShown(false);
     }
   };
   // handle change
@@ -96,17 +98,25 @@ const CreatePayslip = () => {
       },
       body: JSON.stringify({
         remuneration: remuneration,
-        remuneration_descriptions: remunerationDescriptions,
+        remuneration_descriptions: [remunerationDescriptions],
       }),
     })
-      .then((resp) => resp.json())
-      .then((data) => console.log(data));
-    console.log(
-      JSON.stringify({
-        remuneration: remuneration,
-        remuneration_descriptions: remunerationDescriptions,
+      .then((resp) => {
+        if (resp.ok) {
+          //reset form fields
+          setRemunerationDescriptions([]);
+          setRemuneration({ name: "", salary: "", employee_id: "" });
+          setRemunerationDescription({
+            name: "",
+            type: "",
+            description: "",
+            amount: "",
+          });
+          //navigate to view employee payslip
+          navigate("/hr/view_employee_payslip");
+        }
       })
-    );
+      .then((data) => console.log(data));
   };
 
   return (
@@ -212,7 +222,7 @@ const CreatePayslip = () => {
             </div>
           ))}
           {/* conditional rendering of renumeration description fields */}
-          {isPresent ? (
+          {isShown ? (
             <div className="form-row">
               <div className="col-md-4 mb-3">
                 <label for="name">Compensation name</label>
