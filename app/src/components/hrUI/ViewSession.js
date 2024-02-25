@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import {retrieve} from "../Encryption";
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './viewSession.css'
 
 import CreateSession from './CreateSession'
@@ -10,7 +10,7 @@ const ViewSession = ({sessions, setSessions}) => {
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
     const navigate=useNavigate()
-    const { id } = useParams()
+    // const { id } = useParams()
 
     useEffect(() => {
         const fetchSessions = () => {

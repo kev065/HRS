@@ -2,6 +2,7 @@ from flask import Blueprint, make_response, jsonify
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
 from datetime import datetime
+from dateutil.parser import parse
 from models import Session, db, Goals
 from serializer import sessionSchema
 from auth_middleware import hr_required
@@ -104,7 +105,13 @@ class SessionById(Resource):
         for key, value in data.items():
             if value is None:
                 continue
-            setattr(single_session, key, value)
+            
+            # Convert string representations of dates to datetime objects
+            if key in ['start_date', 'end_date']:
+                setattr(single_session, key, parse(value).date())
+            else:
+                setattr(single_session, key, value)
+
         db.session.commit()
 
         result = sessionSchema.dump(single_session)

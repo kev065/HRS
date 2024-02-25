@@ -26,13 +26,22 @@ const UpdateSession = () => {
               return resp.json();
           })
           .then((data) => {
-              // Format the dates received from the server
-              const formattedStartDate = data.start_date.split('T')[0];
-              const formattedEndDate = data.end_date.split('T')[0];
-              setSession(data);
-              setName(data.name);
-              setStartDate(formattedStartDate);
-              setEndDate(formattedEndDate);
+            try {
+                const { name, start_date, end_date } = data;
+        
+                // Convert the formatted dates to JavaScript Date objects
+                const formattedStartDate = new Date(start_date);
+                const formattedEndDate = new Date(end_date);
+        
+                // Update the state variables
+                setSession(data);
+                setName(name);
+                setStartDate(formattedStartDate.toISOString().split('T')[0]);
+                setEndDate(formattedEndDate.toISOString().split('T')[0]);
+            } catch (error) {
+                console.error('Error updating session:', error);
+                // Handle any unexpected response format or missing properties
+            }
           })
           .catch((error) => {
               console.error('Error updating session:', error);
@@ -46,8 +55,8 @@ const UpdateSession = () => {
     const updatedSession = {
         id: id,
         name: name,
-        start_date: start_date,
-        end_date: end_date,
+        start_date: new Date(start_date),
+        end_date: new Date(end_date),
     };
 
     fetch(`/sessions/${session.id}`, {
@@ -66,7 +75,7 @@ const UpdateSession = () => {
         })
         .then((updatedData) => {
             console.log('Updated Session:', updatedData);
-            navigate('/hr/session_page');
+            navigate('/hr/session');
         })
         .catch((error) => {
             console.error('Error updating session:', error);
