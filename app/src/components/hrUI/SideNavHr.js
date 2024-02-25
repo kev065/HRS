@@ -74,25 +74,18 @@ const SideNavHr = () => {
           </ul>
         </li>
 
-
         <li className="nav-item">
-          <a href="#" className="nav-link">
+          <Link to={"/hr/add_employee"} className="nav-link">
             <i className="nav-icon fas fa-user-plus" />
-            <p>
-              <Link to={"/hr/add_employee"}>Onboard Employee</Link>
-            </p>
-          </a>
+            <p>Onboard Employee</p>
+          </Link>
         </li>
         <li className="nav-item">
-          <a href="#" className="nav-link">
+          <Link to={"/hr/hr_delete_employee"} className="nav-link">
             <i className="nav-icon fas fa-user-minus" />
-            <p>
-              <Link to={"/hr/hr_delete_employee"}>Offboard Employee</Link>
-            </p>
-          </a>
+            <p>Offboard Employee</p>
+          </Link>
         </li>
-
-
 
 
         <li className="nav-item">
