@@ -74,18 +74,18 @@ const SideNavHr = () => {
           </ul>
         </li>
 
-
         <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-users" />
-            <p>
-              Employees
-            
-            </p>
-          </a>
-          
+          <Link to={"/hr/add_employee"} className="nav-link">
+            <i className="nav-icon fas fa-user-plus" />
+            <p>Onboard Employee</p>
+          </Link>
         </li>
-
+        <li className="nav-item">
+          <Link to={"/hr/hr_delete_employee"} className="nav-link">
+            <i className="nav-icon fas fa-user-minus" />
+            <p>Offboard Employee</p>
+          </Link>
+        </li>
 
 
         <li className="nav-item">
@@ -148,14 +148,12 @@ const SideNavHr = () => {
 
 
         <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-calendar-check" />
+          <Link to="/hr/hr_pending_leaves" className="nav-link">
+          <i className="nav-icon fas fa-hourglass-half" />
             <p>
               Leave Tracker
-             
             </p>
-          </a>
-      
+          </Link>
         </li>
 
 
