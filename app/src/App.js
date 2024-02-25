@@ -30,17 +30,19 @@ import Experience from "./components/employeeUI/AddExperience";
 import Goals from "./components/employeeUI/ViewGoalsEmployee";
 import ViewPayslipEmployee from "./components/employeeUI/ViewPayslipEmployee";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
-import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
+import CreatePayslip from "./components/hrUI/CreatePayslip";
+import ViewStaffEducation from "./components/hrUI/ViewStaffEducation";
+import DeleteEmployeeForm from "./components/hrUI/DeleteEmployee";
 import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
-import CreateProfile from './components/hrUI/CreateProfile';
-import EditProfile from './components/hrUI/EditProfile'
-import ViewDepartmentTrainings from './components/managerUI/ViewDepartmentTrainings';
-import RecommendTraining from './components/managerUI/RecommendTraining';
-import ViewEmployeesPerDepartment from './components/managerUI/ViewEmployeesPerDepartment';
-import ViewStaffEducation from './components/hrUI/ViewStaffEducation';
-import DeleteEmployeeForm from './components/hrUI/DeleteEmployee';
+import CreateProfile from "./components/hrUI/CreateProfile";
+import EditProfile from "./components/hrUI/EditProfile";
+import ViewDepartmentTrainings from "./components/managerUI/ViewDepartmentTrainings";
+import RecommendTraining from "./components/managerUI/RecommendTraining";
+import ViewEmployeesPerDepartment from "./components/managerUI/ViewEmployeesPerDepartment";
+import ManagerProfile from "./components/managerUI/ManagerProfile";
+import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
+import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
-import ManagerProfile from './components/managerUI/ManagerProfile'
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
 
 function App() {
@@ -89,8 +91,10 @@ function App() {
         <Route path="/hr/edit_profile" element={<EditProfile/>}/>
         <Route path="/hr/update_session/:id" element={<UpdateSession/>}/>
         <Route path="/hr/session" element={<Session sessions={sessions} setSessions={setSessions}/>}/>
-
-        </Route>   
+        <Route path="/hr/create_payslip" element={<CreatePayslip />} />
+        <Route path="/hr/view_employee_payslip" element={<ViewPayslipHr />} />
+        
+        </Route>
 
         <Route path="/manager" element={<DashBoardManager />} >
         <Route path="/manager/manager_pending_leaves" element={<ManagerPendingLeaves />}/>
@@ -102,6 +106,7 @@ function App() {
         <Route path="/manager/create_profile" element={<ManagerCreateProfile/>}/>
         <Route path="/manager/manager_update_profile" element={<ManagerEditProfile/>}/>
         </Route>
+
       </Routes>
     </div>
   );
