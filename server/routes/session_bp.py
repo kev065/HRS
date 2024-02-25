@@ -49,12 +49,12 @@ class Sessions(Resource):
             end_date - start_date).days <= 92, "The session should represent a quarter of a year"
 
         # Uniqueness validation
-        session = Session.query.filter_by(name=data.name).first()
+        session = Session.query.filter_by(name=data['name']).first()
         if session:
             return make_response(jsonify({"error": "Session with the same name already exists"}), 409)
 
         # Goal association validation
-        goal = Goals.query.filter_by(id=data.goals).first()
+        goal = Goals.query.filter_by(id=data['goals']).first()
         if not goal:
             return make_response(jsonify({"error": "The associated goal does not exist"}), 409)
 
