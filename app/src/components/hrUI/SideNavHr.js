@@ -77,14 +77,21 @@ const SideNavHr = () => {
 
         <li className="nav-item">
           <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-users" />
+            <i className="nav-icon fas fa-user-plus" />
             <p>
-              Employees
-            
+              <Link to={"/hr/add_employee"}>Onboard Employee</Link>
             </p>
           </a>
-          
         </li>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
+            <i className="nav-icon fas fa-user-minus" />
+            <p>
+              <Link to={"/hr/hr_delete_employee"}>Offboard Employee</Link>
+            </p>
+          </a>
+        </li>
+
 
 
 
