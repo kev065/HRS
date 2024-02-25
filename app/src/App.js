@@ -22,7 +22,6 @@ import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
 import EditProfileForm from "./components/employeeUI/EditProfileForm";
 import Session from "./components/hrUI/Session";
 import Profile from "./components/hrUI/Profile";
-import UpdateProfile from "./components/hrUI/UpdateProfile";
 import LeaveApprovalForm from "./components/hrUI/PendingLeavesHr";
 import ManagerPendingLeaves from "./components/managerUI/LeaveApproval_Manager";
 import DashBoardManager from "./components/managerUI/DashBoardManager";
@@ -79,7 +78,6 @@ function App() {
         <Route path="/hr/view_employees" element={<ViewEmployees />} />
         <Route path="/hr/verify_documents/:employeeId"  element={<VerifyDocuments />} />
         <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
-        <Route path="/hr/hr_update_profile" element={<UpdateProfile />}/>
         <Route path="/hr/hr_profile" element={<Profile />}/>
         <Route path="/hr/staff_education" element={<ViewStaffEducation />}/>
         <Route path="/hr/hr_delete_employee" element={<DeleteEmployeeForm />}/>
