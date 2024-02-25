@@ -74,15 +74,17 @@ const UpdateDocument = () => {
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2>Update Document</h2>
+      <h2 style={{ marginLeft:"570px",marginTop:"60px"}}>Update Document</h2>
+      <div className="ui equal width form" style={{ marginLeft:"450px",marginTop:"60px"}}>
       <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleDocumentChange} required />
-        <br />
+      <div className="eight wide field">
         <label>
           Document Name:
           <input type="text" value={documentName} onChange={(e) => setDocumentName(e.target.value)} required />
         </label>
+        </div>
         <br />
+        <div className="eight wide field">
         <label>
           Document Type:
           <select value={documentType} onChange={(e) => setDocumentType(e.target.value)} required>
@@ -92,9 +94,15 @@ const UpdateDocument = () => {
             <option value="other">Other</option>
           </select>
         </label>
+        </div>
         <br />
-        <button type="submit">Update Document</button>
+        <div className="eight wide field">
+        <input type="file" onChange={handleDocumentChange} required />
+        <br />
+        </div>
+        <button type="submit" className='ui teal button'style={{ width: "200px", marginLeft:"110px",marginTop:"20px"}}>Update Document</button>
       </form>
+      </div>
     </div>
   );
 };

@@ -30,9 +30,11 @@ const VerifyDocuments = () => {
     <div
       className="content-wrapper"
       style={{ marginLeft: "280px", backgroundColor: "white", marginTop: "20px" }}
+
     >
+       <h1 style={{ marginLeft:"500px", marginBottom:"50px"}}>Verify Documents</h1>
       {documents.length > 0 ? (
-        <table>
+        <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
           <thead>
             <tr>
               <th>Name</th>

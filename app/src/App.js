@@ -1,3 +1,14 @@
+import { Routes, Route } from 'react-router-dom';
+import { useState } from 'react';
+import './App.css';
+import MainPage from './components/MainPage';
+import Login from './components/Login';
+import DashBoardHr from './components/hrUI/DashBoardHr';
+import DashBoardEmployee from './components/employeeUI/DashBoardEmployee';
+import Trainings from './components/hrUI/Trainings';
+import AddEmployeeForm from './components/hrUI/AddEmployee';
+import UpdateTrainings from './components/hrUI/UpdateTrainings';
+import ViewEmployeesDocuments from "./components/hrUI/ViewEmployeesDocuments"
 import { Routes, Route } from "react-router-dom";
 import { useState } from "react";
 import "./App.css";
@@ -8,7 +19,7 @@ import DashBoardEmployee from "./components/employeeUI/DashBoardEmployee";
 import Trainings from "./components/hrUI/Trainings";
 import AddEmployeeForm from "./components/hrUI/AddEmployee";
 import UpdateTrainings from "./components/hrUI/UpdateTrainings";
-import ViewEmployees from "./components/hrUI/ViewEmployees";
+
 import VerifyDocuments from "./components/hrUI/VerifyDocuments";
 import EducationDocumentUpload from "./components/employeeUI/EducationDocumentUpload";
 import ViewEducation from "./components/employeeUI/ViewEducation";
@@ -30,6 +41,16 @@ import Experience from "./components/employeeUI/AddExperience";
 import Goals from "./components/employeeUI/ViewGoalsEmployee";
 import ViewPayslipEmployee from "./components/employeeUI/ViewPayslipEmployee";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
+import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
+import Session from './components/hrUI/Session';
+import Profile from './components/hrUI/Profile'
+import UpdateProfile from './components/hrUI/UpdateProfile';
+import LeaveApprovalForm from './components/hrUI/PendingLeavesHr';
+import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
+import DashBoardManager from './components/managerUI/DashBoardManager';
+import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
+import Experience from './components/employeeUI/AddExperience';
+import Goals from './components/employeeUI/ViewGoalsEmployee';
 import CreateProfile from './components/hrUI/CreateProfile';
 import EditProfile from './components/hrUI/EditProfile'
 import ViewDepartmentTrainings from './components/managerUI/ViewDepartmentTrainings';
@@ -75,11 +96,12 @@ function App() {
         <Route path="/hr/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings} />  } />
         <Route path="/hr/add_employee" element={<AddEmployeeForm />} />      
         <Route path="/hr/update_trainings/:id" element={<UpdateTrainings />} />
-        <Route path="/hr/view_employees" element={<ViewEmployees />} />
+        <Route path="/hr/view_employees_documents" element={<ViewEmployeesDocuments />} />
         <Route path="/hr/verify_documents/:employeeId"  element={<VerifyDocuments />} />
         <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
         <Route path="/hr/hr_profile" element={<Profile />}/>
         <Route path="/hr/staff_education" element={<ViewStaffEducation />}/>
+        <Route path="/hr/view_staff_details" element={<ViewStaffDetails/>}/>
         <Route path="/hr/hr_delete_employee" element={<DeleteEmployeeForm />}/>
         <Route path="/hr/create_profile" element={<CreateProfile/>}/>
         <Route path="/hr/edit_profile" element={<EditProfile/>}/>

@@ -41,7 +41,7 @@ const ViewEmployeesPerDepartment = () => {
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Employees in my Department</h2>
-      <table>
+      <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
             <th>ID</th>

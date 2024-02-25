@@ -4,7 +4,7 @@ from flask_restful import Api, Resource, abort, reqparse
 from models import EmployeeTraining, db,Training
 from serializer import employeeTrainingSchema
 from auth_middleware import hr_required,employee_required
-from flask_jwt_extended import current_user
+from flask_jwt_extended import current_user,get_jwt_identity
 
 employee_training_bp = Blueprint('employee_training_bp', __name__)
 api = Api(employee_training_bp)
@@ -97,8 +97,8 @@ api.add_resource(EmployeeTrainingById, '/employee_trainings/<string:id>')
 class TrainingForSingleEmployee(Resource):
     @employee_required()
     def get(self, id):
-       
-        employee_trainings = EmployeeTraining.query.filter_by(employee_id=current_user.id).all()
+        current_user = get_jwt_identity()
+        employee_trainings = EmployeeTraining.query.filter_by(employee_id=current_user).all()
         if not employee_trainings:
             return make_response(jsonify({"message": "No trainings found for the employee."}), 404)
         
