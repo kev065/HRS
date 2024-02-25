@@ -9,17 +9,6 @@ import Trainings from './components/hrUI/Trainings';
 import AddEmployeeForm from './components/hrUI/AddEmployee';
 import UpdateTrainings from './components/hrUI/UpdateTrainings';
 import ViewEmployeesDocuments from "./components/hrUI/ViewEmployeesDocuments"
-import { Routes, Route } from "react-router-dom";
-import { useState } from "react";
-import "./App.css";
-import MainPage from "./components/MainPage";
-import Login from "./components/Login";
-import DashBoardHr from "./components/hrUI/DashBoardHr";
-import DashBoardEmployee from "./components/employeeUI/DashBoardEmployee";
-import Trainings from "./components/hrUI/Trainings";
-import AddEmployeeForm from "./components/hrUI/AddEmployee";
-import UpdateTrainings from "./components/hrUI/UpdateTrainings";
-
 import VerifyDocuments from "./components/hrUI/VerifyDocuments";
 import EducationDocumentUpload from "./components/employeeUI/EducationDocumentUpload";
 import ViewEducation from "./components/employeeUI/ViewEducation";
@@ -34,7 +23,6 @@ import EditProfileForm from "./components/employeeUI/EditProfileForm";
 import Session from "./components/hrUI/Session";
 import Profile from "./components/hrUI/Profile";
 import LeaveApprovalForm from "./components/hrUI/PendingLeavesHr";
-import ManagerPendingLeaves from "./components/managerUI/LeaveApproval_Manager";
 import DashBoardManager from "./components/managerUI/DashBoardManager";
 import ManagerApprovedLeaves from "./components/managerUI/ManagerApprovedLeaves";
 import Experience from "./components/employeeUI/AddExperience";
@@ -42,15 +30,7 @@ import Goals from "./components/employeeUI/ViewGoalsEmployee";
 import ViewPayslipEmployee from "./components/employeeUI/ViewPayslipEmployee";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
-import Session from './components/hrUI/Session';
-import Profile from './components/hrUI/Profile'
-import UpdateProfile from './components/hrUI/UpdateProfile';
-import LeaveApprovalForm from './components/hrUI/PendingLeavesHr';
 import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
-import DashBoardManager from './components/managerUI/DashBoardManager';
-import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
-import Experience from './components/employeeUI/AddExperience';
-import Goals from './components/employeeUI/ViewGoalsEmployee';
 import CreateProfile from './components/hrUI/CreateProfile';
 import EditProfile from './components/hrUI/EditProfile'
 import ViewDepartmentTrainings from './components/managerUI/ViewDepartmentTrainings';
