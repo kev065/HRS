@@ -35,7 +35,7 @@ const ViewLeaves = () => {
   }, []);
 
   const handleUpdateLeave = (leave) => {
-    navigate(`/update_leave/${leave.id}`);
+    navigate(`/employee/update_leave/${leave.id}`);
   };
 
   const handleDeleteLeave = (leaveId) => {
@@ -57,7 +57,7 @@ const ViewLeaves = () => {
   };
 
   const handleViewLeave = (leave) => {
-    navigate(`/leave/${leave.id}`);
+    navigate(`employee/leave/${leave.id}`);
   };
 
   const showButtons = (leave) => {

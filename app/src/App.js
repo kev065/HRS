@@ -115,6 +115,27 @@ function App() {
             path="/manager/manager_approved_leaves"
             element={<ManagerApprovedLeaves />}
           />
+          <Route
+            path="/manager/view_department_trainings"
+            element={<ViewDepartmentTrainings />}
+          />
+          <Route
+            path="/manager/recommend_training/:employeeId"
+            element={<RecommendTraining />}
+          />
+          <Route
+            path="/manager/department_employees/:managerId"
+            element={<ViewEmployeesPerDepartment />}
+          />
+          <Route path="/manager/manager_profile" element={<ManagerProfile />} />
+          <Route
+            path="/manager/create_profile"
+            element={<ManagerCreateProfile />}
+          />
+          <Route
+            path="/manager/manager_update_profile"
+            element={<ManagerEditProfile />}
+          />
         </Route>
       </Routes>
     </div>

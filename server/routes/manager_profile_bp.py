@@ -1,45 +1,21 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint, make_response, jsonify, request
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import get_jwt_identity
 from datetime import datetime
 from auth_middleware import manager_required
-
+from cloudinary.uploader import upload
+from flask_cors import cross_origin
 from serializer import managerProfileSchema
 
 from models import ManagerProfile, db
+
 
 manager_profile_bp = Blueprint('manager_profile_bp', __name__)
 ma = Marshmallow(manager_profile_bp)
 bcrypt = Bcrypt()
 api = Api(manager_profile_bp)
-
-post_args = reqparse.RequestParser()
-post_args.add_argument('date_of_birth', type=str,
-                       required=True, help='Date of Bith is required')
-post_args.add_argument('firstname', type=str,
-                       required=True, help='Fisrt Name is required')
-post_args.add_argument('lastname', type=str, required=True,
-                       help='Last Name is required')
-post_args.add_argument('mantra', type=str, required=True,
-                       help='Mantra is required')
-post_args.add_argument('phone_contact', type=int,
-                       required=True, help='Phone contact  is required')
-post_args.add_argument('title', type=str, required=True,
-                       help='Job Title is required')
-post_args.add_argument('profile_photo', type=str,
-                       required=True, help='Profile photo is required')
-
-
-patch_args = reqparse.RequestParser()
-patch_args.add_argument('date_of_birth', type=str)
-patch_args.add_argument('firstname', type=str)
-patch_args.add_argument('lastname', type=str)
-patch_args.add_argument('mantra', type=str)
-patch_args.add_argument('phone_contact', type=int)
-patch_args.add_argument('title', type=str)
-patch_args.add_argument('profile_photo')
 
 
 class ManagerProfiles(Resource):
@@ -49,29 +25,50 @@ class ManagerProfiles(Resource):
         response = make_response(jsonify(result), 200)
 
         return response
-
+    
+    @cross_origin()
     @manager_required()
     def post(self):
         current_user = get_jwt_identity()
-        data = post_args.parse_args()
+        if "profile_photo" not in request.files:
+            abort(400, detail='profile_photo is required first')
 
-        # error handling
-        managerProfile = ManagerProfile.query.filter_by(
-            manager_id=data.manager_id).first()
-        if managerProfile:
-            abort(409, detail="Profile with the same manager ID already exists")
-        date_of_birth = datetime.strptime(
-            data["date_of_birth"], "%Y-%m-%d")
+        profile_photo = request.files["profile_photo"]
 
-        new_managerProfile = ManagerProfile(first_name=data['first_name'], last_name=data['last_name'], date_of_birth=date_of_birth, manager_id=current_user, mantra=data['mantra'],
-                                            phone_contact=data['phone_contact'], title=data['title'], profile_photo=data['profile_photo'], date_created=datetime.utcnow())
-        db.session.add(new_managerProfile)
-        db.session.commit()
+        data = request.form
+        try:
+            if profile_photo:
+                cloudinary_upload_result = upload(profile_photo)
+                photo_url = cloudinary_upload_result.get("url")
+                print(photo_url)
+            else:
+                abort(400, detail='profile_photo is required')
 
-        result = managerProfileSchema.dump(new_managerProfile)
-        response = make_response(jsonify(result), 201)
+            data = request.form
+            employee_id = current_user
+            first_name = data["first_name"]
+            last_name = data["last_name"]
+            mantra = data["mantra"]
+            phone_contact = data["phone_contact"]
+            title = data["title"]
+            date_of_birth = datetime.strptime(
+                data["date_of_birth"], "%Y-%m-%d")
+            date_created = datetime.utcnow()
 
-        return response
+            new_managerProfile = ManagerProfile(date_of_birth=date_of_birth, employee_id=employee_id, first_name=first_name, last_name=last_name,
+                                                     mantra=mantra, phone_contact=phone_contact, profile_photo=photo_url, title=title, date_created=date_created)
+            db.session.add(new_managerProfile)
+            db.session.commit()
+
+            result = managerProfileSchema.dump(new_managerProfile)
+            response = make_response(jsonify(result), 201)
+
+            return response
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            db.session.rollback()
+            return make_response(jsonify({"error": str(e)}), 500)
 
 
 api.add_resource(ManagerProfiles, '/managerProfiles')
@@ -89,6 +86,7 @@ class ManagerProfileById(Resource):
             response = make_response(jsonify(result), 200)
             return response
 
+    @cross_origin()
     @manager_required()
     def patch(self, id):
         current_user = get_jwt_identity()
@@ -100,19 +98,37 @@ class ManagerProfileById(Resource):
         if single_managerProfile.manager_id != current_user:
             abort(401, detail="Unauthorized request")
 
-        data = patch_args.parse_args()
+        profile_photo = request.files.get("profile_photo")
+        data = request.form.to_dict()
+
         if 'date_of_birth' in data:
             data['date_of_birth'] = datetime.strptime(
                 data['date_of_birth'], "%Y-%m-%d")
-        for key, value in data.items():
-            if value is None:
-                continue
-            setattr(single_managerProfile, key, value)
-        db.session.commit()
-        result = managerProfileSchema.dump(single_managerProfile)
-        response = make_response(jsonify(result), 200)
+            
+        try:
+            if profile_photo:
+                 # upload new profile photo
+                cloudinary_upload_result = upload(profile_photo)
+                photo_url = cloudinary_upload_result.get("url")
+                print(photo_url)
+                # set the profile photo attribute to the url
+                single_managerProfile.profile_photo = photo_url
 
-        return response
+            for key, value in data.items():
+                if value is None:
+                    continue
+                setattr(single_managerProfile, key, value)
+            db.session.commit()
+            result = managerProfileSchema.dump(single_managerProfile)
+            response = make_response(jsonify(result), 200)
+
+            return response
+        
+        except Exception as e:
+            print(f"Error: {e}")
+            db.session.rollback()
+            return make_response(jsonify({"error": str(e)}), 500)
+
 
     @manager_required()
     def delete(self, id):

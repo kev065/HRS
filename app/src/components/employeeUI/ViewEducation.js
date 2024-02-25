@@ -35,7 +35,7 @@ const ViewEducation = () => {
 
 
   const handleUpdateEducation = (education) => {
-    navigate(`/update_education/${education.id}`);
+    navigate(`/employee/update_education/${education.id}`);
   };
 
   const handleDeleteEducation =(educationId)=>{
