@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './PendingLeavesHr.css';
+import { retrieve } from "../Encryption";
 
 const PendingLeaves = () => {
   const [leaves, setLeaves] = useState([]);
@@ -26,7 +27,11 @@ const PendingLeaves = () => {
 
   const handleApprove = async (leaveId) => {
     try {
-      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: true });
+      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: true }, {
+        headers: {
+          'Authorization': `Bearer ${retrieve().access_token}`
+        }
+      });
       console.log('Leave approved:', response.data);
       setSuccess('Leave approved'); 
     } catch (error) {
@@ -40,7 +45,11 @@ const PendingLeaves = () => {
 
   const handleDecline = async (leaveId) => {
     try {
-      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: false });
+      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: false }, {
+        headers: {
+          'Authorization': `Bearer ${retrieve().access_token}`
+        }
+      });
       console.log('Leave declined:', response.data);
       setSuccess('Leave declined');
     } catch (error) {
