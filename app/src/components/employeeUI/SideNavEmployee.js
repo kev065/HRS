@@ -101,14 +101,14 @@ const SideNavEmployee = () => {
                   </a>
                 </li>
 
+
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <Link to={"/employee/experience"} className="nav-link">
                     <i className="nav-icon fas fa-briefcase" />
-                    <p>
-                      <Link to={"/employee/experience"}>Add/Update Experience</Link>
-                    </p>
-                  </a>
+                    <p>Add/Update Experience</p>
+                  </Link>
                 </li>
+
 
 
 
