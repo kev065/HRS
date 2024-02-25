@@ -21,6 +21,7 @@ import EmployeeProfileForm from "./components/employeeUI/EmployeeProfileForm";
 import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
 import EditProfileForm from "./components/employeeUI/EditProfileForm";
 import Session from "./components/hrUI/Session";
+import UpdateSession from "./components/hrUI/UpdateSession"
 import Profile from "./components/hrUI/Profile";
 import LeaveApprovalForm from "./components/hrUI/PendingLeavesHr";
 import DashBoardManager from "./components/managerUI/DashBoardManager";
@@ -44,6 +45,7 @@ import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
 
 function App() {
   const [trainings, setTrainings] = useState([]);
+  const [sessions, setSessions] = useState([]);
 
   return (
     <div className="App">
@@ -85,6 +87,8 @@ function App() {
         <Route path="/hr/hr_delete_employee" element={<DeleteEmployeeForm />}/>
         <Route path="/hr/create_profile" element={<CreateProfile/>}/>
         <Route path="/hr/edit_profile" element={<EditProfile/>}/>
+        <Route path="/hr/update_session/:id" element={<UpdateSession/>}/>
+        <Route path="/hr/session" element={<Session sessions={sessions} setSessions={setSessions}/>}/>
 
         </Route>   
 

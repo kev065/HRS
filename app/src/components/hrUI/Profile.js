@@ -11,27 +11,18 @@ const Profile = () => {
 
 
   useEffect(() => {
-    fetch(`/hr_personnels/${id}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + retrieve().access_token,
-      },
-    })
-      .then((res) => {
-        if(!res.ok){
-          throw new Error(`HTTP error! Status: ${res.status}`)
-        }
-        return res.json();
+    fetch(`/hr_personnels/${id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched HR data:", data);
+        setHr(data);
       })
-      .then((data) => setHr(data))
-      .catch((err) => {
-        console.error("Error loading HR data:", err)
-      });
-  }, []); 
+      .catch((err) => console.log("Error fetching HR data:", err));
+}, [id]); 
 
   if (!hr) return <div>Loading...</div>;
   console.log(hr);
-  if (!hr || !hr.hr_profiles || hr.hr_profiles.length === 0)
+  if (!hr.hr_profiles || hr.hr_profiles.length === 0)
     return navigate(`/hr/create_profile`);
   const hrProfileData = hr.hr_profiles[0];
 
