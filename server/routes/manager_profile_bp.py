@@ -45,7 +45,7 @@ class ManagerProfiles(Resource):
                 abort(400, detail='profile_photo is required')
 
             data = request.form
-            employee_id = current_user
+            manager_id = current_user
             first_name = data["first_name"]
             last_name = data["last_name"]
             mantra = data["mantra"]
@@ -55,7 +55,7 @@ class ManagerProfiles(Resource):
                 data["date_of_birth"], "%Y-%m-%d")
             date_created = datetime.utcnow()
 
-            new_managerProfile = ManagerProfile(date_of_birth=date_of_birth, employee_id=employee_id, first_name=first_name, last_name=last_name,
+            new_managerProfile = ManagerProfile(date_of_birth=date_of_birth, first_name=first_name,manager_id=manager_id, last_name=last_name,
                                                      mantra=mantra, phone_contact=phone_contact, profile_photo=photo_url, title=title, date_created=date_created)
             db.session.add(new_managerProfile)
             db.session.commit()

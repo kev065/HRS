@@ -39,7 +39,7 @@ function ViewDepartmentTrainings() {
         <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
             <h1>Training for my Department Staff </h1>
             {error && <p>{error}</p>}
-            <table>
+            <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
                 <thead>
                     <tr>
                         <th>First Name</th>
@@ -68,7 +68,7 @@ function ViewDepartmentTrainings() {
                                 </ul>
                             </td>
                             <td>
-                                <button onClick={() => handleRecommend(employee.id)}>Recommend More Training</button>
+                                <button className='ui mini teal button'onClick={() => handleRecommend(employee.id)}>Recommend More Training</button>
                             </td>
                         </tr>
                     ))}

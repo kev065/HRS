@@ -38,8 +38,8 @@ const ViewStaffEducation = () => {
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2> Staff Education Details</h2>
-      <table>
+      <h2 style={{ marginLeft:"500px", marginBottom:"50px"}}> Staff Education Details</h2>
+      <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
             <th>Employee ID</th>

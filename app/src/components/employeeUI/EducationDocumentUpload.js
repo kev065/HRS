@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { retrieve } from "../Encryption";
 import { useNavigate} from 'react-router-dom';
 
-const EducationDocumentUpload = ({onClose}) => {
+const EducationDocumentUpload = () => {
+ 
   const [educationDetails, setEducationDetails] = useState({
     institution: '',
     course: '',
@@ -84,51 +85,73 @@ const EducationDocumentUpload = ({onClose}) => {
     });
   };
   
-  const handleExit = () => {
-    onClose();
-};
+
 
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2>Add Education</h2>
+      <h2 style={{ marginLeft:"570px",marginTop:"60px"}}>Add Education</h2>
+      
+      <div className="ui equal width form" style={{ marginLeft:"450px",marginTop:"60px"}} >
+        <div>
       <form onSubmit={handleSubmit}>
+        <div className="eight wide field">
         <label>
           Institution:
           <input type="text" name="institution" value={educationDetails.institution} onChange={handleEducationChange} required />
         </label>
+        </div>
         <br />
+        <div className="eight wide field">
         <label>
           Course:
           <input type="text" name="course" value={educationDetails.course} onChange={handleEducationChange} required />
         </label>
+        </div>
         <br />
+      <div className="eight wide field" >
         <label>
           Qualification:
           <input type="text" name="qualification" value={educationDetails.qualification} onChange={handleEducationChange} required />
         </label>
         <br />
+</div>
+<div className="eight wide field">
         <label>
           Start Date:
           <input type="date" name="start_date" value={educationDetails.start_date} onChange={handleEducationChange} required />
         </label>
+        </div>
         <br />
+        <div  className="eight wide field">
         <label>
           End Date:
           <input type="date" name="end_date" value={educationDetails.end_date} onChange={handleEducationChange} required />
         </label>
+        </div>
         <br />
+        <div className="eight wide field">
         <input type="file" onChange={handleDocumentChange} required />
         <br />
+        </div>
+        <br/>
+        <div className="eight wide field">
         <select value={documentType} onChange={(e) => setDocumentType(e.target.value)}>
           <option value="official">Official</option>
           <option value="institution">Institution</option>
           <option value="other">Other</option>
         </select>
+        </div>
+      
         <br />
-        <button type="submit">Submit</button>
+        <button className='ui teal button'style={{ width: "200px", marginLeft:"110px",marginTop:"20px"}} type="submit">Submit</button>
       </form>
-      <button onClick={handleExit}>Exit</button>
+      <div>
+
+    </div>
+      </div>
+      </div>
+      
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {retrieve} from "../Encryption"
+import { retrieve } from "../Encryption"
 
 const CreateTraining = ({ trainings, setTrainings, onClose }) => {
     const [title, setTitle] = useState('');
@@ -25,7 +25,7 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                 "Authorization": "Bearer " + retrieve().access_token,
+                "Authorization": "Bearer " + retrieve().access_token,
             },
             body: JSON.stringify(newTraining),
         })
@@ -52,42 +52,58 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
     };
 
     return (
-        <div >
-            <h3>Add Training</h3>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Title:
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Description:
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Start Date:
-                    <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    Start Time:
-                    <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    End Date:
-                    <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
-                </label>
-                <br />
-                <label>
-                    End Time:
-                    <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
-                </label>
-                <br />
-                <button type="submit">Create Training</button>
-            </form>
-            <button onClick={handleExit}>Exit</button>
+        <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor: "white", marginTop: "40px" }}>
+            <h2 style={{ marginLeft: "480px", marginTop: "60px" }}>Add Training</h2>
+            <div className="ui equal width form" style={{ marginLeft: "250px", marginTop: "60px", width: "900px" }}>
+                <div>
+                    <form onSubmit={handleSubmit}>
+                        <div className="twelve wide field">
+                            <label>
+                                Title:
+                                <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                            </label>
+                        </div>
+                        <br />
+                        <div className="twelve wide field">
+                            <label>
+                                Description:
+                                <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+                            </label>
+                        </div>
+                        <br />
+                        <div className="twelve wide field">
+                            <label>
+                                Start Date:
+                                <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+                            </label>
+                        </div>
+                        <br />
+                        <div className="twelve wide field">
+                            <label>
+                                Start Time:
+                                <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required />
+                            </label>
+                        </div>
+                        <br />
+                        <div className="twelve wide field">
+                            <label>
+                                End Date:
+                                <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+                            </label>
+                        </div>
+                        <br />
+                        <div className="twelve wide field">
+                            <label>
+                                End Time:
+                                <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required />
+                            </label>
+                        </div>
+                        <br />
+                        <button type="submit" className="ui teal button" style={{ marginBottom: '20px', marginTop: '40px', marginLeft: "250px" }}>Create Training</button>
+                    </form>
+                </div>
+            </div>
+            <button className="mini ui teal button" style={{ marginLeft: "950px" }} onClick={handleExit}>Exit</button>
         </div>
     );
 };

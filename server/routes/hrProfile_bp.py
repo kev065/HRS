@@ -55,7 +55,7 @@ class HrProfiles(Resource):
             date_created = datetime.utcnow()
 
             new_hr_profile = HrProfile(date_of_birth=date_of_birth, hr_id=hr_id, first_name=first_name, last_name=last_name, mantra=mantra,
-                                    phone_contact=phone_contact, profile_photo=profile_photo, title=title, date_created=date_created)
+                                    phone_contact=phone_contact, profile_photo=photo_url, title=title, date_created=date_created)
             db.session.add(new_hr_profile)
             db.session.commit()
 

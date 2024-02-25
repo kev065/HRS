@@ -80,9 +80,10 @@ const CreateProfile = () => {
           // clear out form fields
           formik.resetForm();
           //set success message
-          setSuccess("Successfully created account!!");
+          setSuccess("Profile creation successful!!");
           //navigate user to home page
           navigate("/hr/hr_profile");
+          setProfilePhoto(null);
         } else {
           return response.json().then((err) => console.log(err));
         }

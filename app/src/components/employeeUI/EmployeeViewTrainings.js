@@ -5,7 +5,7 @@ const EmployeeViewTrainings = () => {
   const [trainings, setTrainings] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const employeeId=retrieve().employee.id
+  const employeeId = retrieve().employee.id;
 
   useEffect(() => {
     const fetchTrainings = () => {
@@ -14,7 +14,6 @@ const EmployeeViewTrainings = () => {
           "Authorization": "Bearer " + retrieve().access_token
         }
       })
-
         .then(response => {
           if (!response.ok) {
             throw new Error('Failed to fetch trainings');
@@ -35,25 +34,36 @@ const EmployeeViewTrainings = () => {
   }, [employeeId]);
 
   return (
-    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor: "white", marginTop: "20px" }}>
       {loading && <div>Loading...</div>}
       {!loading && trainings.length === 0 && <h3>No trainings found for you.</h3>}
       {trainings.length > 0 && (
         <div>
           <h2>Trainings for Employee ID: {employeeId}</h2>
-          <ul>
-            {trainings.map((training, index) => (
-              <li key={index}>
-                <h3>{training.title}</h3>
-                <p><strong>Description:</strong> {training.description}</p>
-                <p><strong>Start Date:</strong> {training.start_date}</p>
-                <p><strong>Start Time:</strong> {training.start_time}</p>
-                <p><strong>End Date:</strong> {training.end_date}</p>
-                <p><strong>End Time:</strong> {training.end_time}</p>
-              </li>
-            ))}
-          </ul>
+          <table  className="ui striped table" style={{ width: "1200px",marginBottom:"20px"}}>
+            <thead>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Start Date</th>
+                <th>Start Time</th>
+                <th>End Date</th>
+                <th>End Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trainings.map((training, index) => (
+                <tr key={index}>
+                  <td>{training.title}</td>
+                  <td>{training.description}</td>
+                  <td>{training.start_date}</td>
+                  <td>{training.start_time}</td>
+                  <td>{training.end_date}</td>
+                  <td>{training.end_time}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>

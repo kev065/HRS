@@ -44,7 +44,7 @@ const AddDocument = ({ documents, setDocuments, onClose }) => {
         setDocumentName('');
         setDocumentType('');
         setDocuments([...documents, data]);
-        onClose(); // Close the form after successful submission
+        onClose(); 
       })
       .catch((error) => {
         console.error('Error adding document:', error);
@@ -57,16 +57,20 @@ const AddDocument = ({ documents, setDocuments, onClose }) => {
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor: "white", marginTop: "40px" }}>
-      <div className="ui centered card" style={{ marginTop: '20px', width: "700px" }}>
-        <div className='card_container'>
-          <h2>Add Document</h2>
-          <form onSubmit={handleSubmit} className='form_container'>
-            <div className='form-details-container'>
-              <label className='label_css'>
+      <h2 style={{ marginLeft:"390px",marginTop:"60px"}}>Add Document</h2>
+      <div className="ui equal width form" style={{ marginLeft:"210px",marginTop:"60px",width:"800px"}} >
+        <div >
+     
+          <form onSubmit={handleSubmit} >
+            
+            <div className="twelve wide field">
+              <label >
                 Document Name:
                 <input type="text" value={documentName} onChange={(e) => setDocumentName(e.target.value)} required />
               </label>
+              </div>
               <br />
+              <div className="twelve wide field">
               <label>
                 Document Type:
                 <select value={documentType} onChange={(e) => setDocumentType(e.target.value)} required>
@@ -76,14 +80,17 @@ const AddDocument = ({ documents, setDocuments, onClose }) => {
                   <option value="other">Other</option>
                 </select>
               </label>
+              </div>
               <br />
+              <div className="twelve wide field">
               <input type="file" onChange={handleDocumentChange} required />
               <br />
-              <button type="submit" className="mini ui teal button" style={{ marginBottom: '20px', marginTop: '20px' }}>Submit</button>
+              <button type="submit" className="ui teal button" style={{ marginBottom: '20px', marginTop: '40px',marginLeft:"250px" }}>Submit</button>
             </div>
+          
           </form>
           <div>
-            <button onClick={handleExit} className="mini ui teal button">Exit</button>
+            <button onClick={handleExit} className="mini ui teal button" style={{ marginLeft:"550px"}} >Close</button>
           </div>
         </div>
       </div>

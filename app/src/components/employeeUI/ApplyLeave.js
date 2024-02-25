@@ -47,26 +47,34 @@ const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
 
     return (
         <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
-            <h2>Apply for Leave</h2>
+            <h2 style={{ marginLeft:"410px",marginTop:"60px"}}>Apply for Leave</h2>
+            <div className="ui equal width form" style={{ marginLeft:"250px",marginTop:"60px",width:"800px"}}>
             <form onSubmit={handleSubmit}>
+            <div className="twelve wide field">
                 <label>
                     Start Date:
                     <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="twelve wide field">
                 <label>
                     End Date:
                     <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="twelve wide field">
                 <label>
                     Description:
                     <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
                 </label>
                 <br />
-                <button type="submit">Apply</button>
+                </div>
+                <button type="submit" className="ui teal button" style={{ marginBottom: '20px', marginTop: '40px',marginLeft:"250px" }}>Submit</button>
             </form>
-            <button onClick={handleExit}>Exit</button>
+            </div>
+            <button className="mini ui teal button" style={{ marginLeft:"800px"}} onClick={handleExit}>Close</button>
         </div>
     );
 };

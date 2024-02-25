@@ -71,7 +71,7 @@ const ViewLeaves = () => {
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
       <h2>Leave Applications</h2>
-      <table>
+      <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
             <th>Start Date</th>
@@ -91,8 +91,8 @@ const ViewLeaves = () => {
               <td>
                 {showButtons(leave) && (
                   <>
-                    <button onClick={() => handleUpdateLeave(leave)}>Update</button>
-                    <button onClick={() => handleDeleteLeave(leave.id)}>Delete</button>
+                    <button className='ui mini teal button' style={{ marginLeft:"10px"}} onClick={() => handleUpdateLeave(leave)}>Update</button>
+                    <button className='ui mini teal button' style={{ marginLeft:"10px"}} onClick={() => handleDeleteLeave(leave.id)}>Delete</button>
                   </>
                 )}
                 {/* <button onClick={() => handleViewLeave(leave)} disabled={!showButtons(leave)}>View</button> */}
@@ -102,7 +102,7 @@ const ViewLeaves = () => {
         </tbody>
       </table>
       {showAddLeave && <ApplyLeave onClose={handleAddLeaveClose} leaves={leaves} setLeaves={setLeaves} />}
-      <button onClick={() => setShowAddLeave(true)}>Apply for Leave</button>
+      <button className='ui teal button'style={{ width: "200px", marginLeft:"500px",marginTop:"60px"}} onClick={() => setShowAddLeave(true)}>Apply for Leave</button>
     </div>
   );
 };

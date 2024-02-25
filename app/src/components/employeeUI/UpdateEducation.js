@@ -83,34 +83,53 @@ const UpdateEducation = () => {
 
     return (
         <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+            <h2 style={{ marginLeft:"570px",marginTop:"60px"}}>Update Education</h2>
+            <div className="ui equal width form" style={{ marginLeft:"450px",marginTop:"60px"}} >
+        <div>
             {education && <form onSubmit={handleSubmit}>
+            <div className="eight wide field">
                 <label>
                     Institution:
                     <input type="text" value={institution} onChange={(e) => setInstitution(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
+          
                 <label>
                     Course:
                     <input type="text" value={course} onChange={(e) => setCourse(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
+          
                 <label>
                     Qualification:
                     <input type="text" value={qualification} onChange={(e) => setQualification(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
+          
                 <label>
                     Start Date:
                     <input type="date" value={start_date} onChange={(e) => setStartDate(e.target.value)} required />
                 </label>
+                </div>
                 <br />
+                <div className="eight wide field">
+          
                 <label>
                     End Date:
                     <input type="date" value={end_date} onChange={(e) => setEndDate(e.target.value)} required />
                 </label>
+                </div>
                 <br />
-                <button type="submit">Update Education</button>
+                <button type="submit"  className='ui teal button'style={{ width: "200px", marginLeft:"110px",marginTop:"20px"}}>Update</button>
             </form>}
+            </div>
+            </div>
         </div>
     );
 };
