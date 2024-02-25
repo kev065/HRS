@@ -1,13 +1,13 @@
-import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import './App.css';
-import MainPage from './components/MainPage';
-import Login from './components/Login';
-import DashBoardHr from './components/hrUI/DashBoardHr';
-import DashBoardEmployee from './components/employeeUI/DashBoardEmployee';
-import Trainings from './components/hrUI/Trainings';
-import AddEmployeeForm from './components/hrUI/AddEmployee';
-import UpdateTrainings from './components/hrUI/UpdateTrainings';
+import { Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import "./App.css";
+import MainPage from "./components/MainPage";
+import Login from "./components/Login";
+import DashBoardHr from "./components/hrUI/DashBoardHr";
+import DashBoardEmployee from "./components/employeeUI/DashBoardEmployee";
+import Trainings from "./components/hrUI/Trainings";
+import AddEmployeeForm from "./components/hrUI/AddEmployee";
+import UpdateTrainings from "./components/hrUI/UpdateTrainings";
 import ViewEmployees from "./components/hrUI/ViewEmployees";
 import VerifyDocuments from "./components/hrUI/VerifyDocuments";
 import EducationDocumentUpload from "./components/employeeUI/EducationDocumentUpload";
@@ -20,17 +20,19 @@ import UpdateLeave from "./components/employeeUI/UpdateLeave";
 import EmployeeProfileForm from "./components/employeeUI/EmployeeProfileForm";
 import EmployeeProfile from "./components/employeeUI/EmployeeProfile";
 import EditProfileForm from "./components/employeeUI/EditProfileForm";
+import Session from "./components/hrUI/Session";
+import Profile from "./components/hrUI/Profile";
+import UpdateProfile from "./components/hrUI/UpdateProfile";
+import LeaveApprovalForm from "./components/hrUI/PendingLeavesHr";
+import ManagerPendingLeaves from "./components/managerUI/LeaveApproval_Manager";
+import DashBoardManager from "./components/managerUI/DashBoardManager";
+import ManagerApprovedLeaves from "./components/managerUI/ManagerApprovedLeaves";
+import Experience from "./components/employeeUI/AddExperience";
+import Goals from "./components/employeeUI/ViewGoalsEmployee";
+import ViewPayslipEmployee from "./components/employeeUI/ViewPayslipEmployee";
 import EmployeeViewTrainings from "./components/employeeUI/EmployeeViewTrainings";
-import Session from './components/hrUI/Session';
-import Profile from './components/hrUI/Profile'
 import CreateProfile from './components/hrUI/CreateProfile';
 import EditProfile from './components/hrUI/EditProfile'
-import LeaveApprovalForm from './components/hrUI/PendingLeavesHr';
-import ManagerPendingLeaves from './components/managerUI/LeaveApproval_Manager';
-import DashBoardManager from './components/managerUI/DashBoardManager';
-import ManagerApprovedLeaves from './components/managerUI/ManagerApprovedLeaves';
-import Experience from './components/employeeUI/AddExperience';
-import Goals from './components/employeeUI/ViewGoalsEmployee';
 import ViewDepartmentTrainings from './components/managerUI/ViewDepartmentTrainings';
 import RecommendTraining from './components/managerUI/RecommendTraining';
 import ViewEmployeesPerDepartment from './components/managerUI/ViewEmployeesPerDepartment';
@@ -48,14 +50,14 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/session" element={<Session />}/>
+        <Route path="/session" element={<Session />} />
         <Route path="/employee" element={<DashBoardEmployee />}>
-       <Route path="/employee/view_education/:employeeId" element={<ViewEducation />} />
-       <Route path="/employee/add_education" element={<EducationDocumentUpload />}/>
-       <Route path="/employee/update_document/:id" element={<UpdateDocuments />} />
-       <Route path="/employee/view_leaves/:id" element={<ViewLeaves />} />
-       <Route path="/employee/update_leave/:id" element={<UpdateLeave />} />
-       <Route path="/employee/profile" element={<EmployeeProfile/>} />
+        <Route path="/employee/view_education/:employeeId" element={<ViewEducation />} />
+        <Route path="/employee/add_education" element={<EducationDocumentUpload />}/>
+        <Route path="/employee/update_document/:id" element={<UpdateDocuments />} />
+        <Route path="/employee/view_leaves/:id" element={<ViewLeaves />} />
+        <Route path="/employee/update_leave/:id" element={<UpdateLeave />} />
+        <Route path="/employee/profile" element={<EmployeeProfile/>} />
         <Route path="/employee/profile/create" element={<EmployeeProfileForm />} />
         <Route path="/employee/profile/edit" element={<EditProfileForm />} />
         <Route path="/employee/view_documents/:id" element={<ViewDocuments />} />
@@ -66,6 +68,7 @@ function App() {
         <Route path="/employee/view_education/:id" element={<ViewEducation />} />
         <Route path="/employee/goals" element={<Goals />}/>
         <Route path="/employee/experience" element={<Experience />}/>
+        <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
 
        </Route>
 
@@ -95,9 +98,8 @@ function App() {
         <Route path="/manager/create_profile" element={<ManagerCreateProfile/>}/>
         <Route path="/manager/manager_update_profile" element={<ManagerEditProfile/>}/>
         </Route>
-             
-        </Routes>
-      </div>
+      </Routes>
+    </div>
   );
 }
 
