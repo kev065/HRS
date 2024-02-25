@@ -1,0 +1,9 @@
+.create-payslip {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  left: 16%;
+  width: 80%;
+  min-height: 88vh;
+  margin-top: 3rem;
+}
