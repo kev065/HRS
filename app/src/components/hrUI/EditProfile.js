@@ -1,24 +1,23 @@
 import React, { useEffect } from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { retrieve } from "../Encryption";
-import "./employeeform.css";
-import { store } from "../Encryption";
+import './create_profile.css'
 
-const EditProfileForm = () => {
+const EditProfile = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [employeeProfileData, setEmployeeProfileData] = useState({});
-  const id = retrieve().employee.id;
+  const {hrId} = useParams
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [hrProfileData, setHrProfileData] = useState({});
 
   useEffect(() => {
-    fetch(`/employees/${id}`)
+    fetch(`/hr_personnels/${hrId}`)
       .then((response) => response.json())
-      .then((data) => setEmployeeProfileData(data.employee_profiles[0]))
+      .then((data) => setHrProfileData(data.hr_profiles[0]))
       .catch((err) => console.log(err));
   }, []);
 
@@ -53,12 +52,12 @@ const EditProfileForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      first_name: employeeProfileData?.first_name,
-      last_name: employeeProfileData?.last_name,
-      mantra: employeeProfileData?.mantra,
-      phone_contact: employeeProfileData?.phone_contact,
-      title: employeeProfileData?.title,
-      date_of_birth: employeeProfileData?.date_of_birth,
+      first_name: hrProfileData.first_name || '',
+      last_name: hrProfileData.last_name || '',
+      mantra: hrProfileData.mantra || '',
+      phone_contact: hrProfileData.phone_contact || '',
+      title: hrProfileData.title || '',
+      date_of_birth: hrProfileData.date_of_birth || '',
     },
     validationSchema: yup.object().shape({
       first_name: yup.string().required("Please fill out this field"),
@@ -68,7 +67,7 @@ const EditProfileForm = () => {
         .string()
         .required("Please fill out this field")
         .min(10, "Phone contact must be atleast 10 characters"),
-      title: yup.string().required("Please provide a title"),
+      title: yup.string().required("Please fill out this field"),
       date_of_birth: yup.date().required("Please fill out this field"),
     }),
     onSubmit: (values) => {
@@ -83,26 +82,30 @@ const EditProfileForm = () => {
 
       console.log(...formData.entries());
 
-      fetch(`/employeeProfiles/${employeeProfileData.id}`, {
+      fetch(`/hrProfiles/${hrId}`, {
         method: "PATCH",
         headers: {
+          "Content-Type": "application/json",
           Authorization: "Bearer " + retrieve().access_token,
+          Accept: "application/json",
         },
-        body: formData,
+        body: JSON.stringify(values),
       }).then((response) => {
         if (response.ok) {
+          // clear out form fields
+          formik.resetForm();
           //set success message
           setSuccess("Successfully Updated account!!");
           //navigate user to home page
-          navigate("/profile");
+          navigate(`/hr/hr_profile${hrId}`);
         } else {
           return response.json().then((err) => console.log(err));
         }
       });
     },
-    enableReinitialize: true, // enable reinitialization of the form
+    enableReinitialize: true,
   });
-  if (!employeeProfileData) return <div>Loading...</div>;
+  if (!hrProfileData) return <div>Loading...</div>;
   return (
     <div className='content-wrapper' sstyle={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
     <div className="container">
@@ -226,4 +229,4 @@ const EditProfileForm = () => {
   );
 };
 
-export default EditProfileForm;
+export default EditProfile;

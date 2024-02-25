@@ -5,14 +5,14 @@ import profile from "../../assets/profile.png";
 import { Link, useNavigate } from "react-router-dom";
 
 const EmployeeProfile = () => {
-  const [employee, setEemployee] = useState(null);
-  const { id } = retrieve().employee;
+  const [employee, setEmployee] = useState(null);
+  const id = retrieve().employee.id;
   const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`/employees/${id}`)
       .then((response) => response.json())
-      .then((data) => setEemployee(data))
+      .then((data) => setEmployee(data))
       .catch((err) => console.log(err));
   }, []);
 
@@ -51,8 +51,8 @@ const EmployeeProfile = () => {
             <div className="card text-center profile-sidebar">
               <div className="card-body">
                 <img
-                  src={profile}
-                  alt=""
+                  src={employeeProfileData?.profile_photo || profile}
+                  alt="profile"
                   className="rounded-circle"
                   width={150}
                 />

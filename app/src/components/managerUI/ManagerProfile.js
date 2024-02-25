@@ -1,19 +1,19 @@
 import React, {useState, useEffect} from 'react'
-import './profile.css'
+import './managerProfile.css'
 import profile from "../../assets/profile.png";
-import { Link, useNavigate} from "react-router-dom"
+import { Link, useNavigate, useParams} from "react-router-dom"
 import { retrieve } from '../Encryption';
 
-const Profile = () => {
-  const [ hr, setHr] = useState(null);
-  const { id } = retrieve().hr;
+const ManagerProfile = () => {
+  const [ manager, setManager] = useState(null);
+  const { id } = retrieve().manager;
   const navigate = useNavigate();
+  const { managerId } = useParams
 
 
   useEffect(() => {
-    fetch(`/hr_personnels/${id}`, {
+    fetch(`/managers/${id}`, {
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + retrieve().access_token,
       },
     })
@@ -23,25 +23,26 @@ const Profile = () => {
         }
         return res.json();
       })
-      .then((data) => setHr(data))
+      .then((data) => setManager(data))
       .catch((err) => {
-        console.error("Error loading HR data:", err)
+        console.error("Error loading manager data:", err)
       });
-  }, []); 
+  }, [managerId]); 
 
-  if (!hr) return <div>Loading...</div>;
-  console.log(hr);
-  if (!hr || !hr.hr_profiles || hr.hr_profiles.length === 0)
-    return navigate(`/hr/create_profile`);
-  const hrProfileData = hr.hr_profiles[0];
+
+  if (!manager) return <div>Loading...</div>;
+  console.log(manager);
+  if (!manager || !manager.manager_profiles || manager.manager_profiles.length === 0)
+    return navigate(`/manager/create_profile`);
+  const managerProfileData = manager.manager_profiles[0];
 
   function handleLogout(e) {
     fetch("/logout", {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + retrieve().access_token,
-        Accept: "application/json",
+        
+        'Authorization': "Bearer " + retrieve().access_token,
+        
       },
     }).then((resp) => {
       if (resp.ok) {
@@ -56,7 +57,7 @@ const Profile = () => {
       <div className="main">
         <div className="topbar">
           <Link onClick={handleLogout}>Logout</Link>
-          <a href="">Dashboard</a>
+          <a manageref="">Dashboard</a>
         </div>
         <div className="row">
           <div className="col-md-4 mt-1">
@@ -69,8 +70,8 @@ const Profile = () => {
                   width={150}
                 />
                 <div className="mt-3">
-                  <h3>{hr.email}</h3>
-                  <p>{hrProfileData.mantra}</p>
+                  <h3>{manager.email}</h3>
+                  <p>{managerProfileData.mantra}</p>
                 </div>
                 <div className="mt-3">
                   <button className="sidebar-btn">Edit Profile</button>
@@ -90,7 +91,7 @@ const Profile = () => {
                     <h5>Full Name</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.first_name}
+                    {managerProfileData.first_name}
                   </div>
                 </div>
                 <div className="row">
@@ -98,7 +99,7 @@ const Profile = () => {
                     <h5>Last Name</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.last_name}
+                    {managerProfileData.last_name}
                   </div>
                 </div>
                 <div className="row">
@@ -106,7 +107,7 @@ const Profile = () => {
                     <h5>Contact</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.phone_contact}
+                    {managerProfileData.phone_contact}
                   </div>
                 </div>
                 <div className="row">
@@ -114,7 +115,7 @@ const Profile = () => {
                     <h5>Date of Birth</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.date_of_birth}
+                    {managerProfileData.date_of_birth}
                   </div>
                 </div>
               </div>
@@ -128,4 +129,4 @@ const Profile = () => {
   )
 }
 
-export default Profile
+export default ManagerProfile

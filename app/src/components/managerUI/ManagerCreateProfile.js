@@ -1,26 +1,17 @@
-import React, { useEffect } from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { retrieve } from "../Encryption";
-import "./employeeform.css";
-import { store } from "../Encryption";
+import React, {useState  } from 'react'
+import './managerEdit.css'
+import { useNavigate, useParams } from 'react-router-dom';
+import { retrieve } from '../Encryption';
+import { useFormik } from 'formik';
+import * as yup from "yup"
 
-const EditProfileForm = () => {
+const ManagerCreateProfile = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [employeeProfileData, setEmployeeProfileData] = useState({});
-  const id = retrieve().employee.id;
-  const [profilePhoto, setProfilePhoto] = useState(null);
+  const { managerId } = useParams()
 
-  useEffect(() => {
-    fetch(`/employees/${id}`)
-      .then((response) => response.json())
-      .then((data) => setEmployeeProfileData(data.employee_profiles[0]))
-      .catch((err) => console.log(err));
-  }, []);
+  const [profilePhoto, setProfilePhoto] = useState(null);
 
   // image upload check size and extension type
   const MAX_FILE_SIZE = 10000000; //10MB
@@ -28,12 +19,10 @@ const EditProfileForm = () => {
     image: ["jpg", "png", "jpeg", "webp"],
   };
   const getExtension = (fileName) => {
-    console.log(fileName);
     if (!fileName) return null;
     const parts = fileName.split(".");
     return parts[parts.length - 1].toLowerCase();
   };
-  // handle profile photo
   const handleChange = (event) => {
     const file = event.target.files[0]; // get the file object
     if (file) {
@@ -53,24 +42,26 @@ const EditProfileForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      first_name: employeeProfileData?.first_name,
-      last_name: employeeProfileData?.last_name,
-      mantra: employeeProfileData?.mantra,
-      phone_contact: employeeProfileData?.phone_contact,
-      title: employeeProfileData?.title,
-      date_of_birth: employeeProfileData?.date_of_birth,
+      first_name: "",
+      last_name: "",
+      mantra: "",
+      phone_contact: "",
+      title: "",
+      date_of_birth: "",
     },
     validationSchema: yup.object().shape({
-      first_name: yup.string().required("Please fill out this field"),
-      last_name: yup.string().required("Please fill out this field"),
-      mantra: yup.string().required("Please fill out this field"),
+      first_name: yup.string().required("First name is required"),
+      last_name: yup.string().required("Last name is required"),
+      mantra: yup.string().required("Mantra is required"),
       phone_contact: yup
         .string()
-        .required("Please fill out this field")
+        .required("Phone contacts are required")
         .min(10, "Phone contact must be atleast 10 characters"),
-      title: yup.string().required("Please provide a title"),
-      date_of_birth: yup.date().required("Please fill out this field"),
+      title: yup.string().required("Title is required"),
+      date_of_birth: yup.date().required("Date of birth is required"),
     }),
+
+
     onSubmit: (values) => {
       const formData = new FormData();
       formData.append("first_name", values.first_name);
@@ -80,31 +71,36 @@ const EditProfileForm = () => {
       formData.append("title", values.title);
       formData.append("date_of_birth", values.date_of_birth);
       formData.append("profile_photo", profilePhoto);
+      
+      console.log("Form data before making the POST request:",...formData.entries());
 
-      console.log(...formData.entries());
-
-      fetch(`/employeeProfiles/${employeeProfileData.id}`, {
-        method: "PATCH",
+      fetch("/managerProfiles", {
+        method: "POST",
         headers: {
-          Authorization: "Bearer " + retrieve().access_token,
+          'Authorization': "Bearer " + retrieve().access_token,
         },
         body: formData,
       }).then((response) => {
         if (response.ok) {
+          // clear out form fields
+          formik.resetForm();
           //set success message
-          setSuccess("Successfully Updated account!!");
+          setSuccess("Successfully created account!!");
           //navigate user to home page
-          navigate("/profile");
+          setTimeout(() => {
+            navigate("/manager/manager_profile");
+          }, 2000);
+          response.json().then((data) => console.log(data));
         } else {
           return response.json().then((err) => console.log(err));
         }
+        console.log("After making the POST request");
       });
     },
-    enableReinitialize: true, // enable reinitialization of the form
   });
-  if (!employeeProfileData) return <div>Loading...</div>;
+
   return (
-    <div className='content-wrapper' sstyle={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
     <div className="container">
       <div className="form-container">
         <form className="profile-form" onSubmit={formik.handleSubmit}>
@@ -117,6 +113,7 @@ const EditProfileForm = () => {
               id="profile_photo"
               name="profile_photo"
               onChange={handleChange}
+              required
             />
             {error && <div className="error">{error}</div>}
           </div>
@@ -216,14 +213,14 @@ const EditProfileForm = () => {
           <div className="update-account-container">
             {/* <input type="submit" /> */}
             <button className="update-btn" type="submit">
-              Update Profile
+              Create Profile
             </button>
           </div>
         </form>
       </div>
     </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditProfileForm;
+export default ManagerCreateProfile
