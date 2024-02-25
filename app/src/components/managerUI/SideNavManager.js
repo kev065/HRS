@@ -49,12 +49,33 @@ const SideNavManager = () => {
             <i className="nav-icon fas fa-user-circle" />
             <p>
               Profile
-            
+             
             </p>
           </a>
-          
-        </li>
+          <ul className="nav nav-treeview">
+            <li className="nav-item">
+            <Link to={"/manager/manager_profile"} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          View HR Profile
+        </Link>
 
+            </li>
+
+            <li className="nav-item">
+            <Link to={"/manager/create_profile"} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          Create HR Profile
+        </Link>
+            </li>
+
+            <li className="nav-item">
+            <Link to={"/manager/manager_update_profile"} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          Edit HR Profile
+        </Link>
+            </li>
+          </ul>
+        </li>
 
         <li className="nav-item">
           <a href="#" className="nav-link">

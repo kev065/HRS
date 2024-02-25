@@ -92,12 +92,12 @@ const CreateProfile = () => {
   });
 
   return (
-    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-    <div className="container">
-      <div className="form-container">
-        <form className="profile-form" onSubmit={formik.handleSubmit}>
-          {success ? <h4 className="secondary-title">{success}</h4> : null}
-          <div className="form-control">
+    <div className='content-wrapper-hr' >
+    <div className="container-hr">
+      <div className="form-container-hr">
+        <form className="profile-form-hr" onSubmit={formik.handleSubmit}>
+          {success ? <h4 className="secondary-title-hr">{success}</h4> : null}
+          <div className="form-control-hr">
             <label htmlFor="profile_photo">Upload photo</label>
             <br />
             <input
@@ -109,7 +109,7 @@ const CreateProfile = () => {
             />
             {error && <div className="error">{error}</div>}
           </div>
-          <div className="form-control">
+          <div className="form-control-hr">
             <label htmlFor="first_name">First Name</label>
             <br />
             <input
@@ -125,7 +125,7 @@ const CreateProfile = () => {
             ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control-hr">
             <label htmlFor="last_name">Last Name</label>
             <br />
             <input
@@ -141,7 +141,7 @@ const CreateProfile = () => {
             ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control-hr">
             <label htmlFor="mantra">Mantra</label>
             <br />
             <input
@@ -157,7 +157,7 @@ const CreateProfile = () => {
             ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control-hr">
             <label htmlFor="phone_contact">Contact</label>
             <br />
             <input
@@ -173,7 +173,7 @@ const CreateProfile = () => {
             ) : null}
           </div>
 
-          <div className="form-control">
+          <div className="form-control-hr">
             <label htmlFor="title">Title</label>
             <br />
             <input
@@ -188,7 +188,7 @@ const CreateProfile = () => {
               <div className="error">{formik.errors.title}</div>
             ) : null}
           </div>
-          <div className="form-control">
+          <div className="form-control-hr">
             <label htmlFor="date_of_birth">Date of Birth</label>
             <br />
             <input
@@ -202,9 +202,9 @@ const CreateProfile = () => {
               <div className="error">{formik.errors.date_of_birth}</div>
             ) : null}
           </div>
-          <div className="update-account-container">
+          <div className="create-account-container-hr">
             {/* <input type="submit" /> */}
-            <button className="update-btn" type="submit">
+            <button className="creeate-btn" type="submit">
               Create Profile
             </button>
           </div>

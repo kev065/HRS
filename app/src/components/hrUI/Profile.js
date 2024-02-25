@@ -8,6 +8,7 @@ const Profile = () => {
   const [ hr, setHr] = useState(null);
   const { id } = retrieve().hr;
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
@@ -16,14 +17,17 @@ const Profile = () => {
       .then((data) => {
         console.log("Fetched HR data:", data);
         setHr(data);
+        if (!data.hr_profiles || data.hr_profiles.length === 0) {
+          // Only navigate if no HR profiles are present
+          navigate(`/hr/create_profile`);
+        }
       })
       .catch((err) => console.log("Error fetching HR data:", err));
-}, [id]); 
+      setLoading(false); // Set loading to false in case of an error
+}, [id, navigate, setHr]); 
 
   if (!hr) return <div>Loading...</div>;
-  console.log(hr);
-  if (!hr.hr_profiles || hr.hr_profiles.length === 0)
-    return navigate(`/hr/create_profile`);
+
   const hrProfileData = hr.hr_profiles[0];
 
   function handleLogout(e) {
