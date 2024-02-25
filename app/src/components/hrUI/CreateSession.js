@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {retrieve} from "../Encryption"
+import './createSession.css'
 
 const CreateSession = ({sessions, setSessions, onClose}) => {
     const [name, setName] = useState('');
@@ -69,7 +70,7 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
     };
 
   return (
-    <div>
+    <div className="create-session-container">
         <h3>Add Sesion</h3>
             <form onSubmit={handleSubmit}>
                 <label>
@@ -100,7 +101,7 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
                 </label>
                 <button type="submit">Create Session</button>
             </form>
-            <button onClick={handleExit}>Exit</button>
+            <button className="exit-button" onClick={handleExit}>Exit</button>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { retrieve } from "../Encryption";
-
+import './updateSession.css'
 
 const UpdateSession = () => {
     const { id } = useParams();

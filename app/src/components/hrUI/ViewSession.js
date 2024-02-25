@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {retrieve} from "../Encryption";
 import { useNavigate,useParams } from 'react-router-dom';
+import './viewSession.css'
 
 import CreateSession from './CreateSession'
 
