@@ -62,11 +62,12 @@ const SideNavEmployee = () => {
                 </li>
 
                 <li className="nav-item">
-                  <a href="#" className="nav-link">
+                  <Link to={"/employee/goals"} className="nav-link">
                     <i className="nav-icon fas fa-users-cog" />
                     <p>Goals</p>
-                  </a>
+                  </Link>
                 </li>
+
 
                 <li className="nav-item">
                   <a href="#" className="nav-link">
@@ -98,6 +99,17 @@ const SideNavEmployee = () => {
                     </p>
                   </a>
                 </li>
+
+
+                <li className="nav-item">
+                  <Link to={"/employee/experience"} className="nav-link">
+                    <i className="nav-icon fas fa-briefcase" />
+                    <p>Add/Update Experience</p>
+                  </Link>
+                </li>
+
+
+
 
                 <li className="nav-item">
                   <a href="#" className="nav-link">
