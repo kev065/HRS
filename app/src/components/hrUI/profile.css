@@ -18,7 +18,7 @@
 }
 
 .profile-sidebar {
-  background-color: #fff;
+  background-color: rgba(0, 0, 0, 0.25);
   color: var(--extra-light);
   min-height: 100vh;
 }
@@ -39,8 +39,4 @@
 
 .sidebar-btn.del {
   background-color: tomato;
-}
-
-.profile {
-  margin-top: 1rem;
 }

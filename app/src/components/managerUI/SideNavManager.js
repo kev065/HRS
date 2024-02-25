@@ -91,14 +91,12 @@ const SideNavManager = () => {
 
 
         <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-calendar-check" />
+          <Link to="/manager/manager_pending_leaves" className="nav-link">
+          <i className="nav-icon fas fa-hourglass-half" />
             <p>
               Leave Tracker
-           
             </p>
-          </a>
-         
+          </Link>
         </li>
 
 

@@ -77,7 +77,9 @@ class PayslipResource(Resource):
     def viewPayslip(self, role, employee_id=None):
         year = request.args.get('year')
         month = request.args.get('month')
-        employee_id = request.args.get('employee_id')
+        # get id from request params when role is hr
+        if role == 'hr':
+            employee_id = request.args.get('employee_id')
 
         employee = Employee.query.filter_by(id=employee_id).first()
         if not employee:
@@ -95,6 +97,7 @@ class PayslipResource(Resource):
         bonus = []
         allowance = []
         normal = []
+        deduction = []
 
         remuneration_descriptions = RemunerationDescription.query.filter_by(
             remuneration_id=remuneration.id).all()
@@ -106,6 +109,8 @@ class PayslipResource(Resource):
                 allowance.append(remunerationDescriptionSchema.dump(rem))
             if rem.type == "normal":
                 normal.append(remunerationDescriptionSchema.dump(rem))
+            if rem.type == "deduction":
+                deduction.append(remunerationDescriptionSchema.dump(rem))
 
         employee_profile = EmployeeProfile.query.filter_by(
             employee_id=employee_id).first()
@@ -124,6 +129,7 @@ class PayslipResource(Resource):
             'bonus': bonus if bonus else None,
             'allowance': allowance if allowance else None,
             'normal': normal if normal else None,
+            'deduction': deduction if deduction else None
         }
 
         response = make_response(

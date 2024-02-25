@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 const SideNavHr = () => {
+  const {hrId} = useParams()
   return (
     <div>
  {/* Main Sidebar Container */}
@@ -47,9 +48,31 @@ const SideNavHr = () => {
              
             </p>
           </a>
-         
-        </li>
+          <ul className="nav nav-treeview">
+            <li className="nav-item">
+            <Link to={`/hr_profile/${hrId}`} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          View HR Profile
+        </Link>
+                <i className="fas fa-eye nav-icon" />
+                <p>View Profile Details</p>
+            </li>
 
+            <li className="nav-item">
+            <Link to={`/create_profile/${hrId}`} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          Create HR Profile
+        </Link>
+            </li>
+
+            <li className="nav-item">
+            <Link to={`/Edit_profile/${hrId}`} className="nav-link">
+          <i className="fas fa-eye nav-icon" />
+          Edit HR Profile
+        </Link>
+            </li>
+          </ul>
+        </li>
 
         <li className="nav-item">
           <a href="#" className="nav-link">
@@ -60,8 +83,17 @@ const SideNavHr = () => {
             </p>
           </a>
           
+          <Link to={"/hr/add_employee"} className="nav-link">
+            <i className="nav-icon fas fa-user-plus" />
+            <p>Onboard Employee</p>
+          </Link>
         </li>
-
+        <li className="nav-item">
+          <Link to={"/hr/hr_delete_employee"} className="nav-link">
+            <i className="nav-icon fas fa-user-minus" />
+            <p>Offboard Employee</p>
+          </Link>
+        </li>
 
 
         <li className="nav-item">
@@ -124,14 +156,12 @@ const SideNavHr = () => {
 
 
         <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-calendar-check" />
+          <Link to="/hr/hr_pending_leaves" className="nav-link">
+          <i className="nav-icon fas fa-hourglass-half" />
             <p>
               Leave Tracker
-             
             </p>
-          </a>
-      
+          </Link>
         </li>
 
 

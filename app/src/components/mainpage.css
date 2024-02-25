@@ -232,7 +232,7 @@ div.services {
   margin-top: 80px;
 }
 
-.service-card {
+.service-cards .service-card {
   height: 400px;
   width: 370px;
   background-color: aliceblue;
@@ -247,7 +247,7 @@ div.services {
   overflow: hidden;
 }
 
-.service-card::after {
+.service-cards .service-card::after {
   content: "";
   position: absolute;
   top: 150%;
@@ -261,37 +261,39 @@ div.services {
   transition: 1s;
 }
 
-.service-card:hover::after {
+.service-cards .service-card:hover::after {
   width: 225%;
   top: -100%;
 }
 
-.service-card i {
+.service-cards .service-card i {
+  margin-top: 1rem;
   color: #72e2ae;
   margin-bottom: 20px;
   font-size: 4.8rem;
 }
 
-.service-card h2 {
+.service-cards .service-card h2 {
   color: var(--gray);
   font-weight: 600;
   letter-spacing: 1px;
 }
 
-.service-card p {
+.service-cards .service-card p {
+  font-size: 1.25rem;
   text-align: center;
   width: 100%;
   margin: 12px 0;
   color: rgb(4, 52, 83);
 }
 
-.service-card:hover {
+.service-cards .service-card:hover {
   background-color: transparent;
   transform: translateY(-8px);
   border-color: #72e2ae;
 }
 
-.service-card:hover i {
+.service-cards .service-card:hover i {
   color: #fead53;
 }
 

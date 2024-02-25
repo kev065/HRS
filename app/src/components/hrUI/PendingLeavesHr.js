@@ -5,6 +5,7 @@ import './PendingLeavesHr.css';
 const PendingLeaves = () => {
   const [leaves, setLeaves] = useState([]);
   const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     const fetchLeaves = async () => {
@@ -27,6 +28,7 @@ const PendingLeaves = () => {
     try {
       const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: true });
       console.log('Leave approved:', response.data);
+      setSuccess('Leave approved'); 
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message);
@@ -40,6 +42,7 @@ const PendingLeaves = () => {
     try {
       const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: false });
       console.log('Leave declined:', response.data);
+      setSuccess('Leave declined');
     } catch (error) {
       if (error.response) {
         setError(error.response.data.message);
@@ -52,6 +55,7 @@ const PendingLeaves = () => {
   return (
     <div className="container">
       {error && <p className="error">{error}</p>}
+      {success && <p className="success">{success}</p>} 
       {leaves.map((leave) => (
         <div key={leave.id} className="leave">
           <p>Employee ID: {leave.employee_id}</p>

@@ -51,14 +51,14 @@ const Login = () => {
         // Redirect the user based on their role
         switch (role) {
           case "manager":
-            navigate("/manager");
+            navigate(`/manager`);
             break;
           case "employee":
             navigate("/employee/profile");
 
             break;
           case "hr":
-            navigate("/hr");
+            navigate(`/hr`);
             break;
           default:
             console.error("Unknown role:", role);
