@@ -1,22 +1,16 @@
 import React, {useState, useEffect} from 'react'
 import './managerProfile.css'
 import profile from "../../assets/profile.png";
-import { Link, useNavigate, useParams} from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { retrieve } from '../Encryption';
 
 const ManagerProfile = () => {
   const [ manager, setManager] = useState(null);
-  const { id } = retrieve().manager;
+  const  id  = retrieve().manager;
   const navigate = useNavigate();
-  const { managerId } = useParams
-
-
+  
   useEffect(() => {
-    fetch(`/managers/${id}`, {
-      headers: {
-        'Authorization': 'Bearer ' + retrieve().access_token,
-      },
-    })
+    fetch(`/managers/${id}`)
       .then((res) => {
         if(!res.ok){
           throw new Error(`HTTP error! Status: ${res.status}`)
@@ -27,12 +21,12 @@ const ManagerProfile = () => {
       .catch((err) => {
         console.error("Error loading manager data:", err)
       });
-  }, [managerId]); 
+  }, []); 
 
 
   if (!manager) return <div>Loading...</div>;
   console.log(manager);
-  if (!manager || !manager.manager_profiles || manager.manager_profiles.length === 0)
+  if (manager.manager_profiles.length === 0)
     return navigate(`/manager/create_profile`);
   const managerProfileData = manager.manager_profiles[0];
 
