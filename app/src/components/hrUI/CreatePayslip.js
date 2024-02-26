@@ -275,27 +275,29 @@ const CreatePayslip = () => {
             </div>
           ) : null}
         </div>
-        <button
-          type="button"
-          className="btn btn-secondary btn-sm"
-          onClick={toggleForm}
-        >
-          Toggle
-        </button>
-        <button
-          type="button"
-          className="btn btn-primary btn-sm ml-3"
-          onClick={addRemuneration}
-        >
-          Add Remuneration
-        </button>
-        <button
-          type="button"
-          className="btn btn-danger btn-sm ml-3"
-          onClick={removeRemuneration}
-        >
-          Remove Remuneration
-        </button>
+        <div className="col-md-4 mb-3">
+          <button
+            type="button"
+            className="btn btn-secondary btn-sm ml-3 col-2"
+            onClick={toggleForm}
+          >
+            Toggle
+          </button>
+          <button
+            type="button"
+            className="btn btn-primary btn-sm ml-3 col-4"
+            onClick={addRemuneration}
+          >
+            Add Remuneration
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger btn-sm ml-3 col-4"
+            onClick={removeRemuneration}
+          >
+            Remove Remuneration
+          </button>
+        </div>
         <button className="btn btn-success btn-block mt-4 mb-4" type="submit">
           Generate Payslip
         </button>

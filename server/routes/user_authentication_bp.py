@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import Blueprint, jsonify
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
-from flask_jwt_extended import jwt_required, get_jwt,JWTManager
+from flask_jwt_extended import jwt_required, get_jwt, JWTManager
 from flask_jwt_extended import create_access_token
 
 from models import Employee, Manager, HR_Personel, db, TokenBlocklist
@@ -19,21 +19,18 @@ login_args.add_argument('email', type=str, required=True,
                         help="email is required")
 login_args.add_argument('password', type=str, required=True,
                         help="password is required")
-# login_args.add_argument('role', type=str, required=True,
-#                         help="role is required")
-
-
-
+login_args.add_argument('role', type=str, required=True,
+                        help="role is required")
 
 
 class Login(Resource):
     def post(self):
         data = login_args.parse_args()
         email = data['email']
-
+        role = data['role']
         password = data['password']
 
-        if "@manager" in email:
+        if role == "manager":
             # Login manager
             manager = Manager.query.filter_by(email=email).first()
             if not manager:
@@ -48,7 +45,7 @@ class Login(Resource):
             else:
                 abort(400, detail="Your password is incorrect")
 
-        elif "@employee" in email:
+        elif role == "employee":
             # Login employee
             employee = Employee.query.filter_by(email=email).first()
             if not employee:
@@ -63,7 +60,7 @@ class Login(Resource):
             else:
                 abort(400, detail="Your password is incorrect")
 
-        elif "@hr" in email:
+        elif role == "hr":
             # Login hr
             hr = HR_Personel.query.filter_by(email=email).first()
             if not hr:
@@ -97,5 +94,3 @@ class Logout(Resource):
 
 
 api.add_resource(Logout, '/logout')
-
-
