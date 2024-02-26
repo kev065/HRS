@@ -26,35 +26,18 @@ const SideNavManager = () => {
       
     </div>
     {/* SidebarSearch Form */}
-    <div className="form-inline">
-      <div className="input-group" data-widget="sidebar-search">
-        <input className="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search" />
-        <div className="input-group-append">
-          <button className="btn btn-sidebar">
-      
-          </button>
-        </div>
-      </div>
-    </div>
+    
     {/* Sidebar Menu */}
     <nav className="mt-2">
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li className="nav-item">
-          <a href="./manager_dashboard" className="nav-link active">
-            <i className="far fa-circle nav-icon" />
-            <p>Dashboard</p>
-          </a>
-        </li>
 
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-user-circle" />
+      <li className="nav-item">
+          <Link to="/manager/manager_profile" className="nav-link">
+          <i className="nav-icon fas fa-user-circle" />
             <p>
               Profile
-            
             </p>
-          </a>
-          
+          </Link>
         </li>
         <li className="nav-item">
           <a href="#" className="nav-link">
@@ -67,7 +50,6 @@ const SideNavManager = () => {
           </a>
          
         </li>
-
 
         <li className="nav-item">
           <a href="#" className="nav-link">

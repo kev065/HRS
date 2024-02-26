@@ -20,58 +20,18 @@ const SideNavHr = () => {
       
     </div>
     {/* SidebarSearch Form */}
-    <div className="form-inline">
-      <div className="input-group" data-widget="sidebar-search">
-        <input className="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search" />
-        <div className="input-group-append">
-          <button className="btn btn-sidebar">
-            <i className="fas fa-search fa-fw" />
-          </button>
-        </div>
-      </div>
-    </div>
+    
     {/* Sidebar Menu */}
     <nav className="mt-2">
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li className="nav-item">
-          <a href="hr_dashboard" className="nav-link active">
-            <i className="far fa-circle nav-icon" />
-            <p>Dashboard</p>
-          </a>
-        </li>
 
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-user-circle" />
+      <li className="nav-item">
+          <Link to="/hr/hr_profile" className="nav-link">
+          <i className="nav-icon fas fa-user-circle" />
             <p>
               Profile
-             
             </p>
-          </a>
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-            <Link to={`/hr_profile/${hrId}`} className="nav-link">
-          <i className="fas fa-eye nav-icon" />
-          View HR Profile
-        </Link>
-                <i className="fas fa-eye nav-icon" />
-                <p>View Profile Details</p>
-            </li>
-
-            <li className="nav-item">
-            <Link to={`/create_profile/${hrId}`} className="nav-link">
-          <i className="fas fa-eye nav-icon" />
-          Create HR Profile
-        </Link>
-            </li>
-
-            <li className="nav-item">
-            <Link to={`/Edit_profile/${hrId}`} className="nav-link">
-          <i className="fas fa-eye nav-icon" />
-          Edit HR Profile
-        </Link>
-            </li>
-          </ul>
+          </Link>
         </li>
 
         <li className="nav-item">
@@ -135,14 +95,12 @@ const SideNavHr = () => {
   
 
         <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-money-check-alt" /> 
+          <Link to="/hr/view_employee_payslip" className="nav-link">
+          <i className="nav-icon fas fa-money-check-alt" />
             <p>
               Payroll
-         
             </p>
-          </a>
-          
+          </Link>
         </li>
 
 

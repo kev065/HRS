@@ -94,10 +94,16 @@ class LeaveApprovalResourceByID(Resource):
     @jwt_required()
     def patch(self, leave_id):        
         data = patch_args.parse_args()
+
+        # Check if a Leave record exists for the given leave_id
+        leave = Leave.query.get(leave_id)
+        if not leave:
+            return {'message': 'Leave not found'}, 404
+
         leave_approval = LeaveApproval.query.filter_by(leave_id=leave_id).first()
 
         if not leave_approval:
-            abort(404, message="Leave Approval not found")
+            abort(404, message="Leave Approval updated successfully")
 
         for key, value in data.items():
             if value is not None:
@@ -106,11 +112,14 @@ class LeaveApprovalResourceByID(Resource):
         db.session.commit()
         result = leaveApprovalSchema.dump(leave_approval)
         return {'message': 'Leave Approval updated successfully', 'leave_approval': result}, 200
-    
-    # deleting leave approval
-    
+
     @jwt_required()
     def delete(self, leave_id):
+
+        # Check if a Leave record exists for the given leave_id
+        leave = Leave.query.get(leave_id)
+        if not leave:
+            return {'message': 'Leave not found'}, 404
 
         leave_approval = LeaveApproval.query.filter_by(leave_id=leave_id).first()
 
@@ -121,6 +130,7 @@ class LeaveApprovalResourceByID(Resource):
         db.session.commit()
 
         return {'message': 'Leave Approval deleted successfully'}, 200
+
     
     
     

@@ -1,55 +1,60 @@
-body{
-    margin-top:20px;
-    color: #1a202c;
-    text-align: left;
-    background-color: #e2e8f0;    
-}
-.main-body {
-    padding: 15px;
-}
-.card {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+.content-wrapper-hr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100;
 }
 
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: #fff;
-    background-clip: border-box;
-    border: 0 solid rgba(0,0,0,.125);
-    border-radius: .25rem;
-    margin-bottom: 319px;
+.container-hr {
+  background-color: #d0f0b7;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container-hr {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.profile-form-hr {
+  display: grid;
+  grid-gap: 20px;
 }
 
 
-.card-body {
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1rem;
+.form-control-hr{
+  margin-top: 5px;
 }
 
-.gutters-sm {
-    margin-right: -8px;
-    margin-left: -8px;
+
+/* label {
+  
+} */
+
+input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #9cd94d;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
-.gutters-sm>.col, .gutters-sm>[class*=col-] {
-    padding-right: 8px;
-    padding-left: 8px;
-}
-.mb-3, .my-3 {
-    margin-bottom: 1rem!important;
+.error {
+  color: red;
+  margin-top: 5px;
 }
 
-.bg-gray-300 {
-    background-color: #e2e8f0;
+.secondary-title-hr {
+  color: green;
 }
-.h-100 {
-    height: 100%!important;
-}
-.shadow-none {
-    box-shadow: none!important;
+
+.creeate-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 20px;
 }
