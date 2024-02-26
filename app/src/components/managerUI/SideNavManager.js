@@ -37,44 +37,14 @@ const SideNavManager = () => {
     {/* Sidebar Menu */}
     <nav className="mt-2">
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-        <li className="nav-item">
-          <a href="./manager_dashboard" className="nav-link active">
-            <i className="far fa-circle nav-icon" />
-            <p>Dashboard</p>
-          </a>
-        </li>
 
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-user-circle" />
+      <li className="nav-item">
+          <Link to="/manager/manager_profile" className="nav-link">
+          <i className="nav-icon fas fa-user-circle" />
             <p>
               Profile
-             
             </p>
-          </a>
-          <ul className="nav nav-treeview">
-            <li className="nav-item">
-            <Link to={"/manager/manager_profile"} className="nav-link">
-          <i className="fas fa-eye nav-icon" />
-          View HR Profile
-        </Link>
-
-            </li>
-
-            <li className="nav-item">
-            <Link to={"/manager/create_profile"} className="nav-link">
-          <i className="fas fa-eye nav-icon" />
-          Create HR Profile
-        </Link>
-            </li>
-
-            <li className="nav-item">
-            <Link to={"/manager/manager_update_profile"} className="nav-link">
-          <i className="fas fa-eye nav-icon" />
-          Edit HR Profile
-        </Link>
-            </li>
-          </ul>
+          </Link>
         </li>
 
         <li className="nav-item">
