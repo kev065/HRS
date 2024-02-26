@@ -2,15 +2,36 @@ import React, { useEffect, useState } from "react";
 import "./payslipEmployee.css";
 import { retrieve } from "../Encryption";
 
-const PaySlipEmployee = ({ payslip }) => {
+const PaySlipEmployee = ({ payslip, setPayslip }) => {
   const [employee, setEmployee] = useState(null);
-  console.log(payslip);
-  console.log(employee);
+  const [clearBtn, setClearBtn] = useState(false);
+
   useEffect(() => {
     fetch(`/employees/${payslip.employee_id}`)
       .then((resp) => resp.json())
       .then((data) => setEmployee(data));
   }, [payslip]);
+
+  const handleDelete = () => {
+    fetch(`/payslip/${payslip.remuneration_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + retrieve().access_token,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          res.json().then((data) => {
+            throw new Error(data);
+          });
+        }
+        // hide payslip
+        setPayslip(null);
+        return res.json();
+      })
+      .then((data) => console.log(data));
+  };
 
   return (
     <div id="payslip">
@@ -18,11 +39,11 @@ const PaySlipEmployee = ({ payslip }) => {
       <div id="scope">
         <div class="scope-entry">
           <div class="title">PAY RUN</div>
-          <div class="value">Mar 15, 2015</div>
+          <div class="value">{`${payslip?.month}/${payslip?.year}`}</div>
         </div>
         <div class="scope-entry">
-          <div class="title">PAY PERIOD</div>
-          <div class="value">Mar 1 - Mar 15, 2015</div>
+          <div class="title">PAYED ON</div>
+          <div class="value">{payslip?.date_created}</div>
         </div>
       </div>
       <div class="payslip-content">
@@ -47,7 +68,7 @@ const PaySlipEmployee = ({ payslip }) => {
             </div>
             <div class="entry">
               <div class="label">Department</div>
-              <div class="value">department here</div>
+              <div class="value">{payslip?.department_name}</div>
             </div>
             <div class="entry">
               <div class="label">Prepared by</div>
@@ -58,7 +79,7 @@ const PaySlipEmployee = ({ payslip }) => {
             <div class="title">Total Income</div>
             <div class="entry">
               <div class="label">KSH</div>
-              <div class="value">total income here</div>
+              <div class="value">{payslip?.total_income}</div>
             </div>
           </div>
         </div>
@@ -123,12 +144,18 @@ const PaySlipEmployee = ({ payslip }) => {
                 <div class="label">NET PAY</div>
                 <div class="detail"></div>
                 <div class="rate"></div>
-                <div class="amount">net pay here</div>
+                <div class="amount">{payslip?.net_pay}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <button className="btn btn-secondary" onClick={(e) => setPayslip(null)}>
+        Exit
+      </button>
+      <button className="btn btn-danger float-right" onClick={handleDelete}>
+        Delete
+      </button>
     </div>
   );
 };
