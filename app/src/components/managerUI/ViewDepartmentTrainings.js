@@ -16,7 +16,7 @@ function ViewDepartmentTrainings() {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Failed to fetch data');
+                throw new Error('You have no Team members');
             }
             return response.json();
         })

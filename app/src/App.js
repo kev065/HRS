@@ -44,6 +44,8 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
+import ViewDepartments from './components/managerUI/ViewDepartments';
+
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -101,10 +103,13 @@ function App() {
         <Route path="/manager/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
         <Route path="/manager/view_department_trainings" element={<ViewDepartmentTrainings />}/>
         <Route path="/manager/recommend_training/:employeeId" element={<RecommendTraining />}/>
-        <Route path="/manager/department_employees/:managerId" element={<ViewEmployeesPerDepartment/>}/>
+        <Route path="/manager/department_employees/:deptId" element={<ViewEmployeesPerDepartment/>}/>
         <Route path="/manager/manager_profile" element={<ManagerProfile/>}/>
         <Route path="/manager/create_profile" element={<ManagerCreateProfile/>}/>
         <Route path="/manager/manager_update_profile" element={<ManagerEditProfile/>}/>
+        <Route path="/manager/departments" element={<ViewDepartments/>}/>
+        <Route path="/manager/update_departments/:id" element={<UpdateDepartments/>}/>
+
         </Route>
 
       </Routes>

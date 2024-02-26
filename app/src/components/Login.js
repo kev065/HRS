@@ -30,9 +30,7 @@ const Login = () => {
       role: selectedRole
     };
 
-    console.log("Login request data:", credentials);
-
-    fetch("http://127.0.0.1:5555/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
