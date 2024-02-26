@@ -1,8 +1,8 @@
 from flask import Blueprint, make_response, jsonify
 from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
-from serializer import departmentSchema
-from models import db, Department
+from serializer import departmentSchema,employeeSchema
+from models import db, Department,EmployeeProfile,Employee,Manager,ManagerProfile
 from auth_middleware import manager_required
 
 
@@ -97,7 +97,6 @@ class DepartmentByID(Resource):
 
 
 api.add_resource(DepartmentByID, '/departments/<string:id>')
-
 
 
 

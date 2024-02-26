@@ -58,7 +58,7 @@ def create_app():
     migrate = Migrate(app, db)
     db.init_app(app)
     jwt = JWTManager(app)
-    CORS(app)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
 
     @jwt.token_in_blocklist_loader
     def check_if_token_is_revoked(jwt_header, jwt_payload: dict):

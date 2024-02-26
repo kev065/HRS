@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import CreateTraining from './CreateTraining';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UpdateTrainings from './UpdateTrainings';
-import {retrieve} from "../Encryption";
-
-
+import { retrieve } from "../Encryption";
 
 const ViewTrainings = ({ trainings, setTrainings }) => {
     const [showCreateTraining, setShowCreateTraining] = useState(false);
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
-    const navigate=useNavigate()
-    const { id } = useParams()
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchTrainings = () => {
@@ -37,34 +35,27 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
         setShowCreateTraining(false);
     };
 
-    const handleUpdateTraining =(training)=>{
+    const handleUpdateTraining = (training) => {
         navigate(`/update_trainings/${training.id}`);
-    }
-    const handleDeleteTraining =(trainingId)=>{
+    };
+
+    const handleDeleteTraining = (trainingId) => {
         fetch(`/trainings/${trainingId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + retrieve().access_token,
-      },
-    })
-      .then((res) => {
-        console.log("RES: ", res);
-       
-      })
-      .then((data)=>{
-        const updatedTrainings = trainings.filter(training => training.id !== trainingId);
-        setTrainings(updatedTrainings)
-        
-      })
-      .catch((err) => {
-        console.log(err);
-        throw new Error(err);
-      });
-        
-    }
-
-
-    
+            method: "DELETE",
+            headers: {
+                Authorization: "Bearer " + retrieve().access_token,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                const updatedTrainings = trainings.filter(training => training.id !== trainingId);
+                setTrainings(updatedTrainings);
+            })
+            .catch((err) => {
+                console.log(err);
+                throw new Error(err);
+            });
+    };
 
     const filteredTrainings = trainings.filter(training => {
         const startDate = new Date(training.start_date);
@@ -79,7 +70,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
     });
 
     return (
-        <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
+        <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor: "white", marginTop: "20px" }}>
             <h2>Trainings</h2>
             <div>
                 <label htmlFor="fromDate">From: </label>
@@ -87,39 +78,41 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
                 <label htmlFor="toDate">To: </label>
                 <input type="date" id="toDate" value={toDate} onChange={e => setToDate(e.target.value)} />
             </div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>Start Date</th>
-                        <th>Start Time</th>
-                        <th>End Date</th>
-                        <th>End Time</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {filteredTrainings.map(training => (
-                        <tr key={training.id}>
-                            <td>{training.title}</td>
-                            <td>{training.description}</td>
-                            <td>{training.start_date}</td>
-                            <td>{training.start_time}</td>
-                            <td>{training.end_date}</td>
-                            <td>{training.end_time}</td>
-                            <td>
-                                <button onClick={() => handleUpdateTraining(training)}>Update</button>
-                                <button onClick={() => handleDeleteTraining(training.id)}>Delete</button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-            {showCreateTraining && <CreateTraining onClose={handleCreateTrainingClose} trainings={trainings} setTrainings={setTrainings} />}
-            {/* {id && <UpdateTrainings training={trainings.find(training => training.id === id)} trainings={trainings} setTrainings={setTrainings} />} */}
 
+            {filteredTrainings.length === 0 ? (
+                <p>No trainings available</p>
+            ) : (
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Description</th>
+                            <th>Start Date</th>
+                            <th>Start Time</th>
+                            <th>End Date</th>
+                            <th>End Time</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredTrainings.map(training => (
+                            <tr key={training.id}>
+                                <td>{training.title}</td>
+                                <td>{training.description}</td>
+                                <td>{training.start_date}</td>
+                                <td>{training.start_time}</td>
+                                <td>{training.end_date}</td>
+                                <td>{training.end_time}</td>
+                                <td>
+                                    <button onClick={() => handleUpdateTraining(training)}>Update</button>
+                                    <button onClick={() => handleDeleteTraining(training.id)}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+            {showCreateTraining && <CreateTraining onClose={handleCreateTrainingClose} trainings={trainings} setTrainings={setTrainings} />}
             <button onClick={() => setShowCreateTraining(true)}>Add Training</button>
         </div>
     );

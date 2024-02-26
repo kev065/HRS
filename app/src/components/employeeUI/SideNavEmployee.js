@@ -132,12 +132,7 @@ const SideNavEmployee = () => {
                     </p>
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    <i className="nav-icon fas fa-chalkboard-teacher" />
-                    <p>Training Tracker</p>
-                  </a>
-                </li>
+               
               </ul>
             </nav>
           </div>

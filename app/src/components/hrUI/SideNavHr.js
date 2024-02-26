@@ -132,16 +132,7 @@ const SideNavHr = () => {
         </li>
 
 
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-building" />
-            <p>
-              Departments
-           
-            </p>
-          </a>
-          
-        </li>
+  
 
         <li className="nav-item">
           <a href="#" className="nav-link">
