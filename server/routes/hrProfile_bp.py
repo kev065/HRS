@@ -117,15 +117,14 @@ class HrProfileById(Resource):
                 single_hr_profile.profile_photo = photo_url
 
 
-                for key, value in data.items():
-                    if value is not None:
-                        setattr(single_hr_profile, key, value)
-                db.session.commit()
-                result = hrProfileSchema.dump(single_hr_profile)
-                response = make_response(jsonify(result), 200)
+            for key, value in data.items():
+                if value is not None:
+                    setattr(single_hr_profile, key, value)
+            db.session.commit()
+            result = hrProfileSchema.dump(single_hr_profile)
+            response = make_response(jsonify(result), 200)
 
-                return response
-            
+            return response
         except Exception as e:
             print(f"Error: {e}")
             db.session.rollback()
