@@ -6,29 +6,22 @@ import { retrieve } from '../Encryption';
 
 const Profile = () => {
   const [ hr, setHr] = useState(null);
-  const { id } = retrieve().hr;
+  const  id  = retrieve().hr.id;
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
 
 
   useEffect(() => {
     fetch(`/hr_personnels/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched HR data:", data);
-        setHr(data);
-        if (!data.hr_profiles || data.hr_profiles.length === 0) {
-          // Only navigate if no HR profiles are present
-          navigate(`/hr/create_profile`);
-        }
-      })
-      .catch((err) => console.log("Error fetching HR data:", err));
-      setLoading(false); // Set loading to false in case of an error
-}, [id, navigate, setHr]); 
+    .then((response) => response.json())
+    .then((data) => setHr(data))
+    .catch((err) => console.log(err));
+  }, []); 
 
   if (!hr) return <div>Loading...</div>;
-
-  const hrProfileData = hr.hr_profiles[0];
+  console.log(hr);
+  if (hr?.hr_profiles?.length === 0)
+    return navigate(`/hr/create_profile`);
+  const hrProfileData = hr?.hr_profiles[0];
 
   function handleLogout(e) {
     fetch("/logout", {
@@ -47,45 +40,35 @@ const Profile = () => {
   }
 
   return (
+    <div
+    className="content-wrapper"
+    style={{
+      marginLeft: "280px",
+      backgroundColor: "white",
+      marginTop: "20px",
+    }}
+  >
     <div className="profile-container">
       <div className="main">
-        <div className="topbar">
-          <Link onClick={handleLogout}>Logout</Link>
-          <a href="">Dashboard</a>
-        </div>
         <div className="row">
-          <div className="col-md-4 mt-1">
-            <div className="card text-center profile-sidebar">
-              <div className="card-body">
-                <img
-                  src={profile}
-                  alt=""
-                  className="rounded-circle"
-                  width={150}
-                />
-                <div className="mt-3">
-                  <h3>{hr.email}</h3>
-                  <p>{hrProfileData.mantra}</p>
-                </div>
-                <div className="mt-3">
-                  <button className="sidebar-btn">Edit Profile</button>
-                </div>
-                <div className="mt-3">
-                  <button className="sidebar-btn del">Delete Profile</button>
-                </div>
-              </div>
-            </div>
-          </div>
           <div className="col md-8 mt-1">
             <div className="card mb-3 content">
-              <h1 className="m-3 pt-3">About</h1>
+              <div className="col-md-3">
+                <img
+                  src={hrProfileData?.profile_photo || profile}
+                  alt="profile"
+                  className="rounded-circle profile"
+                  width={150}
+                />
+              </div>
+              <h1 className="m-3 pt-3">{hrProfileData?.mantra}</h1>
               <div className="card-body">
                 <div className="row">
                   <div className="col-md-3">
                     <h5>Full Name</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.first_name}
+                    {hrProfileData?.first_name}
                   </div>
                 </div>
                 <div className="row">
@@ -93,7 +76,7 @@ const Profile = () => {
                     <h5>Last Name</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.last_name}
+                    {hrProfileData?.last_name}
                   </div>
                 </div>
                 <div className="row">
@@ -101,7 +84,15 @@ const Profile = () => {
                     <h5>Contact</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.phone_contact}
+                    {hrProfileData?.phone_contact}
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-3">
+                    <h5>Email</h5>
+                  </div>
+                  <div className="col-md-9 text-secondary">
+                    {hr?.email}
                   </div>
                 </div>
                 <div className="row">
@@ -109,17 +100,77 @@ const Profile = () => {
                     <h5>Date of Birth</h5>
                   </div>
                   <div className="col-md-9 text-secondary">
-                    {hrProfileData.date_of_birth}
+                    {hrProfileData?.date_of_birth}
                   </div>
                 </div>
               </div>
             </div>
-            
+            <div className="card mb-3 content">
+              <h1 className="m-3 pt-3">Leave Approvals</h1>
+              {hr?.leave_approvals.length !== 0 ? (
+                hr?.leave_approvals.map((leave_approval) => (
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-3">
+                        <h5>{leave_approval.name}</h5>
+                      </div>
+                      <div className="col-md-9 text-secondary">
+                        {leave_approval.description}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h5 className="text-secondary">No leaves have been set</h5>
+              )}
+            </div>
+            {/* <div className="card mb-3 content">
+              <h1 className="m-3 pt-3">Recent Payslip</h1>
+              {manager?.remunerations.length !== 0 ? (
+                manager?.remunerations.map((payslip) => (
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-3">
+                        <h5>{payslip.name}</h5>
+                      </div>
+                      <div className="col-md-9 text-secondary">
+                        {payslip.description}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h5 className="text-secondary">No recent payslips</h5>
+              )}
+            </div>
+            <div className="card mb-3 content">
+              <h1 className="m-3 pt-3">Approved Leaves</h1>
+              {manager?.leaves.length !== 0 ? (
+                hrProfileData?.leaves.map((leave) => (
+                  <div className="card-body">
+                    <div className="col-md-3">
+                      <h5>start</h5>
+                    </div>
+                    <div className="col-md-9 text-secondary">
+                      {leave.start_date}
+                    </div>
+                    <div className="col-md-3">
+                      <h5>end</h5>
+                    </div>
+                    <div className="col-md-9 text-secondary">
+                      {leave.end_date}
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <h5 className="text-secondary">No approved leaves</h5>
+              )}
+            </div> */}
           </div>
         </div>
       </div>
-      
     </div>
+  </div>
   )
 }
 
