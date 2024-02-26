@@ -21,7 +21,6 @@ const Profile = () => {
         }
       })
       .catch((err) => console.log("Error fetching HR data:", err));
-    setLoading(false); // Set loading to false in case of an error
   }, [id]);
 
   if (!hr) return <div className="loader"></div>;

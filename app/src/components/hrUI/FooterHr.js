@@ -3,7 +3,7 @@ import React from "react";
 const FooterHr = () => {
   return (
     <div>
-      <footer className="main-footer mh-10 sticky-top mh-10">
+      <footer className="main-footer mh-10 sticky-bottom">
         <strong>Copyright © 2024 SilverBack Group 5</strong>
         All rights reserved.
         <div className="float-right d-none d-sm-inline-block">
