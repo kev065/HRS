@@ -177,9 +177,8 @@ class ManagerSchema(SQLAlchemyAutoSchema):
         include_fk = True
         exclude = ('password',)
     leave_approvals = Nested(LeaveApprovalSchema, many=True)
-    profile = Nested(ManagerProfileSchema, many=True)
-
-
+    manager_profile = Nested(ManagerProfileSchema, many=True) 
+    
 managerSchema = ManagerSchema()
 
 
@@ -188,9 +187,8 @@ class HrSchema(SQLAlchemyAutoSchema):
         model = HR_Personel
         include_fk = True
         exclude = ('password',)
-
     leave_approvals = Nested(LeaveApprovalSchema, many=True)
-    profile = Nested(HrProfileSchema, many=True)
+    hr_profiles = Nested(HrProfileSchema, many=True)
 
 
 hrSchema = HrSchema()

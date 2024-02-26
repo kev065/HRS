@@ -54,7 +54,7 @@ class Manager(db.Model):
         'departments.id'), nullable=False, unique=True)
     leave_approvals = db.relationship('LeaveApproval', backref='manager')
     manager_profile = db.relationship(
-        'ManagerProfile', uselist=False, backref='manager')
+        'ManagerProfile', backref='manager')
 
 
 class Department(db.Model):
