@@ -9,7 +9,7 @@ const AddGoalForm = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5555/managers', {
+    axios.get('http://localhost:5555/managers_with_names', {
       headers: {
         "Authorization": "Bearer " + retrieve().access_token
       }
@@ -20,7 +20,8 @@ const AddGoalForm = () => {
     .catch(err => {
       console.error(err);
     });
-  }, []);
+}, []);
+
 
   const handleSubmit = async (values) => {
     try {
