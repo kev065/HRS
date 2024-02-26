@@ -118,9 +118,8 @@ class HrProfileById(Resource):
 
 
                 for key, value in data.items():
-                    if value is None:
-                        continue
-                    setattr(single_hr_profile, key, value)
+                    if value is not None:
+                        setattr(single_hr_profile, key, value)
                 db.session.commit()
                 result = hrProfileSchema.dump(single_hr_profile)
                 response = make_response(jsonify(result), 200)
