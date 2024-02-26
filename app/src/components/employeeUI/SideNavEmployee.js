@@ -45,12 +45,7 @@ const SideNavEmployee = () => {
                 role="menu"
                 data-accordion="false"
               >
-                <li className="nav-item">
-                  <a href="./employee_dashboard" className="nav-link active">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Dashboard</p>
-                  </a>
-                </li>
+              
 
                 <li className="nav-item">
                   <a href="#" className="nav-link">
@@ -132,12 +127,7 @@ const SideNavEmployee = () => {
                     </p>
                   </a>
                 </li>
-                <li className="nav-item">
-                  <a href="#" className="nav-link">
-                    <i className="nav-icon fas fa-chalkboard-teacher" />
-                    <p>Training Tracker</p>
-                  </a>
-                </li>
+              
               </ul>
             </nav>
           </div>

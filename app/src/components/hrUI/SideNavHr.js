@@ -143,14 +143,12 @@ const SideNavHr = () => {
         </li>
 
         <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-money-check-alt" /> 
+          <Link to="/hr/view_employee_payslip" className="nav-link">
+          <i className="nav-icon fas fa-money-check-alt" />
             <p>
               Payroll
-         
             </p>
-          </a>
-          
+          </Link>
         </li>
 
 
