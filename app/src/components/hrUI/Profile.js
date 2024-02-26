@@ -1,15 +1,14 @@
-import React, {useState, useEffect} from 'react'
-import './profile.css'
+import React, { useState, useEffect } from "react";
+import "./profile.css";
 import profile from "../../assets/profile.png";
-import { Link, useNavigate} from "react-router-dom"
-import { retrieve } from '../Encryption';
+import { Link, useNavigate } from "react-router-dom";
+import { retrieve } from "../Encryption";
 
 const Profile = () => {
-  const [ hr, setHr] = useState(null);
+  const [hr, setHr] = useState(null);
   const { id } = retrieve().hr;
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     fetch(`/hr_personnels/${id}`)
@@ -23,42 +22,22 @@ const Profile = () => {
         }
       })
       .catch((err) => console.log("Error fetching HR data:", err));
-      setLoading(false); // Set loading to false in case of an error
-}, [id, navigate, setHr]); 
+    setLoading(false); // Set loading to false in case of an error
+  }, [id]);
 
-  if (!hr) return <div>Loading...</div>;
+  if (!hr) return <div className="loader"></div>;
 
   const hrProfileData = hr.hr_profiles[0];
-
-  function handleLogout(e) {
-    fetch("/logout", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + retrieve().access_token,
-        Accept: "application/json",
-      },
-    }).then((resp) => {
-      if (resp.ok) {
-        localStorage.clear();
-        navigate("/login");
-      }
-    });
-  }
 
   return (
     <div className="profile-container">
       <div className="main">
-        <div className="topbar">
-          <Link onClick={handleLogout}>Logout</Link>
-          <a href="">Dashboard</a>
-        </div>
         <div className="row">
           <div className="col-md-4 mt-1">
             <div className="card text-center profile-sidebar">
               <div className="card-body">
                 <img
-                  src={profile}
+                  src={hrProfileData.profile_photo || profile}
                   alt=""
                   className="rounded-circle"
                   width={150}
@@ -114,13 +93,11 @@ const Profile = () => {
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
-      
     </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

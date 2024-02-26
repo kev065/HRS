@@ -1,70 +1,52 @@
-import React, {useState, useEffect} from 'react'
-import './managerProfile.css'
+import React, { useState, useEffect } from "react";
+import "./managerProfile.css";
 import profile from "../../assets/profile.png";
-import { Link, useNavigate, useParams} from "react-router-dom"
-import { retrieve } from '../Encryption';
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { retrieve } from "../Encryption";
 
 const ManagerProfile = () => {
-  const [ manager, setManager] = useState(null);
+  const [manager, setManager] = useState(null);
   const { id } = retrieve().manager;
   const navigate = useNavigate();
-  const { managerId } = useParams
-
+  const { managerId } = useParams;
 
   useEffect(() => {
     fetch(`/managers/${id}`, {
       headers: {
-        'Authorization': 'Bearer ' + retrieve().access_token,
+        Authorization: "Bearer " + retrieve().access_token,
       },
     })
       .then((res) => {
-        if(!res.ok){
-          throw new Error(`HTTP error! Status: ${res.status}`)
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
         }
         return res.json();
       })
       .then((data) => setManager(data))
       .catch((err) => {
-        console.error("Error loading manager data:", err)
+        console.error("Error loading manager data:", err);
       });
-  }, [managerId]); 
+  }, [managerId]);
 
-
-  if (!manager) return <div>Loading...</div>;
+  if (!manager) return <div className="loader"></div>;
   console.log(manager);
-  if (!manager || !manager.manager_profiles || manager.manager_profiles.length === 0)
+  if (
+    !manager ||
+    !manager.manager_profiles ||
+    manager.manager_profiles.length === 0
+  )
     return navigate(`/manager/create_profile`);
   const managerProfileData = manager.manager_profiles[0];
-
-  function handleLogout(e) {
-    fetch("/logout", {
-      method: "GET",
-      headers: {
-        
-        'Authorization': "Bearer " + retrieve().access_token,
-        
-      },
-    }).then((resp) => {
-      if (resp.ok) {
-        localStorage.clear();
-        navigate("/login");
-      }
-    });
-  }
 
   return (
     <div className="profile-container">
       <div className="main">
-        <div className="topbar">
-          <Link onClick={handleLogout}>Logout</Link>
-          <a manageref="">Dashboard</a>
-        </div>
         <div className="row">
           <div className="col-md-4 mt-1">
             <div className="card text-center profile-sidebar">
               <div className="card-body">
                 <img
-                  src={profile}
+                  src={managerProfileData.profile_photo || profile}
                   alt=""
                   className="rounded-circle"
                   width={150}
@@ -120,13 +102,11 @@ const ManagerProfile = () => {
                 </div>
               </div>
             </div>
-            
           </div>
         </div>
       </div>
-      
     </div>
-  )
-}
+  );
+};
 
-export default ManagerProfile
+export default ManagerProfile;
