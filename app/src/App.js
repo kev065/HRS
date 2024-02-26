@@ -44,8 +44,8 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
+import AddGoalForm from './components/employeeUI/AddGoalsEmployee';
 import ViewDepartments from './components/managerUI/ViewDepartments';
-
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -75,6 +75,7 @@ function App() {
         <Route path="/employee/goals" element={<Goals />}/>
         <Route path="/employee/experience" element={<Experience />}/>
         <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
+        <Route path="/employee/add_goals" element={<AddGoalForm />} /> 
 
        </Route>
 
