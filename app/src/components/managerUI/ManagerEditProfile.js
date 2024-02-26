@@ -7,11 +7,11 @@ import "./managerEdit.css";
 
 const ManagerEditProfile = () => {
   const navigate = useNavigate();
-  const id = retrieve().manager.id
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const [managerProfileData, setManagerProfileData] = useState({});
+  const  id  =  retrieve().manager.id
   const [profilePhoto, setProfilePhoto] = useState(null);
+  const [managerProfileData, setManagerProfileData] = useState({});
 
   useEffect(() => {
     fetch(`/managers/${id}`)
@@ -47,12 +47,12 @@ const ManagerEditProfile = () => {
 
   const formik = useFormik({
     initialValues: {
-      first_name: managerProfileData?.first_name ,
-      last_name: managerProfileData?.last_name ,
-      mantra: managerProfileData?.mantra ,
-      phone_contact: managerProfileData?.phone_contact ,
+      first_name: managerProfileData?.first_name,
+      last_name: managerProfileData?.last_name,
+      mantra: managerProfileData?.mantra,
+      phone_contact: managerProfileData?.phone_contact,
       title: managerProfileData?.title,
-      date_of_birth: managerProfileData?.date_of_birth || "",
+      date_of_birth: managerProfileData?.date_of_birth,
     },
     validationSchema: yup.object().shape({
       first_name: yup.string().required("Please fill out this field"),
@@ -61,8 +61,8 @@ const ManagerEditProfile = () => {
       phone_contact: yup
         .string()
         .required("Please fill out this field")
-        .min(10, "Phone contact must be at least 10 characters"),
-      title: yup.string().required("Please provide a title"),
+        .min(10, "Phone contact must be atleast 10 characters"),
+      title: yup.string().required("Please fill out this field"),
       date_of_birth: yup.date().required("Please fill out this field"),
     }),
     onSubmit: (values) => {
@@ -80,16 +80,16 @@ const ManagerEditProfile = () => {
       fetch(`/managerProfiles/${managerProfileData.id}`, {
         method: "PATCH",
         headers: {
+          
           Authorization: "Bearer " + retrieve().access_token,
         },
         body: formData,
       }).then((response) => {
         if (response.ok) {
+          //set success message
           setSuccess("Successfully Updated account!!");
-          setTimeout(() => {
-            navigate(`/manager/manager_profile`);
-          }, 2000);
-          response.json().then((data) => console.log(data));
+          //navigate user to home page
+          navigate(`/manager/manager_profile`);
         } else {
           return response.json().then((err) => console.log(err));
         }
@@ -97,7 +97,6 @@ const ManagerEditProfile = () => {
     },
     enableReinitialize: true,
   });
-  
   if (!managerProfileData) return <div>Loading...</div>;
 
   return (
