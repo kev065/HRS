@@ -97,7 +97,7 @@ const EditProfile = () => {
           //set success message
           setSuccess("Successfully Updated account!!");
           //navigate user to home page
-          navigate(`/hr/hr_profile${hrId}`);
+          navigate(`/hr/hr_profile`);
         } else {
           return response.json().then((err) => console.log(err));
         }

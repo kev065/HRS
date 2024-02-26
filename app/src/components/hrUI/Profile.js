@@ -39,6 +39,10 @@ const Profile = () => {
     });
   }
 
+  const handleEditButtonClick = () => {
+    navigate('/hr/edit_profile');
+  };
+
   return (
     <div
     className="content-wrapper"
@@ -124,6 +128,12 @@ const Profile = () => {
                 <h5 className="text-secondary">No leaves have been set</h5>
               )}
             </div>
+            <div className="card-footer">
+        {/* Add the onClick event handler for the Edit Profile button */}
+        <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
+          Edit Profile
+        </button>
+      </div>
             {/* <div className="card mb-3 content">
               <h1 className="m-3 pt-3">Recent Payslip</h1>
               {manager?.remunerations.length !== 0 ? (

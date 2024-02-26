@@ -39,6 +39,10 @@ const ManagerProfile = () => {
     });
   }
 
+  const handleEditButtonClick = () => {
+    navigate('/manager/manager_update_profile');
+  };
+
   return (
     <div
     className="content-wrapper"
@@ -123,6 +127,10 @@ const ManagerProfile = () => {
               ) : (
                 <h5 className="text-secondary">No leaves have been set</h5>
               )}
+
+        <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
+          Edit Profile
+        </button>
             </div>
             {/* <div className="card mb-3 content">
               <h1 className="m-3 pt-3">Recent Payslip</h1>
