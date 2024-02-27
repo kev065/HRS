@@ -79,7 +79,7 @@ const RecommendTraining = () => {
     ) : (
       <>
         <h3>Select a training to recommend for Employee ID: {employeeId}</h3>
-        <table>
+        <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
           <thead>
             <tr>
               <th>Title</th>
@@ -98,7 +98,7 @@ const RecommendTraining = () => {
                 <td>{training.start_time}</td>
                 <td>{training.end_time}</td>
                 <td>
-                  <button onClick={() => handleRecommend(training.id)}>Assign Training</button>
+                  <button className='ui teal button' style={{ width: "200px", marginLeft: "110px", marginTop: "20px" }}onClick={() => handleRecommend(training.id)}>Assign Training</button>
                 </td>
               </tr>
             ))}

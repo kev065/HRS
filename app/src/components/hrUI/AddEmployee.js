@@ -1,14 +1,28 @@
-import React, { useState } from 'react'; 
+import React, { useState, useEffect } from 'react'; 
 import { Formik, Field, Form } from 'formik';
 import axios from 'axios'; 
 import './AddEmployee.css';
 
 const AddEmployeeForm = () => {
+  const [departments, setDepartments] = useState([]);
   const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const response = await axios.get('/departments');
+        setDepartments(response.data);
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
 
   const handleSubmit = async (values) => {
     try {
-      const response = await axios.post('http://localhost:5555/employees', values);
+      const response = await axios.post('/employees', values);
       console.log('New Employee:', response.data);
       setMessage('Employee added successfully!'); 
     } catch (error) {
@@ -39,8 +53,13 @@ const AddEmployeeForm = () => {
           </label>
           <br />
           <label>
-            Department ID:
-            <Field type="text" name="dept_id" required />
+            Department:
+            <Field as="select" name="dept_id" required>
+              <option value="">Select a department</option>
+              {departments.map(department => (
+                <option key={department.id} value={department.id}>{department.name}</option>
+              ))}
+            </Field>
           </label>
           <br />
           <button type="submit">Add Employee</button>

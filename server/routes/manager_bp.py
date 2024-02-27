@@ -3,9 +3,9 @@ from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import get_jwt_identity
-from serializer import managerSchema
+from serializer import managerSchema,departmentSchema
 from auth_middleware import manager_required
-from models import Manager, db,Employee,Department,EmployeeProfile,EmployeeTraining
+from models import Manager, db,Employee,Department,EmployeeProfile,EmployeeTraining,ManagerProfile
 
 manager_bp = Blueprint('manager_bp', __name__)
 ma = Marshmallow(manager_bp)
@@ -162,12 +162,9 @@ api.add_resource(TrainingsPerDepartment, '/manager/employees/<string:manager_id>
 
 class EmployeesPerDepartment(Resource):
     @manager_required()
-    def get(self, manager_id):
-        manager = Manager.query.get(manager_id)
-        if not manager:
-            return make_response(jsonify({"message": "Manager not found"}), 404)
-
-        department = Department.query.get(manager.dept_id)
+    def get(self, dept_id):
+      
+        department = Department.query.get(dept_id)
         if not department:
             return make_response(jsonify({"message": "Department not found"}), 404)
 
@@ -194,5 +191,78 @@ class EmployeesPerDepartment(Resource):
 
         return jsonify(employees_details)
 
-api.add_resource(EmployeesPerDepartment, '/employees_department/<string:manager_id>')
+api.add_resource(EmployeesPerDepartment, '/employees_department/<string:dept_id>')
 
+
+class DepartmentsHead(Resource):
+    def get(self):
+        departments = Department.query.all()
+        result = []
+        for department in departments:
+            department_data = departmentSchema.dump(department)
+          
+            manager = Manager.query.filter_by(dept_id=department.id).first()
+            if manager:
+                department_data['manager'] = {
+                    'id': manager.id,
+                    'email': manager.email,
+                   
+                    'profile': {}
+                }
+                manager_profile = ManagerProfile.query.filter_by(manager_id=manager.id).first()
+                if manager_profile:
+                    department_data['manager']['profile'] = {
+                        'first_name': manager_profile.first_name,
+                        'last_name': manager_profile.last_name,
+                       
+                    }
+            result.append(department_data)
+        response = make_response(jsonify(result), 200)
+        return response
+api.add_resource(DepartmentsHead, '/department_heads')
+
+class UpdateDepartmentDetails(Resource):
+
+    @manager_required()
+    def patch(self, id):
+        current_user = get_jwt_identity()
+        department = Department.query.filter_by(id=id).first()
+
+        if not department:
+            abort(404, detail=f'Department with id {id} does not exist')
+
+        # Check if the current user is authorized to update this department
+        if department.manager.id != current_user:
+            abort(401, detail="Unauthorized request")
+
+        data = patch_args.parse_args()
+
+        # Update department fields
+        for key, value in data.items():
+            if value is not None:
+                setattr(department, key, value)
+
+        # Update manager fields
+        manager_data = data.get('manager', {})
+        if manager_data:
+            manager = department.manager
+            for key, value in manager_data.items():
+                if value is not None:
+                    setattr(manager, key, value)
+
+        db.session.commit()
+
+        # Serialize the updated department and manager
+        result = {
+            'department': departmentSchema.dump(department),
+            'manager': managerSchema.dump(manager)
+        }
+
+        response = make_response(jsonify(result), 200)
+        return response
+api.add_resource(UpdateDepartmentDetails, '/Update_department_details')
+
+@manager_bp.route('/managers_with_names', methods=['GET'])
+def get_managers_with_names():
+    managers = db.session.query(Manager.id, ManagerProfile.first_name, ManagerProfile.last_name).join(ManagerProfile).all()
+    return jsonify([{'id': id, 'name': f"{first_name} {last_name}"} for id, first_name, last_name in managers])

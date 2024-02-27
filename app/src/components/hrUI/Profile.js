@@ -1,26 +1,24 @@
-import React, {useState, useEffect} from 'react'
-import './profile.css'
+import React, { useState, useEffect } from "react";
+import "./profile.css";
 import profile from "../../assets/profile.png";
-import { Link, useNavigate} from "react-router-dom"
-import { retrieve } from '../Encryption';
+import { Link, useNavigate } from "react-router-dom";
+import { retrieve } from "../Encryption";
 
 const Profile = () => {
-  const [ hr, setHr] = useState(null);
-  const  id  = retrieve().hr.id;
+  const [hr, setHr] = useState(null);
+  const id = retrieve().hr.id;
   const navigate = useNavigate();
-
 
   useEffect(() => {
     fetch(`/hr_personnels/${id}`)
-    .then((response) => response.json())
-    .then((data) => setHr(data))
-    .catch((err) => console.log(err));
-  }, []); 
+      .then((response) => response.json())
+      .then((data) => setHr(data))
+      .catch((err) => console.log(err));
+  }, []);
 
   if (!hr) return <div>Loading...</div>;
   console.log(hr);
-  if (hr?.hr_profiles?.length === 0)
-    return navigate(`/hr/create_profile`);
+  if (hr?.hr_profiles?.length === 0) return navigate(`/hr/create_profile`);
   const hrProfileData = hr?.hr_profiles[0];
 
   function handleLogout(e) {
@@ -183,12 +181,12 @@ const Profile = () => {
                 <h5 className="text-secondary">No approved leaves</h5>
               )}
             </div> */}
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

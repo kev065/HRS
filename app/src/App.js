@@ -44,7 +44,12 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
+import UpdateDepartment from './components/employeeUI/UpdateEducation';
+import ViewDepartments from './components/managerUI/ViewDepartments';
+import AddGoalForm from './components/employeeUI/AddGoalsEmployee'
+import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee'
 import ResetPassword from './components/ResetPassword';
+
 function App() {
   const [trainings, setTrainings] = useState([]);
   const [sessions, setSessions] = useState([]);
@@ -74,6 +79,8 @@ function App() {
         <Route path="/employee/goals" element={<Goals />}/>
         <Route path="/employee/experience" element={<Experience />}/>
         <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
+        <Route path="/employee/view_trainings_employee" element={<ViewTrainingsEmployee />} />
+        <Route path="/employee/add_goals" element={<AddGoalForm />} /> 
 
        </Route>
 
@@ -102,10 +109,13 @@ function App() {
         <Route path="/manager/manager_approved_leaves" element={<ManagerApprovedLeaves />}/>
         <Route path="/manager/view_department_trainings" element={<ViewDepartmentTrainings />}/>
         <Route path="/manager/recommend_training/:employeeId" element={<RecommendTraining />}/>
-        <Route path="/manager/department_employees/:managerId" element={<ViewEmployeesPerDepartment/>}/>
+        <Route path="/manager/department_employees/:deptId" element={<ViewEmployeesPerDepartment/>}/>
         <Route path="/manager/manager_profile" element={<ManagerProfile/>}/>
         <Route path="/manager/create_profile" element={<ManagerCreateProfile/>}/>
         <Route path="/manager/manager_update_profile" element={<ManagerEditProfile/>}/>
+        <Route path="/manager/departments" element={<ViewDepartments/>}/>
+        <Route path="/manager/update_departments/:id" element={<UpdateDepartment/>}/>
+
         </Route>
 
       </Routes>

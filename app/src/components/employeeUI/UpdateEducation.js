@@ -1,137 +1,98 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { retrieve } from "../Encryption";
+import React, { useState, useEffect } from 'react';
+import { retrieve } from '../Encryption';
 
-const UpdateEducation = () => {
-    const { id } = useParams();
-    const [education, setEducation] = useState(null);
-    const [institution, setInstitution] = useState('');
-    const [course, setCourse] = useState('');
-    const [qualification, setQualification] = useState('');
-    const [start_date, setStartDate] = useState('');
-    const [end_date, setEndDate] = useState('');
-    
-    const navigate = useNavigate();
-   
+const UpdateDepartments = () => {
+  const [departments, setDepartments] = useState([]);
+  const [updatedDepartments, setUpdatedDepartments] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetch(`/education/${id}`, {
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer " + retrieve().access_token,
-            },
-        })
-            .then((resp) => {
-                if (!resp.ok) {
-                    throw new Error('Failed to update education');
-                }
-                return resp.json();
-            })
-            .then((data) => {
-               
-                const formattedStartDate = data.start_date.split('T')[0];
-                const formattedEndDate = data.end_date.split('T')[0];
-                setEducation(data);
-                setInstitution(data.institution);
-                setCourse(data.course);
-                setQualification(data.qualification);
-                setStartDate(formattedStartDate);
-                setEndDate(formattedEndDate);
-            })
-            .catch((error) => {
-                console.error('Error updating education:', error);
-            });
+  useEffect(() => {
+    fetch('/department_heads', {
+      headers: {
+        Authorization: "Bearer " + retrieve().access_token,
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        setDepartments(data);
+        setUpdatedDepartments([...data]); 
+        setLoading(false);
+      })
+      .catch(error => console.error('Error fetching departments:', error));
+  }, []);
 
-    }, [id]);
+  const handleDepartmentNameChange = (e, index) => {
+    const updated = [...updatedDepartments];
+    updated[index].name = e.target.value;
+    setUpdatedDepartments(updated);
+  };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+  const handleManagerNameChange = (e, index) => {
+    const updated = [...updatedDepartments];
+    if (updated[index].manager) {
+      updated[index].manager.profile.first_name = e.target.value;
+      setUpdatedDepartments(updated);
+    }
+  };
 
-        const updatedEducation = {
-            id: id,
-            institution: institution,
-            course: course,
-            qualification: qualification,
-            start_date: start_date,
-            end_date: end_date,
-        };
+  const handleManagerEmailChange = (e, index) => {
+    const updated = [...updatedDepartments];
+    if (updated[index].manager) {
+      updated[index].manager.email = e.target.value;
+      setUpdatedDepartments(updated);
+    }
+  };
 
-        fetch(`/education/${education.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer " + retrieve().access_token,
-            },
-            body: JSON.stringify(updatedEducation),
-        })
-            .then((resp) => {
-                if (!resp.ok) {
-                    throw new Error('Failed to update education');
-                }
-                return resp.json();
-            })
-            .then((updatedData) => {
-                const employeeId=retrieve().employee.id
-                console.log('Updated Education:', updatedData);
-                navigate(`/employee/view_education/${employeeId}`);
-               
-            })
-            .catch((error) => {
-                console.error('Error updating education:', error);
-            });
-    };
+  const handleSubmit = (index) => {
+    const updated = [...updatedDepartments];
+    updateDepartment(updated[index]);
+  };
 
-    return (
-        <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-            <h2 style={{ marginLeft:"570px",marginTop:"60px"}}>Update Education</h2>
-            <div className="ui equal width form" style={{ marginLeft:"450px",marginTop:"60px"}} >
-        <div>
-            {education && <form onSubmit={handleSubmit}>
-            <div className="eight wide field">
-                <label>
-                    Institution:
-                    <input type="text" value={institution} onChange={(e) => setInstitution(e.target.value)} required />
-                </label>
-                </div>
-                <br />
-                <div className="eight wide field">
-          
-                <label>
-                    Course:
-                    <input type="text" value={course} onChange={(e) => setCourse(e.target.value)} required />
-                </label>
-                </div>
-                <br />
-                <div className="eight wide field">
-          
-                <label>
-                    Qualification:
-                    <input type="text" value={qualification} onChange={(e) => setQualification(e.target.value)} required />
-                </label>
-                </div>
-                <br />
-                <div className="eight wide field">
-          
-                <label>
-                    Start Date:
-                    <input type="date" value={start_date} onChange={(e) => setStartDate(e.target.value)} required />
-                </label>
-                </div>
-                <br />
-                <div className="eight wide field">
-          
-                <label>
-                    End Date:
-                    <input type="date" value={end_date} onChange={(e) => setEndDate(e.target.value)} required />
-                </label>
-                </div>
-                <br />
-                <button type="submit"  className='ui teal button'style={{ width: "200px", marginLeft:"110px",marginTop:"20px"}}>Update</button>
-            </form>}
-            </div>
-            </div>
-        </div>
-    );
+  const updateDepartment = (updatedDepartment) => {
+    // Here you can send the updated department to the backend
+    // For demonstration, we're just logging it
+    console.log(updatedDepartment);
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor: "white", marginTop: "20px" }}>
+      <div>
+        <h1  style={{ marginLeft: "420px"}}>Update Departments</h1>
+      </div>
+      <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
+        <thead>
+          <tr>
+            <th>Department Name</th>
+            <th>Manager Name</th>
+            <th>Manager Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {updatedDepartments.map((department, index) => (
+            <tr key={index}>
+              <td>
+                <input type="text" value={department.name} onChange={(e) => handleDepartmentNameChange(e, index)} />
+              </td>
+              <td>
+                <input type="text" value={department.manager ? department.manager.profile.first_name : ''} onChange={(e) => handleManagerNameChange(e, index)} />
+              </td>
+              <td>
+                <input type="text" value={department.manager ? department.manager.email : ''} onChange={(e) => handleManagerEmailChange(e, index)} />
+              </td>
+              <td>
+                <button onClick={() => handleSubmit(index)}>Update</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
 };
 
-export default UpdateEducation;
+export default UpdateDepartments;

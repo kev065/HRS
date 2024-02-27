@@ -1,16 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { retrieve } from "../Encryption";
 import './DeleteEmployee.css';
 
 const DeleteEmployeeForm = () => {
-    const [employeeId, setEmployeeId] = useState('');
+    const [employees, setEmployees] = useState([]);
+    const [selectedEmployee, setSelectedEmployee] = useState(null);
     const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        const fetchEmployees = async () => {
+            try {
+                const response = await axios.get('/employees', {
+                    headers: {
+                        'Authorization': `Bearer ${retrieve().access_token}`
+                    }
+                });
+                setEmployees(response.data);
+            } catch (error) {
+                console.error('Error fetching employees:', error);
+            }
+        };
+
+        fetchEmployees();
+    }, []);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.delete(`http://localhost:5555/employees/${employeeId}`, {
+            await axios.delete(`/employees/${selectedEmployee.id}`, {
                 headers: {
                     'Authorization': `Bearer ${retrieve().access_token}`
                 }
@@ -26,10 +44,17 @@ const DeleteEmployeeForm = () => {
         <div className='delete-employee-form' style={{ marginLeft: "280px", marginTop:"20px"}}>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Employee ID:
-                    <input type="text" value={employeeId} onChange={e => setEmployeeId(e.target.value)} required />
+                    Employee Name:
+                    <select onChange={e => setSelectedEmployee(employees.find(emp => emp.id === e.target.value))} required>
+                        <option value="">Select an employee</option>
+                        {employees.map(employee => (
+                            employee.employee_profiles.map(profile => (
+                                <option key={employee.id} value={employee.id}>{profile.first_name} {profile.last_name}</option>
+                            ))
+                        ))}
+                    </select>
                 </label>
-                <button type="submit">Delete Employee</button>
+                <button type="submit">Offboard Employee</button>
             </form>
             {message && <p>{message}</p>}
         </div>
@@ -37,4 +62,6 @@ const DeleteEmployeeForm = () => {
 };
 
 export default DeleteEmployeeForm;
+
+
 

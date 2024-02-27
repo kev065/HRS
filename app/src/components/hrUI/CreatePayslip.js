@@ -17,7 +17,7 @@ const CreatePayslip = () => {
     description: "",
     amount: "",
   });
-  const [isShown, setIsShown] = useState(false);
+  const [isShown, setIsShown] = useState(true);
   const [employees, setEmployees] = useState([]);
   const navigate = useNavigate();
   //fetch employee profiles
@@ -234,6 +234,7 @@ const CreatePayslip = () => {
                   placeholder="eg. Basic Salary"
                   value={remunerationDescription.name}
                   onChange={handleRemunerationDescriptionChange}
+                  required
                 />
               </div>
               <div className="col-md-4 mb-3">
@@ -246,11 +247,12 @@ const CreatePayslip = () => {
                   placeholder="eg. sales commission"
                   value={remunerationDescription.description}
                   onChange={handleRemunerationDescriptionChange}
+                  required
                 />
               </div>
               <div className="col-md-4 mb-3">
                 <label for="name">Type</label>
-                <input
+                <select
                   type="text"
                   className="form-control"
                   id="type"
@@ -258,19 +260,37 @@ const CreatePayslip = () => {
                   placeholder="eg. bonus, allowance"
                   value={remunerationDescription.type}
                   onChange={handleRemunerationDescriptionChange}
-                />
+                  required={!remunerationDescription.type} // Require selection only if no type is chosen
+                >
+                  {/* Default "Choose employee" option */}
+                  <option value="" disabled selected>
+                    Choose type
+                  </option>
+                  <option value={"normal"}>normal</option>
+                  <option value={"bonus"}>bonus</option>
+                  <option value={"allowance"}>allowance</option>
+                  <option value={"deduction"}>deduction</option>
+                </select>
               </div>
               <div className="col-md-4 mb-3">
                 <label for="name">Amount</label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
                   id="amount"
                   name="amount"
                   placeholder="eg. 2000"
                   value={remunerationDescription.amount}
                   onChange={handleRemunerationDescriptionChange}
+                  required
                 />
+                <button
+                  type="button"
+                  className="btn btn-outline-success btn-sm col-4"
+                  onClick={addRemuneration}
+                >
+                  Add
+                </button>
               </div>
             </div>
           ) : null}
@@ -278,24 +298,17 @@ const CreatePayslip = () => {
         <div className="col-md-4 mb-3">
           <button
             type="button"
-            className="btn btn-secondary btn-sm ml-3 col-2"
+            className="btn btn-primary btn-sm col-2"
             onClick={toggleForm}
           >
-            Toggle
+            {isShown ? "Exit" : "Create"}
           </button>
           <button
             type="button"
-            className="btn btn-primary btn-sm ml-3 col-4"
-            onClick={addRemuneration}
-          >
-            Add Remuneration
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger btn-sm ml-3 col-4"
+            className="btn btn-danger btn-sm ml-3 col-2"
             onClick={removeRemuneration}
           >
-            Remove Remuneration
+            Remove
           </button>
         </div>
         <button className="btn btn-success btn-block mt-4 mb-4" type="submit">

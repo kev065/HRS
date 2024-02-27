@@ -3,7 +3,7 @@ from flask_restful import Api, Resource, abort, reqparse
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import get_jwt_identity
 from serializer import educationSchema
-from models import db, Education
+from models import db, Education,EmployeeProfile
 from auth_middleware import employee_required
 from datetime import datetime
 
@@ -152,3 +152,32 @@ class EmployeeEducationDetails(Resource):
 
 api.add_resource(EmployeeEducationDetails,
                  '/education/employee/<string:employee_id>')
+
+
+class StaffEducationDetails(Resource):
+    def get(self):
+       
+      
+       
+        education_details = db.session.query(Education, EmployeeProfile).outerjoin(EmployeeProfile, Education.employee_id == EmployeeProfile.employee_id).all()
+        
+       
+        result = []
+        for education, profile in education_details:
+            education_data = educationSchema.dump(education)
+            if profile is not None:
+                profile_data = {
+                    'first_name': profile.first_name,
+                    'last_name': profile.last_name
+                }
+            else:
+                profile_data = {
+                    'employee_id': education.employee_id
+                }
+            result.append({**education_data, **profile_data})
+
+      
+        response = make_response(jsonify(result), 200)
+        return response
+api.add_resource(StaffEducationDetails,'/staff_education')
+   
