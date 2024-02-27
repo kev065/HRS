@@ -11,32 +11,21 @@ const EmployeeProfile = () => {
 
   useEffect(() => {
     fetch(`/employees/${id}`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          response.json().then((error) => console.log(error));
+        }
+        return response.json();
+      })
       .then((data) => setEmployee(data))
       .catch((err) => console.log(err));
   }, []);
-
-  if (!employee) return <div>Loading...</div>;
   console.log(employee);
-  if (employee.employee_profiles.length === 0)
+  if (!employee) return <div className="loader">loading...</div>;
+  console.log(employee);
+  if (employee?.employee_profiles?.length === 0)
     return navigate("/employee/profile/create");
   const employeeProfileData = employee.employee_profiles[0];
-
-  function handleLogout(e) {
-    fetch("/logout", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + retrieve().access_token,
-        Accept: "application/json",
-      },
-    }).then((resp) => {
-      if (resp.ok) {
-        localStorage.clear();
-        navigate("/login");
-      }
-    });
-  }
 
   return (
     <div
