@@ -11,7 +11,7 @@ const DeleteEmployeeForm = () => {
     useEffect(() => {
         const fetchEmployees = async () => {
             try {
-                const response = await axios.get('http://localhost:5555/employees', {
+                const response = await axios.get('/employees', {
                     headers: {
                         'Authorization': `Bearer ${retrieve().access_token}`
                     }
@@ -28,7 +28,7 @@ const DeleteEmployeeForm = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            await axios.delete(`http://localhost:5555/employees/${selectedEmployee.id}`, {
+            await axios.delete(`/employees/${selectedEmployee.id}`, {
                 headers: {
                     'Authorization': `Bearer ${retrieve().access_token}`
                 }
