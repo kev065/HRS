@@ -10,7 +10,7 @@ const AddEmployeeForm = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get('http://localhost:5555/departments');
+        const response = await axios.get('/departments');
         setDepartments(response.data);
       } catch (error) {
         console.error('Error fetching departments:', error);
@@ -22,7 +22,7 @@ const AddEmployeeForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await axios.post('http://localhost:5555/employees', values);
+      const response = await axios.post('/employees', values);
       console.log('New Employee:', response.data);
       setMessage('Employee added successfully!'); 
     } catch (error) {
