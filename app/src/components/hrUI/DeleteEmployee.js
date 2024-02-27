@@ -54,7 +54,7 @@ const DeleteEmployeeForm = () => {
                         ))}
                     </select>
                 </label>
-                <button type="submit">Delete Employee</button>
+                <button type="submit">Offboard Employee</button>
             </form>
             {message && <p>{message}</p>}
         </div>
