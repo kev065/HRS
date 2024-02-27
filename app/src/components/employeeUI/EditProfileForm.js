@@ -94,7 +94,7 @@ const EditProfileForm = () => {
           //set success message
           setSuccess("Successfully Updated account!!");
           //navigate user to home page
-          navigate("/profile");
+          navigate("/employee/profile");
         } else {
           return response.json().then((err) => console.log(err));
         }
