@@ -20,6 +20,7 @@ from routes.department_bp import department_bp
 from routes.documents_bp import document_bp
 from routes.employee_bp import employee_bp
 from routes.approveLeave_bp import approvalLeave_bp
+from routes.reset_password_bp import reset_password_bp
 from datetime import datetime, timedelta
 from flask import Flask
 from flask_migrate import Migrate
@@ -30,6 +31,7 @@ import os
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from models import TokenBlocklist
+
 
 
 bcrypt = Bcrypt()
@@ -59,6 +61,7 @@ def create_app():
     db.init_app(app)
     jwt = JWTManager(app)
     CORS(app)
+    
 
     @jwt.token_in_blocklist_loader
     def check_if_token_is_revoked(jwt_header, jwt_payload: dict):
@@ -90,6 +93,7 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
+    app.register_blueprint(reset_password_bp)
 
  
 

@@ -38,6 +38,14 @@ const EmployeeProfile = () => {
     });
   }
 
+  const handleEditButtonClick = () => {
+    navigate('/employee/profile/edit');
+  };
+
+  const handleResetPasswordButtonClick = () => {
+    navigate('/reset_password');
+  };
+
   return (
     <div
       className="content-wrapper"
@@ -165,6 +173,12 @@ const EmployeeProfile = () => {
                   <h5 className="text-secondary">No approved leaves</h5>
                 )}
               </div>
+              <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
+                Edit Profile
+              </button>
+              <button type="update" className="btn btn-primary" onClick={handleResetPasswordButtonClick}>
+                Reset Password
+              </button>
             </div>
           </div>
         </div>

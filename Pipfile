@@ -19,6 +19,7 @@ python-dotenv = "*"
 cloudinary = "*"
 flask-wtf = "*"
 python-dateutil = "*"
+flask-mail = "*"
 
 [dev-packages]
 

@@ -43,6 +43,10 @@ const Profile = () => {
     navigate('/hr/edit_profile');
   };
 
+  const handleResetPasswordButtonClick = () => {
+    navigate('/reset_password');
+  };
+
   return (
     <div
     className="content-wrapper"
@@ -132,6 +136,9 @@ const Profile = () => {
         {/* Add the onClick event handler for the Edit Profile button */}
         <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
           Edit Profile
+        </button>
+        <button type="update" className="btn btn-primary" onClick={handleResetPasswordButtonClick}>
+          Reset Password
         </button>
       </div>
             {/* <div className="card mb-3 content">

@@ -44,7 +44,7 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
-
+import ResetPassword from './components/ResetPassword';
 function App() {
   const [trainings, setTrainings] = useState([]);
   const [sessions, setSessions] = useState([]);
@@ -54,6 +54,7 @@ function App() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/reset_password" element={<ResetPassword />} />
         <Route path="/session" element={<Session />} />
         <Route path="/employee" element={<DashBoardEmployee />}>
         <Route path="/employee/view_education/:employeeId" element={<ViewEducation />} />

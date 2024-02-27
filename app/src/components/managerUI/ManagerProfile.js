@@ -43,6 +43,11 @@ const ManagerProfile = () => {
     navigate('/manager/manager_update_profile');
   };
 
+
+  const handleResetPasswordButtonClick = () => {
+    navigate('/reset_password');
+  };
+
   return (
     <div
     className="content-wrapper"
@@ -130,6 +135,9 @@ const ManagerProfile = () => {
 
         <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
           Edit Profile
+        </button>
+        <button type="update" className="btn btn-primary" onClick={handleResetPasswordButtonClick}>
+          Reset Password
         </button>
             </div>
             {/* <div className="card mb-3 content">
