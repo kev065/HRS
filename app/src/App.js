@@ -46,7 +46,9 @@ import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
 import AddGoalForm from './components/employeeUI/AddGoalsEmployee';
 import ViewDepartments from './components/managerUI/ViewDepartments';
-import UpdateDepartment from './components/managerUI/UpdateDepartments';
+import UpdateDepartments from './components/managerUI/UpdateDepartments';
+import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee';
+
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -76,6 +78,7 @@ function App() {
         <Route path="/employee/goals" element={<Goals />}/>
         <Route path="/employee/experience" element={<Experience />}/>
         <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
+        <Route path="/employee/view_trainings_employee" element={<ViewTrainingsEmployee />} />
         <Route path="/employee/add_goals" element={<AddGoalForm />} /> 
 
        </Route>
