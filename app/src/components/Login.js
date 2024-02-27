@@ -6,6 +6,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState(""); 
+  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -14,6 +15,9 @@ const Login = () => {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+  };
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
   };
 
   const handleRoleChange = (e) => {
@@ -27,10 +31,14 @@ const Login = () => {
     const credentials = {
       email: email,
       password: password,
-      role: selectedRole
+      role: selectedRole,
+      confirm_password: confirmPassword,
     };
-
     console.log("Login request data:", credentials);
+
+    if (password !== confirmPassword) {
+      console.error("Password and Confirm Password do not match");
+    }  
 
     fetch("http://127.0.0.1:5555/login", {
       method: "POST",
@@ -115,6 +123,17 @@ const Login = () => {
                           placeholder="Password"
                           value={password}
                           onChange={handlePasswordChange}
+                        />
+                      </div>
+                      <div className="form-group">
+                        <label htmlFor="exampleInputConfirmPassword">Confirm Password</label>
+                        <input
+                          type="password"
+                          className="form-control"
+                          id="exampleInputConfirmPassword"
+                          placeholder="Confirm Password"
+                          value={confirmPassword}
+                          onChange={handleConfirmPasswordChange}
                         />
                       </div>
 
