@@ -9,7 +9,7 @@ const AddGoalForm = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    axios.get('http://localhost:5555/managers_with_names', {
+    axios.get('/managers_with_names', {
       headers: {
         "Authorization": "Bearer " + retrieve().access_token
       }
@@ -25,7 +25,7 @@ const AddGoalForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await axios.post('http://localhost:5555/goals', values);
+      const response = await axios.post('/goals', values);
       console.log('New Goal:', response.data);
       setMessage('Goal added successfully!'); 
     } catch (error) {
