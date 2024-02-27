@@ -1,10 +1,13 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint, make_response, jsonify, current_app
+from flask_mail import Message
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import get_jwt_identity
 from serializer import employeeSchema
 from auth_middleware import employee_required, hr_required
+
+
 
 from models import Employee, db,EmployeeProfile
 
@@ -48,6 +51,11 @@ class Employees(Resource):
             email=data['email'], password=hashed_password, dept_id=data['dept_id'])
         db.session.add(new_employee)
         db.session.commit()
+
+        # send email
+        msg = Message('Welcome!', sender = 'tedtedmike@gmail.com', recipients = [data['email']])
+        msg.body = f"Hello, you have been added as an employee. Your account details are:\nEmail: {data['email']}\nPassword: {data['password']}"
+        current_app.mail.send(msg)
 
         result = employeeSchema.dump(new_employee)
         response = make_response(jsonify(result), 201)
