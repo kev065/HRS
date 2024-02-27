@@ -105,8 +105,7 @@ class PayslipResource(Resource):
         total_deductions = 0
         gross_income = basic_salary
 
-        remuneration_descriptions = RemunerationDescription.query.filter_by(
-            remuneration_id=remuneration.id).all()
+        remuneration_descriptions = remuneration.remunerations
 
         for rem in remuneration_descriptions:
             if rem.type == "bonus":
@@ -150,8 +149,10 @@ class PayslipResource(Resource):
             'year': year
         }
 
+        remuneration = remunerationSchema.dump(remuneration)
+
         response = make_response(
-            jsonify(payslip), 200)
+            jsonify(payslip=payslip, remuneration=remuneration), 200)
         return response
 
     @hr_required()
