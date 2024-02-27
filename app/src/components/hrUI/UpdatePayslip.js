@@ -72,8 +72,8 @@ const UpdatePayslip = ({
   //submit data
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/payslip", {
-      method: "POST",
+    fetch(`/payslip/${remuneration.id}`, {
+      method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + retrieve().access_token,

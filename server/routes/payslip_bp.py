@@ -34,7 +34,6 @@ def validate_remuneration(value):
 
 
 def validate_remuneration_description(value):
-    print(value)
     if not isinstance(value, list):
         raise ValueError('Remuneration descriptions must be in a list')
 
@@ -200,13 +199,15 @@ class PayslipByID(Resource):
     def get(self, remuneration_id):
         remuneration = RemunerationById.get(self, remuneration_id)
         # fetch all associated renumeration descriptions
-        remuneration_descriptions = remuneration.remunerations
+        remuneration_descriptions = RemunerationDescription.query.filter_by(
+            remuneration_id=remuneration_id).all()
         # Serialize remuneration data
         remuneration_data = remuneration.get_json()
-        if not remuneration_descriptions:
+        if remuneration_descriptions:
+            result = [remunerationDescriptionSchema.dump(
+                rem_desc) for rem_desc in remuneration_descriptions]
+        else:
             remuneration_descriptions = None
-        result = [remunerationDescriptionSchema.dump(
-            rem_desc) for rem_desc in remuneration_descriptions]
 
         return {"remuneration": remuneration_data, "remuneration_descriptions": result}
 
