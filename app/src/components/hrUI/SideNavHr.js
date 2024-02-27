@@ -69,7 +69,7 @@ const SideNavHr = () => {
 
         <li className="nav-item">
           <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-users-cog" />
+            <i className="nav-icon fas fa-folder-open" />
             <p>
                 <Link to={"/hr/view_employees_documents"}>Documents</Link>
             
@@ -79,7 +79,7 @@ const SideNavHr = () => {
         </li>
         <li className="nav-item">
           <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-money-check-alt" /> 
+            <i className="nav-icon fas fa-book" /> 
             <p>
            
             <Link to={"/hr/staff_education"}>Education</Link>
@@ -92,16 +92,7 @@ const SideNavHr = () => {
         </li>
 
 
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-building" />
-            <p>
-              Departments
-           
-            </p>
-          </a>
-          
-        </li>
+  
 
         <li className="nav-item">
           <Link to="/hr/view_employee_payslip" className="nav-link">

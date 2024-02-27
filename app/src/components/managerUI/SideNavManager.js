@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
+import { retrieve } from '../Encryption'
+
 
 
 const SideNavManager = () => {
-  
+  const deptId=retrieve().manager.dept_id
   return (
     <div>
          <div>
@@ -24,16 +26,7 @@ const SideNavManager = () => {
       
     </div>
     {/* SidebarSearch Form */}
-    <div className="form-inline">
-      <div className="input-group" data-widget="sidebar-search">
-        <input className="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search" />
-        <div className="input-group-append">
-          <button className="btn btn-sidebar">
-      
-          </button>
-        </div>
-      </div>
-    </div>
+    
     {/* Sidebar Menu */}
     <nav className="mt-2">
       <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -46,13 +39,24 @@ const SideNavManager = () => {
             </p>
           </Link>
         </li>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
+            <i className="nav-icon fas fa-users" />
+            <p>
+        
+            <Link to={"/manager/departments"}>Departments</Link> 
+           
+            </p>
+          </a>
+         
+        </li>
 
         <li className="nav-item">
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-users" />
             <p>
         
-            <Link to="/manager/department_employees/managerId">Team</Link> 
+            <Link to={`/manager/department_employees/${deptId}`}>Team</Link> 
            
             </p>
           </a>

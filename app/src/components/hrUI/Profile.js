@@ -12,20 +12,34 @@ const Profile = () => {
   useEffect(() => {
     fetch(`/hr_personnels/${id}`)
       .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched HR data:", data);
-        setHr(data);
-        if (!data.hr_profiles || data.hr_profiles.length === 0) {
-          // Only navigate if no HR profiles are present
-          navigate(`/hr/create_profile`);
-        }
-      })
-      .catch((err) => console.log("Error fetching HR data:", err));
-  }, [id]);
+      .then((data) => setHr(data))
+      .catch((err) => console.log(err));
+  }, []);
 
-  if (!hr) return <div className="loader"></div>;
+  if (!hr) return <div>Loading...</div>;
+  console.log(hr);
+  if (hr?.hr_profiles?.length === 0) return navigate(`/hr/create_profile`);
+  const hrProfileData = hr?.hr_profiles[0];
 
-  const hrProfileData = hr.hr_profiles[0];
+  function handleLogout(e) {
+    fetch("/logout", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + retrieve().access_token,
+        Accept: "application/json",
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        localStorage.clear();
+        navigate("/login");
+      }
+    });
+  }
+
+  const handleEditButtonClick = () => {
+    navigate("/hr/edit_profile");
+  };
 
   return (
     <div
@@ -109,6 +123,16 @@ const Profile = () => {
                 ) : (
                   <h5 className="text-secondary">No leaves have been set</h5>
                 )}
+              </div>
+              <div className="card-footer">
+                {/* Add the onClick event handler for the Edit Profile button */}
+                <button
+                  type="update"
+                  className="btn btn-primary"
+                  onClick={handleEditButtonClick}
+                >
+                  Edit Profile
+                </button>
               </div>
               {/* <div className="card mb-3 content">
               <h1 className="m-3 pt-3">Recent Payslip</h1>

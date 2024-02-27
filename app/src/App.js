@@ -43,6 +43,9 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from "./components/hrUI/ViewStaffDetails";
 import ManagerEditProfile from "./components/managerUI/ManagerEditProfile";
 import ManagerCreateProfile from "./components/managerUI/ManagerCreateProfile";
+import AddGoalForm from "./components/employeeUI/AddGoalsEmployee";
+import ViewDepartments from "./components/managerUI/ViewDepartments";
+import UpdateDepartment from "./components/managerUI/UpdateDepartments";
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -96,6 +99,7 @@ function App() {
           <Route path="/employee/goals" element={<Goals />} />
           <Route path="/employee/experience" element={<Experience />} />
           <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
+          <Route path="/employee/add_goals" element={<AddGoalForm />} />
         </Route>
 
         <Route path="/hr" element={<DashBoardHr />}>
@@ -154,7 +158,7 @@ function App() {
             element={<RecommendTraining />}
           />
           <Route
-            path="/manager/department_employees/:managerId"
+            path="/manager/department_employees/:deptId"
             element={<ViewEmployeesPerDepartment />}
           />
           <Route path="/manager/manager_profile" element={<ManagerProfile />} />
@@ -165,6 +169,11 @@ function App() {
           <Route
             path="/manager/manager_update_profile"
             element={<ManagerEditProfile />}
+          />
+          <Route path="/manager/departments" element={<ViewDepartments />} />
+          <Route
+            path="/manager/update_departments/:id"
+            element={<UpdateDepartment />}
           />
         </Route>
       </Routes>

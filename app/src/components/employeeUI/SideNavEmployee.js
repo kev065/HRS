@@ -23,19 +23,7 @@ const SideNavEmployee = () => {
             <div className="user-panel mt-3 pb-3 mb-3 d-flex"></div>
             {/* SidebarSearch Form */}
             <div className="form-inline">
-              <div className="input-group" data-widget="sidebar-search">
-                <input
-                  className="form-control form-control-sidebar"
-                  type="search"
-                  placeholder="Search"
-                  aria-label="Search"
-                />
-                <div className="input-group-append">
-                  <button className="btn btn-sidebar">
-                    <i className="fas fa-search fa-fw" />
-                  </button>
-                </div>
-              </div>
+              
             </div>
             {/* Sidebar Menu */}
             <nav className="mt-2">
@@ -58,10 +46,20 @@ const SideNavEmployee = () => {
 
                 <li className="nav-item">
                   <Link to={"/employee/goals"} className="nav-link">
-                    <i className="nav-icon fas fa-users-cog" />
-                    <p>Goals</p>
+                    <i className="nav-icon fas fa-eye" />
+                    <p>View Goals</p>
                   </Link>
                 </li>
+
+
+
+                <li className="nav-item">
+                  <Link to={"/employee/add_goals"} className="nav-link">
+                    <i className="nav-icon fas fa-bullseye" />
+                    <p>Add Goals</p>
+                  </Link>
+                </li>
+
 
 
                 <li className="nav-item">
@@ -75,7 +73,7 @@ const SideNavEmployee = () => {
 
                 <li className="nav-item">
                   <a href="#" className="nav-link">
-                    <i className="nav-icon fas fa-money-check-alt" />
+                    <i className="nav-icon fas fa-graduation-cap" />
                     <p>
                       <Link to={`/employee/view_education/${employeeId}`}>
                         Education
@@ -86,7 +84,7 @@ const SideNavEmployee = () => {
 
                 <li className="nav-item">
                   <a href="#" className="nav-link">
-                    <i className="nav-icon fas fa-money-check-alt" />
+                    <i className="nav-icon fas fa-file-alt" />
                     <p>
                       <Link to={`/employee/view_documents/${employeeId}`}>
                         Documents
@@ -108,7 +106,7 @@ const SideNavEmployee = () => {
 
                 <li className="nav-item">
                   <a href="#" className="nav-link">
-                    <i className="nav-icon fas fa-chalkboard-teacher" />
+                    <i className="nav-icon fas fa-calendar-check" />
                     <p>
                       <Link to={`/employee/view_leaves/${employeeId}`}>
                         Leave Tracker
@@ -127,7 +125,7 @@ const SideNavEmployee = () => {
                     </p>
                   </a>
                 </li>
-              
+               
               </ul>
             </nav>
           </div>

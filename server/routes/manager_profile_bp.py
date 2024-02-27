@@ -76,13 +76,13 @@ api.add_resource(ManagerProfiles, '/managerProfiles')
 
 class ManagerProfileById(Resource):
     def get(self, id):
-        single_managerProfile = ManagerProfile.query.filter_by(id=id).first()
+        single_manager_profile = ManagerProfile.query.filter_by(id=id).first()
 
-        if not single_managerProfile:
-            abort(404, detail=f'user with  id {id} does not exist')
+        if not single_manager_profile:
+            abort(404, detail=f'Manager Profile with  id {id} does not exist')
 
         else:
-            result = managerProfileSchema.dump(single_managerProfile)
+            result = managerProfileSchema.dump(single_manager_profile)
             response = make_response(jsonify(result), 200)
             return response
 
@@ -90,16 +90,19 @@ class ManagerProfileById(Resource):
     @manager_required()
     def patch(self, id):
         current_user = get_jwt_identity()
-        single_managerProfile = ManagerProfile.query.filter_by(id=id).first()
+        single_manager_profile = ManagerProfile.query.filter_by(id=id).first()
 
-        if not single_managerProfile:
-            abort(404, detail=f'user with id {id} does not exist')
+        if not single_manager_profile:
+            abort(404, detail=f'Manager Profile with id {id} does not exist')
 
-        if single_managerProfile.manager_id != current_user:
+        if single_manager_profile.manager_id != current_user:
             abort(401, detail="Unauthorized request")
 
+        # get the profile photo from the request files
         profile_photo = request.files.get("profile_photo")
+
         data = request.form.to_dict()
+
 
         if 'date_of_birth' in data:
             data['date_of_birth'] = datetime.strptime(
@@ -107,23 +110,22 @@ class ManagerProfileById(Resource):
             
         try:
             if profile_photo:
-                 # upload new profile photo
+                # upload new profile photo
                 cloudinary_upload_result = upload(profile_photo)
                 photo_url = cloudinary_upload_result.get("url")
                 print(photo_url)
                 # set the profile photo attribute to the url
-                single_managerProfile.profile_photo = photo_url
+                single_manager_profile.profile_photo = photo_url
+
 
             for key, value in data.items():
-                if value is None:
-                    continue
-                setattr(single_managerProfile, key, value)
+                if value is not None:
+                    setattr(single_manager_profile, key, value)
             db.session.commit()
-            result = managerProfileSchema.dump(single_managerProfile)
+            result = managerProfileSchema.dump(single_manager_profile)
             response = make_response(jsonify(result), 200)
 
             return response
-        
         except Exception as e:
             print(f"Error: {e}")
             db.session.rollback()

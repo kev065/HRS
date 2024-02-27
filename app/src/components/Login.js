@@ -5,6 +5,7 @@ import { store, retrieve } from "./Encryption";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedRole, setSelectedRole] = useState(""); 
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -15,15 +16,21 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const handleRoleChange = (e) => {
+    console.log("Selected Role:", e.target.value);
+    setSelectedRole(e.target.value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const credentials = {
       email: email,
       password: password,
+      role: selectedRole
     };
 
-    fetch("http://127.0.0.1:5555/login", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -31,6 +38,7 @@ const Login = () => {
       body: JSON.stringify(credentials),
     })
       .then((response) => {
+        console.log("Server response status:", response.status);
         if (response.ok) {
           return response.json();
         } else {
@@ -41,7 +49,7 @@ const Login = () => {
       .then((result) => {
         // Check the role and access token from the response
         store(result);
-        const { role, employee } = result;
+        const { role } = result;
         console.log(result)
 
         localStorage.setItem(
@@ -49,7 +57,7 @@ const Login = () => {
           JSON.stringify(result.access_token)
         );
         // Redirect the user based on their role
-        switch (role) {
+        switch (selectedRole) {
           case "manager":
             navigate(`/manager/manager_profile`);
             break;
@@ -72,6 +80,8 @@ const Login = () => {
         console.error("Error during login:", error);
       });
   };
+
+  
   return (
     <div className="main_container_login" style={{ marginRight:"20px" }} >
       <div className="ui column">
@@ -105,6 +115,20 @@ const Login = () => {
                           onChange={handlePasswordChange}
                         />
                       </div>
+
+  
+              <div className="form-group">
+                <label htmlFor="roleDropdown">Role</label>
+                <select
+                  className="form-control"
+                  id="roleDropdown"
+                  onChange={handleRoleChange}
+                >
+                  <option value={"manager"}>Manager</option>
+                  <option value={"employee"}>Employee</option>
+                  <option value={"hr"}>HR</option>
+                </select>
+              </div>
 
                       <div className="form-check">
                         <input

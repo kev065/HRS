@@ -5,11 +5,11 @@ const ViewEmployeesPerDepartment = () => {
   const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const managerId=retrieve().manager.id
+  const deptId=retrieve().manager.dept_id
 
   useEffect(() => {
    
-    fetch(`/employees_department/${managerId}`, {
+    fetch(`/employees_department/${deptId}`, {
         headers: {
           "Authorization": "Bearer " + retrieve().access_token,
         }
@@ -40,7 +40,7 @@ const ViewEmployeesPerDepartment = () => {
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2>Employees in my Department</h2>
+      <h2>Staff in my Department</h2>
       <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
