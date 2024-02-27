@@ -7,7 +7,7 @@ const Goals = () => {
     const [goals, setGoals] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5555/goals', {
+        axios.get('/goals', {
             headers: {
                 "Authorization": "Bearer " + retrieve().access_token
             }

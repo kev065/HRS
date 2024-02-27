@@ -44,6 +44,7 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
+import AddGoalForm from './components/employeeUI/AddGoalsEmployee';
 import ViewDepartments from './components/managerUI/ViewDepartments';
 import UpdateDepartments from './components/managerUI/UpdateDepartments';
 import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee';
@@ -78,6 +79,7 @@ function App() {
         <Route path="/employee/experience" element={<Experience />}/>
         <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
         <Route path="/employee/view_trainings_employee" element={<ViewTrainingsEmployee />} />
+        <Route path="/employee/add_goals" element={<AddGoalForm />} /> 
 
        </Route>
 
@@ -111,7 +113,7 @@ function App() {
         <Route path="/manager/create_profile" element={<ManagerCreateProfile/>}/>
         <Route path="/manager/manager_update_profile" element={<ManagerEditProfile/>}/>
         <Route path="/manager/departments" element={<ViewDepartments/>}/>
-        <Route path="/manager/update_departments/:id" element={<UpdateDepartments/>}/>
+        <Route path="/manager/update_departments/:id" element={<UpdateDepartment/>}/>
 
         </Route>
 

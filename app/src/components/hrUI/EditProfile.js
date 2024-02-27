@@ -85,15 +85,12 @@ const EditProfile = () => {
       fetch(`/hrProfiles/${hrProfileData.id}`, {
         method: "PATCH",
         headers: {
-          "Content-Type": "application/json",
+          
           Authorization: "Bearer " + retrieve().access_token,
-          Accept: "application/json",
         },
-        body: JSON.stringify(values),
+        body: formData,
       }).then((response) => {
         if (response.ok) {
-          // clear out form fields
-          formik.resetForm();
           //set success message
           setSuccess("Successfully Updated account!!");
           //navigate user to home page

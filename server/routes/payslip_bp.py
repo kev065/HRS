@@ -75,14 +75,15 @@ class PayslipResource(Resource):
         if claims['role'] == 'hr':
             return self.viewPayslip(claims['role'])
         elif claims['role'] == 'employee':
-            return self.viewPayslip(claims['role'], current_user)
+            return self.viewPayslip(claims['role'], employee_id=current_user)
         else:
             return {'message': 'Unauthorized to perform this operation'}, 403
 
     def viewPayslip(self, role, employee_id=None):
         year = request.args.get('year')
         month = request.args.get('month')
-        employee_id = request.args.get('employee_id')
+        employee_id = employee_id if employee_id else request.args.get(
+            'employee_id')
 
         employee = Employee.query.filter_by(id=employee_id).first()
         if not employee:
@@ -101,6 +102,8 @@ class PayslipResource(Resource):
         allowance = []
         normal = []
         deduction = []
+        total_deductions = 0
+        gross_income = basic_salary
 
         remuneration_descriptions = RemunerationDescription.query.filter_by(
             remuneration_id=remuneration.id).all()
@@ -108,12 +111,16 @@ class PayslipResource(Resource):
         for rem in remuneration_descriptions:
             if rem.type == "bonus":
                 bonus.append(remunerationDescriptionSchema.dump(rem))
+                gross_income += rem.amount
             if rem.type == "allowance":
                 allowance.append(remunerationDescriptionSchema.dump(rem))
+                gross_income += rem.amount
             if rem.type == "normal":
                 normal.append(remunerationDescriptionSchema.dump(rem))
+                gross_income += rem.amount
             if rem.type == "deduction":
                 deduction.append(remunerationDescriptionSchema.dump(rem))
+                total_deductions += rem.amount
 
         employee_profile = EmployeeProfile.query.filter_by(
             employee_id=employee_id).first()
@@ -122,17 +129,25 @@ class PayslipResource(Resource):
 
         first_name = employee_profile.first_name
         last_name = employee_profile.last_name
+        net_pay = gross_income - total_deductions
+        department_name = employee.department.name
+        date_created = remuneration.remuneration_date
 
         payslip = {
             'employee_id': employee_id,
             'employee_name': f'{first_name} {last_name}',
-            'month': month,
-            'year': year,
+            'date_created': date_created,
             'basic_salary': basic_salary,
             'bonus': bonus if bonus else None,
             'allowance': allowance if allowance else None,
             'normal': normal if normal else None,
-            'deduction': deduction if deduction else None
+            'deduction': deduction if deduction else None,
+            'remuneration_id': remuneration.id,
+            'total_income': gross_income,
+            'net_pay': net_pay,
+            'department_name': department_name,
+            'month': month,
+            'year': year
         }
 
         response = make_response(
