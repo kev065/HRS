@@ -33,53 +33,39 @@ const ResetPassword = () => {
       return;
     }
 
-    const resetData = {
-      email,
-      new_password: newPassword,
-    };
+    // const resetData = {
+    //   email,
+    //   new_password: newPassword,
+    // };
 
-    const accessToken = retrieve().access_token
-    
-    
     try {
-        const requestResponse = await fetch("/reset_password/request", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        });
-  
-        if (!requestResponse.ok) {
-          const errorData = await requestResponse.json();
-          console.error("Password reset request failed:", errorData.message);
-          return;
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, new_password: newPassword }),
+      };
+
+      const response = await fetch("/reset_password/request", requestOptions);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("Password reset request failed:", errorData.message);
+
+        // Check if the error is due to user not found
+        if (errorData.message === "user not found") {
+          alert("The provided email address does not match any user in the system. Please check the email address and try again.");
         }
-      } catch (error) {
-        console.error("Error during password reset request:", error);
+
         return;
       }
 
-      try {
-        const verifyResponse = await fetch("/reset_password/verify", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, new_password: newPassword }),
-        });
-  
-        if (verifyResponse.ok) {
-          console.log("Password reset successfully");
-          navigate("/login"); // Redirect to login page or a success page
-        } else {
-          const errorData = await verifyResponse.json();
-          console.error("Password reset failed:", errorData.message);
-        }
-      } catch (error) {
-        console.error("Error during password reset:", error);
-      }
-    };
+      console.log("Password reset successfully");
+      console.log(newPassword)
+      navigate("/login"); // Redirect to login page or a success page
+    } catch (error) {
+      console.error("Error during password reset:", error);
+    }
+  };
     
 
     
