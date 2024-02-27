@@ -31,10 +31,12 @@ import os
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from models import TokenBlocklist
+from flask_mail import Mail
 
 
 
 bcrypt = Bcrypt()
+mail = Mail()
 
 
 def create_app():
@@ -48,6 +50,18 @@ def create_app():
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+
+    # Flask-Mail configuration
+    app.config['MAIL_SERVER']='smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USERNAME'] = 'tedtedmike@gmail.com' 
+    app.config['MAIL_PASSWORD'] = 'oupm zifw bhqj yadp'  
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+
+    mail.init_app(app)
+    app.mail = mail
+
     cloudinary_url = os.getenv('CLOUDINARY_URL')
     cloudinary_cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME')
     cloudinary_api_key = os.getenv('CLOUDINARY_API_KEY')
