@@ -45,6 +45,8 @@ import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
 import ViewDepartments from './components/managerUI/ViewDepartments';
+import UpdateDepartments from './components/managerUI/UpdateDepartments';
+import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee';
 
 
 function App() {
@@ -75,6 +77,7 @@ function App() {
         <Route path="/employee/goals" element={<Goals />}/>
         <Route path="/employee/experience" element={<Experience />}/>
         <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
+        <Route path="/employee/view_trainings_employee" element={<ViewTrainingsEmployee />} />
 
        </Route>
 
