@@ -49,6 +49,7 @@ import ViewDepartments from './components/managerUI/ViewDepartments';
 import AddGoalForm from './components/employeeUI/AddGoalsEmployee'
 import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee'
 import ResetPassword from './components/ResetPassword';
+import HRViewLeaves from './components/hrUI/HRViewLeaves';
 
 function App() {
   const [trainings, setTrainings] = useState([]);
@@ -101,6 +102,7 @@ function App() {
         <Route path="/hr/session" element={<Session sessions={sessions} setSessions={setSessions}/>}/>
         <Route path="/hr/create_payslip" element={<CreatePayslip />} />
         <Route path="/hr/view_employee_payslip" element={<ViewPayslipHr />} />
+        <Route path="/hr/hr_view_leaves" element={<HRViewLeaves />} />
         
         </Route>
 
