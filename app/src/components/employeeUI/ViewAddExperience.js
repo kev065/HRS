@@ -90,7 +90,7 @@ const ViewExperience = () => {
 
     const handleUpdate = (event, id) => {
         event.preventDefault();
-        navigate(`/update-experience/${id}`);
+        navigate(`/employee/update-experience/${id}`);
     };
 
     const handleDelete = (event, id) => {
