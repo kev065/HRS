@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { store, retrieve } from "./Encryption";
+import './login.css'
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState(""); 
-  const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -15,9 +16,6 @@ const Login = () => {
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-  };
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
   };
 
   const handleRoleChange = (e) => {
@@ -32,13 +30,11 @@ const Login = () => {
       email: email,
       password: password,
       role: selectedRole,
-      confirm_password: confirmPassword,
+
     };
     console.log("Login request data:", credentials);
 
-    if (password !== confirmPassword) {
-      console.error("Password and Confirm Password do not match");
-    }  
+    
 
     fetch("/login", {
       method: "POST",
@@ -93,15 +89,24 @@ const Login = () => {
 
   
   return (
-    <div className="main_container_login" style={{ marginRight:"20px" }} >
-      <div className="ui column">
+      
+      <div className="main_container_login" style={{ marginRight:"20px" }} >
+      <nav className="main-nav">
+          <div className="nav-logo">
+            <a href="#">HRS.io</a>
+          </div>
+          <ul className="nav-list-login">
+            <Link className="link" to={"/"}>Home</Link>
+          </ul>
+        </nav>
+      <div className="ui_column_login">
       <h1 style={{ textAlign: "center" , marginBottom:"30px"}}>Login Form</h1>    
-      <div className="ui centered card " style={{ width: "400px" }}>
+      <div className="ui_centered_card " style={{ width: "400px" }}>
       
       <div className="loginForm_container" style={{ margin: "20px", textAlign: "center" }}>
              
                   <form onSubmit={handleSubmit}>
-                      <div className="form-group">
+                      <div className="form-group_login">
                         <label htmlFor="exampleInputEmail1">
                           Email address
                         </label>
@@ -114,7 +119,7 @@ const Login = () => {
                           onChange={handleEmailChange}
                         />
                       </div>
-                      <div className="form-group">
+                      <div className="form-group_login">
                         <label htmlFor="exampleInputPassword1">Password</label>
                         <input
                           type="password"
@@ -125,20 +130,9 @@ const Login = () => {
                           onChange={handlePasswordChange}
                         />
                       </div>
-                      <div className="form-group">
-                        <label htmlFor="exampleInputConfirmPassword">Confirm Password</label>
-                        <input
-                          type="password"
-                          className="form-control"
-                          id="exampleInputConfirmPassword"
-                          placeholder="Confirm Password"
-                          value={confirmPassword}
-                          onChange={handleConfirmPasswordChange}
-                        />
-                      </div>
-
+                      
   
-              <div className="form-group">
+              <div className="form-group_login">
                 <label htmlFor="roleDropdown">Role</label>
                 <select
                   className="form-control"
@@ -166,10 +160,13 @@ const Login = () => {
                         </label>
                       </div>
                 
-                    <div className="">
+                    <div className="login_button">
                       <button type="submit" className="ui teal button" style={{ marginTop: "20px", textAlign: "center" }}>
-                        Submit
+                        Login
                       </button>
+                    </div>
+                    <div style={{ marginTop: "10px" }}>
+                      <a href="/reset_password">Forgot Password?</a>
                     </div>
                   </form>
                 
@@ -179,6 +176,8 @@ const Login = () => {
      </div>
   
     </div>
+    
+    
     
   );
 };
