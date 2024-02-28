@@ -4,7 +4,7 @@ import { retrieve } from "../Encryption";
 import * as yup from "yup";
 import "./requestPayslip.css";
 
-const RequestPayslip = ({ setPayslip }) => {
+const RequestPayslip = ({ setPayslip, setRemuneration }) => {
   const [employees, setEmployees] = useState([]);
   //fetch employee profiles
   useEffect(() => {
@@ -51,11 +51,13 @@ const RequestPayslip = ({ setPayslip }) => {
           if (!resp.ok) {
             resp.json().then((error) => console.log(error));
           } else {
-            resp.json().then((payslip) => {
+            resp.json().then((data) => {
               //set payslip state with fetched payslip
-              setPayslip(payslip);
+              setPayslip(data.payslip);
+              // set remuneration state
+              setRemuneration(data.remuneration);
               //log data or errors
-              console.log(payslip);
+              console.log(data);
             });
           }
         })

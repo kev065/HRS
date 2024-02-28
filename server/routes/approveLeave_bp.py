@@ -103,7 +103,7 @@ class LeaveApprovalResourceByID(Resource):
         leave_approval = LeaveApproval.query.filter_by(leave_id=leave_id).first()
 
         if not leave_approval:
-            abort(404, message="Leave Approval updated successfully")
+            abort(404, message="Error approving Leave")
 
         for key, value in data.items():
             if value is not None:

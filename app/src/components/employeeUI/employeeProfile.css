@@ -3,20 +3,6 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.profile-container .main .topbar {
-  background-color: teal;
-  overflow: hidden;
-}
-
-.profile-container .main .topbar a {
-  float: right;
-  color: white;
-  text-align: center;
-  padding: 20px 26px;
-  text-decoration: none;
-  font-size: 26px;
-}
-
 .profile-sidebar {
   background-color: #fff;
   color: var(--extra-light);

@@ -17,7 +17,7 @@ const CreatePayslip = () => {
     description: "",
     amount: "",
   });
-  const [isShown, setIsShown] = useState(true);
+  const [showCompensationForm, setShowCompensationForm] = useState(false);
   const [employees, setEmployees] = useState([]);
   const navigate = useNavigate();
   //fetch employee profiles
@@ -28,7 +28,7 @@ const CreatePayslip = () => {
   }, []);
 
   const toggleForm = () => {
-    setIsShown(!isShown);
+    setShowCompensationForm(!showCompensationForm);
   };
   //get employee names
   const employeeNames = employees?.map((employee) => (
@@ -66,7 +66,7 @@ const CreatePayslip = () => {
     setRemunerationDescriptions(updatedRemunerations);
     // toggle form
     if (remunerationDescriptions.length === 0) {
-      setIsShown(false);
+      setShowCompensationForm(false);
     }
   };
   // handle change
@@ -222,7 +222,7 @@ const CreatePayslip = () => {
             </div>
           ))}
           {/* conditional rendering of renumeration description fields */}
-          {isShown ? (
+          {showCompensationForm ? (
             <div className="form-row">
               <div className="col-md-4 mb-3">
                 <label for="name">Compensation name</label>
@@ -301,11 +301,11 @@ const CreatePayslip = () => {
             className="btn btn-primary btn-sm col-2"
             onClick={toggleForm}
           >
-            {isShown ? "Exit" : "Create"}
+            {showCompensationForm ? "Exit" : "Create"}
           </button>
           <button
             type="button"
-            className="btn btn-danger btn-sm ml-3 col-2"
+            className="btn btn-danger btn-sm ml-3 col-3"
             onClick={removeRemuneration}
           >
             Remove

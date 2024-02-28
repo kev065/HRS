@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { retrieve } from "../Encryption";
 import './Experience.css';
+import { useNavigate } from "react-router-dom";
 
 // formats the date
 const formatDate = (dateString) => {
@@ -24,18 +25,11 @@ const formatDateForBackend = (dateString) => {
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`;
 };
 
-// Experience
-const Experience = () => {
-    const [experiences, setExperiences] = useState([{
-        name: '',
-        job_title: '',
-        description: '',
-        start_date: '',
-        end_date: ''
-    }]);
+const ViewExperience = () => {
+    const [experiences, setExperiences] = useState([]); // Changed initial state to an empty array
     const [message, setMessage] = useState(''); 
+    const navigate = useNavigate();
 
-    // fetch experiences
     useEffect(() => {
         axios.get('/experiences', {
             headers: {
@@ -43,7 +37,6 @@ const Experience = () => {
             }
         })
         .then(res => {
-            // Format the dates
             const formattedExperiences = res.data.map(exp => ({
                 ...exp,
                 start_date: formatDate(exp.start_date),
@@ -55,20 +48,16 @@ const Experience = () => {
             console.error(err);
         });
     }, []);
-    
 
     const handleChange = (e, index) => {
         const updatedExperiences = [...experiences];
         updatedExperiences[index][e.target.name] = e.target.value;
         setExperiences(updatedExperiences);
     };
-    
 
     const handleSubmit = e => {
         e.preventDefault();
-        // Make a POST request flask backend for the new experience
         const newExperience = experiences[experiences.length - 1];
-        // format the dates
         newExperience.start_date = formatDateForBackend(newExperience.start_date);
         newExperience.end_date = formatDateForBackend(newExperience.end_date);
         axios.post('/experiences', newExperience, {
@@ -77,10 +66,7 @@ const Experience = () => {
             }
         })
         .then(res => {
-            console.log(res.data);
-            // Add the new experience to the state
             setExperiences(prevExperiences => [...prevExperiences, res.data]);
-            // Add a new empty experience to the state for the form
             setExperiences(prevExperiences => [...prevExperiences, {
                 name: '',
                 job_title: '',
@@ -95,24 +81,12 @@ const Experience = () => {
             setMessage('Error adding experience.'); 
         });
     };
-    
 
-    const handleUpdate = (event, id, updatedExperience) => {
+    const handleUpdate = (event, id) => {
         event.preventDefault();
-        axios.put(`/experiences/${id}`, updatedExperience, {
-            headers: {
-                'Authorization': `Bearer ${retrieve().access_token}`
-            }
-        })
-        .then(res => {
-            // Update the experiences state with the updated experience
-            setExperiences(experiences.map(exp => exp.id === id ? res.data : exp));
-        })
-        .catch(err => {
-            console.error(err);
-        });
+        navigate(`/employee/update-experience/${id}`);
     };
-    
+
     const handleDelete = (event, id) => {
         event.preventDefault();
         axios.delete(`/experiences/${id}`, {
@@ -121,7 +95,6 @@ const Experience = () => {
             }
         })
         .then(res => {
-            // Remove the deleted experience 
             setExperiences(experiences.filter(exp => exp.id !== id));
             setMessage('Experience deleted successfully!');
         })
@@ -141,27 +114,56 @@ const Experience = () => {
         }]);
     };
 
-
     return (
         <div style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
             <form onSubmit={handleSubmit}>
-                {experiences.map((experience, index) => (
-                    <div key={index} className="experience">
-                        <input type="text" name="name" value={experience.name} onChange={e => handleChange(e, index)} placeholder="Name" required />
-                        <input type="text" name="job_title" value={experience.job_title} onChange={e => handleChange(e, index)} placeholder="Job Title" required />
-                        <textarea name="description" value={experience.description} onChange={e => handleChange(e, index)} placeholder="Description" required />
-                        <label>
-                            Start Date:
-                            <input type="date" name="start_date" value={experience.start_date} onChange={e => handleChange(e, index)} required />
-                        </label>
-                        <label>
-                            End Date:
-                            <input type="date" name="end_date" value={experience.end_date} onChange={e => handleChange(e, index)} required />
-                        </label>
-                        <button type="button" className="update-button" onClick={(event) => handleUpdate(event, experience.id, experience)}>Update</button>
-                        <button type="button" className="delete-button" onClick={(event) => handleDelete(event, experience.id)}>Delete</button>
+                <div className="experience">
+                    <div className="experience-row">
+                        <div className="experience-cell">Name</div>
+                        <div className="experience-cell">Job Title</div>
+                        <div className="experience-cell">Description</div>
+                        <div className="experience-cell">Start Date</div>
+                        <div className="experience-cell">End Date</div>
+                        <div className="experience-cell">Actions</div>
                     </div>
-                ))}
+                    {experiences.slice(0, -1).map((experience, index) => (
+                        <div key={index} className="experience-row">
+                            <div className="experience-cell">{experience.name}</div>
+                            <div className="experience-cell">{experience.job_title}</div>
+                            <div className="experience-cell">{experience.description}</div>
+                            <div className="experience-cell">{experience.start_date}</div>
+                            <div className="experience-cell">{experience.end_date}</div>
+                            <div className="experience-cell">
+                                <button type="button" className="update-button" onClick={(event) => handleUpdate(event, experience.id)}>Update</button>
+                                <button type="button" className="delete-button" onClick={(event) => handleDelete(event, experience.id)}>Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                    {experiences.length > 0 && (
+                        <div className="experience-row">
+                            <div className="experience-cell">
+                                <input type="text" name="name" value={experiences[experiences.length - 1].name} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Name" required />
+                            </div>
+                            <div className="experience-cell">
+                                <input type="text" name="job_title" value={experiences[experiences.length - 1].job_title} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Job Title" required />
+                            </div>
+                            <div className="experience-cell">
+                                <textarea name="description" value={experiences[experiences.length - 1].description} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Description" required />
+                            </div>
+                            <div className="experience-cell">
+                                <label>
+                                    <input type="date" name="start_date" value={experiences[experiences.length - 1].start_date} onChange={e => handleChange(e, experiences.length - 1)} required />
+                                </label>
+                            </div>
+                            <div className="experience-cell">
+                                <label>
+                                    <input type="date" name="end_date" value={experiences[experiences.length - 1].end_date} onChange={e => handleChange(e, experiences.length - 1)} required />
+                                </label>
+                            </div>
+                            <div className="experience-cell"></div>
+                        </div>
+                    )}
+                </div>
                 <button type="button" className="add-button" onClick={addExperience}>Add Another Experience</button>
                 <button type="submit" className="submit-button">Submit</button>
             </form>
@@ -170,5 +172,4 @@ const Experience = () => {
     );
 };
 
-export default Experience;
-
+export default ViewExperience;
