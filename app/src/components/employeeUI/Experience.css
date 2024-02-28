@@ -1,8 +1,20 @@
 .experience {
+    display: table;
     margin: 1em 0;
     background-color: #f0f8ff; 
     border-radius: 5px;
     padding: 1em;
+    width: 100%;
+}
+
+.experience-row {
+    display: table-row;
+}
+
+.experience-cell {
+    display: table-cell;
+    padding: 0.5em;
+    border: 1px solid #ccc;
 }
 
 .experience input,
@@ -33,21 +45,12 @@
     background-color: #ff0000; 
 }
 
-.experience .add-button {
+.experience .add-button,
+.experience .submit-button {
+    display: block;
+    width: 200px;
+    height: 40px;  
+    margin: 20px auto; 
     background-color: #1e90ff; 
     color: white;
 }
-
-.experience .submit-button {
-    background-color: #008000; 
-    color: white;
-}
-
-
-
-
-
-
-
-
-

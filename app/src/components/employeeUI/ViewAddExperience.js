@@ -123,29 +123,59 @@ const ViewExperience = () => {
     return (
         <div style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
             <form onSubmit={handleSubmit}>
-                {experiences.map((experience, index) => (
-                    <div key={index} className="experience">
-                        <input type="text" name="name" value={experience.name} onChange={e => handleChange(e, index)} placeholder="Name" required />
-                        <input type="text" name="job_title" value={experience.job_title} onChange={e => handleChange(e, index)} placeholder="Job Title" required />
-                        <textarea name="description" value={experience.description} onChange={e => handleChange(e, index)} placeholder="Description" required />
-                        <label>
-                            Start Date:
-                            <input type="date" name="start_date" value={experience.start_date} onChange={e => handleChange(e, index)} required />
-                        </label>
-                        <label>
-                            End Date:
-                            <input type="date" name="end_date" value={experience.end_date} onChange={e => handleChange(e, index)} required />
-                        </label>
-                        <button type="button" className="update-button" onClick={(event) => handleUpdate(event, experience.id)}>Update</button>
-                        <button type="button" className="delete-button" onClick={(event) => handleDelete(event, experience.id)}>Delete</button>
+                <div className="experience">
+                    <div className="experience-row">
+                        <div className="experience-cell">Name</div>
+                        <div className="experience-cell">Job Title</div>
+                        <div className="experience-cell">Description</div>
+                        <div className="experience-cell">Start Date</div>
+                        <div className="experience-cell">End Date</div>
+                        <div className="experience-cell">Actions</div>
                     </div>
-                ))}
+                    {experiences.slice(0, -1).map((experience, index) => (
+                        <div key={index} className="experience-row">
+                            <div className="experience-cell">{experience.name}</div>
+                            <div className="experience-cell">{experience.job_title}</div>
+                            <div className="experience-cell">{experience.description}</div>
+                            <div className="experience-cell">{experience.start_date}</div>
+                            <div className="experience-cell">{experience.end_date}</div>
+                            <div className="experience-cell">
+                                <button type="button" className="update-button" onClick={(event) => handleUpdate(event, experience.id)}>Update</button>
+                                <button type="button" className="delete-button" onClick={(event) => handleDelete(event, experience.id)}>Delete</button>
+                            </div>
+                        </div>
+                    ))}
+                    <div className="experience-row">
+                        <div className="experience-cell">
+                            <input type="text" name="name" value={experiences[experiences.length - 1].name} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Name" required />
+                        </div>
+                        <div className="experience-cell">
+                            <input type="text" name="job_title" value={experiences[experiences.length - 1].job_title} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Job Title" required />
+                        </div>
+                        <div className="experience-cell">
+                            <textarea name="description" value={experiences[experiences.length - 1].description} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Description" required />
+                        </div>
+                        <div className="experience-cell">
+                            <label>
+                                <input type="date" name="start_date" value={experiences[experiences.length - 1].start_date} onChange={e => handleChange(e, experiences.length - 1)} required />
+                            </label>
+                        </div>
+                        <div className="experience-cell">
+                            <label>
+                                <input type="date" name="end_date" value={experiences[experiences.length - 1].end_date} onChange={e => handleChange(e, experiences.length - 1)} required />
+                            </label>
+                        </div>
+                        <div className="experience-cell"></div>
+                    </div>
+                </div>
                 <button type="button" className="add-button" onClick={addExperience}>Add Another Experience</button>
                 <button type="submit" className="submit-button">Submit</button>
             </form>
             {message && <p>{message}</p>} 
         </div>
     );
+    
+    
 };
 
 export default ViewExperience;
