@@ -18,7 +18,7 @@ const ViewStaffDetails = () => {
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2 style={{ marginLeft:"500px", marginBottom:"50px"}}>Staff Details</h2>
+      <h2 style={{ marginLeft:"500px", marginBottom:"50px"}}>Employees Details</h2>
       <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
