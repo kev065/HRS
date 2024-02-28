@@ -21,8 +21,7 @@ login_args.add_argument('password', type=str, required=True,
                         help="password is required")
 login_args.add_argument('role', type=str, required=True,
                         help="role is required")
-login_args.add_argument('confirm_password', type=str, required=True,
-                        help="confirm_password is required")
+
 
 
 class Login(Resource):
@@ -31,10 +30,7 @@ class Login(Resource):
         email = data['email']
         role = data['role']
         password = data['password']
-        confirm_password = data['confirm_password']
-
-        if password != confirm_password:
-            abort(400, detail="Passwords do not match")
+        
 
         if role == "manager":
             # Login manager

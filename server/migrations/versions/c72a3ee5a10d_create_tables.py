@@ -1,8 +1,8 @@
-"""initial migration
+"""create tables
 
-Revision ID: 530e0d3d7703
+Revision ID: c72a3ee5a10d
 Revises: 
-Create Date: 2024-02-25 19:39:32.357304
+Create Date: 2024-02-28 16:54:01.572330
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '530e0d3d7703'
+revision = 'c72a3ee5a10d'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -53,29 +53,34 @@ def upgrade():
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('email', sa.String(length=30), nullable=False),
     sa.Column('password', sa.String(), nullable=False),
+    sa.Column('personal_no', sa.String(length=10), nullable=False),
     sa.Column('dept_id', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['dept_id'], ['departments.id'], name=op.f('fk_employees_dept_id_departments')),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('personal_no')
     )
     op.create_table('hr_personnels',
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('email', sa.String(length=30), nullable=False),
     sa.Column('password', sa.String(), nullable=False),
+    sa.Column('personal_no', sa.String(length=10), nullable=False),
     sa.Column('dept_id', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['dept_id'], ['departments.id'], name=op.f('fk_hr_personnels_dept_id_departments')),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('personal_no')
     )
     op.create_table('managers',
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('email', sa.String(length=30), nullable=False),
     sa.Column('password', sa.String(), nullable=False),
+    sa.Column('personal_no', sa.String(length=10), nullable=False),
     sa.Column('dept_id', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['dept_id'], ['departments.id'], name=op.f('fk_managers_dept_id_departments')),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('dept_id'),
-    sa.UniqueConstraint('email')
+    sa.UniqueConstraint('email'),
+    sa.UniqueConstraint('personal_no')
     )
     op.create_table('documents',
     sa.Column('id', sa.String(), nullable=False),

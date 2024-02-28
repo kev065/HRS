@@ -76,7 +76,7 @@ const EmployeeViewTrainings = () => {
       {!loading && fetchedTrainings.length === 0 && newlyAppliedTrainings.length === 0 && <h3>Manager has not recommended any trainings for you.</h3>}
       {(fetchedTrainings.length > 0 || newlyAppliedTrainings.length > 0) && (
         <div>
-          <h2>Trainings for Employee ID: {employeeId}</h2>
+          <h2 style={{ marginLeft: "450px"}}>Trainings</h2>
           <table className="ui striped table" style={{ width: "1200px", marginBottom: "20px" }}>
             <thead>
               <tr>

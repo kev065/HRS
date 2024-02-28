@@ -20,7 +20,10 @@ const SideNavManager = () => {
   <div className="sidebar">
     {/* Sidebar user panel (optional) */}
     <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div className="image">
+      <div className=""  style={{marginLeft:"30px",color:"white",font:"helvetica"}}>
+     
+              Manager's DashBoard
+            
      
       </div>
       

@@ -41,14 +41,16 @@ import RecommendTraining from "./components/managerUI/RecommendTraining";
 import ViewEmployeesPerDepartment from "./components/managerUI/ViewEmployeesPerDepartment";
 import ManagerProfile from "./components/managerUI/ManagerProfile";
 import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
-import ViewStaffDetails from "./components/hrUI/ViewStaffDetails";
-import ManagerEditProfile from "./components/managerUI/ManagerEditProfile";
-import ManagerCreateProfile from "./components/managerUI/ManagerCreateProfile";
-import UpdateDepartment from "./components/employeeUI/UpdateEducation";
-import ViewDepartments from "./components/managerUI/ViewDepartments";
-import AddGoalForm from "./components/employeeUI/AddGoalsEmployee";
-import ViewTrainingsEmployee from "./components/employeeUI/ViewTrainingsEmployee";
-import ResetPassword from "./components/ResetPassword";
+import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
+import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
+import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
+import ViewDepartments from './components/managerUI/ViewDepartments';
+import UpdateDepartment from './components/managerUI/UpdateDepartments';
+import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee';
+import ViewManagers from './components/hrUI/ViewManagers';
+import ViewHrPersonnel from './components/hrUI/ViewHrPersonnel';
+import AddGoalForm from './components/employeeUI/AddGoalsEmployee'
+import ResetPassword from './components/ResetPassword';
 import HRViewLeaves from "./components/hrUI/HRViewLeaves";
 
 function App() {
@@ -149,6 +151,28 @@ function App() {
           <Route path="/hr/create_payslip" element={<CreatePayslip />} />
           <Route path="/hr/view_employee_payslip" element={<ViewPayslipHr />} />
           <Route path="/hr/view_leaves" element={<HRViewLeaves />} />
+        <Route path="/hr" element={<DashBoardHr />} >
+        <Route path="/hr/training_page" element={<Trainings trainings={trainings} setTrainings={setTrainings} />  } />
+        <Route path="/hr/add_employee" element={<AddEmployeeForm />} />      
+        <Route path="/hr/update_trainings/:id" element={<UpdateTrainings />} />
+        <Route path="/hr/view_employees_documents" element={<ViewEmployeesDocuments />} />
+        <Route path="/hr/verify_documents/:employeeId"  element={<VerifyDocuments />} />
+        <Route path="/hr/hr_pending_leaves" element={<LeaveApprovalForm />}/>
+        <Route path="/hr/hr_profile" element={<Profile />}/>
+        <Route path="/hr/staff_education" element={<ViewStaffEducation />}/>
+        <Route path="/hr/view_staff_details" element={<ViewStaffDetails/>}/>
+        <Route path="/hr/hr_delete_employee" element={<DeleteEmployeeForm />}/>
+        <Route path="/hr/create_profile" element={<CreateProfile/>}/>
+        <Route path="/hr/edit_profile" element={<EditProfile/>}/>
+        <Route path="/hr/update_session/:id" element={<UpdateSession/>}/>
+        <Route path="/hr/session" element={<Session sessions={sessions} setSessions={setSessions}/>}/>
+        <Route path="/hr/create_payslip" element={<CreatePayslip />} />
+        <Route path="/hr/view_employee_payslip" element={<ViewPayslipHr />} />
+        <Route path="/hr/view_managers" element={<ViewManagers />} />
+        <Route path="/hr/view_hr_personnel" element={<ViewHrPersonnel />} />
+        <Route path="/hr/view_leaves" element={<HRViewLeaves />} />
+        
+        
         </Route>
 
         <Route path="/manager" element={<DashBoardManager />}>
