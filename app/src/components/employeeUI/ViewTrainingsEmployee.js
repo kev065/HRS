@@ -88,7 +88,7 @@ const ViewTrainingsEmployee = () => {
     return (
         <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor: "white", marginTop: "20px" }}>
             <h2 style={{ marginLeft: "500px", marginBottom: "50px" }}>Trainings</h2>
-            <div style={{ marginLeft: "450px", marginBottom: "50px" }}>
+            <div style={{ marginLeft: "50px", marginBottom: "50px" }}>
                 <label htmlFor="fromDate">From: </label>
                 <input type="date" id="fromDate" value={fromDate} onChange={e => setFromDate(e.target.value)} />
                 <label htmlFor="toDate">To: </label>

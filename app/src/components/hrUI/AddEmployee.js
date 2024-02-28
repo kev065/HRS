@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { Formik, Field, Form } from 'formik';
-import axios from 'axios'; 
+import axios from 'axios';
 import './AddEmployee.css';
 
 const AddEmployeeForm = () => {
@@ -24,10 +24,10 @@ const AddEmployeeForm = () => {
     try {
       const response = await axios.post('/employees', values);
       console.log('New Employee:', response.data);
-      setMessage('Employee added successfully!'); 
+      setMessage('Employee added successfully!');
     } catch (error) {
       console.error('Error adding employee:', error);
-      setMessage('Error adding employee.'); 
+      setMessage('Error adding employee.');
     }
   };
 
@@ -37,6 +37,8 @@ const AddEmployeeForm = () => {
         initialValues={{
           email: '',
           password: '',
+          personal_no:"",
+          role:"",
           dept_id: ''
         }}
         onSubmit={handleSubmit}
@@ -53,6 +55,19 @@ const AddEmployeeForm = () => {
           </label>
           <br />
           <label>
+            Staff No:
+            <Field type="text" name="personal_no" required />
+          </label>
+          <br />
+          <label htmlFor="role">Role</label>
+          <Field as="select" name="role" id="role" required>
+            <option value="">Select a role</option>
+            <option value="manager">Manager</option>
+            <option value="employee">Employee</option>
+            <option value="hr">HR</option>
+          </Field>
+          <br />
+          <label>
             Department:
             <Field as="select" name="dept_id" required>
               <option value="">Select a department</option>
@@ -65,7 +80,7 @@ const AddEmployeeForm = () => {
           <button type="submit">Add Employee</button>
         </Form>
       </Formik>
-      {message && <p>{message}</p>} 
+      {message && <p>{message}</p>}
     </div>
   );
 };
