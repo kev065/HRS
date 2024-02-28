@@ -10,6 +10,7 @@ const HRViewLeaves = () => {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [selected_Manager, setSelected_Manager] = useState("");
+    const [message, setMessage] = useState(null);
 
     const handleCreateLeaveApproval = async (leave_id, employee_id) => {
         const values = {
