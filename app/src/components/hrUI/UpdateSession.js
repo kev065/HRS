@@ -29,18 +29,18 @@ const UpdateSession = () => {
             try {
                 const { name, start_date, end_date } = data;
         
-                // Convert the formatted dates to JavaScript Date objects
+              
                 const formattedStartDate = new Date(start_date);
                 const formattedEndDate = new Date(end_date);
         
-                // Update the state variables
+                
                 setSession(data);
                 setName(name);
                 setStartDate(formattedStartDate.toISOString().split('T')[0]);
                 setEndDate(formattedEndDate.toISOString().split('T')[0]);
             } catch (error) {
                 console.error('Error updating session:', error);
-                // Handle any unexpected response format or missing properties
+             
             }
           })
           .catch((error) => {
@@ -89,7 +89,8 @@ const UpdateSession = () => {
             {session && <form onSubmit={handleSubmit}>
                 <label>
                     Session:
-                    <input id="session" type="text" value={session} onChange={(e) => setSession(e.target.value)} required />
+                    <input id="session" type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+
                 </label>
                 <br />
                 <label>

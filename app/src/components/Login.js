@@ -8,6 +8,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState(""); 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -62,6 +64,8 @@ const Login = () => {
           "accessToken",
           JSON.stringify(result.access_token)
         );
+     
+      
         // Redirect the user based on their role
         switch (selectedRole) {
           case "manager":
@@ -83,7 +87,9 @@ const Login = () => {
       })
       .catch((error) => {
        
-        console.error("Error during login:", error);
+        setLoading(false);
+        setError('Invalid Email or Password: Please try again.');
+        console.error('Error while signing in:', error);
       });
   };
 
@@ -162,8 +168,9 @@ const Login = () => {
                 
                     <div className="login_button">
                       <button type="submit" className="ui teal button" style={{ marginTop: "20px", textAlign: "center" }}>
-                        Login
+                      {loading ? 'Loading...' : 'Login'}
                       </button>
+                      {error && <p style={{ color: 'red' }}>{error}</p>}
                     </div>
                     <div style={{ marginTop: "10px" }}>
                       <a href="/reset_password">Forgot Password?</a>
