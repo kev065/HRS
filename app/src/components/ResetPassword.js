@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { retrieve } from "./Encryption";
 import './resetPassword.css'
 
@@ -72,6 +72,14 @@ const ResetPassword = () => {
 
   return (
     <div className="Reset-Passowrd"> 
+    <nav className="main-nav">
+          <div className="nav-logo">
+            <a href="#">HRS.io</a>
+          </div>
+          <ul className="nav-list-login">
+            <Link className="link" to={"/"}>Home</Link>
+          </ul>
+        </nav>
         <div className="Reset-password-Content">
             <h1>Reset Password</h1>
             <form onSubmit={handleSubmit} className="Reset-Passowrd-Form">
