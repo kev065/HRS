@@ -57,6 +57,7 @@ class Manager(db.Model):
     leave_approvals = db.relationship('LeaveApproval', backref='manager')
     manager_profile = db.relationship(
         'ManagerProfile', backref='manager')
+    overseen_goals = db.relationship('Goals', backref='manager')
 
 
 class Department(db.Model):
@@ -178,6 +179,7 @@ class Goals(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     employee_id = db.Column(db.String, db.ForeignKey(
         'employees.id'), nullable=False)
+    manager_id = db.Column(db.String, db.ForeignKey('managers.id'), nullable=True, default='default_manager_id')
     name = db.Column(db.String(30), nullable=False)
     description = db.Column(db.String, nullable=False)
     session_id = db.Column(db.String, db.ForeignKey(
@@ -230,8 +232,8 @@ class LeaveApproval(db.Model):
         'hr_personnels.id'))
     approved_by_manager = db.Column(db.Boolean, default=False)
     approved_by_hr = db.Column(db.Boolean, default=False)
-    manager_app_date = db.Column(db.DateTime)
-    hr_approval_date = db.Column(db.DateTime)
+    manager_app_date = db.Column(db.DateTime, nullable=True)
+    hr_approval_date = db.Column(db.DateTime, nullable=True) 
 
 
 class Education(db.Model):
