@@ -26,13 +26,7 @@ const formatDateForBackend = (dateString) => {
 };
 
 const ViewExperience = () => {
-    const [experiences, setExperiences] = useState([{
-        name: '',
-        job_title: '',
-        description: '',
-        start_date: '',
-        end_date: ''
-    }]);
+    const [experiences, setExperiences] = useState([]); // Changed initial state to an empty array
     const [message, setMessage] = useState(''); 
     const navigate = useNavigate();
 
@@ -145,28 +139,30 @@ const ViewExperience = () => {
                             </div>
                         </div>
                     ))}
-                    <div className="experience-row">
-                        <div className="experience-cell">
-                            <input type="text" name="name" value={experiences[experiences.length - 1].name} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Name" required />
+                    {experiences.length > 0 && (
+                        <div className="experience-row">
+                            <div className="experience-cell">
+                                <input type="text" name="name" value={experiences[experiences.length - 1].name} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Name" required />
+                            </div>
+                            <div className="experience-cell">
+                                <input type="text" name="job_title" value={experiences[experiences.length - 1].job_title} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Job Title" required />
+                            </div>
+                            <div className="experience-cell">
+                                <textarea name="description" value={experiences[experiences.length - 1].description} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Description" required />
+                            </div>
+                            <div className="experience-cell">
+                                <label>
+                                    <input type="date" name="start_date" value={experiences[experiences.length - 1].start_date} onChange={e => handleChange(e, experiences.length - 1)} required />
+                                </label>
+                            </div>
+                            <div className="experience-cell">
+                                <label>
+                                    <input type="date" name="end_date" value={experiences[experiences.length - 1].end_date} onChange={e => handleChange(e, experiences.length - 1)} required />
+                                </label>
+                            </div>
+                            <div className="experience-cell"></div>
                         </div>
-                        <div className="experience-cell">
-                            <input type="text" name="job_title" value={experiences[experiences.length - 1].job_title} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Job Title" required />
-                        </div>
-                        <div className="experience-cell">
-                            <textarea name="description" value={experiences[experiences.length - 1].description} onChange={e => handleChange(e, experiences.length - 1)} placeholder="Description" required />
-                        </div>
-                        <div className="experience-cell">
-                            <label>
-                                <input type="date" name="start_date" value={experiences[experiences.length - 1].start_date} onChange={e => handleChange(e, experiences.length - 1)} required />
-                            </label>
-                        </div>
-                        <div className="experience-cell">
-                            <label>
-                                <input type="date" name="end_date" value={experiences[experiences.length - 1].end_date} onChange={e => handleChange(e, experiences.length - 1)} required />
-                            </label>
-                        </div>
-                        <div className="experience-cell"></div>
-                    </div>
+                    )}
                 </div>
                 <button type="button" className="add-button" onClick={addExperience}>Add Another Experience</button>
                 <button type="submit" className="submit-button">Submit</button>
@@ -174,10 +170,6 @@ const ViewExperience = () => {
             {message && <p>{message}</p>} 
         </div>
     );
-    
-    
 };
 
 export default ViewExperience;
-
-
