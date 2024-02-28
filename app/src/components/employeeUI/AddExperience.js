@@ -37,7 +37,7 @@ const Experience = () => {
 
     // fetch experiences
     useEffect(() => {
-        axios.get('http://localhost:5555/experiences', {
+        axios.get('/experiences', {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
@@ -71,7 +71,7 @@ const Experience = () => {
         // format the dates
         newExperience.start_date = formatDateForBackend(newExperience.start_date);
         newExperience.end_date = formatDateForBackend(newExperience.end_date);
-        axios.post('http://localhost:5555/experiences', newExperience, {
+        axios.post('/experiences', newExperience, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
@@ -99,7 +99,7 @@ const Experience = () => {
 
     const handleUpdate = (event, id, updatedExperience) => {
         event.preventDefault();
-        axios.put(`http://localhost:5555/experiences/${id}`, updatedExperience, {
+        axios.put(`/experiences/${id}`, updatedExperience, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
@@ -115,7 +115,7 @@ const Experience = () => {
     
     const handleDelete = (event, id) => {
         event.preventDefault();
-        axios.delete(`http://localhost:5555/experiences/${id}`, {
+        axios.delete(`/experiences/${id}`, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }

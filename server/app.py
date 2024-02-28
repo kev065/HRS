@@ -20,6 +20,7 @@ from routes.department_bp import department_bp
 from routes.documents_bp import document_bp
 from routes.employee_bp import employee_bp
 from routes.approveLeave_bp import approvalLeave_bp
+from routes.reset_password_bp import reset_password_bp
 from datetime import datetime, timedelta
 from flask import Flask
 from flask_migrate import Migrate
@@ -30,9 +31,12 @@ import os
 from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 from models import TokenBlocklist
+from flask_mail import Mail
+
 
 
 bcrypt = Bcrypt()
+mail = Mail()
 
 
 def create_app():
@@ -46,6 +50,18 @@ def create_app():
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=24)
+
+    # Flask-Mail configuration
+    app.config['MAIL_SERVER']='smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    app.config['MAIL_USERNAME'] = 'tedtedmike@gmail.com' 
+    app.config['MAIL_PASSWORD'] = 'oupm zifw bhqj yadp'  
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+
+    mail.init_app(app)
+    app.mail = mail
+
     cloudinary_url = os.getenv('CLOUDINARY_URL')
     cloudinary_cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME')
     cloudinary_api_key = os.getenv('CLOUDINARY_API_KEY')
@@ -90,6 +106,7 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
+    app.register_blueprint(reset_password_bp)
 
  
 

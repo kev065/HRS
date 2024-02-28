@@ -73,17 +73,6 @@ const SideNavManager = () => {
          
         </li>
 
-        <li className="nav-item">
-          <a href="#" className="nav-link">
-            <i className="nav-icon fas fa-money-check-alt" /> 
-            <p>
-              Payslips
-            
-            </p>
-          </a>
-         
-        </li>
-
 
         <li className="nav-item">
           <Link to="/manager/manager_pending_leaves" className="nav-link">

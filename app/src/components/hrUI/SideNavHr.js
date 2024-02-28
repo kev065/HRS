@@ -125,6 +125,15 @@ const SideNavHr = () => {
             
           </li>
 
+          <li className="nav-item">
+          <Link to="/hr/session" className="nav-link">
+          <i className="nav-icon fas fa-users-cog" />
+            <p>
+              session
+            </p>
+          </Link>
+        </li>
+
 
        
          
