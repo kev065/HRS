@@ -99,7 +99,7 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
                             </label>
                         </div>
                         <br />
-                        <button type="submit" className="ui teal button" style={{ marginBottom: '20px', marginTop: '40px', marginLeft: "250px" }}>Create Training</button>
+                        <button type="submit" className="ui teal button" style={{ marginBottom: '20px', marginTop: '40px', marginLeft: "200px",width:"200px" }}>Create Training</button>
                     </form>
                 </div>
             </div>

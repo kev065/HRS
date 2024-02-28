@@ -136,21 +136,21 @@ class TrainingsPerDepartment(Resource):
 
             employee_details = {
                 "id": employee.id,
+                "personal_no": employee.personal_no,
                 "email": employee.email,
                 "first_name": employee_profile.first_name if employee_profile else None,
                 "last_name": employee_profile.last_name if employee_profile else None,
                 "phone_contact": employee_profile.phone_contact if employee_profile else None
             }
 
-         
             assigned_trainings = EmployeeTraining.query.filter_by(employee_id=employee.id).all()
             employee_details["assigned_trainings"] = [{
-                "title": training.training.title,
-                "description": training.training.description,
-                "start_date": training.training.start_date.strftime('%Y-%m-%d'),
-                "start_time": training.training.start_time.strftime('%H:%M:%S'),
-                "end_date": training.training.end_date.strftime('%Y-%m-%d'),
-                "end_time": training.training.end_time.strftime('%H:%M:%S')
+                "title": training.training.title if training.training else None,
+                "description": training.training.description if training.training else None,
+                "start_date": training.training.start_date.strftime('%Y-%m-%d') if training.training and training.training.start_date else None,
+                "start_time": training.training.start_time.strftime('%H:%M:%S') if training.training and training.training.start_time else None,
+                "end_date": training.training.end_date.strftime('%Y-%m-%d') if training.training and training.training.end_date else None,
+                "end_time": training.training.end_time.strftime('%H:%M:%S') if training.training and training.training.end_time else None
             } for training in assigned_trainings]
 
             employees_details.append(employee_details)
@@ -159,11 +159,9 @@ class TrainingsPerDepartment(Resource):
 
 api.add_resource(TrainingsPerDepartment, '/manager/employees/<string:manager_id>')
 
-
 class EmployeesPerDepartment(Resource):
     @manager_required()
     def get(self, dept_id):
-      
         department = Department.query.get(dept_id)
         if not department:
             return make_response(jsonify({"message": "Department not found"}), 404)
@@ -179,14 +177,13 @@ class EmployeesPerDepartment(Resource):
 
             employee_details = {
                 "id": employee.id,
+                "personal_no": employee.personal_no,  
                 "email": employee.email,
                 "first_name": employee_profile.first_name if employee_profile else None,
                 "last_name": employee_profile.last_name if employee_profile else None,
                 "phone_contact": employee_profile.phone_contact if employee_profile else None
             }
 
-         
-           
             employees_details.append(employee_details)
 
         return jsonify(employees_details)
@@ -231,18 +228,18 @@ class UpdateDepartmentDetails(Resource):
         if not department:
             abort(404, detail=f'Department with id {id} does not exist')
 
-        # Check if the current user is authorized to update this department
+     
         if department.manager.id != current_user:
             abort(401, detail="Unauthorized request")
 
         data = patch_args.parse_args()
 
-        # Update department fields
+    
         for key, value in data.items():
             if value is not None:
                 setattr(department, key, value)
 
-        # Update manager fields
+     
         manager_data = data.get('manager', {})
         if manager_data:
             manager = department.manager
@@ -252,7 +249,7 @@ class UpdateDepartmentDetails(Resource):
 
         db.session.commit()
 
-        # Serialize the updated department and manager
+     
         result = {
             'department': departmentSchema.dump(department),
             'manager': managerSchema.dump(manager)
@@ -264,5 +261,58 @@ api.add_resource(UpdateDepartmentDetails, '/Update_department_details')
 
 @manager_bp.route('/managers_with_names', methods=['GET'])
 def get_managers_with_names():
-    managers = db.session.query(Manager.id, ManagerProfile.first_name, ManagerProfile.last_name).join(ManagerProfile).all()
-    return jsonify([{'id': id, 'name': f"{first_name} {last_name}"} for id, first_name, last_name in managers])
+    managers = db.session.query(Manager.id, ManagerProfile.personal_no, ManagerProfile.first_name, ManagerProfile.last_name).join(ManagerProfile).all()
+    return jsonify([{'id': id,"personal_no":personal_no, 'name': f"{first_name} {last_name}"} for id,personal_no, first_name, last_name in managers])
+
+class ManagerDetails(Resource):
+    def get(self):
+        managers_with_profiles = db.session.query(Manager, ManagerProfile).outerjoin(ManagerProfile, Manager.id == ManagerProfile.manager_id).all()
+
+        result = []
+        for manager, manager_profile in managers_with_profiles:
+            manager_data = {
+                'id': manager.id,
+                'email': manager.email,
+                'personal_no': manager.personal_no
+            }
+            if manager_profile:
+                manager_data.update({
+                    'first_name': manager_profile.first_name,
+                    'last_name': manager_profile.last_name,
+                    'mantra': manager_profile.mantra,
+                    'phone_contact': manager_profile.phone_contact
+                })
+            
+            result.append(manager_data)
+
+        response = make_response(jsonify(result), 200)
+        return response
+
+api.add_resource(ManagerDetails, '/manager_details')
+
+class ManagerDepartmentDetails(Resource):
+    def get(self):
+        managers_with_profiles = db.session.query(Manager, ManagerProfile, Department).outerjoin(ManagerProfile, Manager.id == ManagerProfile.manager_id).outerjoin(Department, Manager.dept_id == Department.id).all()
+
+        result = []
+        for manager, manager_profile, department in managers_with_profiles:
+            manager_data = {
+                'id': manager.id,
+                'email': manager.email,
+                'personal_no': manager.personal_no,
+                'department_name': department.name if department else None
+            }
+            if manager_profile:
+                manager_data.update({
+                    'first_name': manager_profile.first_name,
+                    'last_name': manager_profile.last_name,
+                    'mantra': manager_profile.mantra,
+                    'phone_contact': manager_profile.phone_contact
+                })
+
+            result.append(manager_data)
+
+        response = make_response(jsonify(result), 200)
+        return response
+
+api.add_resource(ManagerDepartmentDetails, '/manager_department_details')

@@ -44,10 +44,16 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
-import UpdateDepartment from './components/employeeUI/UpdateEducation';
+
 import ViewDepartments from './components/managerUI/ViewDepartments';
+import UpdateDepartment from './components/managerUI/UpdateDepartments';
+import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee';
+import ViewManagers from './components/hrUI/ViewManagers';
+import ViewHrPersonnel from './components/hrUI/ViewHrPersonnel';
+
+
 import AddGoalForm from './components/employeeUI/AddGoalsEmployee'
-import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee'
+
 import ResetPassword from './components/ResetPassword';
 
 function App() {
@@ -101,6 +107,9 @@ function App() {
         <Route path="/hr/session" element={<Session sessions={sessions} setSessions={setSessions}/>}/>
         <Route path="/hr/create_payslip" element={<CreatePayslip />} />
         <Route path="/hr/view_employee_payslip" element={<ViewPayslipHr />} />
+        <Route path="/hr/view_managers" element={<ViewManagers />} />
+        <Route path="/hr/view_hr_personnel" element={<ViewHrPersonnel />} />
+        
         
         </Route>
 
