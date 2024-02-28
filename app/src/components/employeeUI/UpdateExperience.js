@@ -70,14 +70,14 @@ const UpdateExperience = () => {
             start_date: formatDateForBackend(experience.start_date),
             end_date: formatDateForBackend(experience.end_date)
         };
-        axios.put(`/experiences/${id}`, updatedExperience, {
+        axios.patch(`/experiences/${id}`, updatedExperience, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
         })
         .then(res => {
             setMessage('Experience updated successfully!');
-            navigate('/view-experience');
+            navigate('/employee/view_experience');
         })
         .catch(err => {
             console.error(err);
