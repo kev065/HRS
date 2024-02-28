@@ -44,7 +44,7 @@ import ViewPayslipHr from "./components/hrUI/ViewPayslipHr";
 import ViewStaffDetails from './components/hrUI/ViewStaffDetails';
 import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
-import UpdateDepartment from './components/employeeUI/UpdateEducation';
+
 import ViewDepartments from './components/managerUI/ViewDepartments';
 import UpdateDepartment from './components/managerUI/UpdateDepartments';
 import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee';

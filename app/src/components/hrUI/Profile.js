@@ -77,29 +77,9 @@ const Profile = () => {
                     {hrProfileData?.first_name}
                   </div>
                 </div>
-<<<<<<< HEAD
-                <h1 className="m-3 pt-3">{hrProfileData?.mantra}</h1>
-                <div className="card-body">
-                <div className="row">
-                    <div className="col-md-3">
-                      <h5>Staff No</h5>
-                    </div>
-                    <div className="col-md-9 text-secondary">
-                      {hrProfileData?.personal_no}
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-3">
-                      <h5>Full Name</h5>
-                    </div>
-                    <div className="col-md-9 text-secondary">
-                      {hrProfileData?.first_name}
-                    </div>
-=======
                 <div className="row">
                   <div className="col-md-3">
                     <h5>Last Name</h5>
->>>>>>> bd63ddd44cda835a03dbea9852e79d5c56a201e2
                   </div>
                   <div className="col-md-9 text-secondary">
                     {hrProfileData?.last_name}
