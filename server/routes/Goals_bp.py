@@ -1,7 +1,7 @@
 from flask import Blueprint, make_response, jsonify
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from flask_restful import Api, Resource, abort, reqparse
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from models import Goals, db
 from serializer import goalsSchema
 
@@ -9,14 +9,13 @@ goals_bp = Blueprint('goals_bp', __name__)
 api = Api(goals_bp)
 
 post_args = reqparse.RequestParser()
-post_args.add_argument('employee_id', type=str,
-                       required=True, help='Employee ID is required')
 post_args.add_argument('name', type=str, required=True,
                        help='Goal name is required')
 post_args.add_argument('description', type=str,
                        required=True, help='Description is required')
 post_args.add_argument('session_id', type=str,
                        required=True, help='Session ID is required')
+post_args.add_argument('manager_id', type=str, required=True, help='Manager ID is required')
 
 patch_args = reqparse.RequestParser()
 patch_args.add_argument('employee_id', type=str, help='Employee ID')
@@ -34,14 +33,22 @@ class GoalsResource(Resource):
     @jwt_required()
     def post(self):
         data = post_args.parse_args()
+        print("Received data:", data)
+        current_user = get_jwt_identity()
+    
 
         # error handling
-        goal = Goals.query.filter_by(name=data.name).first()
+        goal = Goals.query.filter_by(name=data['name']).first()
         if goal:
             return make_response(jsonify({"error": "Goal with the same name already exists"}), 409)
 
-        new_goal = Goals(employee_id=data['employee_id'], name=data['name'],
-                         description=data['description'], session_id=data['session_id'])
+        new_goal = Goals(
+            employee_id=current_user,
+            manager_id=data['manager_id'],  
+            name=data['name'],
+            description=data['description'],
+            session_id=data['session_id']
+        )
         db.session.add(new_goal)
         db.session.commit()
 
