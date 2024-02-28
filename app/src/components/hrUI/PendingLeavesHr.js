@@ -11,7 +11,11 @@ const PendingLeaves = () => {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get('http://localhost:5555/leaves');
+        const response = await axios.get('/leave_approvals', {
+          headers: {
+            'Authorization': `Bearer ${retrieve().access_token}`
+          }
+        });
         setLeaves(response.data);
       } catch (error) {
         if (error.response) {
@@ -27,7 +31,7 @@ const PendingLeaves = () => {
 
   const handleApprove = async (leaveId) => {
     try {
-      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: true }, {
+      const response = await axios.patch(`/leave_approvals/${leaveId}`, { hr_approval: true }, {
         headers: {
           'Authorization': `Bearer ${retrieve().access_token}`
         }
@@ -45,7 +49,7 @@ const PendingLeaves = () => {
 
   const handleDecline = async (leaveId) => {
     try {
-      const response = await axios.patch(`http://localhost:5555/leave/approval/${leaveId}`, { hr_approval: false }, {
+      const response = await axios.patch(`/leave/approval/${leaveId}`, { hr_approval: false }, {
         headers: {
           'Authorization': `Bearer ${retrieve().access_token}`
         }
