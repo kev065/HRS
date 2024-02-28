@@ -83,6 +83,7 @@ function App() {
         <Route path="/employee/payslip" element={<ViewPayslipEmployee />} />
         <Route path="/employee/view_trainings_employee" element={<ViewTrainingsEmployee />} />
         <Route path="/employee/add_goals" element={<AddGoalForm />} /> 
+        <Route path="/employee/update-experience/:id" element={<UpdateExperience />} />
 
        </Route>
 
