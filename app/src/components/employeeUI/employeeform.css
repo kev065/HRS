@@ -1,6 +1,6 @@
 .form-container {
   font-family: "Poppins", sans-serif;
-  min-height: 88vh;
+  min-height: 80vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -16,8 +16,6 @@
   grid-template-columns: repeat(2, 2fr);
   gap: 30px;
   padding: 2%;
-  box-shadow: 0 0 1px black;
-  height: 70vh;
 }
 
 .form-div label {
@@ -32,7 +30,7 @@
   border: rgba(13, 152, 186, 0.25) solid 1px;
   padding: 15px;
   text-indent: 0.5rem;
-  font-size: 200;
+  font-size: 12px;
   font-family: "Poppins", sans-serif;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -61,6 +59,7 @@
 .form-div input::placeholder {
   color: #333f;
   font-style: italic;
+  font-size: 10px;
 }
 
 button.update-btn {

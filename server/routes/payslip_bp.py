@@ -34,7 +34,6 @@ def validate_remuneration(value):
 
 
 def validate_remuneration_description(value):
-    print(value)
     if not isinstance(value, list):
         raise ValueError('Remuneration descriptions must be in a list')
 
@@ -105,8 +104,7 @@ class PayslipResource(Resource):
         total_deductions = 0
         gross_income = basic_salary
 
-        remuneration_descriptions = RemunerationDescription.query.filter_by(
-            remuneration_id=remuneration.id).all()
+        remuneration_descriptions = remuneration.remunerations
 
         for rem in remuneration_descriptions:
             if rem.type == "bonus":
@@ -150,8 +148,10 @@ class PayslipResource(Resource):
             'year': year
         }
 
+        remuneration = remunerationSchema.dump(remuneration)
+
         response = make_response(
-            jsonify(payslip), 200)
+            jsonify(payslip=payslip, remuneration=remuneration), 200)
         return response
 
     @hr_required()
@@ -199,13 +199,15 @@ class PayslipByID(Resource):
     def get(self, remuneration_id):
         remuneration = RemunerationById.get(self, remuneration_id)
         # fetch all associated renumeration descriptions
-        remuneration_descriptions = remuneration.remunerations
+        remuneration_descriptions = RemunerationDescription.query.filter_by(
+            remuneration_id=remuneration_id).all()
         # Serialize remuneration data
         remuneration_data = remuneration.get_json()
-        if not remuneration_descriptions:
+        if remuneration_descriptions:
+            result = [remunerationDescriptionSchema.dump(
+                rem_desc) for rem_desc in remuneration_descriptions]
+        else:
             remuneration_descriptions = None
-        result = [remunerationDescriptionSchema.dump(
-            rem_desc) for rem_desc in remuneration_descriptions]
 
         return {"remuneration": remuneration_data, "remuneration_descriptions": result}
 

@@ -12,18 +12,20 @@ const PaySlipEmployee = ({ payslip }) => {
       <div id="scope">
         <div class="scope-entry">
           <div class="title">PAY RUN</div>
-          <div class="value">Mar 15, 2015</div>
+          <div class="value">
+            {payslip?.month}/{payslip?.year}
+          </div>
         </div>
         <div class="scope-entry">
           <div class="title">PAY PERIOD</div>
-          <div class="value">Mar 1 - Mar 15, 2015</div>
+          <div class="value">{payslip?.date_created}</div>
         </div>
       </div>
       <div class="payslip-content">
         <div class="left-panel">
           <div id="employee">
-            <div id="name">{employee.employee_profiles[0]?.first_name}</div>
-            <div id="name">{employee.employee_profiles[0]?.last_name}</div>
+            <div id="name">{employee?.employee_profiles[0]?.first_name}</div>
+            <div id="name">{employee?.employee_profiles[0]?.last_name}</div>
             <div id="email">{employee?.email}</div>
           </div>
           <div class="details">
@@ -37,11 +39,11 @@ const PaySlipEmployee = ({ payslip }) => {
             </div>
             <div class="entry">
               <div class="label">Position</div>
-              <div class="value">{employee.employee_profiles[0]?.title}</div>
+              <div class="value">{employee?.employee_profiles[0]?.title}</div>
             </div>
             <div class="entry">
               <div class="label">Department</div>
-              <div class="value">department here</div>
+              <div class="value">{payslip?.department_name}</div>
             </div>
             <div class="entry">
               <div class="label">Prepared by</div>
@@ -52,7 +54,7 @@ const PaySlipEmployee = ({ payslip }) => {
             <div class="title">Total Income</div>
             <div class="entry">
               <div class="label">KSH</div>
-              <div class="value">total income here</div>
+              <div class="value">{payslip?.total_income}</div>
             </div>
           </div>
         </div>
@@ -117,7 +119,7 @@ const PaySlipEmployee = ({ payslip }) => {
                 <div class="label">NET PAY</div>
                 <div class="detail"></div>
                 <div class="rate"></div>
-                <div class="amount">net pay here</div>
+                <div class="amount">{payslip.net_pay}</div>
               </div>
             </div>
           </div>

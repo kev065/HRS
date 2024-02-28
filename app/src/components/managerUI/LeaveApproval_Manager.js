@@ -1,82 +1,115 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./ManagerPendingLeaves.css";
 import { retrieve } from "../Encryption";
-import './ManagerPendingLeaves.css';
 
 const ManagerPendingLeaves = () => {
   const [leaves, setLeaves] = useState([]);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null); 
+  const [success, setSuccess] = useState(null);
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get('http://localhost:5555/leaves', {
-            headers: {
-                "Authorization": "Bearer " + retrieve().access_token
-            }
-        });
+        const response = await axios.get("/leave_approvals");
         setLeaves(response.data);
       } catch (error) {
         if (error.response) {
           setError(error.response.data.message);
         } else {
-          setError('An error occurred while fetching leaves');
+          setError("An error occurred while fetching leaves");
         }
       }
     };
 
     fetchLeaves();
-  }, []);
+  }, [refresh]);
 
   const handleApprove = async (leaveId) => {
-    try {
-      const response = await axios.patch(`http://localhost:5555/leave_approvals/${leaveId}`, { manager_approval: true }, {
-            headers: {
-                "Authorization": "Bearer " + retrieve().access_token
-            }
-        });
-      setSuccess('Leave approved successfully'); // Set success message
-      console.log('Leave approved:', response.data);
-    } catch (error) {
-      if (error.response) {
-        setError(error.response.data.message);
-      } else {
-        setError('An error occurred while approving leave');
-      }
-    }
+    const manager_app_date = new Date();
+
+    fetch(`/leave_approvals/${leaveId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + retrieve().access_token,
+      },
+      body: JSON.stringify({
+        approved_by_manager: true,
+        manager_app_date: manager_app_date.toISOString().replace("Z", ""),
+      }),
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          resp.json().then((data) => {
+            setSuccess("Successfully approved leave");
+          });
+          setRefresh(!refresh);
+        } else {
+          resp.json().then((err) => setError(error.error));
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const handleDecline = async (leaveId) => {
-    try {
-      const response = await axios.patch(`http://localhost:5555/leave_approvals/${leaveId}`, { manager_approval: false }, {
-            headers: {
-                "Authorization": "Bearer " + retrieve().access_token
-            }
-        });
-      setSuccess('Leave declined successfully'); 
-      console.log('Leave declined:', response.data);
-    } catch (error) {
-      if (error.response) {
-        setError(error.response.data.message);
-      } else {
-        setError('An error occurred while declining leave');
-      }
-    }
+    const manager_app_date = new Date();
+
+    fetch(`/leave_approvals/${leaveId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + retrieve().access_token,
+      },
+      body: JSON.stringify({
+        approved_by_manager: false,
+        manager_app_date: manager_app_date.toISOString().replace("Z", ""),
+      }),
+    })
+      .then((resp) => {
+        if (resp.ok) {
+          resp.json().then((data) => {
+            setSuccess("Successfully declined leave");
+          });
+          setRefresh(!refresh);
+        } else {
+          resp.json().then((err) => setError(error.error));
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
-    <div className="container">
+    <div className="container w-50 bg-white text-dark m-auto pt-4">
       {error && <p className="error">{error}</p>}
-      {success && <p className="success">{success}</p>} {/* Display success message */}
-      {leaves.map((leave) => (
+      {success && <p className="success">{success}</p>}
+      {leaves?.map((leave) => (
         <div key={leave.id} className="leave">
           <p>Employee ID: {leave.employee_id}</p>
-          <p>Start Date: {new Date(leave.start_date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-          <p>End Date: {new Date(leave.end_date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
-          <p>Description: {leave.description}</p>
-          <button className="button approve" onClick={() => handleApprove(leave.id)}>Approve</button>
-          <button className="button decline" onClick={() => handleDecline(leave.id)}>Decline</button>
+          <p>
+            {leave.approved_by_hr ? "Approved by HR" : "Not approved by HR"}
+          </p>
+          <p>
+            {leave.approved_by_manager
+              ? "Approved by Manager"
+              : "Not approved by manager"}
+          </p>
+          {!leave.approved_by_manager ? (
+            <button
+              className="button approve"
+              onClick={() => handleApprove(leave.id)}
+            >
+              Approve
+            </button>
+          ) : (
+            <button
+              className="button decline"
+              onClick={() => handleDecline(leave.id)}
+            >
+              Decline
+            </button>
+          )}
         </div>
       ))}
     </div>
@@ -84,5 +117,3 @@ const ManagerPendingLeaves = () => {
 };
 
 export default ManagerPendingLeaves;
-
-
