@@ -40,11 +40,11 @@ const ViewEmployeesPerDepartment = () => {
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2>Staff in my Department</h2>
+      <h2 style={{marginLeft:"440px",marginBottom:"20px",marginTop:"20px"}}>Staff in my Department</h2>
       <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
-            <th>ID</th>
+            <th>Staff No</th>
           
             <th>First Name</th>
             <th>Last Name</th>
@@ -55,7 +55,7 @@ const ViewEmployeesPerDepartment = () => {
         <tbody>
           {employees.map(employee => (
             <tr key={employee.id}>
-              <td>{employee.id}</td>
+              <td>{employee.personal_no}</td>
               
               <td>{employee.first_name}</td>
               <td>{employee.last_name}</td>

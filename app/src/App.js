@@ -46,8 +46,11 @@ import ManagerEditProfile from './components/managerUI/ManagerEditProfile';
 import ManagerCreateProfile from './components/managerUI/ManagerCreateProfile'
 import AddGoalForm from './components/employeeUI/AddGoalsEmployee';
 import ViewDepartments from './components/managerUI/ViewDepartments';
-import UpdateDepartments from './components/managerUI/UpdateDepartments';
+import UpdateDepartment from './components/managerUI/UpdateDepartments';
 import ViewTrainingsEmployee from './components/employeeUI/ViewTrainingsEmployee';
+import ViewManagers from './components/hrUI/ViewManagers';
+import ViewHrPersonnel from './components/hrUI/ViewHrPersonnel';
+
 
 
 function App() {
@@ -100,6 +103,9 @@ function App() {
         <Route path="/hr/session" element={<Session sessions={sessions} setSessions={setSessions}/>}/>
         <Route path="/hr/create_payslip" element={<CreatePayslip />} />
         <Route path="/hr/view_employee_payslip" element={<ViewPayslipHr />} />
+        <Route path="/hr/view_managers" element={<ViewManagers />} />
+        <Route path="/hr/view_hr_personnel" element={<ViewHrPersonnel />} />
+        
         
         </Route>
 

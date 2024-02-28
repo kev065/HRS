@@ -65,6 +65,14 @@ const Profile = () => {
                 </div>
                 <h1 className="m-3 pt-3">{hrProfileData?.mantra}</h1>
                 <div className="card-body">
+                <div className="row">
+                    <div className="col-md-3">
+                      <h5>Staff No</h5>
+                    </div>
+                    <div className="col-md-9 text-secondary">
+                      {hrProfileData?.personal_no}
+                    </div>
+                  </div>
                   <div className="row">
                     <div className="col-md-3">
                       <h5>Full Name</h5>

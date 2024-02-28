@@ -43,9 +43,9 @@ def seed_database():
         # Managers
         manager_data = [
             {"email": "manager1@example.com", "password": "hashed_password_1",
-                "dept_id": departments[0].id},
+                "dept_id": departments[0].id,"personal_no":"SF1120"},
             {"email": "manager2@example.com", "password": "hashed_password_2",
-                "dept_id": departments[1].id},
+                "dept_id": departments[1].id,"personal_no":"SF1130"},
         ]
         managers = []
         for manager_info in manager_data:
@@ -57,9 +57,9 @@ def seed_database():
         # Employees
         employee_data = [
             {"email": "employee1@example.com",
-                "password": "hashed_password_1", "dept_id": departments[0].id},
+                "password": "hashed_password_1", "dept_id": departments[0].id,"personal_no":"SF1100"},
             {"email": "employee2@example.com",
-                "password": "hashed_password_2", "dept_id": departments[1].id},
+                "password": "hashed_password_2", "dept_id": departments[1].id,"personal_no":"SF1110"},
         ]
         employees = []
         for employee_info in employee_data:
@@ -246,9 +246,9 @@ def seed_database():
         # Seed data for HR Personnels
         hr_personnel_data = [
             {"email": "hr1@example.com", "password": "hashed_password_1",
-                "dept_id": "department_id_1"},
+                "dept_id": "department_id_1","personal_no":"SF1160"},
             {"email": "hr2@example.com", "password": "hashed_password_2",
-                "dept_id": "department_id_2"},
+                "dept_id": "department_id_2","personal_no":"SF1150"},
         ]
         for hr_info in hr_personnel_data:
             hr_personnel = HR_Personel(**hr_info)

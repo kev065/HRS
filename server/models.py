@@ -31,6 +31,7 @@ class Employee(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    personal_no=db.Column(db.String(10),unique=True,nullable=False)
     dept_id = db.Column(db.String, db.ForeignKey(
         'departments.id'), nullable=False)
     employee_profiles = db.relationship('EmployeeProfile', backref='employee')
@@ -50,8 +51,9 @@ class Manager(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    personal_no=db.Column(db.String(10),unique=True,nullable=False)
     dept_id = db.Column(db.String, db.ForeignKey(
-        'departments.id'), nullable=False, unique=True)
+        'departments.id'), nullable=False)
     leave_approvals = db.relationship('LeaveApproval', backref='manager')
     manager_profile = db.relationship(
         'ManagerProfile', backref='manager')
@@ -71,6 +73,7 @@ class HR_Personel(db.Model):
     id = db.Column(db.String, primary_key=True, default=generate_uuid)
     email = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    personal_no=db.Column(db.String(10),unique=True,nullable=False)
     dept_id = db.Column(db.String, db.ForeignKey(
         'departments.id'), nullable=False)
     leave_approvals = db.relationship('LeaveApproval', backref='hr_personnel')
@@ -85,6 +88,7 @@ class EmployeeProfile(db.Model):
         'employees.id'), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
+  
     mantra = db.Column(db.String, nullable=False)
     phone_contact = db.Column(db.Integer, nullable=False)
     profile_photo = db.Column(db.String, nullable=False)
@@ -100,6 +104,7 @@ class ManagerProfile(db.Model):
         'managers.id'), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
+    
     mantra = db.Column(db.String(), nullable=False)
     phone_contact = db.Column(db.Integer, nullable=False)
     profile_photo = db.Column(db.String(), nullable=False)
@@ -115,6 +120,7 @@ class HrProfile(db.Model):
         'hr_personnels.id'), nullable=False)
     first_name = db.Column(db.String(30), nullable=False)
     last_name = db.Column(db.String(30), nullable=False)
+   
     mantra = db.Column(db.String, nullable=False)
     phone_contact = db.Column(db.Integer, nullable=False)
     profile_photo = db.Column(db.String(), nullable=False)

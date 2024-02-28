@@ -124,6 +124,7 @@ const Login = () => {
                   id="roleDropdown"
                   onChange={handleRoleChange}
                 >
+                  <option value="">Select a role</option>
                   <option value={"manager"}>Manager</option>
                   <option value={"employee"}>Employee</option>
                   <option value={"hr"}>HR</option>
