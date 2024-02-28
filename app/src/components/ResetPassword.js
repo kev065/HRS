@@ -72,7 +72,7 @@ const ResetPassword = () => {
 
   return (
     <div className="Reset-Passowrd"> 
-    <nav className="main-nav">
+      <nav className="main-nav">
           <div className="nav-logo">
             <a href="#">HRS.io</a>
           </div>
