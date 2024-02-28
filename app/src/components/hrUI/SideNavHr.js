@@ -14,7 +14,13 @@ const SideNavHr = () => {
   <div className="sidebar">
     {/* Sidebar user panel (optional) */}
     <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-      <div className="image">
+      <div className="">
+      <div className=""  style={{marginLeft:"30px",color:"white",font:"helvetica"}}>
+     
+     Hr's DashBoard
+   
+
+</div>
        
       </div>
       
@@ -34,6 +40,19 @@ const SideNavHr = () => {
           </Link>
         </li>
 
+     
+        <li className="nav-item">
+        <Link to={"/hr/add_employee"} className="nav-link">
+            <i className="nav-icon fas fa-user-plus" />
+            <p>Onboard Staff</p>
+          </Link>
+          </li>
+        <li className="nav-item">
+          <Link to={"/hr/hr_delete_employee"} className="nav-link">
+            <i className="nav-icon fas fa-user-minus" />
+            <p>Offboard Staff</p>
+          </Link>
+        </li>
         <li className="nav-item">
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-users" />
@@ -43,24 +62,26 @@ const SideNavHr = () => {
             </p>
           </a>
           
-          <Link to={"/hr/add_employee"} className="nav-link">
-            <i className="nav-icon fas fa-user-plus" />
-            <p>Onboard Employee</p>
-          </Link>
+         
         </li>
-        <li className="nav-item">
-          <Link to={"/hr/hr_delete_employee"} className="nav-link">
-            <i className="nav-icon fas fa-user-minus" />
-            <p>Offboard Employee</p>
-          </Link>
-        </li>
-
 
         <li className="nav-item">
           <a href="#" className="nav-link">
             <i className="nav-icon fas fa-users-cog" />
             <p>
-              Managers
+            
+              <Link to={"/hr/view_managers"}>Managers</Link>
+            
+            </p>
+          </a>
+      
+        </li>
+        <li className="nav-item">
+          <a href="#" className="nav-link">
+            <i className="nav-icon fas fa-users-cog" />
+            <p>
+            
+              <Link to={"/hr/view_hr_personnel"}>Hr Personnel</Link>
             
             </p>
           </a>

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import CreateTraining from './CreateTraining';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import UpdateTrainings from './UpdateTrainings';
-import {retrieve} from "../Encryption";
-
-
+import { retrieve } from "../Encryption";
 
 const ViewTrainings = ({ trainings, setTrainings }) => {
     const [showCreateTraining, setShowCreateTraining] = useState(false);
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
-    const navigate=useNavigate()
-    const { id } = useParams()
+    const navigate = useNavigate();
+    const { id } = useParams();
 
     useEffect(() => {
         const fetchTrainings = () => {
@@ -37,34 +35,32 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
         setShowCreateTraining(false);
     };
 
-    const handleUpdateTraining =(training)=>{
+    const handleUpdateTraining = (training) => {
         navigate(`/hr/update_trainings/${training.id}`);
-    }
-    const handleDeleteTraining =(trainingId)=>{
+    };
+
+    const handleDeleteTraining = (trainingId) => {
         fetch(`/trainings/${trainingId}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: "Bearer " + retrieve().access_token,
-      },
-    })
-      .then((res) => {
-        console.log("RES: ", res);
-       
-      })
-      .then((data)=>{
-        const updatedTrainings = trainings.filter(training => training.id !== trainingId);
-        setTrainings(updatedTrainings)
-        
-      })
-      .catch((err) => {
-        console.log(err);
-        throw new Error(err);
-      });
-        
-    }
+            method: "DELETE",
+            headers: {
+                Authorization: "Bearer " + retrieve().access_token,
+            },
+        })
+            .then((res) => {
+                console.log("RES: ", res);
 
+            })
+            .then((data) => {
+                const updatedTrainings = trainings.filter(training => training.id !== trainingId);
+                setTrainings(updatedTrainings)
 
-    
+            })
+            .catch((err) => {
+                console.log(err);
+                throw new Error(err);
+            });
+
+    };
 
     const filteredTrainings = trainings.filter(training => {
         const startDate = new Date(training.start_date);
@@ -78,17 +74,21 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
         return true;
     });
 
+    const handleAddTraining = () => {
+        setShowCreateTraining(true);
+    };
+
     return (
-        <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-            <h2 style={{ marginLeft:"500px", marginBottom:"50px"}}>Trainings</h2>
-            <div style={{ marginLeft:"450px", marginBottom:"50px"}}>
+        <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor: "white", marginTop: "20px" }}>
+            <h2 style={{ marginLeft: "500px", marginBottom: "50px" }}>Trainings</h2>
+            <div style={{ marginLeft: "50px", marginBottom: "50px" }}>
                 <label htmlFor="fromDate">From: </label>
                 <input type="date" id="fromDate" value={fromDate} onChange={e => setFromDate(e.target.value)} />
                 <label htmlFor="toDate">To: </label>
                 <input type="date" id="toDate" value={toDate} onChange={e => setToDate(e.target.value)} />
             </div>
-            
-            <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
+
+            <table className='ui striped table' style={{ width: "1200px", marginLeft: "60px", marginBottom: "20px" }}>
                 <thead>
                     <tr>
                         <th>Title</th>
@@ -110,17 +110,15 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
                             <td>{training.end_date}</td>
                             <td>{training.end_time}</td>
                             <td>
-                                <button className='ui mini teal button' style={{ marginLeft:"10px"}} onClick={() => handleUpdateTraining(training)}>Update</button>
-                                <button  className='ui mini teal button' style={{ marginLeft:"10px"}}onClick={() => handleDeleteTraining(training.id)}>Delete</button>
+                                <button className='ui mini teal button' style={{ marginLeft: "10px" }} onClick={() => handleUpdateTraining(training)}>Update</button>
+                                <button className='ui mini teal button' style={{ marginLeft: "10px" }} onClick={() => handleDeleteTraining(training.id)}>Delete</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
             {showCreateTraining && <CreateTraining onClose={handleCreateTrainingClose} trainings={trainings} setTrainings={setTrainings} />}
-            {/* {id && <UpdateTrainings training={trainings.find(training => training.id === id)} trainings={trainings} setTrainings={setTrainings} />} */}
-
-            <button className='ui teal button'style={{ width: "200px", marginLeft:"500px",marginTop:"60px"}}onClick={() => setShowCreateTraining(true)}>Add Training</button>
+            <button className='ui teal button' style={{ width: "200px", marginLeft: "500px", marginTop: "60px", display: showCreateTraining ? 'none' : 'block' }} onClick={handleAddTraining}>Add Training</button>
         </div>
     );
 };

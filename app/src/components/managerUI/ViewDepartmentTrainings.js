@@ -37,11 +37,11 @@ function ViewDepartmentTrainings() {
 
     return (
         <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-            <h1>Training for my Department Staff </h1>
+            <h1 style={{marginLeft:"370px",marginBottom:"20px",marginTop:"20px"}}>Training for my Department Staff </h1>
             {error && <p>{error}</p>}
             <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
                 <thead>
-                    <tr>
+                    <tr> <th>Staff No</th>
                         <th>First Name</th>
                         <th>Last Name</th>
                         <th>Email</th>
@@ -52,6 +52,7 @@ function ViewDepartmentTrainings() {
                 <tbody>
                     {employees.map(employee => (
                         <tr key={employee.id}>
+                            <td>{employee.personal_no}</td>
                             <td>{employee.first_name}</td>
                             <td>{employee.last_name}</td>
                             <td>{employee.email}</td>

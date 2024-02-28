@@ -42,7 +42,7 @@ const ViewStaffEducation = () => {
       <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
-            <th>Employee ID</th>
+            <th>Staff No</th>
        
             <th>First Name</th>
             <th>Last Name</th>
@@ -57,7 +57,7 @@ const ViewStaffEducation = () => {
         <tbody>
           {educationDetails.map(education => (
             <tr key={education.id}>
-              <td>{education.employee_id}</td>
+              <td>{education.personal_no}</td>
             
               <td>{education.first_name}</td>
               <td>{education.last_name}</td>
