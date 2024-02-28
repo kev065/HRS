@@ -2,7 +2,12 @@ import React, { useEffect, useState } from "react";
 import "./payslipEmployee.css";
 import { retrieve } from "../Encryption";
 
-const PaySlipEmployee = ({ payslip, setPayslip }) => {
+const PaySlipEmployee = ({
+  payslip,
+  setPayslip,
+  showUpdatePayslip,
+  setShowUpdatePayslip,
+}) => {
   const [employee, setEmployee] = useState(null);
   const [clearBtn, setClearBtn] = useState(false);
 
@@ -155,6 +160,12 @@ const PaySlipEmployee = ({ payslip, setPayslip }) => {
       </button>
       <button className="btn btn-danger float-right" onClick={handleDelete}>
         Delete
+      </button>
+      <button
+        className="btn btn-primary float-right"
+        onClick={(e) => setShowUpdatePayslip(!showUpdatePayslip)}
+      >
+        Edit
       </button>
     </div>
   );

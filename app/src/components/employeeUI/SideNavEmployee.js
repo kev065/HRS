@@ -9,7 +9,7 @@ const SideNavEmployee = () => {
     <div>
       <div>
         {/* Main Sidebar Container */}
-        <aside className="main-sidebar sidebar-dark-primary elevation-4">
+        <aside className="main-sidebar sidebar-dark-primary elevation-4" >
           <a href="index3.html" className="brand-link">
             <span
               className="brand-text font-weight-light"
@@ -20,7 +20,14 @@ const SideNavEmployee = () => {
           </a>
 
           <div className="sidebar">
-            <div className="user-panel mt-3 pb-3 mb-3 d-flex"></div>
+            <div className="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div className=""  style={{marginLeft:"30px",color:"white",font:"helvetica"}}>
+     
+     Employee's DashBoard
+   
+
+</div>
+</div>
             {/* SidebarSearch Form */}
             <div className="form-inline">
               

@@ -5,10 +5,10 @@ import ApplyLeave from './ApplyLeave';
 
 const ViewLeaves = () => {
   const [leaves, setLeaves] = useState([]);
-  const [showAddLeave, setShowAddLeave] = useState(false);
+  const [showAddLeave, setShowAddLeave] = useState(false); // Initialize to false
   const navigate = useNavigate();
   const today = new Date();
-  const employee_id=retrieve().employee.id
+  const employee_id = retrieve().employee.id;
 
   useEffect(() => {
     const fetchLeaves = () => {
@@ -65,12 +65,12 @@ const ViewLeaves = () => {
   };
 
   const handleAddLeaveClose = () => {
-    setShowAddLeave(false);
+    setShowAddLeave(false); 
   };
 
   return (
     <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2>Leave Applications</h2>
+      <h2 style={{ marginLeft: "450px"}}>Leave Applications</h2>
       <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
         <thead>
           <tr>
@@ -101,8 +101,8 @@ const ViewLeaves = () => {
           ))}
         </tbody>
       </table>
+      {!showAddLeave && <button className='ui teal button'style={{ width: "200px", marginLeft:"500px",marginTop:"60px"}} onClick={() => setShowAddLeave(true)}>Apply for Leave</button>}
       {showAddLeave && <ApplyLeave onClose={handleAddLeaveClose} leaves={leaves} setLeaves={setLeaves} />}
-      <button className='ui teal button'style={{ width: "200px", marginLeft:"500px",marginTop:"60px"}} onClick={() => setShowAddLeave(true)}>Apply for Leave</button>
     </div>
   );
 };

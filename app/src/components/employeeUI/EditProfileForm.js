@@ -199,7 +199,7 @@ const EditProfileForm = () => {
           <br />
           <input
             type="text"
-            id="title"
+            id="form-title"
             name="title"
             placeholder="eg. Mr. Mrs"
             value={formik.values.title}

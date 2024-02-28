@@ -28,11 +28,11 @@ const EmployeeProfile = () => {
   const employeeProfileData = employee.employee_profiles[0];
 
   const handleEditButtonClick = () => {
-    navigate('/employee/profile/edit');
+    navigate("/employee/profile/edit");
   };
 
   const handleResetPasswordButtonClick = () => {
-    navigate('/reset_password');
+    navigate("/reset_password");
   };
   return (
     <div
@@ -129,7 +129,7 @@ const EmployeeProfile = () => {
                           <h5>{payslip.name}</h5>
                         </div>
                         <div className="col-md-9 text-secondary">
-                          {payslip.description}
+                          {payslip.salary}
                         </div>
                       </div>
                     </div>
@@ -161,10 +161,18 @@ const EmployeeProfile = () => {
                   <h5 className="text-secondary">No approved leaves</h5>
                 )}
               </div>
-              <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
+              <button
+                type="update"
+                className="btn btn-primary"
+                onClick={handleEditButtonClick}
+              >
                 Edit Profile
               </button>
-              <button type="update" className="btn btn-primary" onClick={handleResetPasswordButtonClick}>
+              <button
+                type="update"
+                className="btn btn-primary"
+                onClick={handleResetPasswordButtonClick}
+              >
                 Reset Password
               </button>
             </div>

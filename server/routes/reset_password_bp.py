@@ -76,13 +76,25 @@ class VerifyPasswordReset(Resource):
         if not user:
             return {"message": "User not found"}, 404
              
-
+        
 
         data = request.get_json()
         new_password = data.get('new_password')
 
         if not new_password:
             return {"message": "New password cannot be empty"}, 400
+
+        # Check if the user has a valid reset token
+        if user.id not in reset_tokens:
+            return {"message": "Invalid reset token"}, 401
+
+        reset_token = reset_tokens[user.id]
+        now = datetime.utcnow()
+
+         # Check if the reset token has expired
+        if now > reset_token['expiration_date']:
+            return {"message": "Reset token has expired"}, 401
+
 
         # Update the user's password
         user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
@@ -94,7 +106,7 @@ class VerifyPasswordReset(Resource):
             print(f"Key '{user.id}' not found in reset_tokens dictionary")
 
         db.session.commit()
-
         return {"message": "Password reset successfully"}, 200
+       
     
 api.add_resource(VerifyPasswordReset, '/reset_password/verify')

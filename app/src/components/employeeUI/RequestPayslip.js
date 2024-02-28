@@ -32,11 +32,11 @@ const RequestPayslip = ({ setPayslip }) => {
           if (!resp.ok) {
             resp.json().then((error) => console.log(error));
           } else {
-            resp.json().then((payslip) => {
+            resp.json().then((payslipData) => {
               //set payslip state with fetched payslip
-              setPayslip(payslip);
+              setPayslip(payslipData.payslip);
               //log data or errors
-              console.log(payslip);
+              console.log(payslipData);
             });
           }
         })

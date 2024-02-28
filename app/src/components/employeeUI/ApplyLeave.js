@@ -3,6 +3,7 @@ import { retrieve } from "../Encryption";
 
 const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
     const [startDate, setStartDate] = useState('');
+    
     const [endDate, setEndDate] = useState('');
     const [description, setDescription] = useState('');
     const employeeId=retrieve().employee.id
@@ -14,7 +15,6 @@ const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
             start_date: startDate,
             end_date: endDate,
             description: description
-  
         };
 
         fetch('/leaves', {
@@ -28,13 +28,11 @@ const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
             .then((resp) => resp.json())
             .then((data) => {
                 console.log('New Leave Application:', data);
-                setLeaves([...leaves,data])
+                setLeaves([...leaves, data])
                 setEndDate("")
                 setStartDate("")
                 setDescription("")
-                onClose()
-
-               
+                onClose(); // Close the form after submission
             })
             .catch((error) => {
                 console.error('Error applying for leave:', error);
@@ -49,32 +47,35 @@ const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
         <div className='content-wrapper' style={{ marginLeft: "10px", backgroundColor:"white", marginTop:"40px"}}>
             <h2 style={{ marginLeft:"410px",marginTop:"60px"}}>Apply for Leave</h2>
             <div className="ui equal width form" style={{ marginLeft:"250px",marginTop:"60px",width:"800px"}}>
-            <form onSubmit={handleSubmit}>
-            <div className="twelve wide field">
-                <label>
-                    Start Date:
-                    <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
-                </label>
-                </div>
-                <br />
-                <div className="twelve wide field">
-                <label>
-                    End Date:
-                    <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
-                </label>
-                </div>
-                <br />
-                <div className="twelve wide field">
-                <label>
-                    Description:
-                    <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
-                </label>
-                <br />
-                </div>
-                <button type="submit" className="ui teal button" style={{ marginBottom: '20px', marginTop: '40px',marginLeft:"250px" }}>Submit</button>
-            </form>
+                <form onSubmit={handleSubmit}>
+                    <div className="twelve wide field">
+                        <label>
+                            Start Date:
+                            <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} required />
+                        </label>
+                    </div>
+                    <br />
+                    <div className="twelve wide field">
+                        <label>
+                            End Date:
+                            <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
+                        </label>
+                    </div>
+                    <br />
+                    <div className="twelve wide field">
+                        <label>
+                            Description:
+                            <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+                        </label>
+                        <br />
+                    </div>
+                    <br/>
+                    <button type="submit" className="ui teal button" style={{ marginBottom: '20px', marginTop: '40px',width:"200px",marginLeft:"200px" }}>Submit</button>
+                </form>
             </div>
-            <button className="mini ui teal button" style={{ marginLeft:"800px"}} onClick={handleExit}>Close</button>
+            <div>
+                <button className="mini ui teal button" style={{ marginLeft:"800px"}} onClick={handleExit}>Close</button>
+            </div>
         </div>
     );
 };

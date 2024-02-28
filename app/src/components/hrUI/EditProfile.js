@@ -4,13 +4,13 @@ import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { retrieve } from "../Encryption";
-import './create_profile.css'
+import "./create_profile.css";
 
 const EditProfile = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const  id  =  retrieve().hr.id
+  const id = retrieve().hr.id;
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [hrProfileData, setHrProfileData] = useState({});
 
@@ -85,7 +85,6 @@ const EditProfile = () => {
       fetch(`/hrProfiles/${hrProfileData.id}`, {
         method: "PATCH",
         headers: {
-          
           Authorization: "Bearer " + retrieve().access_token,
         },
         body: formData,
@@ -199,7 +198,7 @@ const EditProfile = () => {
           <br />
           <input
             type="text"
-            id="title"
+            id="form-title"
             name="title"
             placeholder="eg. Mr. Mrs"
             value={formik.values.title}
