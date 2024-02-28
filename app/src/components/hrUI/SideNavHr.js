@@ -150,7 +150,7 @@ const SideNavHr = () => {
           <Link to="/hr/session" className="nav-link">
           <i className="nav-icon fas fa-users-cog" />
             <p>
-              session
+              Session
             </p>
           </Link>
         </li>
