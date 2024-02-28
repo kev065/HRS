@@ -109,6 +109,8 @@ function App() {
         <Route path="/hr/view_hr_personnel" element={<ViewHrPersonnel />} />
         <Route path="/hr/view_leaves" element={<HRViewLeaves />} />
         
+
+        
         </Route>
 
         <Route path="/manager" element={<DashBoardManager />} >
@@ -131,3 +133,4 @@ function App() {
 }
 
 export default App;
+        
