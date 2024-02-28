@@ -1,4 +1,5 @@
-from flask import Blueprint, make_response, jsonify
+from flask import Blueprint, make_response, jsonify, current_app
+from flask_mail import Message
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
