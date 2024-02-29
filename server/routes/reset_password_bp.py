@@ -1,112 +1,157 @@
-from flask import Blueprint, jsonify, request, current_app, url_for
-from flask_restful import Resource, Api, reqparse
-from flask_restful import Api, Resource, abort, reqparse
+from datetime import datetime
+from flask import Blueprint,request,make_response,jsonify
+from flask_marshmallow import Marshmallow
+from flask_restful import Api, Resource, reqparse,abort
+from flask_jwt_extended import jwt_required,get_jwt_identity,current_user, get_jwt
 from flask_bcrypt import Bcrypt
-import secrets
-from datetime import datetime, timedelta
-from flask_jwt_extended import jwt_required,  get_jwt_identity, get_jwt
-from flask_jwt_extended import create_access_token
-from flask_cors import cross_origin
+from models import db,Employee, Manager, HR_Personel
 
-from models import Employee, Manager, HR_Personel, db, TokenBlocklist
-from serializer import managerSchema, hrSchema, employeeSchema
 
+change_password_bp=Blueprint('change_password_bp',__name__)
+ma=Marshmallow(change_password_bp)
+api=Api(change_password_bp)
 bcrypt = Bcrypt()
+ 
 
-reset_password_bp = Blueprint('reset_password_bp', __name__)
-api = Api(reset_password_bp)
+change_password_args=reqparse.RequestParser()
+change_password_args.add_argument('currentPassword',type=str, required=True)
+change_password_args.add_argument('newPassword',type=str, required=True)
+change_password_args.add_argument('confirmPassword',type=str, required=True)
 
-reset_tokens = {}
-
-reset_password_parser = reqparse.RequestParser()
-reset_password_parser.add_argument('email', type=str, required=True, help="email is required")
-
-class ResetPassword(Resource):
-    def post(self):
-        data = reset_password_parser.parse_args()
-        email = data['email'] 
-
-        user = Employee.query.filter_by(email=email).first() or \
-               Manager.query.filter_by(email=email).first() or \
-               HR_Personel.query.filter_by(email=email).first()
-
-        if not user:
-            return {"message": "User not found"}, 404
-        
-        # Generate a unique token 
-        token = secrets.token_urlsafe(32)
-
-        # Get expiration time from the app configuration
-        expiration_hours = current_app.config.get('JWT_ACCESS_TOKEN_EXPIRES', 24)
-        print(f"Expiration hours: {expiration_hours}")
-
-        # Check if expiration_hours is a valid integer
-        if not isinstance(expiration_hours, (int, float)):
-            print(f"Invalid value for expiration_hours: {expiration_hours}")
-            # Handle the error appropriately, e.g., set a default value
-
-        total_hours = expiration_hours.total_seconds() / 3600.0
-        expires_delta = timedelta(hours=total_hours)
-        now = datetime.utcnow()
-        expiration_date = now + expires_delta
-
-        # Store the token in-memory (or you can save it in the database)
-        reset_tokens[user.id] = {"token": token, "expiration_date": expiration_date}
+forgot_password_args=reqparse.RequestParser()
+forgot_password_args.add_argument('email',type=str, required=True)
+forgot_password_args.add_argument('newPassword',type=str, required=True)
+forgot_password_args.add_argument('confirmPassword',type=str, required=True)
+forgot_password_args.add_argument('role',type=str, required=True)
 
 
-        # Create a JWT token with the user's email and expiration time
-        jwt_token = create_access_token(identity=email, expires_delta=expires_delta)
-
-        
-        return {"message": "Reset token generated successfully", "token": jwt_token}, 200
-
-api.add_resource(ResetPassword, '/reset_password/request')
-
-class VerifyPasswordReset(Resource):
+class ChangePassword(Resource):
     @jwt_required()
     def post(self):
-        current_user_email = get_jwt_identity()
-
-        print("Current User Email:", current_user_email)
-
-        user = Employee.query.filter_by(email=current_user_email).first() or \
-               Manager.query.filter_by(email=current_user_email).first() or \
-               HR_Personel.query.filter_by(email=current_user_email).first()
-
-        if not user:
-            return {"message": "User not found"}, 404
-             
+        data = change_password_args.parse_args()
+        claims = get_jwt()
+        print(claims)
         
+        current_user = get_jwt_identity()
+        if claims['role']=='employee':
+            employee = Employee.query.filter_by(id=current_user).first()
 
-        data = request.get_json()
-        new_password = data.get('new_password')
+            if not employee:
+                abort(404, detai="employee not found")
 
-        if not new_password:
-            return {"message": "New password cannot be empty"}, 400
+            if not bcrypt.check_password_hash(employee.password, data["currentPassword"]):
+                return abort(401, detail="Incorrect current password")
+            
+            if data["newPassword"] != data["confirmPassword"]:
+                return abort(422, detail="New password and confirm password do not match")
+            hashed_password = bcrypt.generate_password_hash(data["newPassword"]).decode('utf-8')
+            
+            employee.password = hashed_password
 
-        # Check if the user has a valid reset token
-        if user.id not in reset_tokens:
-            return {"message": "Invalid reset token"}, 401
+            db.session.commit()
 
-        reset_token = reset_tokens[user.id]
-        now = datetime.utcnow()
+            return {'detail': 'Password has been changed successfully'}
 
-         # Check if the reset token has expired
-        if now > reset_token['expiration_date']:
-            return {"message": "Reset token has expired"}, 401
+        elif claims['role']=='manager':
+            manager= Manager.query.filter_by(id=current_user).first()
 
+            if not manager:
+                abort(404, detai="manager not found")
+            
+            if not bcrypt.check_password_hash(manager.password, data["currentPassword"]):
+                return abort(401, detail="Incorrect current password")
+            
+            if data["newPassword"] != data["confirmPassword"]:
+                return abort(422, detail="New password and confirm password do not match")
+            hashed_password = bcrypt.generate_password_hash(data["newPassword"]).decode('utf-8')
+            
+            manager.password = hashed_password
 
-        # Update the user's password
-        user.password = bcrypt.generate_password_hash(new_password).decode('utf-8')
+            db.session.commit()
 
-        # Remove the used token from memory (or database)
-        if user.id in reset_tokens:
-            del reset_tokens[user.id]
+            return {'detail': 'Password has been changed successfully'}
+
+        elif claims['role']=='hr':
+            
+            hr = HR_Personel.query.filter_by(id=current_user).first()
+            
+            if not hr:
+                abort(404, detai="hr not found")
+            
+            if not bcrypt.check_password_hash(hr.password, data["currentPassword"]):
+                return abort(401, detail="Incorrect current password")
+            
+            if data["newPassword"] != data["confirmPassword"]:
+                return abort(422, detail="New password and confirm password do not match")
+            hashed_password = bcrypt.generate_password_hash(data["newPassword"]).decode('utf-8')
+            
+            hr.password = hashed_password
+
+            db.session.commit()
+
+            return {'detail': 'Password has been changed successfully'}
+
         else:
-            print(f"Key '{user.id}' not found in reset_tokens dictionary")
+            return abort(404, detail='Invalid Role')
 
-        db.session.commit()
-        return {"message": "Password reset successfully"}, 200
-       
-    
-api.add_resource(VerifyPasswordReset, '/reset_password/verify')
+
+api.add_resource(ChangePassword, '/change_password')
+
+class ForgotPassword(Resource):
+    def post(self):
+        data = forgot_password_args.parse_args()
+        role = data['role']
+        if role == 'employee':
+            employee = Employee.query.filter_by(email=data['email']).first()
+
+            if not employee:
+                abort(404, detai="employee not found")
+            
+            if data["newPassword"] != data["confirmPassword"]:
+                return abort(422, detail="New password and confirm password do not match")
+            hashed_password = bcrypt.generate_password_hash(data["newPassword"]).decode('utf-8')
+            
+            employee.password = hashed_password
+
+            db.session.commit()
+
+            return {'detail': 'Password has been changed successfully'}
+
+        elif role == "manager":
+            manager= Manager.query.filter_by(email=data['email']).first()
+
+            if not manager:
+                abort(404, detai="manager not found")
+            
+            if data["newPassword"] != data["confirmPassword"]:
+                return abort(422, detail="New password and confirm password do not match")
+            hashed_password = bcrypt.generate_password_hash(data["newPassword"]).decode('utf-8')
+            
+            manager.password = hashed_password
+
+            db.session.commit()
+
+            return {'detail': 'Password has been changed successfully'}
+
+        elif role == "hr":
+            hr = HR_Personel.query.filter_by(email=data['email']).first()
+
+            if not hr:
+                abort(404, detai="hr not found")
+            
+            if data["newPassword"] != data["confirmPassword"]:
+                return abort(422, detail="New password and confirm password do not match")
+            hashed_password = bcrypt.generate_password_hash(data["newPassword"]).decode('utf-8')
+            
+            hr.password = hashed_password
+
+            db.session.commit()
+
+            return {'detail': 'Password has been changed successfully'}
+
+        else:
+            return abort(404, detail='Invalid Role')
+
+
+api.add_resource(ForgotPassword, '/forgot_password')
+

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "2adddf46b3a020b4c68ae1b2d2f7553f54f9672cdec2898a0a1d5c3dbf59bee5"
+            "sha256": "2a2cc3bada5b6ea5d4dead570000d4afb99c20f882b52a6a17986698c97098bd"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -90,10 +90,10 @@
         },
         "cloudinary": {
             "hashes": [
-                "sha256:5e2d3eee1f2d8d9eecfe575ed1bf82c851a279a79a6d449d19eef506f6b672e1"
+                "sha256:ef577671361c6b3814a8c143246ff2722837c6806fe85e8dfd0e6ad52029782a"
             ],
             "index": "pypi",
-            "version": "==1.38.0"
+            "version": "==1.39.0"
         },
         "flask": {
             "hashes": [
@@ -252,6 +252,15 @@
             "markers": "platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
             "version": "==3.0.3"
         },
+        "gunicorn": {
+            "hashes": [
+                "sha256:3213aa5e8c24949e792bcacfc176fef362e7aac80b76c56f6b5122bf350722f0",
+                "sha256:88ec8bff1d634f98e61b9f65bc4bf3cd918a90806c6f5c48bc5603849ec81033"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.5'",
+            "version": "==21.2.0"
+        },
         "itsdangerous": {
             "hashes": [
                 "sha256:2c2349112351b88699d8d4b6b075022c0808887cb7ad10069318a8b0bc88db44",
@@ -381,7 +390,7 @@
                 "sha256:961d03dc3453ebbc59dbdea9e4e11c5651520a876d0f4db161e8674aae935da9"
             ],
             "index": "pypi",
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
             "version": "==2.8.2"
         },
         "python-dotenv": {
@@ -405,7 +414,7 @@
                 "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926",
                 "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2'",
             "version": "==1.16.0"
         },
         "sqlalchemy": {

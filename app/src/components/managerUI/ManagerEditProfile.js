@@ -20,6 +20,8 @@ const ManagerEditProfile = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  console.log(managerProfileData)
+
   const MAX_FILE_SIZE = 10000000; // 10MB
   const validFileExtensions = {
     image: ["jpg", "png", "jpeg", "webp"],

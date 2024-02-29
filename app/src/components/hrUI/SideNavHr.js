@@ -18,18 +18,7 @@ const SideNavHr = () => {
         <div className="sidebar">
           {/* Sidebar user panel (optional) */}
           <div className="user-panel mt-3 pb-3 mb-3 d-flex">
-            <div className="">
-              <div
-                className=""
-                style={{
-                  marginLeft: "30px",
-                  color: "white",
-                  font: "helvetica",
-                }}
-              >
-                Hr's DashBoard
-              </div>
-            </div>
+            <div className="image"></div>
           </div>
           {/* SidebarSearch Form */}
 
@@ -49,39 +38,30 @@ const SideNavHr = () => {
               </li>
 
               <li className="nav-item">
-                <Link to={"/hr/add_employee"} className="nav-link">
-                  <i className="nav-icon fas fa-user-plus" />
-                  <p>Onboard Staff</p>
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link to={"/hr/hr_delete_employee"} className="nav-link">
-                  <i className="nav-icon fas fa-user-minus" />
-                  <p>Offboard Staff</p>
-                </Link>
-              </li>
-              <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon fas fa-users" />
                   <p>
                     <Link to={"/hr/view_staff_details"}>Employees</Link>
                   </p>
                 </a>
+
+                <Link to={"/hr/add_employee"} className="nav-link">
+                  <i className="nav-icon fas fa-user-plus" />
+                  <p>Onboard Employee</p>
+                </Link>
               </li>
+              {/* <li className="nav-item">
+                <Link to={"/hr/hr_delete_employee"} className="nav-link">
+                  <i className="nav-icon fas fa-user-minus" />
+                  <p>Offboard Employee</p>
+                </Link>
+              </li> */}
 
               <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon fas fa-users-cog" />
                   <p>
                     <Link to={"/hr/view_managers"}>Managers</Link>
-                  </p>
-                </a>
-              </li>
-              <li className="nav-item">
-                <a href="#" className="nav-link">
-                  <i className="nav-icon fas fa-users-cog" />
-                  <p>
-                    <Link to={"/hr/view_hr_personnel"}>Hr Personnel</Link>
                   </p>
                 </a>
               </li>
@@ -102,27 +82,23 @@ const SideNavHr = () => {
                   </p>
                 </a>
               </li>
-
               <li className="nav-item">
                 <Link to="/hr/view_employee_payslip" className="nav-link">
                   <i className="nav-icon fas fa-money-check-alt" />
                   <p>Payroll</p>
                 </Link>
               </li>
-
               <li className="nav-item">
-                <Link to="/hr/hr_pending_leaves" className="nav-link">
+                <Link to="/hr/view_leaves" className="nav-link">
                   <i className="nav-icon fas fa-hourglass-half" />
                   <p>Leave Tracker</p>
                 </Link>
               </li>
               <li className="nav-item">
-                <a href="#" className="nav-link">
-                  <i className="nav-icon fas fa-chalkboard-teacher" />
-                  <p>
-                    <Link to="/hr/view_leaves">View Leaves</Link>
-                  </p>
-                </a>
+                <Link to="/hr/hr_pending_leaves" className="nav-link">
+                  <i className="nav-icon fas fa-hourglass-half" />
+                  <p>Approve Leaves</p>
+                </Link>
               </li>
               <li className="nav-item">
                 <a href="#" className="nav-link">
@@ -132,11 +108,10 @@ const SideNavHr = () => {
                   </p>
                 </a>
               </li>
-
               <li className="nav-item">
                 <Link to="/hr/session" className="nav-link">
                   <i className="nav-icon fas fa-users-cog" />
-                  <p>Session</p>
+                  <p>session</p>
                 </Link>
               </li>
             </ul>

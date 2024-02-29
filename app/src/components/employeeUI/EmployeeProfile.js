@@ -32,7 +32,7 @@ const EmployeeProfile = () => {
   };
 
   const handleResetPasswordButtonClick = () => {
-    navigate("/reset_password");
+    navigate("/change_password");
   };
   return (
     <div
@@ -144,23 +144,25 @@ const EmployeeProfile = () => {
               </div>
               <div className="card mb-3 content">
                 <h1 className="m-3 pt-3">Approved Leaves</h1>
-                {employee.goals.length !== 0 ? (
-                  employeeProfileData.goals.map((leave) => (
-                    <div className="card-body">
-                      <div className="col-md-3">
-                        <h5>start</h5>
+                {employee.leaves?.length !== 0 ? (
+                  employee.leaves
+                    .filter((leave) => leave.approved)
+                    .map((leave) => (
+                      <div className="card-body">
+                        <div className="col-md-3">
+                          <h5>start</h5>
+                        </div>
+                        <div className="col-md-9 text-secondary">
+                          {leave.start_date}
+                        </div>
+                        <div className="col-md-3">
+                          <h5>end</h5>
+                        </div>
+                        <div className="col-md-9 text-secondary">
+                          {leave.end_date}
+                        </div>
                       </div>
-                      <div className="col-md-9 text-secondary">
-                        {leave.start_date}
-                      </div>
-                      <div className="col-md-3">
-                        <h5>end</h5>
-                      </div>
-                      <div className="col-md-9 text-secondary">
-                        {leave.end_date}
-                      </div>
-                    </div>
-                  ))
+                    ))
                 ) : (
                   <h5 className="text-secondary">No approved leaves</h5>
                 )}

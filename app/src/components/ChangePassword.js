@@ -1,26 +1,23 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { retrieve } from "./Encryption";
-import './resetPassword.css'
+// import './ChangePassword.css'
 
 
 
-const ResetPassword = () => {
-  const [email, setEmail] = useState("");
+const ChangePassword = () => {
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [selectedRole, setSelectedRole] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
   
 
-  const handleRoleChange = (e) => {
-    console.log("Selected Role:", e.target.value);
-    setSelectedRole(e.target.value);
+  const handleCurrentPasswordChange = (e) => {
+    console.log(e.target.value);
+    setCurrentPassword(e.target.value);
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
 
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
@@ -42,20 +39,18 @@ const ResetPassword = () => {
     try {
       const requestOptions = {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: email, newPassword: newPassword, role: selectedRole, confirmPassword: confirmPassword }),
+        headers: { "Content-Type": "application/json" ,
+                    Authorization: "Bearer " + retrieve().access_token,
+    
+    },
+        body: JSON.stringify({ newPassword: newPassword, currentPassword: currentPassword, confirmPassword: confirmPassword }),
       };
 
-      const response = await fetch("/forgot_password", requestOptions);
+      const response = await fetch("/change_password", requestOptions);
 
       if (!response.ok) {
         const errorData = await response.json();
         console.error("Password reset request failed:", errorData.message);
-
-        // Check if the error is due to user not found
-        if (errorData.message === "user not found") {
-          alert("The provided email address does not match any user in the system. Please check the email address and try again.");
-        }
 
         return;
       }
@@ -63,10 +58,12 @@ const ResetPassword = () => {
       console.log("Password reset successfully");
       console.log(newPassword)
       navigate("/login"); // Redirect to login page or a success page
-    } catch (error) {
-      console.error("Error during password reset:", error);
-    }
+    } 
+    catch (error) {
+        setError("Error during password reset: " + error.message);
+        console.error('Error during password reset:', error);
   };
+}
     
 
     
@@ -84,9 +81,10 @@ const ResetPassword = () => {
         <div className="Reset-password-Content">
             <h1>Reset Password</h1>
             <form onSubmit={handleSubmit} className="Reset-Passowrd-Form">
+                
                 <div className="Email-Card">
-                <label>Email:</label>
-                <input type="email" value={email} onChange={handleEmailChange} required />
+                <label>Current Password:</label>
+                <input type="password" value={currentPassword} onChange={handleCurrentPasswordChange} required />
                 </div>
                 <div className="New-Password-Card">
                 <label>New Password:</label>
@@ -96,20 +94,8 @@ const ResetPassword = () => {
                 <label>Confirm Password:</label>
                 <input type="password" value={confirmPassword} onChange={handleConfirmPasswordChange} required />
                 </div>
-                <div className="form-group_login">
-                <label htmlFor="roleDropdown">Role</label>
-                <select
-                  className="form-control"
-                  id="roleDropdown"
-                  onChange={handleRoleChange}
-                >
-                  <option value="">Select a role</option>
-                  <option value={"manager"}>Manager</option>
-                  <option value={"employee"}>Employee</option>
-                  <option value={"hr"}>HR</option>
-                </select>
-              </div>
                 <button className="Reset-Password" type="submit">Reset Password</button>
+                {error && <div className="error-message">{error}</div>}
             </form>
          </div>
     </div>
@@ -117,4 +103,4 @@ const ResetPassword = () => {
   );
 };
 
-export default ResetPassword;
+export default ChangePassword;
