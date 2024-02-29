@@ -3,3 +3,4 @@ instance/app.db
 .vscode
 __pycache__/
 *.pyc
+versions/
