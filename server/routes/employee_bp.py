@@ -56,6 +56,11 @@ class Employees(Resource):
               db.session.add(new_employee)
               db.session.commit()
 
+              # send email
+              msg = Message('Welcome!', sender = 'tedtedmike@gmail.com', recipients = [data['email']])
+              msg.body = f"Hello, you have been added as an employee. Your account details are:\nEmail: {data['email']}\nPassword: {data['password']}"
+              current_app.mail.send(msg)
+
               result = employeeSchema.dump(new_employee)
               response = make_response(jsonify(result), 201)
               return response
@@ -68,6 +73,11 @@ class Employees(Resource):
               new_manager = Manager(email=data['email'], password=hashed_password, dept_id=data['dept_id'], personal_no=data["personal_no"])
               db.session.add(new_manager)
               db.session.commit()
+
+              # send email
+              msg = Message('Welcome!', sender = 'tedtedmike@gmail.com', recipients = [data['email']])
+              msg.body = f"Hello, you have been added as a manager. Your account details are:\nEmail: {data['email']}\nPassword: {data['password']}"
+              current_app.mail.send(msg)
 
               result = managerSchema.dump(new_manager)
               response = make_response(jsonify(result), 201)

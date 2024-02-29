@@ -1,8 +1,8 @@
-"""create tables
+"""initial migration
 
-Revision ID: c72a3ee5a10d
+Revision ID: 9cdd5d5cda66
 Revises: 
-Create Date: 2024-02-28 16:54:01.572330
+Create Date: 2024-02-29 00:02:00.161196
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c72a3ee5a10d'
+revision = '9cdd5d5cda66'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -138,10 +138,12 @@ def upgrade():
     op.create_table('goals',
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('employee_id', sa.String(), nullable=False),
+    sa.Column('manager_id', sa.String(), nullable=True),
     sa.Column('name', sa.String(length=30), nullable=False),
     sa.Column('description', sa.String(), nullable=False),
     sa.Column('session_id', sa.String(), nullable=False),
     sa.ForeignKeyConstraint(['employee_id'], ['employees.id'], name=op.f('fk_goals_employee_id_employees')),
+    sa.ForeignKeyConstraint(['manager_id'], ['managers.id'], name=op.f('fk_goals_manager_id_managers')),
     sa.ForeignKeyConstraint(['session_id'], ['sessions.id'], name=op.f('fk_goals_session_id_sessions')),
     sa.PrimaryKeyConstraint('id')
     )

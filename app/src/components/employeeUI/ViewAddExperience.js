@@ -31,7 +31,7 @@ const ViewExperience = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('/experiences', {
+        axios.get('/employee_experiences', {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
