@@ -9,7 +9,7 @@ function ViewDepartmentTrainings() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`/manager/employees/${managerId}`, {
+        fetch(`https://hrs-iymg.onrender.com/manager/employees/${managerId}`, {
             headers: {
                 Authorization: "Bearer " + retrieve().access_token,
             },
