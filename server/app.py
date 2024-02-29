@@ -8,6 +8,7 @@ from routes.remuneration_bp import remuneration_bp
 from routes.hrProfile_bp import hrProfile_bp
 from routes.leave_approval_bp import leave_approval_bp
 from routes.employee_training_bp import employee_training_bp
+from routes.employee_resources_bp import employee_resources_bp
 from routes.training_bp import training_bp
 from routes.Goals_bp import goals_bp
 from routes.session_bp import session_bp
@@ -107,6 +108,7 @@ def create_app():
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
     app.register_blueprint(reset_password_bp)
+    app.register_blueprint(employee_resources_bp)
 
  
 
