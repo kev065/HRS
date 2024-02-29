@@ -20,6 +20,7 @@ cloudinary = "*"
 flask-wtf = "*"
 python-dateutil = "*"
 flask-mail = "*"
+gunicorn = "*"
 
 [dev-packages]
 
