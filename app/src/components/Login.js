@@ -38,7 +38,7 @@ const Login = () => {
 
     
 
-    fetch("/login", {
+    fetch("https://hrs-1ke2.onrender.com/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
