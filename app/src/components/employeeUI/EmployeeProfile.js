@@ -32,7 +32,7 @@ const EmployeeProfile = () => {
   };
 
   const handleResetPasswordButtonClick = () => {
-    navigate("/reset_password");
+    navigate("/change_password");
   };
   return (
     <div

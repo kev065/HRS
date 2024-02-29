@@ -20,7 +20,7 @@ from routes.department_bp import department_bp
 from routes.documents_bp import document_bp
 from routes.employee_bp import employee_bp
 from routes.approveLeave_bp import approvalLeave_bp
-from routes.reset_password_bp import reset_password_bp
+from routes.reset_password_bp import change_password_bp
 from datetime import datetime, timedelta
 from flask import Flask
 from flask_migrate import Migrate
@@ -106,7 +106,7 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
-    app.register_blueprint(reset_password_bp)
+    app.register_blueprint(change_password_bp)
 
  
 

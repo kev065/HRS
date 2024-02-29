@@ -51,6 +51,7 @@ import ViewManagers from './components/hrUI/ViewManagers';
 import ViewHrPersonnel from './components/hrUI/ViewHrPersonnel';
 import AddGoalForm from './components/employeeUI/AddGoalsEmployee'
 import ResetPassword from './components/ResetPassword';
+import ChangePassword from "./components/ChangePassword";
 import HRViewLeaves from './components/hrUI/HRViewLeaves';
 import UpdateExperience from './components/employeeUI/UpdateExperience';
 
@@ -64,6 +65,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/reset_password" element={<ResetPassword />} />
+        <Route path="/change_password" element={<ChangePassword />} />
         <Route path="/session" element={<Session />} />
         <Route path="/employee" element={<DashBoardEmployee />}>
         <Route path="/employee/view_education/:employeeId" element={<ViewEducation />} />
