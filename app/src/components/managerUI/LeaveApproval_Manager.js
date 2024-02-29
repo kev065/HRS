@@ -12,7 +12,7 @@ const ManagerPendingLeaves = () => {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get("/leave_approvals");
+        const response = await axios.get("https://hrs-iymg.onrender.com/leave_approvals");
         setLeaves(response.data);
       } catch (error) {
         if (error.response) {
@@ -29,7 +29,7 @@ const ManagerPendingLeaves = () => {
   const handleApprove = async (leaveId) => {
     const manager_app_date = new Date();
 
-    fetch(`/leave_approvals/${leaveId}`, {
+    fetch(`https://hrs-iymg.onrender.com/leave_approvals/${leaveId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const ManagerPendingLeaves = () => {
   const handleDecline = async (leaveId) => {
     const manager_app_date = new Date();
 
-    fetch(`/leave_approvals/${leaveId}`, {
+    fetch(`https://hrs-iymg.onrender.com/leave_approvals/${leaveId}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

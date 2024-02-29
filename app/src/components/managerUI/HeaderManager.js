@@ -6,7 +6,7 @@ import { retrieve } from "../Encryption";
 const HeaderManager = () => {
   const navigate = useNavigate();
   function handleLogout(e) {
-    fetch("/logout", {
+    fetch("https://hrs-iymg.onrender.com/logout", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

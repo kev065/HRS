@@ -12,7 +12,7 @@ const Departments = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('/departments')
+    fetch('https://hrs-iymg.onrender.com/departments')
       .then(response => response.json())
       .then(data => setDepartments(data))
       .catch(error => console.error('Error fetching departments:', error));
@@ -26,7 +26,7 @@ const Departments = () => {
 };
 
   const handleDelete = (departmentId) => {
-    fetch(`/departments/${departmentId}`, {
+    fetch(`https://hrs-iymg.onrender.com/departments/${departmentId}`, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + retrieve().access_token,

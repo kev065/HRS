@@ -70,7 +70,7 @@ const EmployeeProfileForm = () => {
       formData.append("date_of_birth", values.date_of_birth);
       formData.append("profile_photo", profilePhoto);
       console.log(...formData.entries());
-      fetch("/employeeProfiles", {
+      fetch("https://hrs-iymg.onrender.com/employeeProfiles", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + retrieve().access_token,

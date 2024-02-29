@@ -9,7 +9,7 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
     const [selectedGoal, setSelectedGoal] = useState('');
     const [goals, setGoals] = useState([]);
     useEffect(() => {
-        fetch('/goals', {
+        fetch('https://hrs-iymg.onrender.com/goals', {
           headers: {
             'Authorization': 'Bearer ' + retrieve().access_token,
           },
@@ -17,7 +17,6 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
           .then((resp) => resp.json())
           .then((data) => {
             // Assuming data is an array of goals with 'id' and 'name' properties
-            // Update this based on your actual data structure
             setGoals(data);
           })
           .catch((error) => {
@@ -36,7 +35,7 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
 
         };
 
-        fetch('/sessions', {
+        fetch('https://hrs-iymg.onrender.com/sessions', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

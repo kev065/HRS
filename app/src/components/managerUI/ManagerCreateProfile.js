@@ -74,7 +74,7 @@ const ManagerCreateProfile = () => {
       
       console.log("Form data before making the POST request:",...formData.entries());
 
-      fetch("/managerProfiles", {
+      fetch("https://hrs-iymg.onrender.com/managerProfiles", {
         method: "POST",
         headers: {
           'Authorization': "Bearer " + retrieve().access_token,

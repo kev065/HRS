@@ -9,7 +9,7 @@ const UpdateDepartment = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/departments/${id}`, {
+    fetch(`https://hrs-iymg.onrender.com/departments/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + retrieve().access_token,
@@ -37,7 +37,7 @@ const UpdateDepartment = () => {
       name: name,
     };
 
-    fetch(`/departments/${id}`, {
+    fetch(`https://hrs-iymg.onrender.com/departments/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

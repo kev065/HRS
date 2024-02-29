@@ -9,7 +9,7 @@ const ViewEmployeesPerDepartment = () => {
 
   useEffect(() => {
    
-    fetch(`/employees_department/${deptId}`, {
+    fetch(`https://hrs-iymg.onrender.com/employees_department/${deptId}`, {
         headers: {
           "Authorization": "Bearer " + retrieve().access_token,
         }

@@ -38,7 +38,7 @@ const UpdateExperience = () => {
     const [message, setMessage] = useState(''); 
 
     useEffect(() => {
-        axios.get(`/experiences/${id}`, {
+        axios.get(`https://hrs-iymg.onrender.com/experiences/${id}`, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
@@ -70,7 +70,7 @@ const UpdateExperience = () => {
             start_date: formatDateForBackend(experience.start_date),
             end_date: formatDateForBackend(experience.end_date)
         };
-        axios.patch(`/experiences/${id}`, updatedExperience, {
+        axios.patch(`https://hrs-iymg.onrender.com/experiences/${id}`, updatedExperience, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }

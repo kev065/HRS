@@ -15,7 +15,7 @@ const RecommendTraining = () => {
   }, []);
 
   const fetchAvailableTrainings = () => {
-    fetch('/available-trainings', {
+    fetch('https://hrs-iymg.onrender.com/available-trainings', {
       headers: {
         "Authorization": "Bearer " + retrieve().access_token,
       }
@@ -42,7 +42,7 @@ const RecommendTraining = () => {
       return;
     }
 
-    fetch('/recommend-employee', {
+    fetch('https://hrs-iymg.onrender.com/recommend-employee', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
