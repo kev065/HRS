@@ -16,9 +16,11 @@ const ManagerEditProfile = () => {
   useEffect(() => {
     fetch(`/managers/${id}`)
       .then((response) => response.json())
-      .then((data) => setManagerProfileData(data.manager_profiles[0]))
+      .then((data) => setManagerProfileData(data.manager_profile[0]))
       .catch((err) => console.log(err));
   }, []);
+
+  console.log(managerProfileData)
 
   const MAX_FILE_SIZE = 10000000; // 10MB
   const validFileExtensions = {
