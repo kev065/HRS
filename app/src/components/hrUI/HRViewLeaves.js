@@ -73,7 +73,6 @@ const HRViewLeaves = () => {
 
   return (
     <div className="container w-50 bg-white text-dark m-auto pt-4">
-      {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
       {leaves.map((leave) => (
         <div key={leave.id} className="leave">
