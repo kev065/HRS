@@ -107,14 +107,8 @@ def create_app():
     app.register_blueprint(goals_session_bp)
     app.register_blueprint(payslip_bp)
     app.register_blueprint(approvalLeave_bp)
-<<<<<<< HEAD
     app.register_blueprint(change_password_bp)
-=======
-    app.register_blueprint(reset_password_bp)
     app.register_blueprint(employee_resources_bp)
->>>>>>> origin/main
-
- 
 
 
     return app
