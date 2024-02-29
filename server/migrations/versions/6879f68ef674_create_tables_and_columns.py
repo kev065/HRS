@@ -1,16 +1,8 @@
-<<<<<<<< HEAD:server/migrations/versions/7e48d960395c_add_new_columns.py
-"""Add new columns
+"""Create tables and columns
 
-Revision ID: 7e48d960395c
+Revision ID: 6879f68ef674
 Revises: 
-Create Date: 2024-02-29 11:35:26.106159
-========
-"""initial migration
-
-Revision ID: 9cdd5d5cda66
-Revises: 
-Create Date: 2024-02-29 00:02:00.161196
->>>>>>>> origin/main:server/migrations/versions/9cdd5d5cda66_initial_migration.py
+Create Date: 2024-02-29 16:02:48.145906
 
 """
 from alembic import op
@@ -18,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<<< HEAD:server/migrations/versions/7e48d960395c_add_new_columns.py
-revision = '7e48d960395c'
-========
-revision = '9cdd5d5cda66'
->>>>>>>> origin/main:server/migrations/versions/9cdd5d5cda66_initial_migration.py
+revision = '6879f68ef674'
 down_revision = None
 branch_labels = None
 depends_on = None
