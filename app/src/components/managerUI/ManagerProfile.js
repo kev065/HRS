@@ -10,7 +10,7 @@ const ManagerProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/managers/${id}`)
+    fetch(`https://hrs-iymg.onrender.com/managers/${id}`)
       .then((response) => response.json())
       .then((data) => setManager(data))
       .catch((err) => console.log(err));
@@ -23,7 +23,7 @@ const ManagerProfile = () => {
   const managerProfileData = manager?.manager_profile[0];
 
   function handleLogout(e) {
-    fetch("/logout", {
+    fetch("https://hrs-iymg.onrender.com/logout", {
       method: "GET",
       headers: {
         Authorization: "Bearer " + retrieve().access_token,

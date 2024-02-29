@@ -15,7 +15,7 @@ const AddDepartment = ({ departments, setDepartments }) => {
 
     };
 
-    fetch(`/departments`, {
+    fetch(`https://hrs-iymg.onrender.com/departments`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

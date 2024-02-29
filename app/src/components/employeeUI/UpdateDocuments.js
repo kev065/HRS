@@ -11,7 +11,7 @@ const UpdateDocument = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/documents/${id}`, {
+    fetch(`https://hrs-iymg.onrender.com/documents/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + retrieve().access_token,
@@ -50,7 +50,7 @@ const UpdateDocument = () => {
     formData.append('name', documentName);
     formData.append('type', documentType);
 
-    fetch(`/update_document/upload/${id}`, {
+    fetch(`https://hrs-iymg.onrender.com/update_document/upload/${id}`, {
       method: 'PATCH',
       headers: {
         'Authorization': 'Bearer ' + retrieve().access_token,

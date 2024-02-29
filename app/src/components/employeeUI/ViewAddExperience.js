@@ -31,7 +31,7 @@ const ViewExperience = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('/employee_experiences', {
+        axios.get('https://hrs-iymg.onrender.com/employee_experiences', {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
@@ -60,7 +60,7 @@ const ViewExperience = () => {
         const newExperience = experiences[experiences.length - 1];
         newExperience.start_date = formatDateForBackend(newExperience.start_date);
         newExperience.end_date = formatDateForBackend(newExperience.end_date);
-        axios.post('/experiences', newExperience, {
+        axios.post('https://hrs-iymg.onrender.com/experiences', newExperience, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }
@@ -89,7 +89,7 @@ const ViewExperience = () => {
 
     const handleDelete = (event, id) => {
         event.preventDefault();
-        axios.delete(`/experiences/${id}`, {
+        axios.delete(`https://hrs-iymg.onrender.com/experiences/${id}`, {
             headers: {
                 'Authorization': `Bearer ${retrieve().access_token}`
             }

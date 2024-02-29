@@ -7,7 +7,7 @@ const OffboardEmployee = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.delete(`http://localhost:5555/employees/${employeeId}`);
+      const response = await axios.delete(`https://hrs-iymg.onrender.com/employees/${employeeId}`);
       console.log(response.data);
       setEmployeeId('');  
     } catch (error) {

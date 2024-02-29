@@ -46,7 +46,7 @@ const ChangePassword = () => {
         body: JSON.stringify({ newPassword: newPassword, currentPassword: currentPassword, confirmPassword: confirmPassword }),
       };
 
-      const response = await fetch("/change_password", requestOptions);
+      const response = await fetch("https://hrs-iymg.onrender.com/change_password", requestOptions);
 
       if (!response.ok) {
         const errorData = await response.json();

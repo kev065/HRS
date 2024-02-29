@@ -12,7 +12,7 @@ const EmployeeViewTrainings = () => {
 
   useEffect(() => {
     const fetchTrainings = () => {
-      fetch(`/single_employee_trainings/${employeeId}`, {
+      fetch(`https://hrs-iymg.onrender.com/single_employee_trainings/${employeeId}`, {
         headers: {
           "Authorization": "Bearer " + retrieve().access_token
         }
@@ -43,7 +43,7 @@ const EmployeeViewTrainings = () => {
   };
 
   const handleDeleteTraining = (trainingId) => {
-    fetch(`/delete_single_employee_trainings/${trainingId}`, {
+    fetch(`https://hrs-iymg.onrender.com/delete_single_employee_trainings/${trainingId}`, {
         method: "DELETE",
         headers: {
             Authorization: "Bearer " + retrieve().access_token,

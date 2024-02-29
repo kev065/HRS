@@ -11,7 +11,7 @@ const ViewDocuments = () => {
 
   useEffect(() => {
     const fetchDocuments = () => {
-      fetch(`/documents/employee/${employeeId}`, {
+      fetch(`https://hrs-iymg.onrender.com/documents/employee/${employeeId}`, {
         headers: {
           "Authorization": "Bearer " + retrieve().access_token
         }
@@ -38,7 +38,7 @@ const ViewDocuments = () => {
   };
 
   const handleDeleteDocument = (documentId) => {
-    fetch(`/documents/${documentId}`, {
+    fetch(`https://hrs-iymg.onrender.com/documents/${documentId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + retrieve().access_token,

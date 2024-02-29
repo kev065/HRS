@@ -22,7 +22,7 @@ const CreatePayslip = () => {
   const navigate = useNavigate();
   //fetch employee profiles
   useEffect(() => {
-    fetch("/employeeProfiles")
+    fetch("https://hrs-iymg.onrender.com/employeeProfiles")
       .then((resp) => resp.json())
       .then((data) => setEmployees(data));
   }, []);
@@ -90,7 +90,7 @@ const CreatePayslip = () => {
     e.preventDefault();
     console.log(remuneration);
     console.log([...remunerationDescriptions]);
-    fetch("/payslip", {
+    fetch("https://hrs-iymg.onrender.com/payslip", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -14,7 +14,7 @@ const ViewTrainingsEmployee = () => {
 
     useEffect(() => {
         const fetchTrainings = () => {
-            fetch(`/filtered_single_employee_trainings/${employeeId}`, {
+            fetch(`https://hrs-iymg.onrender.com/filtered_single_employee_trainings/${employeeId}`, {
                 headers: {
                     "Authorization": "Bearer " + retrieve().access_token,
                 }
@@ -43,7 +43,7 @@ const ViewTrainingsEmployee = () => {
     };
 
     const handleApplyTraining = (training) => {
-        fetch('/apply_training', {
+        fetch('https://hrs-iymg.onrender.com/apply_training', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

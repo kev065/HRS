@@ -11,7 +11,7 @@ const UpdateLeave = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/leaves/${id}`, {
+    fetch(`https://hrs-iymg.onrender.com/leaves/${id}`, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + retrieve().access_token,
@@ -43,7 +43,7 @@ const UpdateLeave = () => {
       description: description,
     };
 
-    fetch(`/leaves/${id}`, {
+    fetch(`https://hrs-iymg.onrender.com/leaves/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

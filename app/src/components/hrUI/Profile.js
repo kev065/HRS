@@ -10,7 +10,7 @@ const Profile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/hr_personnels/${id}`)
+    fetch(`https://hrs-iymg.onrender.com/hr_personnels/${id}`)
       .then((response) => response.json())
       .then((data) => setHr(data))
       .catch((err) => console.log(err));
@@ -22,7 +22,7 @@ const Profile = () => {
   const hrProfileData = hr?.hr_profiles[0];
 
   function handleLogout(e) {
-    fetch("/logout", {
+    fetch("https://hrs-iymg.onrender.com/logout", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

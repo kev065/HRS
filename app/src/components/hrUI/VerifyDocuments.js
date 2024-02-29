@@ -7,7 +7,7 @@ const VerifyDocuments = () => {
   const { employeeId } = useParams();
 
   useEffect(() => {
-    fetch(`/documents/employee/${employeeId}`, {
+    fetch(`https://hrs-iymg.onrender.com/documents/employee/${employeeId}`, {
       headers: {
         Authorization: "Bearer " + retrieve().access_token,
       },
