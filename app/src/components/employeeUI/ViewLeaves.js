@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { retrieve } from "../Encryption";
-import { useNavigate } from 'react-router-dom';
-import ApplyLeave from './ApplyLeave';
+import { useNavigate } from "react-router-dom";
+import ApplyLeave from "./ApplyLeave";
 
 const ViewLeaves = () => {
   const [leaves, setLeaves] = useState([]);
@@ -14,20 +14,20 @@ const ViewLeaves = () => {
     const fetchLeaves = () => {
       fetch(`/employee_leaves/${employee_id}`, {
         headers: {
-          "Authorization": "Bearer " + retrieve().access_token
-        }
+          Authorization: "Bearer " + retrieve().access_token,
+        },
       })
-        .then(response => {
+        .then((response) => {
           if (!response.ok) {
-            throw new Error('Failed to fetch Leaves');
+            throw new Error("Failed to fetch Leaves");
           }
           return response.json();
         })
-        .then(data => {
+        .then((data) => {
           setLeaves(data);
         })
-        .catch(error => {
-          console.error('Error fetching leaves:', error);
+        .catch((error) => {
+          console.error("Error fetching leaves:", error);
         });
     };
 
@@ -48,7 +48,7 @@ const ViewLeaves = () => {
       .then((res) => {
         console.log("RES: ", res);
 
-        setLeaves(leaves.filter(leave => leave.id !== leaveId));
+        setLeaves(leaves.filter((leave) => leave.id !== leaveId));
       })
       .catch((err) => {
         console.log(err);
@@ -65,13 +65,13 @@ const ViewLeaves = () => {
   };
 
   const handleAddLeaveClose = () => {
-    setShowAddLeave(false); 
+    setShowAddLeave(false);
   };
 
   return (
-    <div className='content-wrapper' style={{ marginLeft: "280px", backgroundColor:"white", marginTop:"20px"}}>
-      <h2 style={{ marginLeft: "450px"}}>Leave Applications</h2>
-      <table className='ui striped table' style={{ width: "1200px", marginLeft:"60px",marginBottom:"20px"}}>
+    <div className="content-wrapper">
+      <h2 style={{ textAlign: "center" }}>Leave Applications</h2>
+      <table className="ui striped table">
         <thead>
           <tr>
             <th>Start Date</th>
@@ -82,17 +82,41 @@ const ViewLeaves = () => {
           </tr>
         </thead>
         <tbody>
-          {leaves.map(leave => (
+          {leaves.map((leave) => (
             <tr key={leave.id}>
-             <td>{new Date(leave.start_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
-             <td>{new Date(leave.end_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</td>
+              <td>
+                {new Date(leave.start_date).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </td>
+              <td>
+                {new Date(leave.end_date).toLocaleDateString("en-GB", {
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })}
+              </td>
               <td>{leave.description}</td>
-              <td>{leave.approved ? 'Yes' : 'No'}</td>
+              <td>{leave.approved ? "Yes" : "No"}</td>
               <td>
                 {showButtons(leave) && (
                   <>
-                    <button className='ui mini teal button' style={{ marginLeft:"10px"}} onClick={() => handleUpdateLeave(leave)}>Update</button>
-                    <button className='ui mini teal button' style={{ marginLeft:"10px"}} onClick={() => handleDeleteLeave(leave.id)}>Delete</button>
+                    <button
+                      className="ui mini teal button"
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => handleUpdateLeave(leave)}
+                    >
+                      Update
+                    </button>
+                    <button
+                      className="ui mini teal button"
+                      style={{ marginLeft: "10px" }}
+                      onClick={() => handleDeleteLeave(leave.id)}
+                    >
+                      Delete
+                    </button>
                   </>
                 )}
                 {/* <button onClick={() => handleViewLeave(leave)} disabled={!showButtons(leave)}>View</button> */}
@@ -101,8 +125,21 @@ const ViewLeaves = () => {
           ))}
         </tbody>
       </table>
-      {!showAddLeave && <button className='ui teal button'style={{ width: "200px", marginLeft:"500px",marginTop:"60px"}} onClick={() => setShowAddLeave(true)}>Apply for Leave</button>}
-      {showAddLeave && <ApplyLeave onClose={handleAddLeaveClose} leaves={leaves} setLeaves={setLeaves} />}
+      {!showAddLeave && (
+        <button
+          className="ui teal button"
+          onClick={() => setShowAddLeave(true)}
+        >
+          Apply for Leave
+        </button>
+      )}
+      {showAddLeave && (
+        <ApplyLeave
+          onClose={handleAddLeaveClose}
+          leaves={leaves}
+          setLeaves={setLeaves}
+        />
+      )}
     </div>
   );
 };
