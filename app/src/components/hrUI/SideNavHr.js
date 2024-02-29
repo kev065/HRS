@@ -60,8 +60,13 @@ const SideNavHr = () => {
               <li className="nav-item">
                 <a href="#" className="nav-link">
                   <i className="nav-icon fas fa-users-cog" />
-                  <p>Managers</p>
+                  <p>
+                  
+                    <Link to={"/hr/view_managers"}>Managers</Link>
+                  
+                  </p>
                 </a>
+            
               </li>
 
               <li className="nav-item">
