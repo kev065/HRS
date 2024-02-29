@@ -6,23 +6,7 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
     const [name, setName] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [selectedGoal, setSelectedGoal] = useState('');
-    const [goals, setGoals] = useState([]);
-    useEffect(() => {
-        fetch('https://hrs-iymg.onrender.com/goals', {
-          headers: {
-            'Authorization': 'Bearer ' + retrieve().access_token,
-          },
-        })
-          .then((resp) => resp.json())
-          .then((data) => {
-            // Assuming data is an array of goals with 'id' and 'name' properties
-            setGoals(data);
-          })
-          .catch((error) => {
-            console.error('Error fetching goals:', error);
-          });
-      }, []);
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -31,7 +15,6 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
             name: name,
             start_date: startDate,
             end_date: endDate,
-            goals: selectedGoal,
 
         };
 
@@ -55,7 +38,6 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
             setName('');
             setStartDate('');
             setEndDate('');
-            setSelectedGoal('');
             onClose();
         })
         .catch((error) => {
@@ -87,17 +69,6 @@ const CreateSession = ({sessions, setSessions, onClose}) => {
                     <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} required />
                 </label>
                 <br />
-                <label>
-                Goal:
-                <select value={selectedGoal} onChange={(e) => setSelectedGoal(e.target.value)} required>
-                    <option value="">Select a Goal</option>
-                    {goals.map((goal) => (
-                    <option key={goal.id} value={goal.id}>
-                        {goal.name}
-                    </option>
-                    ))}
-                </select>
-                </label>
                 <button type="submit">Create Session</button>
             </form>
             <button className="exit-button" onClick={handleExit}>Exit</button>
