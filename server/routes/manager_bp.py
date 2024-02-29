@@ -261,7 +261,7 @@ api.add_resource(UpdateDepartmentDetails, '/Update_department_details')
 
 @manager_bp.route('/managers_with_names', methods=['GET'])
 def get_managers_with_names():
-    managers = db.session.query(Manager.id, ManagerProfile.personal_no, ManagerProfile.first_name, ManagerProfile.last_name).join(ManagerProfile).all()
+    managers = db.session.query(Manager.id, Manager.personal_no, ManagerProfile.first_name, ManagerProfile.last_name).join(ManagerProfile).all()
     return jsonify([{'id': id,"personal_no":personal_no, 'name': f"{first_name} {last_name}"} for id,personal_no, first_name, last_name in managers])
 
 class ManagerDetails(Resource):

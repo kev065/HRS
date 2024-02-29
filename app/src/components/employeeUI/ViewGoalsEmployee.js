@@ -7,7 +7,7 @@ const Goals = () => {
     const [goals, setGoals] = useState([]);
 
     useEffect(() => {
-        axios.get('/goals', {
+        axios.get('/employee_goals', {
             headers: {
                 "Authorization": "Bearer " + retrieve().access_token
             }
@@ -23,7 +23,7 @@ const Goals = () => {
     return (
         <div className="container">
           <div className="title-container">
-            <h1 className="title-animation">My Goals<span></span></h1>
+            <h1 className="title">My Goals</h1>
           </div>
           <div>
             {goals.map((goal, index) => (
@@ -38,3 +38,4 @@ const Goals = () => {
     };
     
 export default Goals;
+
