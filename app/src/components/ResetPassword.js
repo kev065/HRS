@@ -46,7 +46,7 @@ const ResetPassword = () => {
         body: JSON.stringify({ email: email, newPassword: newPassword, role: selectedRole, confirmPassword: confirmPassword }),
       };
 
-      const response = await fetch("/forgot_password", requestOptions);
+      const response = await fetch("https://hrs-iymg.onrender.com/forgot_password", requestOptions);
 
       if (!response.ok) {
         const errorData = await response.json();
