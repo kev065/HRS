@@ -40,7 +40,7 @@ const ManagerProfile = () => {
     navigate('/manager/manager_update_profile');
   };
   const handleResetPasswordButtonClick = () => {
-    navigate('/reset_password');
+    navigate('/change_password');
   };
 
 
