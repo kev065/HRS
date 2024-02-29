@@ -4,9 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const HRViewLeaves = () => {
-  const navigate = useNavigate();
-  const [leaves, setLeaves] = useState([]);
-  const [managers, setManagers] = useState([]);
+  const [unapprovedLeaves, setUnapprovedLeaves] = useState([]);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
 
@@ -18,7 +16,10 @@ const HRViewLeaves = () => {
             Authorization: `Bearer ${retrieve().access_token}`,
           },
         });
-        setLeaves(response.data);
+        const filteredLeaves = response.data.filter(
+          (leave) => leave.leave_approval.length === 0
+        );
+        setUnapprovedLeaves(filteredLeaves);
       } catch (error) {
         if (error.response) {
           setError(error.response.data.message);
@@ -29,22 +30,9 @@ const HRViewLeaves = () => {
     };
 
     fetchLeaves();
-
-    axios
-      .get("/managers_with_names", {
-        headers: {
-          Authorization: "Bearer " + retrieve().access_token,
-        },
-      })
-      .then((res) => {
-        setManagers(res.data);
-      })
-      .catch((err) => {
-        console.error(err);
-      });
   }, []);
 
-  const handleCreateLeaveApproval = (leave_id, employee_id) => {
+  const handleCreateLeaveApproval = (leave_id, employee_id, index) => {
     const values = {
       leave_id: leave_id,
       employee_id: employee_id,
@@ -64,6 +52,10 @@ const HRViewLeaves = () => {
           resp
             .json()
             .then((data) => setSuccess("Laeve approval created successfully!"));
+          //update state
+          const updatedUnapprovedLeaves = [...unapprovedLeaves];
+          updatedUnapprovedLeaves.splice(index, 1);
+          setUnapprovedLeaves(updatedUnapprovedLeaves);
         } else {
           resp.json().then((error) => setError(error.error));
         }
@@ -75,7 +67,7 @@ const HRViewLeaves = () => {
     <div className="container w-50 bg-white text-dark m-auto pt-4">
       {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
-      {leaves.map((leave) => (
+      {unapprovedLeaves?.map((leave, index) => (
         <div key={leave.id} className="leave">
           <p className="fs-6">
             <span className="text-muted">Employee ID:</span>
@@ -96,7 +88,7 @@ const HRViewLeaves = () => {
           <button
             className="button approve"
             onClick={() =>
-              handleCreateLeaveApproval(leave.id, leave.employee_id)
+              handleCreateLeaveApproval(leave.id, leave.employee_id, index)
             }
           >
             Create Approval

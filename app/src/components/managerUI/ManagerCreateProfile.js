@@ -1,15 +1,15 @@
-import React, {useState  } from 'react'
-import './managerEdit.css'
-import { useNavigate, useParams } from 'react-router-dom';
-import { retrieve } from '../Encryption';
-import { useFormik } from 'formik';
-import * as yup from "yup"
+import React, { useState } from "react";
+import "./managerEdit.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { retrieve } from "../Encryption";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const ManagerCreateProfile = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const { managerId } = useParams()
+  const { managerId } = useParams();
 
   const [profilePhoto, setProfilePhoto] = useState(null);
 
@@ -61,7 +61,6 @@ const ManagerCreateProfile = () => {
       date_of_birth: yup.date().required("Date of birth is required"),
     }),
 
-
     onSubmit: (values) => {
       const formData = new FormData();
       formData.append("first_name", values.first_name);
@@ -71,13 +70,16 @@ const ManagerCreateProfile = () => {
       formData.append("title", values.title);
       formData.append("date_of_birth", values.date_of_birth);
       formData.append("profile_photo", profilePhoto);
-      
-      console.log("Form data before making the POST request:",...formData.entries());
+
+      console.log(
+        "Form data before making the POST request:",
+        ...formData.entries()
+      );
 
       fetch("/managerProfiles", {
         method: "POST",
         headers: {
-          'Authorization': "Bearer " + retrieve().access_token,
+          Authorization: "Bearer " + retrieve().access_token,
         },
         body: formData,
       }).then((response) => {
@@ -100,127 +102,129 @@ const ManagerCreateProfile = () => {
   });
 
   return (
-    <div className='content-wrapper-manager' >
-    <div className="container-manager">
-      <div className="form-container-manager">
-        <form className="profile-form-manager" onSubmit={formik.handleSubmit}>
-          {success ? <h4 className="secondary-title-manager">{success}</h4> : null}
-          <div className="form-control">
-            <label htmlFor="profile_photo">Upload photo</label>
-            <br />
-            <input
-              type="file"
-              id="profile_photo"
-              name="profile_photo"
-              onChange={handleChange}
-              required
-            />
-            {error && <div className="error">{error}</div>}
-          </div>
-          <div className="form-control-manager">
-            <label htmlFor="first_name">First Name</label>
-            <br />
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              placeholder="eg. John"
-              value={formik.values.first_name}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.first_name && formik.errors.first_name ? (
-              <div className="error">{formik.errors.first_name}</div>
+    <div className="content-wrapper-manager">
+      <div className="container-manager">
+        <div className="form-container-manager">
+          <form className="profile-form-manager" onSubmit={formik.handleSubmit}>
+            {success ? (
+              <h4 className="secondary-title-manager">{success}</h4>
             ) : null}
-          </div>
+            <div className="form-control">
+              <label htmlFor="profile_photo">Upload photo</label>
+              <br />
+              <input
+                type="file"
+                id="profile_photo"
+                name="profile_photo"
+                onChange={handleChange}
+                required
+              />
+              {error && <div className="error">{error}</div>}
+            </div>
+            <div className="form-control-manager">
+              <label htmlFor="first_name">First Name</label>
+              <br />
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                placeholder="eg. John"
+                value={formik.values.first_name}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.first_name && formik.errors.first_name ? (
+                <div className="error">{formik.errors.first_name}</div>
+              ) : null}
+            </div>
 
-          <div className="form-control-manager">
-            <label htmlFor="last_name">Last Name</label>
-            <br />
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              placeholder="eg. Doe"
-              value={formik.values.last_name}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.last_name && formik.errors.last_name ? (
-              <div className="error">{formik.errors.last_name}</div>
-            ) : null}
-          </div>
+            <div className="form-control-manager">
+              <label htmlFor="last_name">Last Name</label>
+              <br />
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                placeholder="eg. Doe"
+                value={formik.values.last_name}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.last_name && formik.errors.last_name ? (
+                <div className="error">{formik.errors.last_name}</div>
+              ) : null}
+            </div>
 
-          <div className="form-control-manager">
-            <label htmlFor="mantra">Mantra</label>
-            <br />
-            <input
-              type="text"
-              id="mantra"
-              name="mantra"
-              placeholder="mantra goes here..."
-              value={formik.values.mantra}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.mantra && formik.errors.mantra ? (
-              <div className="error">{formik.errors.mantra}</div>
-            ) : null}
-          </div>
+            <div className="form-control-manager">
+              <label htmlFor="mantra">Mantra</label>
+              <br />
+              <input
+                type="text"
+                id="mantra"
+                name="mantra"
+                placeholder="mantra goes here..."
+                value={formik.values.mantra}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.mantra && formik.errors.mantra ? (
+                <div className="error">{formik.errors.mantra}</div>
+              ) : null}
+            </div>
 
-          <div className="form-control-manager">
-            <label htmlFor="phone_contact">Contact</label>
-            <br />
-            <input
-              type="tel"
-              id="phone_contact"
-              name="phone_contact"
-              placeholder="eg. +2547920911"
-              value={formik.values.phone_contact}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.phone_contact && formik.errors.phone_contact ? (
-              <div className="error">{formik.errors.phone_contact}</div>
-            ) : null}
-          </div>
+            <div className="form-control-manager">
+              <label htmlFor="phone_contact">Contact</label>
+              <br />
+              <input
+                type="tel"
+                id="phone_contact"
+                name="phone_contact"
+                placeholder="eg. +2547920911"
+                value={formik.values.phone_contact}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.phone_contact && formik.errors.phone_contact ? (
+                <div className="error">{formik.errors.phone_contact}</div>
+              ) : null}
+            </div>
 
-          <div className="form-control-manager">
-            <label htmlFor="title">Title</label>
-            <br />
-            <input
-              type="text"
-              id="title"
-              name="title"
-              placeholder="eg. Mr. Mrs"
-              value={formik.values.title}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.title && formik.errors.title ? (
-              <div className="error">{formik.errors.title}</div>
-            ) : null}
-          </div>
-          <div className="form-control-manager">
-            <label htmlFor="date_of_birth">Date of Birth</label>
-            <br />
-            <input
-              type="date"
-              id="date_of_birth"
-              name="date_of_birth"
-              value={formik.values.date_of_birth}
-              onChange={formik.handleChange}
-            />
-            {formik.touched.date_of_birth && formik.errors.date_of_birth ? (
-              <div className="error">{formik.errors.date_of_birth}</div>
-            ) : null}
-          </div>
-          <div className="update-account-container-manager">
-            {/* <input type="submit" /> */}
-            <button className="update-btn-manager" type="submit">
-              Create Profile
-            </button>
-          </div>
-        </form>
+            <div className="form-control-manager">
+              <label htmlFor="form-title">Title</label>
+              <br />
+              <input
+                type="text"
+                id="form-title"
+                name="title"
+                placeholder="eg. manager"
+                value={formik.values.title}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.title && formik.errors.title ? (
+                <div className="error">{formik.errors.title}</div>
+              ) : null}
+            </div>
+            <div className="form-control-manager">
+              <label htmlFor="date_of_birth">Date of Birth</label>
+              <br />
+              <input
+                type="date"
+                id="date_of_birth"
+                name="date_of_birth"
+                value={formik.values.date_of_birth}
+                onChange={formik.handleChange}
+              />
+              {formik.touched.date_of_birth && formik.errors.date_of_birth ? (
+                <div className="error">{formik.errors.date_of_birth}</div>
+              ) : null}
+            </div>
+            <div className="update-account-container-manager">
+              {/* <input type="submit" /> */}
+              <button className="update-btn-manager" type="submit">
+                Create Profile
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default ManagerCreateProfile
+export default ManagerCreateProfile;

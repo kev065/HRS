@@ -37,12 +37,11 @@ const ManagerProfile = () => {
   }
 
   const handleEditButtonClick = () => {
-    navigate('/manager/manager_update_profile');
+    navigate("/manager/manager_update_profile");
   };
   const handleResetPasswordButtonClick = () => {
-    navigate('/reset_password');
+    navigate("/reset_password");
   };
-
 
   return (
     <div
@@ -62,7 +61,7 @@ const ManagerProfile = () => {
                   <img
                     src={managerProfileData?.profile_photo || profile}
                     alt="profile"
-                    className="rounded-circle profile"
+                    className="profile"
                     width={150}
                   />
                 </div>
@@ -128,58 +127,23 @@ const ManagerProfile = () => {
                 ) : (
                   <h5 className="text-secondary">No leaves have been set</h5>
                 )}
-
-        <button type="update" className="btn btn-primary" onClick={handleEditButtonClick}>
-          Edit Profile
-        </button>
-        <button type="update" className="btn btn-primary" onClick={handleResetPasswordButtonClick}>
-          Reset Password
-        </button>
-            </div>
-            {/* <div className="card mb-3 content">
-              <h1 className="m-3 pt-3">Recent Payslip</h1>
-              {manager?.remunerations.length !== 0 ? (
-                manager?.remunerations.map((payslip) => (
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-md-3">
-                        <h5>{payslip.name}</h5>
-                      </div>
-                      <div className="col-md-9 text-secondary">
-                        {payslip.description}
-                      </div>
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <h5 className="text-secondary">No recent payslips</h5>
-              )}
-            </div>
-            <div className="card mb-3 content">
-              <h1 className="m-3 pt-3">Approved Leaves</h1>
-              {manager?.leaves.length !== 0 ? (
-                managerProfileData?.leaves.map((leave) => (
-                  <div className="card-body">
-                    <div className="col-md-3">
-                      <h5>start</h5>
-                    </div>
-                    <div className="col-md-9 text-secondary">
-                      {leave.start_date}
-                    </div>
-                    <div className="col-md-3">
-                      <h5>end</h5>
-                    </div>
-                    <div className="col-md-9 text-secondary">
-                      {leave.end_date}
-                    </div>
-                  </div>
-                ))
-              ) : (
-                <h5 className="text-secondary">No approved leaves</h5>
-              )}
-            </div> */}
+              </div>
             </div>
           </div>
+          <button
+            type="update"
+            className="btn btn-primary"
+            onClick={handleEditButtonClick}
+          >
+            Edit Profile
+          </button>
+          <button
+            type="update"
+            className="btn btn-primary"
+            onClick={handleResetPasswordButtonClick}
+          >
+            Reset Password
+          </button>
         </div>
       </div>
     </div>

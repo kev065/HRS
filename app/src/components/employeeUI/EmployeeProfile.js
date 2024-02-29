@@ -50,9 +50,13 @@ const EmployeeProfile = () => {
               <div className="card mb-3 content">
                 <div className="col-md-3">
                   <img
-                    src={employeeProfileData?.profile_photo || profile}
+                    src={
+                      employeeProfileData.profile_photo
+                        ? employeeProfileData.profile_photo
+                        : profile
+                    }
                     alt="profile"
-                    className="rounded-circle profile"
+                    className="profile"
                     width={150}
                   />
                 </div>

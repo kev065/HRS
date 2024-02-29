@@ -6,7 +6,7 @@ from flask_jwt_extended import get_jwt_identity
 from serializer import hrSchema
 from auth_middleware import hr_required
 
-from models import HR_Personel, db,HrProfile
+from models import HR_Personel, db, HrProfile
 
 hr_bp = Blueprint('hr_bp', __name__)
 ma = Marshmallow(hr_bp)
@@ -83,7 +83,7 @@ class HRById(Resource):
 
         data = patch_args.parse_args()
         for key, value in data.items():
-            if value is None:
+            if value is None or value == "null":
                 continue
             setattr(single_HR, key, value)
         db.session.commit()
@@ -118,7 +118,8 @@ api.add_resource(HRById, '/hr_personnels/<string:id>')
 
 class HRDetails(Resource):
     def get(self):
-        hr_personnels_with_profiles = db.session.query(HR_Personel, HrProfile).outerjoin(HrProfile, HR_Personel.id == HrProfile.hr_id).all()
+        hr_personnels_with_profiles = db.session.query(HR_Personel, HrProfile).outerjoin(
+            HrProfile, HR_Personel.id == HrProfile.hr_id).all()
 
         result = []
         for hr_personnel, hr_profile in hr_personnels_with_profiles:
@@ -135,10 +136,11 @@ class HRDetails(Resource):
                     'hr_mantra': hr_profile.mantra,
                     'hr_phone_contact': hr_profile.phone_contact
                 })
-            
+
             result.append(hr_data)
 
         response = make_response(jsonify(result), 200)
         return response
+
 
 api.add_resource(HRDetails, '/hr_details')

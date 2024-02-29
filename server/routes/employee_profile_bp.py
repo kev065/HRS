@@ -118,9 +118,9 @@ class EmployeeProfileById(Resource):
 
             # update the other attributes with the data
             for key, value in data.items():
-                if value is not None:
-                    setattr(single_employee_profile, key, value)
-
+                if value is None or value == "null":
+                    continue
+                setattr(single_employee_profile, key, value)
             db.session.commit()
             result = employeeProfileSchema.dump(single_employee_profile)
             response = make_response(jsonify(result), 200)

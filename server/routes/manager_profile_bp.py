@@ -25,7 +25,7 @@ class ManagerProfiles(Resource):
         response = make_response(jsonify(result), 200)
 
         return response
-    
+
     @cross_origin()
     @manager_required()
     def post(self):
@@ -55,8 +55,8 @@ class ManagerProfiles(Resource):
                 data["date_of_birth"], "%Y-%m-%d")
             date_created = datetime.utcnow()
 
-            new_managerProfile = ManagerProfile(date_of_birth=date_of_birth, first_name=first_name,manager_id=manager_id, last_name=last_name,
-                                                     mantra=mantra, phone_contact=phone_contact, profile_photo=photo_url, title=title, date_created=date_created)
+            new_managerProfile = ManagerProfile(date_of_birth=date_of_birth, first_name=first_name, manager_id=manager_id, last_name=last_name,
+                                                mantra=mantra, phone_contact=phone_contact, profile_photo=photo_url, title=title, date_created=date_created)
             db.session.add(new_managerProfile)
             db.session.commit()
 
@@ -64,7 +64,7 @@ class ManagerProfiles(Resource):
             response = make_response(jsonify(result), 201)
 
             return response
-        
+
         except Exception as e:
             print(f"Error: {e}")
             db.session.rollback()
@@ -103,11 +103,10 @@ class ManagerProfileById(Resource):
 
         data = request.form.to_dict()
 
-
         if 'date_of_birth' in data:
             data['date_of_birth'] = datetime.strptime(
                 data['date_of_birth'], "%Y-%m-%d")
-            
+
         try:
             if profile_photo:
                 # upload new profile photo
@@ -117,10 +116,10 @@ class ManagerProfileById(Resource):
                 # set the profile photo attribute to the url
                 single_manager_profile.profile_photo = photo_url
 
-
             for key, value in data.items():
-                if value is not None:
-                    setattr(single_manager_profile, key, value)
+                if value is None or value == "null":
+                    continue
+                setattr(single_manager_profile, key, value)
             db.session.commit()
             result = managerProfileSchema.dump(single_manager_profile)
             response = make_response(jsonify(result), 200)
@@ -130,7 +129,6 @@ class ManagerProfileById(Resource):
             print(f"Error: {e}")
             db.session.rollback()
             return make_response(jsonify({"error": str(e)}), 500)
-
 
     @manager_required()
     def delete(self, id):

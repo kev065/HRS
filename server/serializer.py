@@ -147,7 +147,7 @@ class LeaveSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Leave
         include_fk = True
-    leave = Nested(LeaveApprovalSchema, many=True)
+    leave_approval = Nested(LeaveApprovalSchema, many=True)
 
 
 leaveSchema = LeaveSchema()
@@ -159,13 +159,15 @@ class EmployeeSchema(SQLAlchemyAutoSchema):
         include_fk = True
         exclude = ('password',)
     # associated data
-    employee_profiles = Nested(EmployeeProfileSchema, many=True)
-    experiences = Nested(ExperienceSchema, many=True)
-    documents = Nested(DocumentSchema, many=True)
-    leaves = Nested(LeaveSchema, many=True)
-    goals = Nested(GoalsSchema, many=True)
-    educations = Nested(EducationSchema, many=True)
-    remunerations = Nested(RemunerationSchema, many=True)
+    employee_profiles = Nested(
+        EmployeeProfileSchema, exclude=('employee_id',),  many=True)
+    experiences = Nested(ExperienceSchema, exclude=('employee_id',), many=True)
+    documents = Nested(DocumentSchema, exclude=('employee_id',), many=True)
+    leaves = Nested(LeaveSchema, exclude=('employee_id',), many=True)
+    goals = Nested(GoalsSchema, exclude=('employee_id',), many=True)
+    educations = Nested(EducationSchema, exclude=('employee_id',), many=True)
+    remunerations = Nested(
+        RemunerationSchema, exclude=('employee_id',), many=True)
 
 
 employeeSchema = EmployeeSchema()
@@ -176,9 +178,12 @@ class ManagerSchema(SQLAlchemyAutoSchema):
         model = Manager
         include_fk = True
         exclude = ('password',)
-    leave_approvals = Nested(LeaveApprovalSchema, many=True)
-    manager_profile = Nested(ManagerProfileSchema, many=True) 
-    
+    leave_approvals = Nested(
+        LeaveApprovalSchema, exclude=('manager_id',),  many=True)
+    manager_profile = Nested(ManagerProfileSchema,
+                             exclude=('manager_id',), many=True)
+
+
 managerSchema = ManagerSchema()
 
 
@@ -187,8 +192,9 @@ class HrSchema(SQLAlchemyAutoSchema):
         model = HR_Personel
         include_fk = True
         exclude = ('password',)
-    leave_approvals = Nested(LeaveApprovalSchema, many=True)
-    hr_profiles = Nested(HrProfileSchema, many=True)
+    leave_approvals = Nested(
+        LeaveApprovalSchema, exclude=('hr_id',), many=True)
+    hr_profiles = Nested(HrProfileSchema, exclude=('hr_id',), many=True)
 
 
 hrSchema = HrSchema()

@@ -4,10 +4,10 @@ from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import get_jwt_identity
-from serializer import employeeSchema,managerSchema,hrSchema
+from serializer import employeeSchema, managerSchema, hrSchema
 from auth_middleware import employee_required, hr_required
 
-from models import Employee, db,EmployeeProfile,Manager,HR_Personel,ManagerProfile,HrProfile
+from models import Employee, db, EmployeeProfile, Manager, HR_Personel, ManagerProfile, HrProfile
 
 employee_bp = Blueprint('employee_bp', __name__)
 ma = Marshmallow(employee_bp)
@@ -25,7 +25,6 @@ post_args.add_argument('personal_no', type=str, required=True,
                        help='Staff No is required')
 post_args.add_argument('role', type=str, required=True,
                        help='Role is required')
-
 
 
 patch_args = reqparse.RequestParser()
@@ -47,46 +46,49 @@ class Employees(Resource):
 
     # error handling
         if data['role'] == 'employee':
-              employee = Employee.query.filter_by(email=data['email']).first()
-              if employee:
-                    abort(409, detail="Employee with the same email already exists")
-              hashed_password = bcrypt.generate_password_hash(data['password'])
+            employee = Employee.query.filter_by(email=data['email']).first()
+            if employee:
+                abort(409, detail="Employee with the same email already exists")
+            hashed_password = bcrypt.generate_password_hash(data['password'])
 
-              new_employee = Employee(email=data['email'], password=hashed_password, dept_id=data['dept_id'], personal_no=data["personal_no"])
-              db.session.add(new_employee)
-              db.session.commit()
+            new_employee = Employee(email=data['email'], password=hashed_password,
+                                    dept_id=data['dept_id'], personal_no=data["personal_no"])
+            db.session.add(new_employee)
+            db.session.commit()
 
-              result = employeeSchema.dump(new_employee)
-              response = make_response(jsonify(result), 201)
-              return response
+            result = employeeSchema.dump(new_employee)
+            response = make_response(jsonify(result), 201)
+            return response
 
         elif data['role'] == 'manager':
-              manager = Manager.query.filter_by(email=data['email']).first()
-              if manager:abort(409, detail="Manager with the same email already exists")
-              hashed_password = bcrypt.generate_password_hash(data['password'])
+            manager = Manager.query.filter_by(email=data['email']).first()
+            if manager:
+                abort(409, detail="Manager with the same email already exists")
+            hashed_password = bcrypt.generate_password_hash(data['password'])
 
-              new_manager = Manager(email=data['email'], password=hashed_password, dept_id=data['dept_id'], personal_no=data["personal_no"])
-              db.session.add(new_manager)
-              db.session.commit()
+            new_manager = Manager(email=data['email'], password=hashed_password,
+                                  dept_id=data['dept_id'], personal_no=data["personal_no"])
+            db.session.add(new_manager)
+            db.session.commit()
 
-              result = managerSchema.dump(new_manager)
-              response = make_response(jsonify(result), 201)
-              return response
+            result = managerSchema.dump(new_manager)
+            response = make_response(jsonify(result), 201)
+            return response
 
         else:
-              hr = HR_Personel.query.filter_by(email=data['email']).first()
-              if hr:abort(409, detail="Hr with the same email already exists")
-              hashed_password = bcrypt.generate_password_hash(data['password'])
+            hr = HR_Personel.query.filter_by(email=data['email']).first()
+            if hr:
+                abort(409, detail="Hr with the same email already exists")
+            hashed_password = bcrypt.generate_password_hash(data['password'])
 
-              new_hr = HR_Personel(
-              email=data['email'], password=hashed_password, dept_id=data['dept_id'], personal_no=data["personal_no"])
-              db.session.add(new_hr)
-              db.session.commit()
+            new_hr = HR_Personel(
+                email=data['email'], password=hashed_password, dept_id=data['dept_id'], personal_no=data["personal_no"])
+            db.session.add(new_hr)
+            db.session.commit()
 
-              result = managerSchema.dump(new_hr)
-              response = make_response(jsonify(result), 201)
-              return response
-
+            result = managerSchema.dump(new_hr)
+            response = make_response(jsonify(result), 201)
+            return response
 
 
 api.add_resource(Employees, '/employees')
@@ -145,10 +147,10 @@ class EmployeeById(Resource):
 api.add_resource(EmployeeById, '/employees/<string:id>')
 
 
-
 class EmployeesDetails(Resource):
     def get(self):
-        employees_with_profiles = db.session.query(Employee, EmployeeProfile).outerjoin(EmployeeProfile, Employee.id == EmployeeProfile.employee_id).all()
+        employees_with_profiles = db.session.query(Employee, EmployeeProfile).outerjoin(
+            EmployeeProfile, Employee.id == EmployeeProfile.employee_id).all()
 
         result = []
         for employee, employee_profile in employees_with_profiles:
@@ -163,10 +165,11 @@ class EmployeesDetails(Resource):
                     'employee_last_name': employee_profile.last_name,
                     'employee_title': employee_profile.title
                 })
-            
+
             result.append(employee_data)
 
         response = make_response(jsonify(result), 200)
         return response
+
 
 api.add_resource(EmployeesDetails, '/employees_details')

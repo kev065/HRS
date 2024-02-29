@@ -1,11 +1,11 @@
-from flask import Blueprint, make_response, jsonify,Response
+from flask import Blueprint, make_response, jsonify, Response
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import get_jwt_identity
-from serializer import managerSchema,departmentSchema
+from serializer import managerSchema, departmentSchema
 from auth_middleware import manager_required
-from models import Manager, db,Employee,Department,EmployeeProfile,EmployeeTraining,ManagerProfile
+from models import Manager, db, Employee, Department, EmployeeProfile, EmployeeTraining, ManagerProfile
 
 manager_bp = Blueprint('manager_bp', __name__)
 ma = Marshmallow(manager_bp)
@@ -132,7 +132,8 @@ class TrainingsPerDepartment(Resource):
         employees_details = []
 
         for employee in employees:
-            employee_profile = EmployeeProfile.query.filter_by(employee_id=employee.id).first()
+            employee_profile = EmployeeProfile.query.filter_by(
+                employee_id=employee.id).first()
 
             employee_details = {
                 "id": employee.id,
@@ -143,7 +144,8 @@ class TrainingsPerDepartment(Resource):
                 "phone_contact": employee_profile.phone_contact if employee_profile else None
             }
 
-            assigned_trainings = EmployeeTraining.query.filter_by(employee_id=employee.id).all()
+            assigned_trainings = EmployeeTraining.query.filter_by(
+                employee_id=employee.id).all()
             employee_details["assigned_trainings"] = [{
                 "title": training.training.title if training.training else None,
                 "description": training.training.description if training.training else None,
@@ -157,7 +159,10 @@ class TrainingsPerDepartment(Resource):
 
         return jsonify(employees_details)
 
-api.add_resource(TrainingsPerDepartment, '/manager/employees/<string:manager_id>')
+
+api.add_resource(TrainingsPerDepartment,
+                 '/manager/employees/<string:manager_id>')
+
 
 class EmployeesPerDepartment(Resource):
     @manager_required()
@@ -173,11 +178,12 @@ class EmployeesPerDepartment(Resource):
         employees_details = []
 
         for employee in employees:
-            employee_profile = EmployeeProfile.query.filter_by(employee_id=employee.id).first()
+            employee_profile = EmployeeProfile.query.filter_by(
+                employee_id=employee.id).first()
 
             employee_details = {
                 "id": employee.id,
-                "personal_no": employee.personal_no,  
+                "personal_no": employee.personal_no,
                 "email": employee.email,
                 "first_name": employee_profile.first_name if employee_profile else None,
                 "last_name": employee_profile.last_name if employee_profile else None,
@@ -188,7 +194,9 @@ class EmployeesPerDepartment(Resource):
 
         return jsonify(employees_details)
 
-api.add_resource(EmployeesPerDepartment, '/employees_department/<string:dept_id>')
+
+api.add_resource(EmployeesPerDepartment,
+                 '/employees_department/<string:dept_id>')
 
 
 class DepartmentsHead(Resource):
@@ -197,26 +205,30 @@ class DepartmentsHead(Resource):
         result = []
         for department in departments:
             department_data = departmentSchema.dump(department)
-          
+
             manager = Manager.query.filter_by(dept_id=department.id).first()
             if manager:
                 department_data['manager'] = {
                     'id': manager.id,
                     'email': manager.email,
-                   
+
                     'profile': {}
                 }
-                manager_profile = ManagerProfile.query.filter_by(manager_id=manager.id).first()
+                manager_profile = ManagerProfile.query.filter_by(
+                    manager_id=manager.id).first()
                 if manager_profile:
                     department_data['manager']['profile'] = {
                         'first_name': manager_profile.first_name,
                         'last_name': manager_profile.last_name,
-                       
+
                     }
             result.append(department_data)
         response = make_response(jsonify(result), 200)
         return response
+
+
 api.add_resource(DepartmentsHead, '/department_heads')
+
 
 class UpdateDepartmentDetails(Resource):
 
@@ -228,18 +240,15 @@ class UpdateDepartmentDetails(Resource):
         if not department:
             abort(404, detail=f'Department with id {id} does not exist')
 
-     
         if department.manager.id != current_user:
             abort(401, detail="Unauthorized request")
 
         data = patch_args.parse_args()
 
-    
         for key, value in data.items():
             if value is not None:
                 setattr(department, key, value)
 
-     
         manager_data = data.get('manager', {})
         if manager_data:
             manager = department.manager
@@ -249,7 +258,6 @@ class UpdateDepartmentDetails(Resource):
 
         db.session.commit()
 
-     
         result = {
             'department': departmentSchema.dump(department),
             'manager': managerSchema.dump(manager)
@@ -257,16 +265,22 @@ class UpdateDepartmentDetails(Resource):
 
         response = make_response(jsonify(result), 200)
         return response
+
+
 api.add_resource(UpdateDepartmentDetails, '/Update_department_details')
+
 
 @manager_bp.route('/managers_with_names', methods=['GET'])
 def get_managers_with_names():
-    managers = db.session.query(Manager.id, ManagerProfile.personal_no, ManagerProfile.first_name, ManagerProfile.last_name).join(ManagerProfile).all()
-    return jsonify([{'id': id,"personal_no":personal_no, 'name': f"{first_name} {last_name}"} for id,personal_no, first_name, last_name in managers])
+    managers = db.session.query(Manager.id, Manager.personal_no, ManagerProfile.first_name,
+                                ManagerProfile.last_name).join(ManagerProfile).all()
+    return jsonify([{'id': id, "personal_no": personal_no, 'name': f"{first_name} {last_name}"} for id, personal_no, first_name, last_name in managers])
+
 
 class ManagerDetails(Resource):
     def get(self):
-        managers_with_profiles = db.session.query(Manager, ManagerProfile).outerjoin(ManagerProfile, Manager.id == ManagerProfile.manager_id).all()
+        managers_with_profiles = db.session.query(Manager, ManagerProfile).outerjoin(
+            ManagerProfile, Manager.id == ManagerProfile.manager_id).all()
 
         result = []
         for manager, manager_profile in managers_with_profiles:
@@ -282,17 +296,20 @@ class ManagerDetails(Resource):
                     'mantra': manager_profile.mantra,
                     'phone_contact': manager_profile.phone_contact
                 })
-            
+
             result.append(manager_data)
 
         response = make_response(jsonify(result), 200)
         return response
 
+
 api.add_resource(ManagerDetails, '/manager_details')
+
 
 class ManagerDepartmentDetails(Resource):
     def get(self):
-        managers_with_profiles = db.session.query(Manager, ManagerProfile, Department).outerjoin(ManagerProfile, Manager.id == ManagerProfile.manager_id).outerjoin(Department, Manager.dept_id == Department.id).all()
+        managers_with_profiles = db.session.query(Manager, ManagerProfile, Department).outerjoin(
+            ManagerProfile, Manager.id == ManagerProfile.manager_id).outerjoin(Department, Manager.dept_id == Department.id).all()
 
         result = []
         for manager, manager_profile, department in managers_with_profiles:
@@ -314,5 +331,6 @@ class ManagerDepartmentDetails(Resource):
 
         response = make_response(jsonify(result), 200)
         return response
+
 
 api.add_resource(ManagerDepartmentDetails, '/manager_department_details')

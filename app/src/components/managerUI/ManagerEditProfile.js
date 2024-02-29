@@ -9,14 +9,14 @@ const ManagerEditProfile = () => {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
-  const  id  =  retrieve().manager.id
+  const id = retrieve().manager.id;
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [managerProfileData, setManagerProfileData] = useState({});
 
   useEffect(() => {
     fetch(`/managers/${id}`)
       .then((response) => response.json())
-      .then((data) => setManagerProfileData(data.manager_profiles[0]))
+      .then((data) => setManagerProfileData(data.manager_profile[0]))
       .catch((err) => console.log(err));
   }, []);
 
@@ -35,7 +35,9 @@ const ManagerEditProfile = () => {
     const file = event.target.files[0];
     if (file) {
       const size = file.size;
-      const isValid = validFileExtensions.image.includes(getExtension(file.name));
+      const isValid = validFileExtensions.image.includes(
+        getExtension(file.name)
+      );
       if (size > MAX_FILE_SIZE) setError("The file is too large");
       else if (!isValid) setError("The file type is not supported");
       else {
@@ -80,7 +82,6 @@ const ManagerEditProfile = () => {
       fetch(`/managerProfiles/${managerProfileData.id}`, {
         method: "PATCH",
         headers: {
-          
           Authorization: "Bearer " + retrieve().access_token,
         },
         body: formData,

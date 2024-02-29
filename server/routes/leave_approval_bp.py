@@ -110,7 +110,7 @@ class LeaveApprovalById(Resource):
 
         else:
             # this blocks ensures approved attribute in leave is always falsy
-            single_leave_approval.leave.approved = True
+            single_leave_approval.leave.approved = False
 
         db.session.commit()
 

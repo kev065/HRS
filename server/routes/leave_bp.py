@@ -2,7 +2,7 @@ from flask import Blueprint, make_response, jsonify
 from flask_restful import Api, Resource, abort, reqparse
 from flask_bcrypt import Bcrypt
 from flask_marshmallow import Marshmallow
-from flask_jwt_extended import get_jwt_identity,current_user
+from flask_jwt_extended import get_jwt_identity, current_user
 
 from serializer import leaveSchema
 
@@ -48,7 +48,6 @@ class Leaves(Resource):
         current_user = get_jwt_identity()
         data = post_args.parse_args()
 
-      
         start_date = datetime.strptime(
             data["start_date"], "%Y-%m-%d")
         end_date = datetime.strptime(
@@ -99,7 +98,6 @@ class LeaveById(Resource):
             data['end_date'] = datetime.strptime(
                 data['end_date'], "%Y-%m-%d")
 
-    
         for key, value in data.items():
             if value is None:
                 continue
@@ -119,6 +117,9 @@ class LeaveById(Resource):
         if leave.employee_id != current_user:
             abort(401, detail="Unauthorized request")
 
+        for leave_approval in leave.leave_approval:
+            db.session.delete(leave_approval)
+
         db.session.delete(leave)
         db.session.commit()
 
@@ -133,11 +134,10 @@ class LeaveById(Resource):
 api.add_resource(LeaveById, '/leaves/<string:id>')
 
 
-
 class EmployeeLeaves(Resource):
     @employee_required()
     def get(self, id):
-        current_user=get_jwt_identity()
+        current_user = get_jwt_identity()
         leaves = Leave.query.filter_by(employee_id=id).all()
 
         if not leaves:
@@ -148,6 +148,5 @@ class EmployeeLeaves(Resource):
             response = make_response(jsonify(result), 200)
             return response
 
+
 api.add_resource(EmployeeLeaves, '/employee_leaves/<string:id>')
-
-
