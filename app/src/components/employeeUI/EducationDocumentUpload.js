@@ -35,7 +35,7 @@ const EducationDocumentUpload = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
   
-    fetch('/education', {
+    fetch('https://hrs-iymg.onrender.com/education', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +55,7 @@ const EducationDocumentUpload = () => {
       formData.append('name', documentName);
       formData.append('type', documentType);
   
-      fetch(`/upload/${educationData.id}`, {
+      fetch(`https://hrs-iymg.onrender.com/upload/${educationData.id}`, {
         method: 'POST',
         headers: {
           "Authorization": "Bearer " + retrieve().access_token,

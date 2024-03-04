@@ -13,7 +13,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
 
     useEffect(() => {
         const fetchTrainings = () => {
-            fetch('/trainings', {
+            fetch('https://hrs-iymg.onrender.com/trainings', {
                 headers: {
                     "Authorization": "Bearer " + retrieve().access_token,
                 }
@@ -40,7 +40,7 @@ const ViewTrainings = ({ trainings, setTrainings }) => {
     };
 
     const handleDeleteTraining = (trainingId) => {
-        fetch(`/trainings/${trainingId}`, {
+        fetch(`https://hrs-iymg.onrender.com/trainings/${trainingId}`, {
             method: "DELETE",
             headers: {
                 Authorization: "Bearer " + retrieve().access_token,

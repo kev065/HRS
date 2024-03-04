@@ -13,7 +13,7 @@ const UpdateSession = () => {
     const navigate = useNavigate();
    
     useEffect(() => {
-      fetch(`/sessions/${id}`, {
+      fetch(`https://hrs-iymg.onrender.com/sessions/${id}`, {
           headers: {
               'Content-Type': 'application/json',
               "Authorization": "Bearer " + retrieve().access_token,
@@ -59,7 +59,7 @@ const UpdateSession = () => {
         end_date: new Date(end_date),
     };
 
-    fetch(`/sessions/${session.id}`, {
+    fetch(`https://hrs-iymg.onrender.com/sessions/${session.id}`, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

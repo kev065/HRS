@@ -5,7 +5,7 @@ const ViewStaffDetails = () => {
   const [staffDetails, setStaffDetails] = useState([]);
 
   useEffect(() => {
-    fetch('/employees_details')
+    fetch('https://hrs-iymg.onrender.com/employees_details')
       .then(response => response.json())
       .then(data => {
         const employees = data.map(employee => ({ ...employee, type: 'Employee' }));

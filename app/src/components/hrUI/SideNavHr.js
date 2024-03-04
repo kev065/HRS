@@ -50,12 +50,12 @@ const SideNavHr = () => {
                   <p>Onboard Employee</p>
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link to={"/hr/hr_delete_employee"} className="nav-link">
                   <i className="nav-icon fas fa-user-minus" />
                   <p>Offboard Employee</p>
                 </Link>
-              </li>
+              </li> */}
 
               <li className="nav-item">
                 <a href="#" className="nav-link">

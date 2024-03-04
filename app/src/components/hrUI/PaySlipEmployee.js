@@ -12,13 +12,13 @@ const PaySlipEmployee = ({
   const [clearBtn, setClearBtn] = useState(false);
 
   useEffect(() => {
-    fetch(`/employees/${payslip.employee_id}`)
+    fetch(`https://hrs-iymg.onrender.com/employees/${payslip.employee_id}`)
       .then((resp) => resp.json())
       .then((data) => setEmployee(data));
   }, [payslip]);
 
   const handleDelete = () => {
-    fetch(`/payslip/${payslip.remuneration_id}`, {
+    fetch(`https://hrs-iymg.onrender.com/payslip/${payslip.remuneration_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

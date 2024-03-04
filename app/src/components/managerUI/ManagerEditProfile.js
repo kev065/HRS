@@ -14,11 +14,13 @@ const ManagerEditProfile = () => {
   const [managerProfileData, setManagerProfileData] = useState({});
 
   useEffect(() => {
-    fetch(`/managers/${id}`)
+    fetch(`https://hrs-iymg.onrender.com/managers/${id}`)
       .then((response) => response.json())
-      .then((data) => setManagerProfileData(data.manager_profiles[0]))
+      .then((data) => setManagerProfileData(data.manager_profile[0]))
       .catch((err) => console.log(err));
   }, []);
+
+  console.log(managerProfileData)
 
   const MAX_FILE_SIZE = 10000000; // 10MB
   const validFileExtensions = {
@@ -77,7 +79,7 @@ const ManagerEditProfile = () => {
 
       console.log(...formData.entries());
 
-      fetch(`/managerProfiles/${managerProfileData.id}`, {
+      fetch(`https://hrs-iymg.onrender.com/managerProfiles/${managerProfileData.id}`, {
         method: "PATCH",
         headers: {
           

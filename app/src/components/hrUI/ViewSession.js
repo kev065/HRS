@@ -14,7 +14,7 @@ const ViewSession = ({sessions, setSessions}) => {
 
     useEffect(() => {
         const fetchSessions = () => {
-            fetch('/sessions', {
+            fetch('https://hrs-iymg.onrender.com/sessions', {
                 headers: {
                     "Authorization": "Bearer " + retrieve().access_token,
                 }
@@ -41,7 +41,7 @@ const ViewSession = ({sessions, setSessions}) => {
     }
 
     const handleDeleteSession =(sessionId)=>{
-        fetch(`/sessions/${sessionId}`, {
+        fetch(`https://hrs-iymg.onrender.com/sessions/${sessionId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + retrieve().access_token,

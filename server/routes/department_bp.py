@@ -32,7 +32,7 @@ class Departments(Resource):
         response = make_response(jsonify(result), 200)
         return response
 
-    @manager_required()
+
     def post(self):
         data = post_args.parse_args()
 
