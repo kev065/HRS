@@ -8,7 +8,7 @@ const Goals = () => {
 
   useEffect(() => {
     axios
-      .get("/employee_goals", {
+      .get("https://hrs-iymg.onrender.com/employee_goals", {
         headers: {
           Authorization: "Bearer " + retrieve().access_token,
         },

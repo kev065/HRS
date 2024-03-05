@@ -46,10 +46,10 @@ class Employees(Resource):
 
     # error handling
         if data['role'] == 'employee':
-            employee = Employee.query.filter_by(email=data['email']).first()
-            if employee:
-                abort(409, detail="Employee with the same email already exists")
-            hashed_password = bcrypt.generate_password_hash(data['password'])
+              employee = Employee.query.filter_by(email=data['email']).first()
+              if employee:
+                    abort(409, detail="Employee with the same email already exists")
+              hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
 
             new_employee = Employee(email=data['email'], password=hashed_password,
                                     dept_id=data['dept_id'], personal_no=data["personal_no"])
@@ -67,10 +67,9 @@ class Employees(Resource):
             return response
 
         elif data['role'] == 'manager':
-            manager = Manager.query.filter_by(email=data['email']).first()
-            if manager:
-                abort(409, detail="Manager with the same email already exists")
-            hashed_password = bcrypt.generate_password_hash(data['password'])
+              manager = Manager.query.filter_by(email=data['email']).first()
+              if manager:abort(409, detail="Manager with the same email already exists")
+              hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
 
             new_manager = Manager(email=data['email'], password=hashed_password,
                                   dept_id=data['dept_id'], personal_no=data["personal_no"])
@@ -88,10 +87,9 @@ class Employees(Resource):
             return response
 
         else:
-            hr = HR_Personel.query.filter_by(email=data['email']).first()
-            if hr:
-                abort(409, detail="Hr with the same email already exists")
-            hashed_password = bcrypt.generate_password_hash(data['password'])
+              hr = HR_Personel.query.filter_by(email=data['email']).first()
+              if hr:abort(409, detail="Hr with the same email already exists")
+              hashed_password = bcrypt.generate_password_hash(data['password']).decode('utf-8')
 
             new_hr = HR_Personel(
                 email=data['email'], password=hashed_password, dept_id=data['dept_id'], personal_no=data["personal_no"])

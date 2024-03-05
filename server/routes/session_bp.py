@@ -18,14 +18,13 @@ post_args.add_argument('start_date', type=str,
                        required=True, help='Start date is required')
 post_args.add_argument('end_date', type=str, required=True,
                        help='End date is required')
-post_args.add_argument('goals', type=str, required=True,
-                       help='Goals are required')
+
 
 patch_args = reqparse.RequestParser()
 patch_args.add_argument('name', type=str, help='Session name')
 patch_args.add_argument('start_date', type=str, help='Start date')
 patch_args.add_argument('end_date', type=str, help='End date')
-patch_args.add_argument('goals', type=str, help='Goals')
+
 
 
 class Sessions(Resource):
@@ -54,13 +53,9 @@ class Sessions(Resource):
         if session:
             return make_response(jsonify({"error": "Session with the same name already exists"}), 409)
 
-        # Goal association validation
-        goal = Goals.query.filter_by(id=data['goals']).first()
-        if not goal:
-            return make_response(jsonify({"error": "The associated goal does not exist"}), 409)
 
         new_session = Session(
-            name=data['name'], start_date=start_date, end_date=end_date, goals=[goal])
+            name=data['name'], start_date=start_date, end_date=end_date)
         db.session.add(new_session)
         db.session.commit()
 

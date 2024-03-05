@@ -11,11 +11,14 @@ const HRViewLeaves = () => {
   useEffect(() => {
     const fetchLeaves = async () => {
       try {
-        const response = await axios.get("/leaves", {
-          headers: {
-            Authorization: `Bearer ${retrieve().access_token}`,
-          },
-        });
+        const response = await axios.get(
+          "https://hrs-iymg.onrender.com/leaves",
+          {
+            headers: {
+              Authorization: `Bearer ${retrieve().access_token}`,
+            },
+          }
+        );
         const filteredLeaves = response.data.filter(
           (leave) => leave.leave_approval.length === 0
         );
@@ -30,6 +33,19 @@ const HRViewLeaves = () => {
     };
 
     fetchLeaves();
+
+    axios
+      .get("https://hrs-iymg.onrender.com/managers_with_names", {
+        headers: {
+          Authorization: "Bearer " + retrieve().access_token,
+        },
+      })
+      .then((res) => {
+        setManagers(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   }, []);
 
   const handleCreateLeaveApproval = (leave_id, employee_id, index) => {
@@ -39,7 +55,7 @@ const HRViewLeaves = () => {
       hr_id: retrieve().hr.id,
     };
 
-    fetch("/leave_approvals", {
+    fetch("https://hrs-iymg.onrender.com/leave_approvals", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +81,6 @@ const HRViewLeaves = () => {
 
   return (
     <div className="container w-50 bg-white text-dark m-auto pt-4">
-      {error && <p className="error">{error}</p>}
       {success && <p className="success">{success}</p>}
       {unapprovedLeaves?.map((leave, index) => (
         <div key={leave.id} className="leave">

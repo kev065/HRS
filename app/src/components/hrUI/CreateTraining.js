@@ -21,7 +21,7 @@ const CreateTraining = ({ trainings, setTrainings, onClose }) => {
             end_time: endTime + ":00",
         };
 
-        fetch('/trainings', {
+        fetch('https://hrs-iymg.onrender.com/trainings', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

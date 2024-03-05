@@ -12,7 +12,7 @@ const ViewLeaves = () => {
 
   useEffect(() => {
     const fetchLeaves = () => {
-      fetch(`/employee_leaves/${employee_id}`, {
+      fetch(`https://hrs-iymg.onrender.com/employee_leaves/${employee_id}`, {
         headers: {
           Authorization: "Bearer " + retrieve().access_token,
         },
@@ -39,7 +39,7 @@ const ViewLeaves = () => {
   };
 
   const handleDeleteLeave = (leaveId) => {
-    fetch(`/leaves/${leaveId}`, {
+    fetch(`https://hrs-iymg.onrender.com/leaves/${leaveId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + retrieve().access_token,

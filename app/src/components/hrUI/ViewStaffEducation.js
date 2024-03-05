@@ -7,7 +7,7 @@ const ViewStaffEducation = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('/staff_education',{
+    fetch('https://hrs-iymg.onrender.com/staff_education',{
         headers: {
             Authorization: "Bearer " + retrieve().access_token,
         },

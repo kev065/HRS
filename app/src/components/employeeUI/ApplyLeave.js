@@ -17,7 +17,7 @@ const ApplyLeave = ({ onClose ,leaves,setLeaves}) => {
             description: description
         };
 
-        fetch('/leaves', {
+        fetch('https://hrs-iymg.onrender.com/leaves', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

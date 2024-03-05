@@ -15,7 +15,7 @@ const UpdateTrainings = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`/trainings/${id}`, {
+        fetch(`https://hrs-iymg.onrender.com/trainings/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
                 "Authorization": "Bearer " + retrieve().access_token,
@@ -58,7 +58,7 @@ const UpdateTrainings = () => {
             end_time: end_time + ":00",
         };
 
-        fetch(`/trainings/${training.id}`, {
+        fetch(`https://hrs-iymg.onrender.com/trainings/${training.id}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

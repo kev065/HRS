@@ -68,7 +68,7 @@ const CreateProfile = () => {
       formData.append("profile_photo", profilePhoto);
       console.log(...formData.entries());
 
-      fetch("/hrProfiles", {
+      fetch("https://hrs-iymg.onrender.com/hrProfiles", {
         method: "POST",
         headers: {
           Authorization: "Bearer " + retrieve().access_token,

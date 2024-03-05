@@ -7,7 +7,7 @@ const UpdateDepartments = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/department_heads', {
+    fetch('https://hrs-iymg.onrender.com/department_heads', {
       headers: {
         Authorization: "Bearer " + retrieve().access_token,
       },

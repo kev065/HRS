@@ -10,7 +10,7 @@ const ViewEducation = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`/education/employee/${employeeId}`, {
+    fetch(`https://hrs-iymg.onrender.com/education/employee/${employeeId}`, {
       headers: {
         Authorization: "Bearer " + retrieve().access_token,
       },
@@ -38,7 +38,7 @@ const ViewEducation = () => {
   };
 
   const handleDeleteEducation = (educationId) => {
-    fetch(`/education/${educationId}`, {
+    fetch(`https://hrs-iymg.onrender.com/education/${educationId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + retrieve().access_token,

@@ -10,7 +10,7 @@ const AddGoalForm = () => {
   const [sessions, setSessions] = useState([]);
 
   useEffect(() => {
-    axios.get('/managers_with_names', {
+    axios.get('https://hrs-iymg.onrender.com/managers_with_names', {
       headers: {
         "Authorization": "Bearer " + retrieve().access_token
       }
@@ -22,7 +22,7 @@ const AddGoalForm = () => {
       console.error(err);
     });
 
-    axios.get('/sessions', {
+    axios.get('https://hrs-iymg.onrender.com/sessions', {
     })
     .then(res => {
       setSessions(res.data);
@@ -35,7 +35,7 @@ const AddGoalForm = () => {
 
 const handleSubmit = async (values) => {
   try {
-    const response = await axios.post('/goals', values, {
+    const response = await axios.post('https://hrs-iymg.onrender.com/goals', values, {
       headers: {
         "Authorization": "Bearer " + retrieve().access_token
       }

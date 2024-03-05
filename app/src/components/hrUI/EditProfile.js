@@ -15,7 +15,7 @@ const EditProfile = () => {
   const [hrProfileData, setHrProfileData] = useState({});
 
   useEffect(() => {
-    fetch(`/hr_personnels/${id}`)
+    fetch(`https://hrs-iymg.onrender.com/hr_personnels/${id}`)
       .then((response) => response.json())
       .then((data) => setHrProfileData(data.hr_profiles[0]))
       .catch((err) => console.log(err));
@@ -82,7 +82,7 @@ const EditProfile = () => {
 
       console.log(...formData.entries());
 
-      fetch(`/hrProfiles/${hrProfileData.id}`, {
+      fetch(`https://hrs-iymg.onrender.com/hrProfiles/${hrProfileData.id}`, {
         method: "PATCH",
         headers: {
           Authorization: "Bearer " + retrieve().access_token,

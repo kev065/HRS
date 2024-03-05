@@ -6,7 +6,7 @@ const ViewManagers = () => {
     const [managers, setManagers] = useState([]);
 
     useEffect(() => {
-        fetch('/manager_department_details')
+        fetch('https://hrs-iymg.onrender.com/manager_department_details')
             .then(response => response.json())
             .then(data => {
                 setManagers(data);

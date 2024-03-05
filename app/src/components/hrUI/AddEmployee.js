@@ -10,7 +10,7 @@ const AddEmployeeForm = () => {
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get('/departments');
+        const response = await axios.get('https://hrs-iymg.onrender.com/departments');
         setDepartments(response.data);
       } catch (error) {
         console.error('Error fetching departments:', error);
@@ -22,7 +22,7 @@ const AddEmployeeForm = () => {
 
   const handleSubmit = async (values) => {
     try {
-      const response = await axios.post('/employees', values);
+      const response = await axios.post('https://hrs-iymg.onrender.com/employees', values);
       console.log('New Employee:', response.data);
       setMessage('Employee added successfully!');
     } catch (error) {

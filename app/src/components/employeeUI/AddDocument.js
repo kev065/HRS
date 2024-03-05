@@ -27,7 +27,7 @@ const AddDocument = ({ documents, setDocuments, onClose }) => {
     formData.append("name", documentName);
     formData.append("type", documentType);
 
-    fetch(`/upload/${employeeId}`, {
+    fetch(`https://hrs-iymg.onrender.com/upload/${employeeId}`, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + retrieve().access_token,

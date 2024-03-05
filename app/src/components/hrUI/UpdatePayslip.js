@@ -12,7 +12,7 @@ const UpdatePayslip = ({
 
   //fetch employee profiles
   useEffect(() => {
-    fetch("/employeeProfiles")
+    fetch("https://hrs-iymg.onrender.com/employeeProfiles")
       .then((resp) => resp.json())
       .then((data) => setEmployees(data));
   }, []);
@@ -72,7 +72,7 @@ const UpdatePayslip = ({
   //submit data
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch(`/payslip/${remuneration.id}`, {
+    fetch(`https://hrs-iymg.onrender.com/payslip/${remuneration.id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
